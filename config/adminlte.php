@@ -187,7 +187,7 @@ return [
     */
 
     'use_route_url' => false,
-    'dashboard_url' => false,
+    'dashboard_url' => '/',
     'logout_url' => 'logout',
     'login_url' => 'login',
     'register_url' => 'register',
@@ -237,14 +237,19 @@ return [
         [
             'text'  => 'Dashboard',
             'route' => 'home',
-            'icon'  => 'fas fa-chart-area',
+            'icon'  => 'fas fa-fw fa-tachometer-alt',
         ],
         [
-            'text'        => 'pages',
-            'url'         => 'admin/pages',
-            'icon'        => 'far fa-fw fa-file',
-            'label'       => 4,
-            'label_color' => 'success',
+            'text'  => 'Lista de roles',
+            'route' => 'admin.roles.index',
+            'icon'  => 'fas fa-user-cog',
+            'active' => ['admin/roles*']
+        ],
+        [
+            'text'  => 'Usuarios',
+            'route' => 'admin.users.index',
+            'icon'  => 'fas fa-users',
+            'active' => ['admin/users*']
         ],
         ['header' => 'PEDIDOS'],
         [
@@ -437,5 +442,5 @@ return [
     | https://github.com/jeroennoten/Laravel-AdminLTE/wiki/9.-Other-Configuration
     */
 
-    'livewire' => false,
+    'livewire' => true,
 ];

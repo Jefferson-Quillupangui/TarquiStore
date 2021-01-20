@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\ProductController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -17,5 +19,10 @@ Route::get('/', [App\Http\Controllers\HomeController::class, 'index'])->name('ho
 
 Route::middleware(['auth:sanctum', 'verified'])->get('/dash', function () {
     return view('dash.index');
-})->name('dash');
+})->name('dashboard');
 
+Route::resource('categories',CategoryController::class)
+    ->names('categories')
+    ->parameters(['categories'=>'Categorias']);
+
+Route::resource('products',ProductController::class)->names('products');

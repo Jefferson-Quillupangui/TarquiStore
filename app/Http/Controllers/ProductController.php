@@ -1,14 +1,12 @@
 <?php
 
-namespace App\Http\Controllers\Admin;
+namespace App\Http\Controllers;
 
-use App\Http\Controllers\Controller;
-use App\Models\User;
 use Illuminate\Http\Request;
+use App\Models\Product;
+use App\Models\Category;
 
-use Spatie\Permission\Models\Role;
-
-class UserController extends Controller
+class ProductController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -16,9 +14,9 @@ class UserController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function index()
-    {      
-        $users = User::all();
-        return view('admin.users.index', compact('users'));
+    {
+        $products = Product::all();
+        return view('product.show',compact('products'));
     }
 
     /**
@@ -27,8 +25,14 @@ class UserController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function create()
-    {
-        return view('admin.users.create');
+    {   
+        //Categorias
+        $categories = Category::all();
+
+        //Productos
+        $products = Product::all();
+
+        return view('product.create', compact('products','categories'));
     }
 
     /**
@@ -39,7 +43,7 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
-        
+        //
     }
 
     /**
@@ -48,9 +52,9 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show(User $user)
+    public function show($id)
     {
-        return view('admin.users.show', compact('user'));
+        //
     }
 
     /**
@@ -59,11 +63,9 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit(User $user)
-    {   
-        $roles = Role::all();
-
-        return view('admin.users.edit', compact('user','roles'));
+    public function edit($id)
+    {
+        //
     }
 
     /**
@@ -73,14 +75,9 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, User $user)
-    {   
-        //Usar relación de usuario con roles
-        $user->roles()->sync($request->roles);
-        
-        //Redireccionar a ruta del rol
-        return redirect()->route('admin.users.edit',$user)
-            ->with('status','El rol se asignó correctamente.');
+    public function update(Request $request, $id)
+    {
+        //
     }
 
     /**
@@ -89,7 +86,7 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(User $user)
+    public function destroy($id)
     {
         //
     }

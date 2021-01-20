@@ -234,94 +234,99 @@ return [
             'url'  => 'admin/blog',
             'can'  => 'manage-blog',
         ],
+
+       
         [
-            'text'  => 'Dashboard',
-            'route' => 'home',
-            'icon'  => 'fas fa-fw fa-tachometer-alt',
+            'text' => 'Dashboard',
+            'url'  => '#',
+            'icon' => 'fas fa-tachometer-alt',
         ],
+
+        ['header' => 'GESTIÓN'],
+
         [
-            'text'  => 'Lista de roles',
-            'route' => 'admin.roles.index',
-            'icon'  => 'fas fa-user-cog',
-            'active' => ['admin/roles*']
-        ],
-        [
-            'text'  => 'Usuarios',
-            'route' => 'admin.users.index',
-            'icon'  => 'fas fa-users',
-            'active' => ['admin/users*']
-        ],
-        ['header' => 'PEDIDOS'],
-        [
-            'text'  => 'Registro de Pedido',
-            'url' => '#',
-            'icon'  => 'fas fa-id-card-alt',
-        ],
-        ['header' => 'account_settings'],
-        [
-            'text' => 'profile',
-            'url'  => 'admin/settings',
-            'icon' => 'fas fa-fw fa-user',
-        ],
-        [
-            'text' => 'change_password',
-            'url'  => 'admin/settings',
-            'icon' => 'fas fa-fw fa-lock',
-        ],
-        [
-            'text'    => 'multilevel',
-            'icon'    => 'fas fa-fw fa-share',
-            'submenu' => [
-                [
-                    'text' => 'level_one',
-                    'url'  => '#',
+            'text'    => 'Productos',
+            'icon'    => 'fas fa-fw fa-store-alt',
+            'submenu' =>  [
+                [   
+                    'text'  => 'Categorias',
+                    'route' => 'categories.index',
+                    'icon'  => 'fas fa-tag',
                 ],
-                [
-                    'text'    => 'level_one',
-                    'url'     => '#',
-                    'submenu' => [
-                        [
-                            'text' => 'level_two',
-                            'url'  => '#',
-                        ],
-                        [
-                            'text'    => 'level_two',
-                            'url'     => '#',
-                            'submenu' => [
-                                [
-                                    'text' => 'level_three',
-                                    'url'  => '#',
-                                ],
-                                [
-                                    'text' => 'level_three',
-                                    'url'  => '#',
-                                ],
-                            ],
-                        ],
-                    ],
-                ],
-                [
-                    'text' => 'level_one',
-                    'url'  => '#',
+                [   
+                    'text'  => 'Productos',
+                    'route' => 'products.index',
+                    'icon'  => 'fas fa-gifts',
                 ],
             ],
         ],
-        ['header' => 'labels'],
         [
-            'text'       => 'important',
-            'icon_color' => 'red',
-            'url'        => '#',
+            'text'    => 'Usuarios',
+            'icon'    => 'fas fa-users',
+            'submenu' =>  [
+                [
+                    'text'  => 'Lista de roles',
+                    'route' => 'admin.roles.index',
+                    'icon'  => 'fas fa-user-cog',
+                    'active' => ['admin/roles*']
+                ],
+                [
+                    'text'  => 'Usuarios',
+                    'route' => 'admin.users.index',
+                    'icon'  => 'fas fa-users',
+                    'active' => ['admin/users*']
+                ],
+            ],
         ],
+
         [
-            'text'       => 'warning',
-            'icon_color' => 'yellow',
-            'url'        => '#',
+            'text'    => 'Pedidos',
+            'icon'    => 'fas fa-shopping-cart',
+            'submenu' =>  [
+                [
+                    'text'  => 'Registro de Pedido',
+                    'url' => '#',
+                    'icon'  => 'fas fa-id-card-alt',
+                ],
+                [
+                    'text'       => 'Pendientes',
+                    'icon_color' => 'yellow',
+                    'url'        => '#',
+                ],
+                [
+                    'text'       => 'Reagendados',
+                    'icon_color' => 'orange',
+                    'url'        => '#',
+                ],
+                [
+                    'text'       => 'Entregados',
+                    'icon_color' => 'green',
+                    'url'        => '#',
+                ],
+                [
+                    'text'       => 'Cancelados',
+                    'icon_color' => 'red',
+                    'url'        => '#',
+                ],
+            ],
         ],
+
+        ['header' => 'GANANCIAS'],
         [
-            'text'       => 'information',
-            'icon_color' => 'cyan',
-            'url'        => '#',
+            'text' => 'Mis Ganancias',
+            'url'  => '#',
+            'icon' => 'fas fa-hand-holding-usd',
         ],
+
+        ['header' => 'account_settings'],
+        [
+            'text' => 'profile',
+            'url'  => 'user/profile',
+            'icon' => 'fas fa-fw fa-user',
+        ],
+
+
+
     ],
 
     /*

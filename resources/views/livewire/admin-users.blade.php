@@ -1,5 +1,5 @@
 <div>
-    <div class="car">
+    <div class="card">
 
         <div wire:keydown="limpiar_page" wire:model="search" class="card-header">
             <input class="form-control w-100" placeholder="Buscar usuario por nombre o por correo">

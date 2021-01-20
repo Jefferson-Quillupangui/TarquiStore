@@ -3,7 +3,7 @@
 @section('title', 'TarquiStore')
 
 @section('content_header')
-    <h1>Dashboard</h1>
+    <h1>Welcome</h1>
 @stop
 
 @section('content')
@@ -15,11 +15,5 @@
 @stop
 
 @section('js')
-    <script>
-        Swal.fire(
-        'Good job!',
-        'You clicked the button!',
-        'success'
-      )
-    </script>
+
 @stop

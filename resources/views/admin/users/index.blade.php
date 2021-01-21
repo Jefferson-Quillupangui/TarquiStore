@@ -53,8 +53,7 @@
     <script src="https://cdn.datatables.net/responsive/2.2.6/js/responsive.bootstrap4.min.js"></script>
     <script>
          $('#usuarios').DataTable(
-            responsive: true,
-            autoWidth: false
+
          );
     </script>
 @stop

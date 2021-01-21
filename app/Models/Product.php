@@ -13,4 +13,10 @@ class Product extends Model
         $category = Category::find($this->category_id);
 	    return $category; 
     }
+
+    //relacion de muchos a muchos 
+    public function order(){
+
+        return $this->belongsToMany(Order::class)->using(OrderProduct::class);
+    }       
 }

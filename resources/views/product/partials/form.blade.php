@@ -7,9 +7,10 @@
             <strong>{{$message}}</strong>
         </span>
     @enderror
-
-    {!! Form::label('image','Imagen:') !!}     
-    {!! Form::text('image',null,['class' => 'form-control' . ($errors->has('image') ? ' is-invalid' : ''), 'placeholder' => 'Ingrese la imagen del producto']) !!}
+    
+    <br>
+    <input id="file-input" name="imagenesperfil" type="file"/>
+    <br>
 
     @error('image')
         <span class="invalid-feedback">
@@ -71,12 +72,22 @@
     {!! Form::label('disccount','Descripción:') !!}     
     {!! Form::text('disccount',null,['class' => 'form-control' . ($errors->has('disccount') ? ' is-invalid' : ''), 'placeholder' => 'Ingrese valor de descuento']) !!}
 
-    
+
+
     @error('disccount')
     <span class="invalid-feedback">
         <strong>{{$message}}</strong>
     </span>
     @enderror
+
+    <div class="form-group">
+        <h1>Categorias</h1>
+        <select class="form-control">
+            @foreach($categories as $category)
+            <option>{{$category->name}}</option>
+            @endforeach
+        </select>
+    </div>
 
 </div>
 

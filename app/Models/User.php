@@ -12,6 +12,8 @@ use Laravel\Jetstream\HasTeams;
 use Laravel\Sanctum\HasApiTokens;
 use Spatie\Permission\Traits\HasRoles;
 
+use App\Models\Collaborator;
+
 class User extends Authenticatable
 {
     use HasApiTokens;
@@ -60,4 +62,10 @@ class User extends Authenticatable
     protected $appends = [
         'profile_photo_url',
     ];
+
+    //Relacion de uno a uno
+    public function collaborator(){
+
+        return $this->hasOne(Collaborator::class);
+    }
 }

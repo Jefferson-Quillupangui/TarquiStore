@@ -3,10 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\Product;
-use App\Models\Category;
 
-class ProductController extends Controller
+class TypeIdentificationController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -15,8 +13,7 @@ class ProductController extends Controller
      */
     public function index()
     {
-        $products = Product::all();
-        return view('product.show',compact('products'));
+        //
     }
 
     /**
@@ -25,14 +22,8 @@ class ProductController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function create()
-    {   
-        //Categorias
-        $categories = Category::all();
-
-        //Productos
-        $products = Product::all();
-
-        return view('product.create', compact('products','categories'));
+    {
+        //
     }
 
     /**
@@ -43,7 +34,7 @@ class ProductController extends Controller
      */
     public function store(Request $request)
     {
-        return $request;
+        //
     }
 
     /**

@@ -234,31 +234,10 @@ return [
             'url'  => 'admin/blog',
             'can'  => 'manage-blog',
         ],
-
-       
         [
             'text' => 'Dashboard',
             'url'  => '#',
             'icon' => 'fas fa-tachometer-alt',
-        ],
-
-        ['header' => 'GESTIÓN'],
-
-        [
-            'text'    => 'Productos',
-            'icon'    => 'fas fa-fw fa-store-alt',
-            'submenu' =>  [
-                [   
-                    'text'  => 'Categorias',
-                    'route' => 'categories.index',
-                    'icon'  => 'fas fa-tag',
-                ],
-                [   
-                    'text'  => 'Productos',
-                    'route' => 'products.index',
-                    'icon'  => 'fas fa-gifts',
-                ],
-            ],
         ],
         [
             'text'    => 'Usuarios',
@@ -275,6 +254,25 @@ return [
                     'route' => 'admin.users.index',
                     'icon'  => 'fas fa-users',
                     'active' => ['admin/users*']
+                ],
+            ],
+        ],
+     
+        ['header' => 'GESTIÓN'],
+
+        [
+            'text'    => 'Productos',
+            'icon'    => 'fas fa-fw fa-store-alt',
+            'submenu' =>  [
+                [   
+                    'text'  => 'Categorias',
+                    'route' => 'categories.index',
+                    'icon'  => 'fas fa-tag',
+                ],
+                [   
+                    'text'  => 'Productos',
+                    'route' => 'products.index',
+                    'icon'  => 'fas fa-gifts',
                 ],
             ],
         ],
@@ -307,6 +305,18 @@ return [
                     'text'       => 'Cancelados',
                     'icon_color' => 'red',
                     'url'        => '#',
+                ],
+            ],
+        ],
+
+        [
+            'text'    => 'Reportes',
+            'icon'    => 'fas fa-columns',
+            'submenu' =>  [
+                [
+                    'text'  => 'Mis reportes',
+                    'url'  => '#',
+                    'icon'  => 'fas fa-vote-yea',
                 ],
             ],
         ],

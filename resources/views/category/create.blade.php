@@ -3,7 +3,7 @@
 @section('title', 'TarquiStore')
 
 @section('content_header')
-    <h1>Crear categoria</h1>
+    <h1> <i class="fab fa-creative-commons-share"></i> Crear categoria</h1>
 @stop
 
 @section('content')

@@ -119,6 +119,6 @@ class CategoryController extends Controller
     {
         $category->delete();
         
-        return redirect()->route('categories.index')->with('status','El rol se elimino correctamente.');
+        return redirect()->route('categories.index')->with('status','La categoria se eliminó correctamente.');
     }
 }

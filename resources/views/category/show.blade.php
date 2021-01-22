@@ -3,7 +3,7 @@
 @section('title', 'TarquiStore')
 
 @section('content_header')
-    <h1>Categorias</h1>
+    <h1><i class="fas fa-tag"></i> Categorias</h1>
 @stop
 
 @section('content')
@@ -13,7 +13,9 @@
 <div class="card">
 
     <div class="card-header">
-        <a href="{{ route('categories.create')}}">Crear categoria</a>
+        <a href="{{ route('categories.create')}}" class="btn btn-info">
+            <i class="fas fa-plus-square"></i> Crear categoria
+        </a>
     </div>
 
     <div class="card-body">

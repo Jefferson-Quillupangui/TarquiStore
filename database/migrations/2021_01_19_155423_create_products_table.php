@@ -21,7 +21,7 @@ class CreateProductsTable extends Migration
             $table->text('description');
             $table->decimal('comission', $precision = 8, $scale = 2);
             $table->integer('quantity');
-            $table->integer('disccount');
+            $table->integer('discount');
             $table->unsignedBigInteger('category_id');
 
             $table->foreign('category_id')

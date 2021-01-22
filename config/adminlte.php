@@ -246,18 +246,38 @@ return [
                 [
                     'text'  => 'Lista de roles',
                     'route' => 'admin.roles.index',
-                    'icon'  => 'fas fa-user-cog',
                     'active' => ['admin/roles*']
                 ],
                 [
                     'text'  => 'Usuarios',
                     'route' => 'admin.users.index',
-                    'icon'  => 'fas fa-users',
                     'active' => ['admin/users*']
                 ],
             ],
         ],
-     
+        [
+            'text'    => 'Mantenimiento',
+            'icon'    => 'fas fa-laptop',
+            'submenu' =>  [
+                [
+                    'text'  => 'Ciudades',
+                    'url' => '#',
+                ],
+                [
+                    'text'  => 'Sectores',
+                    'url' => '#',
+                ],
+                [
+                    'text'  => 'Estados orden',
+                    'url' => '#',
+                ],
+                [
+                    'text'  => 'Tipos de identificación',
+                    'url' => '#',
+                ],
+            ],
+        ],
+         
         ['header' => 'GESTIÓN'],
 
         [

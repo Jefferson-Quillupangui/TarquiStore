@@ -58,11 +58,11 @@
     </span>
     @enderror
 
-    {!! Form::label('disccount','Descripción:') !!}     
-    {!! Form::text('disccount',null,['class' => 'form-control' . ($errors->has('disccount') ? ' is-invalid' : ''), 'placeholder' => 'Ingrese valor de descuento']) !!}
+    {!! Form::label('discount','Descripción:') !!}     
+    {!! Form::text('discount',null,['class' => 'form-control' . ($errors->has('discount') ? ' is-invalid' : ''), 'placeholder' => 'Ingrese valor de descuento']) !!}
 
     
-    @error('disccount')
+    @error('discount')
     <span class="invalid-feedback">
         <strong>{{$message}}</strong>
     </span>

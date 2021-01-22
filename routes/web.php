@@ -22,7 +22,6 @@ Route::middleware(['auth:sanctum', 'verified'])->get('/dash', function () {
 })->name('dashboard');
 
 Route::resource('categories',CategoryController::class)
-    ->names('categories')
-    ->parameters(['categories'=>'Categorias']);
+    ->names('categories');
 
 Route::resource('products',ProductController::class)->names('products');

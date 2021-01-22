@@ -3,7 +3,7 @@
 @section('title', 'TarquiStore')
 
 @section('content_header')
-    <h1>Crear Rol</h1>
+    <h1> <i class="fab fa-creative-commons-share"></i> Crear Rol</h1>
 @stop
 
 @section('content')
@@ -13,7 +13,13 @@
                 
                 @include('admin.roles.partials.form')  
 
-                {!! Form::submit('Crear rol', ['class' => 'btn btn-primary mt-2']) !!}     
+                {!! Form::submit('Guardar', ['class' => 'btn btn-info mt-2']) !!}   
+                
+                <a class="btn btn-link"
+                href="{{ route('admin.roles.index') }}">
+                Regresar
+                </a> 
+                
 
             {!! Form::close() !!}
         </div>    

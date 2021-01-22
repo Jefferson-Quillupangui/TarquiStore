@@ -3,7 +3,7 @@
 @section('title', 'TarquiStore')
 
 @section('content_header')
-      <h1>Lista de roles</h1>
+    <h1><i class="fas fa-user-cog"></i> Lista de roles</h1>
 @stop
 
 @section('content')
@@ -13,7 +13,9 @@
     <div class="card">
 
         <div class="card-header">
-            <a href="{{route('admin.roles.create')}}">Crear rol</a>
+            <a href="{{route('admin.roles.create')}}" class="btn btn-info">
+                <i class="fas fa-plus-square"></i> Crear rol
+            </a>
         </div>
 
         <div class="card-body">

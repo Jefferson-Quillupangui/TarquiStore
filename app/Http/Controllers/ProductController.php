@@ -43,6 +43,25 @@ class ProductController extends Controller
      */
     public function store(Request $request)
     {
+        $request->validate([
+            'name' =>   'required',
+            'image' => 'required|image|max:1024',
+            'price' =>  'required',
+            'comission' =>  'required',
+            'description' => 'required',
+            'discount' =>  'required',
+            'quantity' => 'integer'
+        ], 
+        [   'name.required' =>   'Ingrese el nombre del producto',
+            'price.required' =>  'Ingrese el precio del producto',
+            'image.required' => 'Ingrese la imagen del producto',
+            'comission.required' =>  'Ingrese el valor de la comisión',
+            'description.required' => 'Ingrese la descripción del producto',
+            'discount.required' =>  'Ingrese el valor de descuento o valor 0',
+            'quantity.integer' => 'Ingrese un valor entero de cantidad disponible',
+            'name.unique' => 'El nombre de la categoria ya existe'
+        ]);
+
         return $request;
     }
 

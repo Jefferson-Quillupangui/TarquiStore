@@ -35,7 +35,7 @@
                 <span class="input-group-text" id="basic-addon1"><i class="far fa-keyboard"></i></span>
             </div>
             
-            {!! Form::text('description',null,['class' => 'form-control'. ($errors->has('name') ? ' is-invalid' : ''), 'placeholder' => 'Ingrese la descripción de la categoria']) !!}                 
+            {!! Form::text('description',null,['class' => 'form-control'. ($errors->has('description') ? ' is-invalid' : ''), 'placeholder' => 'Ingrese la descripción de la categoria']) !!}                 
             @error('description')
             <span class="invalid-feedback">
                 <strong>{{$message}}</strong>

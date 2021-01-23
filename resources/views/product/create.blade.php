@@ -3,7 +3,7 @@
 @section('title', 'TarquiStore')
 
 @section('content_header')
-    <h1>Crear categoria</h1>
+    <h1> <i class="fab fa-creative-commons-share"></i> Ingresar producto</h1>
 @stop
 
 @section('content')
@@ -13,7 +13,7 @@
                 
                 @include('product.partials.form')  
 
-                {!! Form::submit('Guardar', ['class' => 'btn btn-primary mt-2']) !!}   
+                {!! Form::submit('Guardar', ['class' => 'btn btn-info mt-2']) !!}   
                 
                 <a class="btn btn-link "
                     href="{{ route('products.index') }}">
@@ -27,8 +27,9 @@
 
 @section('css')
     <link rel="stylesheet" href="/css/admin_custom.css">
+    <style  type="text/css">textarea{ resize : none;}</style>
 @stop
 
 @section('js')
-    <script> console.log('Hi!'); </script>
+
 @stop

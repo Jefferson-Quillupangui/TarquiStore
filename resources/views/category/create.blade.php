@@ -13,7 +13,7 @@
                 
                 @include('category.partials.form')  
 
-                {!! Form::submit('Guardar', ['class' => 'btn btn-primary mt-2']) !!}   
+                {!! Form::submit('Guardar', ['class' => 'btn btn-info mt-2']) !!}   
                 
                 <a class="btn btn-link "
                     href="{{ route('categories.index') }}">

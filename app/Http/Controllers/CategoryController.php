@@ -41,10 +41,12 @@ class CategoryController extends Controller
         //Validación de campos
         $request->validate([
             'name' => 'required',
+            'name' => 'required|unique:categories,name',
             'description' => 'required'
         ], 
         [
             'name.required' => 'Ingrese el nombre de la categoria',
+            'name.unique' => 'El nombre de la categoria ya existe',
             'description.required' => 'Ingrese la descripción de la categoria'
         ]);
         
@@ -93,10 +95,12 @@ class CategoryController extends Controller
         //Validación de datos
         $request->validate([
             'name' => 'required',
+            'name' => 'required|unique:categories,name',
             'description' => 'required'
         ], 
         [
             'name.required' => 'Ingrese el nombre de la categoria',
+            'name.unique' => 'El nombre de la categoria ya existe',
             'description.required' => 'Ingrese la descripción de la categoria'
         ]);
 

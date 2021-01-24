@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 use App\Models\Product;
 use App\Models\Category;
 
+use Illuminate\Support\Facades\Storage; 
+
 class ProductController extends Controller
 {
     /**
@@ -15,7 +17,9 @@ class ProductController extends Controller
      */
     public function index()
     {
-        $products = Product::all();
+        //$products = Product::all();
+        $products = Product::with('Category')->get();
+        //$category = $products->categories->name;
         return view('product.show',compact('products'));
     }
 
@@ -27,12 +31,10 @@ class ProductController extends Controller
     public function create()
     {   
         //Categorias
-        $categories = Category::all();
+        $category = Category::orderBy('id', 'asc')->pluck('name','id');
+        $products = new Product;
 
-        //Productos
-        $products = Product::all();
-
-        return view('product.create', compact('products','categories'));
+        return view('product.create', compact('products','category'));
     }
 
     /**
@@ -44,25 +46,42 @@ class ProductController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'name' =>   'required',
-            'image' => 'required|image|max:1024',
-            'price' =>  'required',
-            'comission' =>  'required',
-            'description' => 'required',
-            'discount' =>  'required',
-            'quantity' => 'integer'
+            'name'          =>  'required|unique:products,name',
+            'image'         =>  'required|image',
+            'price'         =>  'required',
+            'comission'     =>  'required',
+            'description'   =>  'required',
+            'discount'      =>  'integer',
+            'quantity'      =>  'integer'
         ], 
-        [   'name.required' =>   'Ingrese el nombre del producto',
-            'price.required' =>  'Ingrese el precio del producto',
-            'image.required' => 'Ingrese la imagen del producto',
-            'comission.required' =>  'Ingrese el valor de la comisión',
-            'description.required' => 'Ingrese la descripción del producto',
-            'discount.required' =>  'Ingrese el valor de descuento o valor 0',
-            'quantity.integer' => 'Ingrese un valor entero de cantidad disponible',
-            'name.unique' => 'El nombre de la categoria ya existe'
+        [   'name.required'         =>  'Ingrese el nombre del producto',
+            'name.unique'           =>  'El nombre del producto ya existe',
+            'price.required'        =>  'Ingrese el precio del producto',
+            'image.required'        =>  'Ingrese la imagen del producto',
+            'image.image'           =>  'Debe ingresar una imagen del producto',
+            'comission.required'    =>  'Ingrese el valor de la comisión',
+            'description.required'  =>  'Ingrese la descripción del producto',
+            'discount.integer'      =>  'El porcentaje de descuento debe ser un valor entero o cero',
+            'quantity.integer'      =>  'Ingrese un valor entero de cantidad disponible',
+            'name.unique'           =>  'El nombre de la categoria ya existe'
         ]);
 
-        return $request;
+        $imagenes = $request->file('image')->store('public/img');
+
+        $url = Storage::url($imagenes);
+
+        $product = Product::create([
+            'name'          => $request->name,
+            'image'         => $url,
+            'price'         => $request->price,
+            'description'   => $request->description,
+            'comission'     => $request->comission,
+            'quantity'      => $request->quantity,
+            'discount'      => $request->discount,
+            'category_id'   => $request->category
+        ]);
+
+        return redirect()->route('products.index')->with('status','El producto se creó correctamente');
     }
 
     /**
@@ -82,9 +101,10 @@ class ProductController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Product $product)
     {
-        //
+        $category = Category::orderBy('id', 'asc')->pluck('name','id');
+        return view('product.edit', compact('product','category'));
     }
 
     /**
@@ -94,9 +114,46 @@ class ProductController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, Product $product)
     {
-        //
+        
+        $request->validate([
+            'name'          =>  'required',
+            'image'         =>  'required|image',
+            'price'         =>  'required',
+            'comission'     =>  'required',
+            'description'   =>  'required',
+            'discount'      =>  'integer',
+            'quantity'      =>  'integer'
+        ], 
+        [   'name.required'         =>  'Ingrese el nombre del producto',
+            'price.required'        =>  'Ingrese el precio del producto',
+            'image.required'        =>  'Ingrese la imagen del producto',
+            'image.image'           =>  'Debe ingresar una imagen del producto',
+            'comission.required'    =>  'Ingrese el valor de la comisión',
+            'description.required'  =>  'Ingrese la descripción del producto',
+            'discount.integer'      =>  'El porcentaje de descuento debe ser un valor entero o cero',
+            'quantity.integer'      =>  'Ingrese un valor entero de cantidad disponible',
+            'name.unique'           =>  'El nombre de la categoria ya existe'
+        ]);
+
+        $imagenes = $request->file('image')->store('public/img');
+
+        $url = Storage::url($imagenes);
+
+        $product->update([
+            'name'          => $request->name,
+            'image'         => $url,
+            'price'         => $request->price,
+            'description'   => $request->description,
+            'comission'     => $request->comission,
+            'quantity'      => $request->quantity,
+            'discount'      => $request->discount,
+            'category_id'   => $request->category
+        ]);
+
+        return redirect()->route('products.index')->with('status','El producto se creó correctamente');
+
     }
 
     /**
@@ -105,8 +162,15 @@ class ProductController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
-    {
-        //
+    public function destroy(Product $product)
+    {   
+        //Ruta public de la imagen
+        $url = str_replace('storage', 'public',$product->image);
+        //Borrar imagen
+        storage::delete($url);
+        //Borra registro del producto
+        $product->delete();
+
+        return redirect()->route('products.index')->with('status','El producto se eliminó correctamente.');
     }
 }

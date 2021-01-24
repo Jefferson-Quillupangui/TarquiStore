@@ -17,19 +17,18 @@
         <div class="col-md-5">
             <label for="image">Imagen: </label>
             <div class="input-group mb-4">
-                <div class="custom-file">
-                    <input name="image" type="file" class="custom-file-input @error('name') is-invalid @else border-0 @enderror" id="customFile" accept="image/*">
-                    <label class="custom-file-label" for="customFile">Seleccione la imagen</label>
+                <div class="form-input">
+                    {!! Form::file('image',['class' => ($errors->has('image') ? 'is-invalid' : ''),'accept' => 'image/png,image/jpeg']) !!}
                     @error('image')
-                        <span class="invalid-feedback">
+                        <br>
+                        <small class="invalid-feedback">
                             <strong>{{$message}}</strong>
-                        </span>
+                        </small>
                     @enderror
                 </div>
             </div>
         </div>
     </div>
-
     <div class="row">
         <div class="col-md-5">
             <label for="price">Precio:</label>
@@ -76,10 +75,10 @@
     </div>
     <div class="row">
         <div class="col-md-5">
-            <label for="discount">Descuento:</label>
+            <label for="discount">Porcentaje descuento:</label>
             <div class="input-group mb-3">
                 <div class="input-group-prepend">
-                    <span class="input-group-text" id="basic-addon1"><i class="fas fa-dollar-sign"></i></span>
+                    <span class="input-group-text" id="basic-addon1"><i class="fas fa-percentage"></i></span>
                 </div>
                 {!! Form::number('discount',0.00,['class' => 'form-control' . ($errors->has('discount') ? ' is-invalid' : ''), 'placeholder' => 'Valor de descuento del producto','step'=>'any']) !!}
                 @error('discount')
@@ -90,17 +89,13 @@
             </div>   
         </div>
         <div class="col-md-5">
-            <label for="categories">Categorias:</label>
+            <label for="category">Categorias:</label>
             <div class="input-group mb-3">
                 <div class="input-group-prepend">
                     <span class="input-group-text" id="basic-addon1"><i class="far fa-list-alt"></i></span>
                 </div>
-                <select class="form-control">
-                    @foreach($categories as $category)
-                    <option>{{$category->name}}</option>
-                    @endforeach
-                </select>
-                @error('categories')
+                    {!! Form::select('category', $category,0,['class' => 'custom-select']) !!}
+                @error('category')
                 <span class="invalid-feedback">
                     <strong>{{$message}}</strong>
                 </span>

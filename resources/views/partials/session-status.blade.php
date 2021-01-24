@@ -1,5 +1,5 @@
 @if(session('status'))
-<div class="alert alert-light alert-dismissible fade show" role="alert">
+<div class="alert alert-warning alert-dismissible fade show" role="alert">
     <strong>Éxito!</strong> {{session('status')}}
     <button type="button"
             class="close"

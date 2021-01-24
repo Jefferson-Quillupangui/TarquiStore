@@ -29,6 +29,8 @@
                     <th>Descripción</th>
                     <th>Comisión</th>
                     <th>Cantidad</th>
+                    <th>Descuento</th>
+                    <th>Categoria</th>
                     <th colspan="2"></th>
                 </tr>
             </thead>
@@ -37,18 +39,20 @@
                     <tr>
                         <td>{{ $product->id}}</td>
                         <td>{{ $product->name}}</td>
-                        <td>{{ $product->image}}</td>
-                        <td>{{ $product->price}}</td>
+                        <td><img src="{{ asset($product->image) }}"  height="100"/></td>
+                        <td>${{ $product->price}}</td>
                         <td>{{ $product->description}}</td>
-                        <td>{{ $product->comission}}</td>
+                        <td>${{ $product->comission}}</td>
                         <td>{{ $product->quantity}}</td>
+                        <td>{{ $product->discount}}%</td>
+                        <td>{{ $product->Category->name }}</td>
                         
                         <td width="10px">
                             <a class="btn btn-secondary" href="{{route('products.edit',$product)}}">Editar</a>
                         </td>
 
                         <td width="10px">
-                            <form action="{{route('products.destroy',$product)}}" method="POST">
+                            <form action="{{route('products.destroy',$product)}}" method="POST" class="op-eliminar">
                                 @method('delete')
                                 @csrf
 
@@ -75,5 +79,25 @@
 @stop
 
 @section('js')
+<script>
 
+    $('.op-eliminar').submit(function(e){
+        e.preventDefault();
+
+        Swal.fire({
+            title: '¿Está seguro de eliminar el producto?',
+            text: "Esta acción no se puede revertir!",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Confirmar',
+            cancelButtonText:   'Cancelar'
+            }).then((result) => {
+                if (result.value) {
+                        this.submit();
+                }
+        })
+    })
+</script>
 @stop

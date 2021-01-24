@@ -3,7 +3,7 @@
 @section('title', 'TarquiStore')
 
 @section('content_header')
-    <h1>Editar Rol</h1>
+    <h1><i class="fas fa-pencil-alt"></i> Editar producto</h1>
 @stop
 
 @section('content')
@@ -12,14 +12,14 @@
     
     <div class="card">
         <div class="card-body">
-            {!! Form::model($category,['route' => ['categories.update', $category], 'method' => 'put']) !!}
+            {!! Form::model($product,['route' => ['products.update', $product], 'method' => 'put','files' => true]) !!}
                 
-            @include('category.partials.form')  
+            @include('product.partials.form')  
 
-                {!! Form::submit('Guardar', ['class' => 'btn btn-primary mt-2']) !!}  
+                {!! Form::submit('Guardar', ['class' => 'btn btn-info mt-2']) !!}  
                 
                 <a class="btn btn-link "
-                href="{{ route('categories.index') }}">
+                href="{{ route('products.index') }}">
                 Regresar
                 </a>  
 

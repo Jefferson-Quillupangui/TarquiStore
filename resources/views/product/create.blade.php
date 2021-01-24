@@ -9,7 +9,7 @@
 @section('content')
     <div class="card">
         <div class="card-body">
-            {!! Form::open(['route' => 'products.store']) !!}
+            {!! Form::open(['route' => 'products.store', 'method' => 'POST', 'files' => true]) !!}
                 
                 @include('product.partials.form')  
 

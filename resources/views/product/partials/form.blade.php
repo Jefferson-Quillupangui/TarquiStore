@@ -18,7 +18,7 @@
             <label for="image">Imagen: </label>
             <div class="input-group mb-4">
                 <div class="form-input">
-                    {!! Form::file('image',['class' => ($errors->has('image') ? 'is-invalid' : ''),'accept' => 'image/png,image/jpeg']) !!}
+                    {!! Form::file('image',null,['class' => ($errors->has('image') ? 'is-invalid' : ''),'accept' => 'image/png,image/jpeg']) !!}
                     @error('image')
                         <br>
                         <small class="invalid-feedback">

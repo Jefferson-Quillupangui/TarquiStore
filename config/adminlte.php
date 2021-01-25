@@ -303,7 +303,7 @@ return [
             'submenu' =>  [
                 [
                     'text'  => 'Registro de Pedido',
-                    'url' => '#',
+                    'route' => 'orders',
                     'icon'  => 'fas fa-id-card-alt',
                 ],
                 [

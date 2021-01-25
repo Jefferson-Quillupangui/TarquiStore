@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\Pedidos\PedidosController;
 use App\Http\Controllers\ProductController;
 use Illuminate\Support\Facades\Route;
 
@@ -25,3 +26,10 @@ Route::resource('categories',CategoryController::class)
     ->names('categories');
 
 Route::resource('products',ProductController::class)->names('products');
+
+//Route::get('create_orders',PedidosController::class)->name('orders');
+Route::get('create_orders',  [PedidosController::class, 'index' ])->name('orders');
+Route::get('lista_clientes', [PedidosController::class, 'listaClientes_json' ])->name('clientes.lista');
+Route::post('generar_orden', [PedidosController::class, 'createOrden' ])->name('orden.create');
+
+//Route::get("/lista-categoria", [CategoriaController::class, "ObtenerListaCategorias"])->name('Lista-Categorias-Json');

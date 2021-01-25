@@ -19,14 +19,14 @@ class TablesSeeder extends Seeder
      */
     public function run()
     {
-        $user = new TablesSeeder;
+        /*$user = new TablesSeeder;
         $user->userTable(); 
 
         $category = new TablesSeeder;
         $category->categoryTable();
 
         $permission = new TablesSeeder;
-        $permission->permissionTable();
+        $permission->permissionTable();*/
 
         $products = new TablesSeeder();
         $products->productTable();

@@ -3,7 +3,7 @@
 @section('title', 'TarquiStore')
 
 @section('content_header')
-    <h1>Asignar un rol</h1>
+    <h1><i class="fas fa-pencil-alt"></i> Asignar un rol</h1>
 @stop
 
 @section('content')
@@ -26,7 +26,12 @@
                     </div>
                 @endforeach
 
-                {!! Form::submit('Asignar Rol', ['class' => 'btn btn-primary mt-2']) !!}  
+                {!! Form::submit('Asignar Rol', ['class' => 'btn btn-info mt-2']) !!}  
+
+                <a class="btn btn-link "
+                href="{{ route('admin.users.index') }}">
+                Regresar
+                </a>  
 
             {!! Form::close() !!}
 

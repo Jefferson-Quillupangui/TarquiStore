@@ -121,7 +121,18 @@ class CategoryController extends Controller
      */
     public function destroy(Category $category)
     {
-        $category->delete();
+        try {
+            //Eliminar registro
+            $category->delete();
+
+        } catch (\Illuminate\Database\QueryException $e) {
+
+            $errorc = 'No se puede eliminar la categoria porque contiene productos';
+            return redirect()->route('categories.index')
+            ->with('errorc', $errorc);
+        }
+
+        // $category->delete();
         
         return redirect()->route('categories.index')->with('status','La categoria se eliminó correctamente.');
     }

@@ -64,12 +64,12 @@
                       <span class="input-group-text"><i class="far fa-keyboard"></i></span>
                     </div>
                     {!! Form::textarea('description',null,['class' => 'form-control' . ($errors->has('description') ? ' is-invalid' : ''), 'placeholder' => 'Ingrese descripción del producto', 'rows' => '4 ']) !!}
-                  </div>
-                @error('description')
-                <span class="invalid-feedback">
-                    <strong>{{$message}}</strong>
-                </span>
-                @enderror 
+                    @error('description')
+                    <span class="invalid-feedback">
+                        <strong>{{$message}}</strong>
+                    </span>
+                    @enderror                 
+                </div>
             </div>  
         </div>
     </div>

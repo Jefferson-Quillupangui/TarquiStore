@@ -33,19 +33,22 @@
     <div class="row">
         <div class="col-md-5">
             <label for="name_client">Cliente:</label>
-            <div class="input-group">
+            <div class="input-group mb-3">
                 <input type="search" class="form-control rounded" placeholder="Buscar cliente" aria-label="Search"
                   aria-describedby="search-addon" id="textbuscarcliente" codigocliente=0 disabled/>
                 <button type="button" id="btn-buscarpersona" class="btn btn-outline-primary">Buscar </button>
               </div>
         </div>
         <div class="col-md-5">
-            <label for="identification">Cédula:</label>
+            <label for="identification">Identificación:</label>
             <div class="input-group mb-3">
                 <div class="input-group-prepend">
                     <span class="input-group-text" id="basic-addon1"><i class="far fa-keyboard"></i></span>
                 </div>
-                {!! Form::text('identification',null,['placeholder' => 'Identificación', 'id' => 'textidentification']) !!}
+                {!! Form::text('identification',null,['class' => 'form-control' . ($errors->has('identification') ? ' is-invalid' : ''), 
+                                                    'placeholder' => 'Identificación', 
+                                                    'id' => 'textidentification',
+                                                    'disabled']) !!}
             </div>
         </div>
     </div>
@@ -71,7 +74,11 @@
                         <div class="input-group-prepend">
                           <span class="input-group-text"><i class="far fa-keyboard"></i></span>
                         </div>
-                        {!! Form::textarea('address_delivery',null,['class' => 'form-control' . ($errors->has('address_delivery') ? ' is-invalid' : ''), 'placeholder' => 'Ingrese descripción del producto', 'rows' => '4 ','id' => 'textaddressdelivery']) !!}
+                        {!! Form::textarea('address_delivery',null,['class' => 'form-control' . ($errors->has('address_delivery') ? ' is-invalid' : ''), 
+                                                                    'placeholder' => 'Ingrese descripción del producto', 
+                                                                    'rows' => '4 ',
+                                                                    'id' => 'textaddressdelivery',
+                                                                    'spellcheck' => "false"]) !!}
                       </div>
                     @error('address_delivery')
                     <span class="invalid-feedback">

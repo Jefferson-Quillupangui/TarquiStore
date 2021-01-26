@@ -11,6 +11,8 @@ class OrderStatus extends Model
 {
     use HasFactory;
 
+    protected $fillable = ['name','description'];
+
     //Relación de uno a muchos
     public function orders(){
 

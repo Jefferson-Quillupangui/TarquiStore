@@ -25,9 +25,10 @@
                             <tr>
                                 <td>{{$user->id}}</td>
                                 <td>{{$user->name}}</td>
+                                {{-- <td><img src="{{ asset($user->profile_photo_path) }}"  height="100"/></td> --}}
                                 <td>{{$user->email}}</td>
                                 <td width="10px">
-                                    <a class="btn btn-primary" href="{{route('admin.users.edit', $user)}}">Editar</a>
+                                    <a class="btn btn-info" href="{{route('admin.users.edit', $user)}}">Editar</a>
                                 </td>
                             </tr>
                             

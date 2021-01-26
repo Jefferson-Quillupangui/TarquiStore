@@ -3,7 +3,7 @@
 @section('title', 'TarquiStore')
 
 @section('content_header')
-    <h1><i class="fas fa-pencil-alt"></i> Editar Rol</h1>
+    <h1><i class="fas fa-pencil-alt"></i> Editar tipo de identificación</h1>
 @stop
 
 @section('content')
@@ -12,14 +12,14 @@
     
     <div class="card">
         <div class="card-body">
-            {!! Form::model($category,['route' => ['categories.update', $category], 'method' => 'put']) !!}
+            {!! Form::model($type_identification,['route' => ['type_identification.update', $type_identification], 'method' => 'put']) !!}
                 
-            @include('category.partials.form')  
+            @include('typeidentification.partials.form')  
 
                 {!! Form::submit('Guardar', ['class' => 'btn btn-info mt-2']) !!}  
                 
                 <a class="btn btn-link "
-                href="{{ route('categories.index') }}">
+                href="{{ route('type_identification.index') }}">
                 Regresar
                 </a>  
 
@@ -33,5 +33,5 @@
 @stop
 
 @section('js')
-    <script> console.log('Hi!'); </script>
+    <style  type="text/css">textarea{ resize : none;}</style>
 @stop

@@ -15,7 +15,7 @@ class CreateCitySalesTable extends Migration
     {
         Schema::create('city_sales', function (Blueprint $table) {
             $table->id();
-            $table->string('name',45);
+            $table->string('name',45)->unique();
             $table->timestamps();
         });
     }

@@ -3,7 +3,7 @@
 @section('title', 'TarquiStore')
 
 @section('content_header')
-    <h1><i class="fas fa-pencil-alt"></i>Editar Rol</h1>
+    <h1><i class="fas fa-pencil-alt"></i> Editar ciudad</h1>
 @stop
 
 @section('content')
@@ -12,16 +12,16 @@
     
     <div class="card">
         <div class="card-body">
-            {!! Form::model($role,['route' => ['admin.roles.update', $role], 'method' => 'put']) !!}
+            {!! Form::model($city,['route' => ['ciudades.update', $city], 'method' => 'put']) !!}
                 
-                @include('admin.roles.partials.form')  
+            @include('ciudad.partials.form')  
 
-                {!! Form::submit('Editar rol', ['class' => 'btn btn-info mt-2']) !!}     
-
-                <a class="btn btn-link"
-                href="{{ route('admin.roles.index') }}">
+                {!! Form::submit('Guardar', ['class' => 'btn btn-info mt-2']) !!}  
+                
+                <a class="btn btn-link "
+                href="{{ route('ciudades.index') }}">
                 Regresar
-                </a> 
+                </a>  
 
             {!! Form::close() !!}
         </div>    

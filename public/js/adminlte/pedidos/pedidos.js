@@ -68,7 +68,7 @@ $(document).ready(function () {
     
     //custom formatter definition
     var printIcon = function(cell, formatterParams, onRendered){ //plain text value
-        return "<i class='fas fa-angle-down'></i>";
+        return "<i class='fas fa-check'></i>";
     };
 
     function cargarClientes(){
@@ -86,6 +86,7 @@ $(document).ready(function () {
                                // console.log(cell.getRow().getData());
                                 $("#textidentification").val(cell.getRow().getData().identification);
                                 $("#textbuscarcliente").val(cell.getRow().getData().name);
+                                $("#textaddressdelivery").val(cell.getRow().getData().address);
                                 $("#textbuscarcliente").attr("codigocliente", cell.getRow().getData().id);
                                 $("#modal-buscarpersona").modal("hide");
                             }},

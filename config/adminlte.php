@@ -261,19 +261,19 @@ return [
             'submenu' =>  [
                 [
                     'text'  => 'Ciudades',
-                    'url' => '#',
+                    'route' => 'ciudades.index',
                 ],
                 [
                     'text'  => 'Sectores',
-                    'url' => '#',
+                    'route' => 'sectors.index',
                 ],
                 [
                     'text'  => 'Estados orden',
-                    'url' => '#',
+                    'route' => 'status_order.index',
                 ],
                 [
                     'text'  => 'Tipos de identificación',
-                    'url' => '#',
+                    'route' => 'type_identification.index',
                 ],
             ],
         ],
@@ -296,7 +296,11 @@ return [
                 ],
             ],
         ],
-
+        [
+            'text' => 'Clientes',
+            'url'  => '#',
+            'icon' => 'fas fa-user-tag',
+        ],    
         [
             'text'    => 'Pedidos',
             'icon'    => 'fas fa-shopping-cart',

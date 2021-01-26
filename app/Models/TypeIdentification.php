@@ -7,13 +7,14 @@ use Illuminate\Database\Eloquent\Model;
 
 use App\Models\Client;
 
-class Type_identification extends Model
+class TypeIdentification extends Model
 {
     use HasFactory;
+
+    protected $fillable = ['name'];
 
     //Relacion de uno a muchos
     public function clients(){
         return $this->hasMany(Client::class);
     }
-
 }

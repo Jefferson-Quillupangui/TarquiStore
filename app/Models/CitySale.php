@@ -10,7 +10,8 @@ Use App\Models\Order;
 class CitySale extends Model
 {
     use HasFactory;
-
+    protected $fillable = ['name'];
+    
     //Relacion de uno a muchos
     public function orders(){
 

@@ -6,6 +6,10 @@
     <h1><i class="fas fa-user-cog"></i> Lista de roles</h1>
 @stop
 
+@section('css')
+    <link rel="stylesheet" href="/css/admin_custom.css">
+@stop
+
 @section('content')
 
     @include('partials.session-status')
@@ -38,7 +42,7 @@
                             </td>
 
                             <td width="10px">
-                                <form action="{{route('admin.roles.destroy',$role)}}" method="POST">
+                                <form action="{{route('admin.roles.destroy',$role)}}" method="POST" class="op-eliminar">
                                     @method('delete')
                                     @csrf
 
@@ -60,10 +64,6 @@
     </div>
 @stop
 
-@section('css')
-    <link rel="stylesheet" href="/css/admin_custom.css">
-@stop
-
 @section('js')
-    <script> console.log('Hi!'); </script>
+<script type="text/javascript" src="{{ asset("js/adminlte/modales/windeliminar.js") }}"></script>
 @stop

@@ -10,7 +10,7 @@ use App\Models\Order;
 class Sector extends Model
 {
     use HasFactory;
-
+    protected $fillable = ['name'];
     //Relacion de uno a muchos
     public function orders(){
 

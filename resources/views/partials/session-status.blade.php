@@ -9,3 +9,15 @@
     </button>
 </div>
 @endif
+ 
+@if(session('errorc'))
+<div class="alert alert-danger alert-dismissible fade show" role="alert">
+    <strong>Error!</strong> {{session('errorc')}}
+    <button type="button"
+            class="close"
+            data-dismiss="alert"
+            arial-label="close">
+        <span aria-hidden="true">&times; </span>
+    </button>
+</div>
+@endif

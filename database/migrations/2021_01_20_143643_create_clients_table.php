@@ -15,13 +15,13 @@ class CreateClientsTable extends Migration
     {
         Schema::create('clients', function (Blueprint $table) {
             $table->id();
-            $table->string('identification',45)->unique();
+            $table->string('identification',45)->unique()->nullable();
             $table->string('name',45);
             $table->string('last_name',45);
             $table->mediumtext('address');
             $table->string('phone1',20);
-            $table->string('phone2',20);
-            $table->string('email',45);
+            $table->string('phone2',20)->nullable();
+            $table->string('email',45)->nullable();
             $table->unsignedBigInteger('type_identification_id');
 
             $table->foreign('type_identification_id')

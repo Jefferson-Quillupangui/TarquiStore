@@ -12,6 +12,8 @@ class Client extends Model
 {
     use HasFactory;
 
+    protected $guarded = ['id'];
+
     //Relación de uno a muchos (inversa)
     public function type_Indentification(){
         

@@ -3,7 +3,11 @@
 @section('title', 'TarquiStore')
 
 @section('content_header')
-    <h1><i class="fas fa-pencil-alt"></i> Editar producto</h1>
+    <h1><i class="fas fa-pencil-alt"></i> Editar cliente</h1>
+@stop
+
+@section('css')
+    <link rel="stylesheet" href="/css/admin_custom.css">
 @stop
 
 @section('content')
@@ -12,14 +16,14 @@
     
     <div class="card">
         <div class="card-body">
-            {!! Form::model($product,['route' => ['products.update', $product], 'method' => 'put','files' => true]) !!}
+            {!! Form::model($client,['route' => ['clients.update', $client], 'method' => 'put']) !!}
                 
-            @include('product.partials.form')  
+            @include('clientes.partials.form')  
 
                 {!! Form::submit('Guardar', ['class' => 'btn btn-info mt-2']) !!}  
                 
                 <a class="btn btn-link "
-                href="{{ route('products.index') }}">
+                href="{{ route('clients.index') }}">
                 Regresar
                 </a>  
 
@@ -28,11 +32,6 @@
     </div>    
 @stop
 
-@section('css')
-    <link rel="stylesheet" href="/css/admin_custom.css">
-    <style  type="text/css">textarea{ resize : none;}</style>
-@stop
-
 @section('js')
-
+    <script> console.log('Hi!'); </script>
 @stop

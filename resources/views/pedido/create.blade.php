@@ -157,7 +157,10 @@
             </form>
       </div>
     </div>
+        
 </div>
+
+@include('pedido.ordertable')
 
     <!-- Modal -->
     <div class="modal fade" id="modal-buscarpersona" data-backdrop="static" data-keyboard="false" tabindex="-1"

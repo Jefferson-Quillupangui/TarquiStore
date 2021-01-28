@@ -3,7 +3,7 @@
 @section('title', 'TarquiStore')
 
 @section('content_header')
-    <h1><i class="fas fa-tag"></i> Tipos de identificación</h1>
+    <h1><i class="fas fa-th-large"></i> Tipos de identificación</h1>
 @stop
 
 @section('css')

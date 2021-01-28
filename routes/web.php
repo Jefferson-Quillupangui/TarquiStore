@@ -1,5 +1,8 @@
 <?php
 
+
+use Illuminate\Support\Facades\Route;
+
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\CityController;
 use App\Http\Controllers\Pedidos\PedidosController;
@@ -7,7 +10,7 @@ use App\Http\Controllers\ProductController;
 use App\Http\Controllers\SectorsController;
 use App\Http\Controllers\StatusOrderController;
 use App\Http\Controllers\TypesIdentificationController;
-use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\ClientController;
 
 /*
 |--------------------------------------------------------------------------
@@ -27,6 +30,7 @@ Route::middleware(['auth:sanctum', 'verified'])->get('/dash', function () {
 })->name('dashboard');
 //Categorias
 Route::resource('categories',CategoryController::class)
+    ->except(['show'])
     ->names('categories');
 //Productos
 Route::resource('products',ProductController::class)->names('products');
@@ -50,5 +54,7 @@ Route::resource( 'status_order', StatusOrderController::class)
 Route::resource( 'type_identifications', TypesIdentificationController::class)
     ->except(['show'])
     ->names('type_identification');
-
-
+//Clientes
+Route::resource('clients', ClientController::class)
+    ->except(['show'])
+    ->names('clients');

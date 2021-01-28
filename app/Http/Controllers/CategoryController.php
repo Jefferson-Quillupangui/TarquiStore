@@ -60,17 +60,6 @@ class CategoryController extends Controller
     }
 
     /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
-    }
-
-    /**
      * Show the form for editing the specified resource.
      *
      * @param  int  $id
@@ -110,7 +99,8 @@ class CategoryController extends Controller
             'description' => $request->description,
         ]); 
 
-        return redirect()->route('categories.edit',$category)->with('status','La categoria se actualizó correctamente.');
+        return redirect()->route('categories.edit',$category)
+            ->with('status','La categoria se actualizó correctamente.');
     }
 
     /**

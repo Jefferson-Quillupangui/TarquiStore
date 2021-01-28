@@ -297,10 +297,17 @@ return [
             ],
         ],
         [
-            'text' => 'Clientes',
-            'url'  => '#',
-            'icon' => 'fas fa-user-tag',
-        ],    
+            'text'    => 'Clientes',
+            'icon'    => 'fas fa-user-tag',
+            'submenu' =>  [
+                [   
+                    'text'  => 'Lista de clientes',
+                    'route' => 'clients.index',
+                    'icon'  => 'fas fa-address-book',
+                ],
+            ],
+        ],        
+ 
         [
             'text'    => 'Pedidos',
             'icon'    => 'fas fa-shopping-cart',
@@ -311,24 +318,9 @@ return [
                     'icon'  => 'fas fa-id-card-alt',
                 ],
                 [
-                    'text'       => 'Pendientes',
-                    'icon_color' => 'yellow',
-                    'url'        => '#',
-                ],
-                [
-                    'text'       => 'Reagendados',
-                    'icon_color' => 'orange',
-                    'url'        => '#',
-                ],
-                [
-                    'text'       => 'Entregados',
-                    'icon_color' => 'green',
-                    'url'        => '#',
-                ],
-                [
-                    'text'       => 'Cancelados',
-                    'icon_color' => 'red',
-                    'url'        => '#',
+                    'text'      => 'Lista de pedidos',
+                    'url'       => '#',
+                    'icon'      => 'fas fa-shopping-basket',
                 ],
             ],
         ],

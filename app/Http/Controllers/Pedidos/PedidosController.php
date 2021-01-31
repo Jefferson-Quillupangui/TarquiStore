@@ -8,18 +8,30 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
 use App\Models\Category;
+use App\Models\User;
+use App\Models\Sector;
+
 use Illuminate\Support\Facades\Redis;
+use Spatie\Permission\Models\Role;
+use Illuminate\Support\Facades\Auth;
 
 class PedidosController extends Controller
 {
     public function index()
     {
+        $name = Auth::user()->name; 
        // $order = Order::all();
+       //$categories = Category::all();
+       $sectors = Sector::orderBy('id', 'asc')->pluck('name','id');
+       
        $category = Category::orderBy('id', 'asc')->pluck('name','id');
 
-        return view('pedido.create', compact('category'));
+        return view('pedido.create', compact('category','name','sectors'));
     }
 
+    
+
+    
     public function listaClientes_json(){
 
         $data = DB::select('call sp_con_buscar_cliente(?,?)', array('AA',''));

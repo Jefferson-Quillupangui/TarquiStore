@@ -12,9 +12,10 @@ use App\Models\Order;
 class Collaborator extends Model
 {
     use HasFactory;
-
+    protected $guarded = ['id'];
+    
     //relacion de uno a uno inversa
-    public function user(){
+    public function user_collaborator(){
 
         return $this->belongsTo(User::class);
     }

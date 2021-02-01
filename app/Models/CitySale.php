@@ -15,6 +15,6 @@ class CitySale extends Model
     //Relacion de uno a muchos
     public function orders(){
 
-        return $this->hasMany(Order::class);
+        return $this->hasMany(Order::class,'' ,'codigo');
     }
 }

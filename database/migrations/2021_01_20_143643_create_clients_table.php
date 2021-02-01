@@ -22,10 +22,11 @@ class CreateClientsTable extends Migration
             $table->string('phone1',20);
             $table->string('phone2',20)->nullable();
             $table->string('email',45)->nullable();
-            $table->unsignedBigInteger('type_identification_id');
+            $table->char('status',3)->default('A');  
+            $table->string('type_identification_cod');
 
-            $table->foreign('type_identification_id')
-            ->references('id')
+            $table->foreign('type_identification_cod')
+            ->references('codigo')
             ->on('type_identifications');
 
             $table->timestamps();

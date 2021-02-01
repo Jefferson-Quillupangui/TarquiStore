@@ -14,7 +14,6 @@ class CreateOrderProductTable extends Migration
     public function up()
     {
         Schema::create('order_product', function (Blueprint $table) {
-            $table->id();
             $table->unsignedBigInteger('order_id');
 
             $table->foreign('order_id')
@@ -28,7 +27,9 @@ class CreateOrderProductTable extends Migration
                     ->on('products');                  
 
             $table->integer('quantity');
-            $table->decimal('price', $precision = 8, $scale = 2);            
+            $table->decimal('price', $precision = 8, $scale = 2); 
+            $table->integer('discount_porcentage'); 
+            $table->decimal('price_discount', $precision = 8, $scale = 2);                        
             $table->decimal('total_line', $precision = 8, $scale = 2);
             $table->decimal('comission', $precision = 8, $scale = 2);
             $table->decimal('total_comission', $precision = 8, $scale = 2);

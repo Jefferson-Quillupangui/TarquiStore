@@ -15,9 +15,10 @@ class CreateCollaboratorsTable extends Migration
     {
         Schema::create('collaborators', function (Blueprint $table) {
             $table->id();
+            $table->string('identification',25);
             $table->string('name',45);
-            $table->string('last_name',45);
             $table->string('phone',20);
+            $table->char('status',3)->default('A');  
             $table->unsignedBigInteger('user_id')->unique();
 
             $table->foreign('user_id')

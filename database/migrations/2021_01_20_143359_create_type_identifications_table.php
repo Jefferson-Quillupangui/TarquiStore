@@ -14,9 +14,13 @@ class CreateTypeIdentificationsTable extends Migration
     public function up()
     {
         Schema::create('type_identifications', function (Blueprint $table) {
-            $table->id();
+            //$table->id();
+            $table->string('codigo',20)->unique();
             $table->string('name',45)->unique();
+            $table->char('status',3)->default('A');
             $table->timestamps();
+
+            $table->primary('codigo');
         });
     }
 

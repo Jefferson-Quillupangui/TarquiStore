@@ -9,6 +9,7 @@ use App\Models\Sector;
 use App\Models\Client;
 use App\Models\Collaborator;
 use App\Models\Product;
+use App\Models\OrderStatus;
 
 class Order extends Model
 {
@@ -17,14 +18,21 @@ class Order extends Model
     //relacion de uno a muchos inversa
     public function sector(){
 
-        return $this->belongsTo(Sector::class);
+        return $this->belongsTo(Sector::class,'sector_cod' ,'codigo');
     }
 
     //relacion de uno a muchos inversa
     public function citySale(){
 
-        return $this->belongsTo(CitySale::class);
+        return $this->belongsTo(CitySale::class,'city_sale_cod','codigo');
     }
+
+    //relacion de uno a muchos inversa
+    public function orderStatus(){
+
+        return $this->belongsTo(OrderStatus::class,'order_status_cod','codigo');
+    }
+    
 
     //relacion de uno a muchos inversa
     public function client(){

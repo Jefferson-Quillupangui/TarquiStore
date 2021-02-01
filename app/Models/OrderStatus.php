@@ -16,6 +16,6 @@ class OrderStatus extends Model
     //Relación de uno a muchos
     public function orders(){
 
-        return $this->hasMany(Order::class);
+        return $this->hasMany(Order::class,'' ,'codigo');
     }
 }

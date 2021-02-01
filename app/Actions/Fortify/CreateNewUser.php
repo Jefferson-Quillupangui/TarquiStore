@@ -4,6 +4,7 @@ namespace App\Actions\Fortify;
 
 use App\Models\Team;
 use App\Models\User;
+use App\Models\Collaborator;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
@@ -22,20 +23,30 @@ class CreateNewUser implements CreatesNewUsers
      */
     public function create(array $input)
     {
+
         Validator::make($input, [
+            'identification' => ['required', 'string', 'max:25'],
+            'phone' => ['required'],
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
             'password' => $this->passwordRules(),
             'terms' => Jetstream::hasTermsAndPrivacyPolicyFeature() ? ['required', 'accepted'] : '',
-        ])->validate();
+        ], 
+        [
+            'identification.required'   => 'El número de cédula es necesario',
+            'phone.required'            => 'El número de teléfono es necesario',
+        ]
+        )->validate();
 
         return DB::transaction(function () use ($input) {
             return tap(User::create([
                 'name' => $input['name'],
                 'email' => $input['email'],
                 'password' => Hash::make($input['password']),
-            ]), function (User $user) {
+            ]),function (User $user) use ($input) {
                 $this->createTeam($user);
+                $this->createCollaborator($user,$input);
+                
             });
         });
     }
@@ -53,5 +64,15 @@ class CreateNewUser implements CreatesNewUsers
             'name' => explode(' ', $user->name, 2)[0]."'s Team",
             'personal_team' => true,
         ]));
+    }
+
+    protected function createCollaborator(User $user, array $input ){
+        
+        $user->userCollaborator()->save(Collaborator::forceCreate([
+            'user_id' => $user->id,
+            'identification' =>$input['identification'],
+            'name' =>   $input['name'],
+            'phone' =>  $input['phone'],
+        ]));  
     }
 }

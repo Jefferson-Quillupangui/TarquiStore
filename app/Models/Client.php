@@ -17,7 +17,7 @@ class Client extends Model
     //Relación de uno a muchos (inversa)
     public function type_Indentification(){
         
-        return $this->belongsTo(User::class);
+        return $this->belongsTo(User::class,'type_identification_cod','codigo');
     }
 
     //Relacion de uno a muchos

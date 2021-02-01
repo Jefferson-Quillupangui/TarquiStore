@@ -21,6 +21,7 @@ class CreateComissionsTable extends Migration
             $table->integer('quantity_orders');
             $table->string('month',45);
             $table->string('year',45);
+            $table->char('status',3)->default('A');  
             $table->unsignedBigInteger('collaborator_id');
 
             $table->foreign('collaborator_id')

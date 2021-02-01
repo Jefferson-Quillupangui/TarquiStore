@@ -21,16 +21,16 @@ class CreateOrdersTable extends Migration
             $table->decimal('total_comission', $precision = 8, $scale = 2);
             $table->mediumtext('observation');
 
-            $table->unsignedBigInteger('sector_id');
+            $table->string('sector_cod');
 
-            $table->foreign('sector_id')
-            ->references('id')
+            $table->foreign('sector_cod')
+            ->references('codigo')
             ->on('sectors');
 
-            $table->unsignedBigInteger('city_sale_id');
+            $table->string('city_sale_cod');
 
-            $table->foreign('city_sale_id')
-            ->references('id')
+            $table->foreign('city_sale_cod')
+            ->references('codigo')
             ->on('city_sales');
 
             $table->unsignedBigInteger('client_id');
@@ -46,10 +46,10 @@ class CreateOrdersTable extends Migration
             ->on('collaborators');
 
 
-            $table->unsignedBigInteger('order_status');
+            $table->string('order_status_cod');
 
-            $table->foreign('order_status')
-            ->references('id')
+            $table->foreign('order_status_cod')
+            ->references('codigo')
             ->on('order_statuses');
 
             $table->timestamps();

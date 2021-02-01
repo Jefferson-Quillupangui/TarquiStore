@@ -15,6 +15,8 @@ class TypeIdentification extends Model
 
     //Relacion de uno a muchos
     public function clients(){
-        return $this->hasMany(Client::class);
+
+        return $this->hasMany(Client::class, '', 'codigo');
+        //return $this->hasMany(Client::class);
     }
 }

@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Models;
+use App\Models\Collaborator;
 
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -12,7 +13,7 @@ use Laravel\Jetstream\HasTeams;
 use Laravel\Sanctum\HasApiTokens;
 use Spatie\Permission\Traits\HasRoles;
 
-use App\Models\Collaborator;
+
 
 class User extends Authenticatable
 {
@@ -67,5 +68,12 @@ class User extends Authenticatable
     public function collaborator(){
 
         return $this->hasOne(Collaborator::class);
+    }
+
+
+    public function userCollaboratorModel()
+    {
+        //return $this->hasMany(Jetstream::collaboratorModel());
+        return $this->hasMany(Collaborator::class);
     }
 }

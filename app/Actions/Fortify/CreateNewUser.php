@@ -13,6 +13,9 @@ use Laravel\Jetstream\Jetstream;
 
 class CreateNewUser implements CreatesNewUsers
 {
+
+    public static $collaborator = 'App\\Models\\Collaborator';
+
     use PasswordValidationRules;
 
     /**
@@ -68,11 +71,29 @@ class CreateNewUser implements CreatesNewUsers
 
     protected function createCollaborator(User $user, array $input ){
         
-        $user->userCollaborator()->save(Collaborator::forceCreate([
+       // $user->userCollaborator()->save(Collaborator::forceCreate([
+           $user->userCollaboratorModel()->save(Collaborator::forceCreate([
             'user_id' => $user->id,
             'identification' =>$input['identification'],
             'name' =>   $input['name'],
             'phone' =>  $input['phone'],
         ]));  
+
+       
     }
+
+
+
+
+    // protected function userCollaborator()
+    // {
+    //     //return $this->hasMany(Jetstream::collaboratorModel());
+    //     return $this->hasMany(static::$collaborator);
+    // }
+
+    // public static function collaboratorModel()
+    // {
+    //     return static::$collaborator;
+    // }
+
 }

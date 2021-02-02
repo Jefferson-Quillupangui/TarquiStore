@@ -15,7 +15,9 @@ class TypesIdentificationController extends Controller
      */
     public function index()
     {
-        $type_identifications = TypeIdentification::all();
+        //$type_identifications = TypeIdentification::all();
+
+        $type_identifications = TypeIdentification::where('status', '=', 'A')->get();
 
         return view('typeidentification.index', compact('type_identifications'));
     }
@@ -42,13 +44,20 @@ class TypesIdentificationController extends Controller
     {
         
         $request->validate([
+            'codigo'          => 'required|unique:type_identifications,codigo',
             'name'          => 'required|unique:type_identifications,name',
+            
         ],[
+            'codigo.required'         => 'Ingrese el codigo de identifición',
+            'codigo.unique'           => 'El codigo de identifición ya existe',
             'name.required'         => 'Ingrese el nombre del tipo de identifición',
             'name.unique'           => 'El nombre del tipo de identifición ya existe',
         ]);
 
+        
+
         $type_identification = TypeIdentification::create([
+            'codigo' => $request->codigo,
             'name' => strtoupper($request->name)
         ]);
 
@@ -63,7 +72,10 @@ class TypesIdentificationController extends Controller
      */
     public function edit(TypeIdentification $type_identification)
     {
-        return view('typeidentification.edit',compact('type_identification'));
+        $codigo =  $type_identification->codigo;
+    //     $codigo = $request->codigo;
+    //    $pk_codigo = TypeIdentification::where('codigo',$codigo)->get();
+        return view('typeidentification.edit',compact('codigo'));
     }
 
     /**
@@ -96,9 +108,15 @@ class TypesIdentificationController extends Controller
         }
 
         //Actualizar datos en la tabla
-        $type_identification->update([
-            'name'          => strtoupper($request->name)
-        ]);
+         TypeIdentification::where("codigo", $type_identification->codigo)->update([
+                'name'          => strtoupper($request->name)
+            ]);
+            
+            //->update(['name'=> strtoupper($request->name]);
+
+        // $type_identification->update([
+        //     'name'          => strtoupper($request->name)
+        // ]);
 
         return redirect()->route('type_identification.index')
                     ->with('status','El tipo de identificación se actualizó correctamente.');
@@ -113,7 +131,11 @@ class TypesIdentificationController extends Controller
     public function destroy(TypeIdentification $type_identification)
     {
         
-        $type_identification->delete();
+        //$type_identification->delete();
+
+        TypeIdentification::where("codigo", $type_identification->codigo)->update([
+            'status'          => 'I'
+        ]);
         
         return redirect()->route('type_identification.index')
                 ->with('status','El tipo de orden se eliminó correctamente.');

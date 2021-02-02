@@ -9,23 +9,23 @@
 @section('content')
 
     @include('partials.session-status')
-    
+
     <div class="card">
         <div class="card-body">
-            {!! Form::model($type_identification,['route' => ['type_identification.update', $type_identification], 'method' => 'put']) !!}
-                
-            @include('typeidentification.partials.form')  
+            {{-- {!!  Form::model($type_identification, ['route' => ['type_identification.update', $type_identification], 'method' => 'put']) !!} --}}
 
-                {!! Form::submit('Guardar', ['class' => 'btn btn-info mt-2']) !!}  
-                
-                <a class="btn btn-link "
-                href="{{ route('type_identification.index') }}">
+            {!! Form::model($codigo, ['route' => ['type_identification.update', $codigo], 'method' => 'put']) !!}
+            @include('typeidentification.partials.form')
+
+            {!! Form::submit('Guardar', ['class' => 'btn btn-info mt-2']) !!}
+
+            <a class="btn btn-link " href="{{ route('type_identification.index') }}">
                 Regresar
-                </a>  
+            </a>
 
             {!! Form::close() !!}
-        </div>    
-    </div>    
+        </div>
+    </div>
 @stop
 
 @section('css')
@@ -33,5 +33,10 @@
 @stop
 
 @section('js')
-    <style  type="text/css">textarea{ resize : none;}</style>
+    <style type="text/css">
+        textarea {
+            resize: none;
+        }
+
+    </style>
 @stop

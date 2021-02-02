@@ -1,0 +1,107 @@
+[33mcommit 7af6e06fd71407092615976ecd35f8d6a7c704d7[m[33m ([m[1;36mHEAD -> [m[1;32mmaster[m[33m, [m[1;31morigin/master[m[33m, [m[1;31morigin/developer[m[33m, [m[1;31morigin/HEAD[m[33m)[m
+Author: Jeferson Q <bryan_quillu@outlook.es>
+Date:   Sun Jan 31 21:03:03 2021 -0500
+
+    add register and migration
+
+[33mcommit 1f9697d5c7796b25abaa664abaea445f65369a54[m[33m ([m[1;32mdeveloper[m[33m)[m
+Author: jose <joseluissanchez41@hotmail.com>
+Date:   Sun Jan 31 16:42:49 2021 -0500
+
+    ventana de pedidos v1
+
+[33mcommit 3d7ba130531b49c25fb016755b899d45bc225051[m
+Author: jose <joseluissanchez41@hotmail.com>
+Date:   Sun Jan 31 02:20:48 2021 -0500
+
+    archivo
+
+[33mcommit d1ec41a3049bef89c534c5c16be3c65e67da54ea[m[33m ([m[1;32mtest[m[33m)[m
+Author: jose <joseluissanchez41@hotmail.com>
+Date:   Sun Jan 31 01:20:20 2021 -0500
+
+    cambios en formulario js
+
+[33mcommit 2bd7b03534e55a193926eb92c67c478e48906f1c[m
+Author: Jeferson Q <bryan_quillu@outlook.es>
+Date:   Sat Jan 30 12:12:33 2021 -0500
+
+    add schema string
+
+[33mcommit e8b73c5d2e66e0636800f7159c42f42784e2c98b[m
+Author: Jeferson Q <bryan_quillu@outlook.es>
+Date:   Wed Jan 27 19:10:23 2021 -0500
+
+    add pedidos, clients
+
+[33mcommit e76b9329a02c1645687e977352f6e459222de0be[m
+Author: Jeferson Q <bryan_quillu@outlook.es>
+Date:   Tue Jan 26 02:13:49 2021 -0500
+
+    add mantenimiento y validaciones
+
+[33mcommit 1661a59e7eebea4e1265a1ec3295dc598f316879[m
+Author: Jeferson Q <bryan_quillu@outlook.es>
+Date:   Sun Jan 24 21:28:15 2021 -0500
+
+    add pluggin tabulador y sp clientes y orden
+
+[33mcommit 72bd524cc41f353a68e7075dd5ce40b6cf5ec12b[m
+Author: Jeferson Q <bryan_quillu@outlook.es>
+Date:   Sun Jan 24 01:51:44 2021 -0500
+
+    add crud productos y validation, image
+
+[33mcommit 8bea9409ca59ff815a1899b89e3f2d9dd35397fd[m
+Author: Jeferson Q <bryan_quillu@outlook.es>
+Date:   Sat Jan 23 00:47:05 2021 -0500
+
+    add validaciones forms category rol
+
+[33mcommit 46e00432c34fa694095f8ad1feb230c0b6d184b4[m
+Author: Jeferson Q <bryan_quillu@outlook.es>
+Date:   Fri Jan 22 01:24:30 2021 -0500
+
+    add seeders and changed views
+
+[33mcommit 684fa5f74bc768dbfd40cf34c4845913e44c3b69[m
+Author: Jeferson Q <bryan_quillu@outlook.es>
+Date:   Thu Jan 21 00:08:00 2021 -0500
+
+    add migration relacionadas y modelos relacionados
+
+[33mcommit b2c7275c26593a77b07ea6912bad889611370b58[m
+Author: Jeferson Q <bryan_quillu@outlook.es>
+Date:   Tue Jan 19 22:04:31 2021 -0500
+
+    add perfil and categories, products
+
+[33mcommit 93b3571ea699e2cb2f57f66521d01de1f212015b[m
+Author: Jeferson Q <bryan_quillu@outlook.es>
+Date:   Sun Jan 17 18:25:36 2021 -0500
+
+    Creacion de roles y permisos
+
+[33mcommit 08d0193ac65fe822e60bc6689c6efd9ed1e32846[m
+Author: Jeferson Q <bryan_quillu@outlook.es>
+Date:   Wed Jan 13 22:35:35 2021 -0500
+
+    carga de plugins para plantilla
+
+[33mcommit 30bb4f0284a84f55b97b561b04125e140d8004de[m
+Author: Jeferson Q <bryan_quillu@outlook.es>
+Date:   Wed Jan 13 01:56:24 2021 -0500
+
+    cambio de idioma laravel
+
+[33mcommit 375ad7771f2fa848eb042b935aeb70bc81740caa[m
+Author: Jeferson Q <bryan_quillu@outlook.es>
+Date:   Wed Jan 13 00:06:01 2021 -0500
+
+    creacion rutas dashboard
+
+[33mcommit e65c839bb935f1aafd8f6be004f440c9eead2dc5[m
+Author: Jeferson Q <bryan_quillu@outlook.es>
+Date:   Tue Jan 12 18:31:26 2021 -0500
+
+    Subida de proyecto

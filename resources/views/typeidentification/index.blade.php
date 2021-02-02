@@ -11,59 +11,61 @@
 @stop
 
 @section('content')
-    
-@include('partials.session-status')
 
-<div class="card">
+    @include('partials.session-status')
 
-    <div class="card-header">
-        <a href="{{ route('type_identification.create')}}" class="btn btn-info">
-            <i class="fas fa-plus-square"></i> Agregar</a>
-    </div>
+    <div class="card">
 
-    <div class="card-body">
-        <table class="table table-striped">
-            <thead>
-                <tr>
-                    <th>ID</th>
-                    <th>Nombre</th>
-                    <th>Descripción</th>
-                    <th colspan="2"></th>
-                </tr>
-            </thead>
-            <tbody>
-                @forelse($type_identifications as $type_identification )
+        <div class="card-header">
+            <a href="{{ route('type_identification.create') }}" class="btn btn-info">
+                <i class="fas fa-plus-square"></i> Agregar</a>
+        </div>
+
+        <div class="card-body">
+            <table class="table table-striped">
+                <thead>
                     <tr>
-                        <td>{{ $type_identification->id}}</td>
-                        <td>{{ $type_identification->name}}</td>
-                        
-                        <td width="10px">
-                            <a class="btn btn-secondary" href="{{route('type_identification.edit',$type_identification)}}">Editar</a>
-                        </td>
-
-                        <td width="10px">
-                            <form action="{{route('type_identification.destroy',$type_identification)}}" method="POST" class="op-eliminar">
-                                @method('delete')
-                                @csrf
-
-                                <button class="btn btn-danger" type="submit">Eliminar</button>
-                            </form>
-                        </td>
+                        <th>ID</th>
+                        <th>Nombre</th>
+                        <th>Descripción</th>
+                        <th colspan="2"></th>
                     </tr>
+                </thead>
+                <tbody>
+                    @forelse($type_identifications as $type_identification )
+                        <tr>
+                            <td>{{ $type_identification->codigo }}</td>
+                            <td>{{ $type_identification->name }}</td>
 
-                @empty
-                    <tr>
-                        <td colspan="4">No hay ninguna sector registrado</td>
-                    </tr>
+                            <td width="10px">
+                                <a class="btn btn-secondary"
+                                    href="{{ route('type_identification.edit', $type_identification->codigo) }}">Editar</a>
+                            </td>
 
-                @endforelse
+                            <td width="10px">
+                                <form action="{{ route('type_identification.destroy', $type_identification->codigo) }}"
+                                    method="POST" class="op-eliminar">
+                                    @method('delete')
+                                    @csrf
 
-            </tbody>
-        </table>
+                                    <button class="btn btn-danger" type="submit">Eliminar</button>
+                                </form>
+                            </td>
+                        </tr>
+
+                    @empty
+                        <tr>
+                            <td colspan="4">No hay ninguna sector registrado</td>
+                        </tr>
+
+                    @endforelse
+
+                </tbody>
+            </table>
+        </div>
     </div>
-</div>
 @stop
 
 @section('js')
-    <script type="text/javascript" src="{{ asset("js/adminlte/modales/windeliminar.js") }}"></script>
+<script type="text/javascript" src="{{ asset('js/adminlte/modales/windeliminar.js') }}"></script>
 @stop

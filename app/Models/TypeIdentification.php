@@ -11,7 +11,12 @@ class TypeIdentification extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['name'];
+    protected $table='type_identifications';
+    public $primaryKey="codigo";
+     // In Laravel 6.0+ make sure to also set $keyType
+     protected $keyType = 'string';
+
+    protected $fillable = ['codigo','name'];
 
     //Relacion de uno a muchos
     public function clients(){

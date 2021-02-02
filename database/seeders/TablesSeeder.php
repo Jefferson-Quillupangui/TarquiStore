@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Hash;
 
 use App\Models\User;
 use App\Models\Category;
+use App\Models\TypeIdentification;
 use Spatie\Permission\Models\Permission;
 use App\Models\Product;
 
@@ -30,6 +31,10 @@ class TablesSeeder extends Seeder
 
         $products = new TablesSeeder();
         $products->productTable();
+
+        $typeIdentification = new TablesSeeder();
+        $typeIdentification->typeIdentificationTable();
+        
     }
 
     public function userTable(){
@@ -137,6 +142,16 @@ class TablesSeeder extends Seeder
             'quantity'  => 10,
             'discount'  => 0,
             'category_id' => 1
+        ]);
+    }
+
+
+    public function typeIdentificationTable()
+    {
+        TypeIdentification::create([
+            'codigo'      => '05',
+            'name'     => 'CEDULA'
+           // 'status' => 'A'
         ]);
     }
 }

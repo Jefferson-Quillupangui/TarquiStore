@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Models;
-//verificaion de correo
+
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -12,12 +12,9 @@ use Laravel\Jetstream\HasTeams;
 use Laravel\Sanctum\HasApiTokens;
 use Spatie\Permission\Traits\HasRoles;
 
-
-
-
 use App\Models\Collaborator;
 
-class User extends Authenticatable //implements MustVerifyEmail
+class User extends Authenticatable
 {
     use HasApiTokens;
     use HasFactory;

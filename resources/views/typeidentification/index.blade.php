@@ -25,9 +25,8 @@
             <table class="table table-striped">
                 <thead>
                     <tr>
-                        <th>ID</th>
+                        <th>Código</th>
                         <th>Nombre</th>
-                        <th>Descripción</th>
                         <th colspan="2"></th>
                     </tr>
                 </thead>

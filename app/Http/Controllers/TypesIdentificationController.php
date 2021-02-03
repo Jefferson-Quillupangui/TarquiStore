@@ -57,12 +57,12 @@ class TypesIdentificationController extends Controller
 
         
 
-        // $type_identification = TypeIdentification::create([
-        //     'codigo' => $request->codigo,
-        //     'name' => strtoupper($request->name)
-        // ]);
+        $type_identification = TypeIdentification::create([
+            'codigo' => $request->codigo,
+            'name' => strtoupper($request->name)
+        ]);
 
-        // return redirect()->route('type_identification.index')->with('status','El tipo de indentificación se creó correctamente');
+        return redirect()->route('type_identification.index')->with('status','El tipo de indentificación se creó correctamente');
     }
 
     /**

@@ -9,7 +9,10 @@ $(document).ready(function () {
     dia='0'+dia; //agrega cero si el menor de 10
   if(mes<10)
     mes='0'+mes //agrega cero si el menor de 10
-    var hora = fecha.getHours() + ':' + fecha.getMinutes();
+
+    currentHours = fecha.getHours();
+    currentHours = ("0" + currentHours).slice(-2);
+    var hora = currentHours + ':' + fecha.getMinutes();
     var fecha = ano+"-"+mes+"-"+dia ;
     
   document.getElementById('fechaActual').value=fecha;

@@ -10,6 +10,8 @@ use Illuminate\Support\Facades\DB;
 use App\Models\Category;
 use App\Models\User;
 use App\Models\Sector;
+use App\Models\Client;
+
 
 use Illuminate\Support\Facades\Redis;
 use Spatie\Permission\Models\Role;
@@ -34,8 +36,34 @@ class PedidosController extends Controller
     
     public function listaClientes_json(){
 
-        $data = DB::select('call sp_con_buscar_cliente(?,?)', array('AA',''));
-        return response()->json(['data' => $data], 200);
+        // $data = DB::select('call sp_con_buscar_cliente(?,?)', array('AA',''));
+        // return response()->json(['data' => $data], 200);
+   
+        
+
+        // $cliente = Client::  where('status',  'A')
+        // ->get(['id', 
+        // 'identification', 'name','last_name',  'address', 
+        // 'phone1','phone2', 'email','status',  'type_identification_cod']);
+
+        
+        
+        
+        $cliente = Client:: where('status',  'A')
+        ->with([
+            'typeIdentification' => function($query) {
+                $query->select('codigo', 'name'); # Muchos a muchos
+            }
+        ])
+        ->get(
+            ['id', 
+        'identification', 'name','last_name',  'address', 
+        'phone1','phone2', 'email','status',  'type_identification_cod']
+    );
+
+        
+   
+    return response()->json(['data' => $cliente], 200);
     
     }
 

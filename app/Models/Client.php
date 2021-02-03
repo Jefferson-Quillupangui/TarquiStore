@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 
 use App\Models\User;
 use App\Models\Order;
+use App\Models\TypeIdentification;
 
 class Client extends Model
 {
@@ -20,6 +21,11 @@ class Client extends Model
         return $this->belongsTo(User::class,'type_identification_cod','codigo');
     }
 
+    public function typeIdentification(){
+        
+        return $this->belongsTo(TypeIdentification::class,'type_identification_cod','codigo');
+    }
+    
     //Relacion de uno a muchos
     public function orders(){
 

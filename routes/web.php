@@ -24,10 +24,13 @@ use App\Http\Controllers\ClientController;
 */
 
 Route::get('/', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+//->middleware('verified');
 
 Route::middleware(['auth:sanctum', 'verified'])->get('/dash', function () {
     return view('dash.index');
 })->name('dashboard');
+
+//Auth::routes(['verify' => true]);
 //Categorias
 Route::resource('categories',CategoryController::class)
     ->except(['show'])

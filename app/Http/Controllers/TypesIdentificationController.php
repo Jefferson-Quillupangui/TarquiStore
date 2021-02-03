@@ -43,25 +43,26 @@ class TypesIdentificationController extends Controller
     public function store(Request $request)
     {
         
-        $request->validate([
+        $valor = $request->validate([
             'codigo'          => 'required|unique:type_identifications,codigo',
             'name'          => 'required|unique:type_identifications,name',
             
         ],[
             'codigo.required'         => 'Ingrese el codigo de identifición',
             'codigo.unique'           => 'El codigo de identifición ya existe',
-            'name.required'         => 'Ingrese el nombre del tipo de identifición',
             'name.unique'           => 'El nombre del tipo de identifición ya existe',
+            'name.required'         => 'Ingrese el nombre del tipo de identifición',
+           
         ]);
 
         
 
-        $type_identification = TypeIdentification::create([
-            'codigo' => $request->codigo,
-            'name' => strtoupper($request->name)
-        ]);
+        // $type_identification = TypeIdentification::create([
+        //     'codigo' => $request->codigo,
+        //     'name' => strtoupper($request->name)
+        // ]);
 
-        return redirect()->route('type_identification.index')->with('status','El tipo de indentificación se creó correctamente');
+        // return redirect()->route('type_identification.index')->with('status','El tipo de indentificación se creó correctamente');
     }
 
     /**
@@ -75,7 +76,7 @@ class TypesIdentificationController extends Controller
         $codigo =  $type_identification->codigo;
     //     $codigo = $request->codigo;
     //    $pk_codigo = TypeIdentification::where('codigo',$codigo)->get();
-        return view('typeidentification.edit',compact('codigo'));
+        return view('typeidentification.edit',compact('codigo','type_identification'));
     }
 
     /**

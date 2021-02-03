@@ -53,13 +53,30 @@
 
             <div class="form-group">
                 <div class="row">
+
+                    {{-- <div class="input-group">
+                        
+                      </div> --}}
+
                     <div class="col-md-6">
                         <label for="name_client">Cliente:</label>
                         <div class="input-group mb-3">
-                            <input type="search" class="form-control rounded" placeholder="Buscar cliente"
+                            <div class="input-group-prepend">
+                                <span class="input-group-text">
+                                    <i class="fa fa-user-plus"></i>
+                                </span>
+                            </div>
+                            <input type="search" class="form-control" placeholder="Buscar cliente"
                                 aria-label="Search" aria-describedby="search-addon" id="textbuscarcliente" codigocliente=0
                                 disabled />
-                            <button type="button" id="btn-buscarpersona" class="btn btn-outline-primary">Buscar </button>
+                            <div class="input-group-append">
+                                <div class="input-group-text" type="button" id="btn-buscarpersona"><i
+                                        class="fa fa-search"></i></div>
+                            </div>
+                            {{-- <input type="search" class="form-control rounded" placeholder="Buscar cliente"
+                                aria-label="Search" aria-describedby="search-addon" id="textbuscarcliente" codigocliente=0
+                                disabled />
+                            <button type="button" id="btn-buscarpersona" class="btn btn-outline-primary">Buscar </button> --}}
                         </div>
                     </div>
                     <div class="col-md-6">
@@ -113,14 +130,14 @@
 
                 </div>
 
-                <div class="row">
+                {{-- <div class="row">
                     <div class="col-md-6">
                         <label for="sectors">Sector:</label>
                         <div class="input-group mb-3">
                             <div class="input-group-prepend">
                                 <span class="input-group-text" id="basic-sector"><i class="far fa-list-alt"></i></span>
                             </div>
-                            {!! Form::select('sectors', $sectors, 0, ['class' => 'custom-select']) !!}
+                            {!!  Form::select('sectors', $sectors, 0, ['class' => 'custom-select']) !!}
                             @error('sectors')
                                 <span class="invalid-feedback">
                                     <strong>{{ $message }}</strong>
@@ -135,7 +152,7 @@
                             <div class="input-group-prepend">
                                 <span class="input-group-text" id="basic-addon1"><i class="far fa-list-alt"></i></span>
                             </div>
-                            {!! Form::select('category', $category, 0, ['class' => 'custom-select']) !!}
+                            {!!  Form::select('category', $category, 0, ['class' => 'custom-select']) !!}
                             @error('category')
                                 <span class="invalid-feedback">
                                     <strong>{{ $message }}</strong>
@@ -144,7 +161,7 @@
                         </div>
                     </div>
 
-                </div>
+                </div> --}}
 
                 <div class="row">
                     <div class="col-md-6">

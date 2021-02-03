@@ -14,7 +14,7 @@
         <div class="card-body">
             {{-- {!!  Form::model($type_identification, ['route' => ['type_identification.update', $type_identification], 'method' => 'put']) !!} --}}
 
-            {!! Form::model($codigo, ['route' => ['type_identification.update', $codigo], 'method' => 'put']) !!}
+            {!! Form::model($type_identification, ['route' => ['type_identification.update', $codigo], 'method' => 'put']) !!}
             @include('typeidentification.partials.form')
 
             {!! Form::submit('Guardar', ['class' => 'btn btn-info mt-2']) !!}

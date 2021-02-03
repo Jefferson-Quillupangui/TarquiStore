@@ -42,12 +42,14 @@ class TablesSeeder extends Seeder
         User::create([
             'name' => 'Admin',
             'email' =>  'admin@gmail.com',
+            'email_verified_at' => now(),
             'password' => Hash::make('12345678')
         ]);
 
         User::create([
             'name' => 'Vendedor',
             'email' =>  'vendedor@gmail.com',
+            'email_verified_at' => now(),
             'password' => Hash::make('12345678')
         ]);
 

@@ -22,11 +22,11 @@ class PedidosController extends Controller
         $name = Auth::user()->name; 
        // $order = Order::all();
        //$categories = Category::all();
-       $sectors = Sector::orderBy('id', 'asc')->pluck('name','id');
+       //$sectors = Sector::orderBy('id', 'asc')->pluck('name','id');
        
-       $category = Category::orderBy('id', 'asc')->pluck('name','id');
+      // $category = Category::orderBy('id', 'asc')->pluck('name','id');
 
-        return view('pedido.create', compact('category','name','sectors'));
+        return view('pedido.create', compact('name'));//compact('category','name','sectors'));
     }
 
     

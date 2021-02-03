@@ -25,7 +25,7 @@
         <table class="table table-striped">
             <thead>
                 <tr>
-                    <th>ID</th>
+                    <th>Código</th>
                     <th>Nombre</th>
                     <th>Descripción</th>
                     <th colspan="2"></th>
@@ -34,7 +34,7 @@
             <tbody>
                 @forelse($statuses_sorder as $status_order )
                     <tr>
-                        <td>{{ $status_order->id}}</td>
+                        <td>{{ $status_order->codigo}}</td>
                         <td>{{ $status_order->name}}</td>
                         <td>{{ $status_order->description}}</td>
                         

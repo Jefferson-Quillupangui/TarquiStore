@@ -15,11 +15,13 @@ class CreateOrdersTable extends Migration
     {
         Schema::create('orders', function (Blueprint $table) {
             $table->id();
-            $table->dateTime('delivery_date', $precision = 0);
+            $table->date('delivery_date', $precision = 0);
+            $table->time('delivery_time', $precision = 0);
             $table->mediumtext('delivery_address');
             $table->decimal('total_order', $precision = 8, $scale = 2);
             $table->decimal('total_comission', $precision = 8, $scale = 2);
             $table->mediumtext('observation');
+            $table->string('status_comission',3)->nullable();
 
             $table->string('sector_cod');
 

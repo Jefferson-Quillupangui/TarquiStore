@@ -14,7 +14,9 @@ class CityController extends Controller
      */
     public function index()
     {
-        $cities = CitySale::all();
+        //$cities = CitySale::all();
+
+        $cities = CitySale::where('status', '=', 'A')->get();
 
         return view('ciudad.index', compact('cities'));
     }
@@ -38,15 +40,11 @@ class CityController extends Controller
      */
     public function store(Request $request)
     {
-        $request->validate([
-            'name' => 'required|unique:city_sales,name'
-        ],
-        [
-            'name.required' => 'El nombre de la ciudad es requerido',
-            'name.unique' => 'El nombre de la ciudad ya existe'
-        ]);
-        
+        //Validaciones
+        $this->validaUnique($request);
+
         $city = CitySale::create([
+            'codigo' => strtoupper($request->codigo),
             'name' => ucwords(strtolower($request->name)),
         ]);
 
@@ -74,16 +72,18 @@ class CityController extends Controller
     public function update(Request $request, CitySale $city)
     {
         //Validación de datos
-        $request->validate([
-            'name' => 'required|unique:city_sales,name'
-        ],
-        [
-            'name.required' => 'El nombre de la ciudad es requerido',
-            'name.unique' => 'El nombre de la ciudad ya existe'
-        ]);
+        if($request->codigo == $city->codigo){
+
+            $this->validaUniqueCod($request);
+
+        }else{
+
+            $this->validaUnique($request);
+        }
 
         //Actualizar datos en la tabla
         $city->update([
+            'codigo' => strtoupper($request->codigo),
             'name' => ucwords(strtolower($request->name)),
         ]);
 
@@ -98,8 +98,40 @@ class CityController extends Controller
      */
     public function destroy(Citysale $city)
     {
-        $city->delete();
+        //$city->delete();
+
+        //Borrado lógico
+        Citysale::where("codigo", $city->codigo)->update([
+            'status'          => 'I'
+        ]);
+        
         
         return redirect()->route('ciudades.index')->with('status','La ciudad se eliminó correctamente.');
     }
+
+    public function validaUnique(Request $request){
+
+        $request->validate([
+            'name' => 'required|unique:city_sales,name',
+            'codigo' => 'required|unique:city_sales,codigo'
+        ],
+        [
+            'name.required' => 'El nombre de la ciudad es requerido',
+            'name.unique' => 'El nombre de la ciudad ya existe',
+            'codigo.unique' => 'Ingrese el código de la ciudad',
+            'codigo.unique' => 'El código de la ciudad ya existe'
+        ]);
+    }
+
+    public function validaUniqueCod(Request $request){
+
+        $request->validate([
+            'name' => 'required|unique:city_sales,name'
+        ],
+        [
+            'name.required' => 'El nombre de la ciudad es requerido',
+            'name.unique' => 'El nombre de la ciudad ya existe'
+        ]);
+    }
+
 }

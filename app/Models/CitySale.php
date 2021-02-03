@@ -10,8 +10,10 @@ Use App\Models\Order;
 class CitySale extends Model
 {
     use HasFactory;
-    protected $fillable = ['name'];
-    
+    protected $fillable = ['codigo', 'name'];
+    protected $primaryKey="codigo";
+    protected $keyType = 'string';
+
     //Relacion de uno a muchos
     public function orders(){
 

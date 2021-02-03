@@ -39,15 +39,19 @@ class StatusOrderController extends Controller
     public function store(Request $request)
     {
         $request->validate([
+            'codigo'          => 'required|unique:order_statuses,codigo',
             'name'          => 'required|unique:order_statuses,name',
             'description'   => 'required'
         ],[
+            'codigo.required'         => 'Ingrese el código del estado',
+            'codigo.unique'           => 'El código del estado ya existe',
             'name.required'         => 'Ingrese el nombre del estado',
             'name.unique'           => 'El nombre del estado ya existe',
             'description.required'  => 'Ingrese la descripción del estado'
         ]);
 
         $status_order = OrderStatus::create([
+            'codigo' => strtoupper($request->codigo),
             'name' => ucwords(strtolower($request->name)),
             'description' => $request->description
         ]);
@@ -76,31 +80,22 @@ class StatusOrderController extends Controller
      */
     public function update(Request $request, OrderStatus $status_order)
     {
-        //Validar el nombre
-        if($request->name == $status_order->name){
-            $request->validate([
-                'name'          => 'required',
-                'description'   => 'required'
-            ],[
-                'name.required'         => 'Ingrese el nombre del estado',
-                'description.required'  => 'Ingrese la descripción del estado'
-            ]);
-                
-        }else{
-
-            $request->validate([
-                'name'          => 'required|unique:order_statuses,name',
-                'description'   => 'required'
-            ],[
-                'name.required'         => 'Ingrese el nombre del estado',
-                'name.unique'           => 'El nombre del estado ya existe',
-                'description.required'  => 'Ingrese la descripción del estado'
-            ]);
-                
-        }
+       //Validar el nombre
+        $request->validate([
+            'codigo'        => 'required|unique:order_statuses,codigo',//.$status_order->codigo,
+            'name'          => 'required|unique:order_statuses,name',//.$status_order->name,
+            'description'   => 'required'
+        ],[
+            'codigo.required'       => 'Ingrese el código del estado',
+            'codigo.unique'         => 'El código del estado ya existe',
+            'name.required'         => 'Ingrese el nombre del estado',
+            'name.unique'           => 'El nombre del estado ya existe',
+            'description.required'  => 'Ingrese la descripción del estado'
+        ]);
 
         //Actualizar datos en la tabla
         $status_order->update([
+            'codigo'        => strtoupper($request->name),
             'name'          => ucwords(strtolower($request->name)),
             'description'   => $request->description
         ]);

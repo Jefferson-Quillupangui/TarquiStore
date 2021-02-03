@@ -25,7 +25,7 @@
         <table class="table table-striped">
             <thead>
                 <tr>
-                    <th>ID</th>
+                    <th>Código</th>
                     <th>Nombre</th>
                     <th colspan="2"></th>
                 </tr>
@@ -33,7 +33,7 @@
             <tbody>
                 @forelse($sectors as $sector )
                     <tr>
-                        <td>{{ $sector->id}}</td>
+                        <td>{{ $sector->codigo}}</td>
                         <td>{{ $sector->name}}</td>
                         
                         <td width="10px">

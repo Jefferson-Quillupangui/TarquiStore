@@ -26,6 +26,7 @@ class CreateOrderProductTable extends Migration
                     ->references('id')
                     ->on('products');                  
 
+            $table->string('name_product',75);
             $table->integer('quantity');
             $table->decimal('price', $precision = 8, $scale = 2); 
             $table->integer('discount_porcentage'); 

@@ -14,7 +14,10 @@ class SectorsController extends Controller
      */
     public function index()
     {   
-        $sectors = Sector::all();
+        //$sectors = Sector::all();
+
+        $sectors = Sector::where('status', '=', 'A')->get();
+
         return view('sector.index', compact('sectors'));
     }
 
@@ -37,14 +40,20 @@ class SectorsController extends Controller
      */
     public function store(Request $request)
     {
+
         $request->validate([
-            'name' => 'required|unique:sectors,name'
+            'name'      => 'required|unique:sectors,name',
+            'codigo'    => 'required|unique:sectors,codigo' 
+
         ],[
-            'name.required' => 'Ingrese el nombre del sector',
-            'name.unique' => 'El nombre del sector ya existe'
+            'name.required'     => 'Ingrese el nombre del sector',
+            'name.unique'       => 'El nombre del sector ya existe',
+            'codigo.required'   => 'Ingrese el código del sector',
+            'codigo.unique'     => 'El codigo del sector ya existe',
         ]);
 
         $sector = Sector::create([
+            'codigo' => strtoupper($request->codigo),
             'name' => ucwords(strtolower($request->name)),
         ]);
 
@@ -95,8 +104,13 @@ class SectorsController extends Controller
      */
     public function destroy(Sector $sector)
     {
-        $sector->delete();
-        
+        //$sector->delete();
+
+        //Borrado lógico
+        Sector::where("codigo", $sector->codigo)->update([
+            'status' => 'I'
+        ]);
+              
         return redirect()->route('sectors.index')->with('status','El sector se eliminó correctamente.');
     }
 }

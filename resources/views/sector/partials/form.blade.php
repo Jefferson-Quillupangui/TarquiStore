@@ -4,6 +4,25 @@
     </div>
  </div>
 
+ <div class="row">
+    <div class="col-md-5">
+        <label for="name">Código:</label>
+
+        <div class="input-group mb-3">
+            <div class="input-group-prepend">
+                <span class="input-group-text" id="basic-addon1"><i class="fa fa-barcode"></i></span>
+            </div>
+            {!! Form::text('codigo',null,['class' => 'form-control'. ($errors->has('codigo') ? ' is-invalid' : ''), 'placeholder' => 'Código del sector']) !!}                 
+            
+            @error('codigo')
+            <span class="invalid-feedback">
+                <strong>{{$message}}</strong>
+            </span>
+            @enderror
+        </div>
+    </div>
+</div>
+
 <div class="row">
     <div class="col-md-5">
         <label for="name">Nombre:</label>

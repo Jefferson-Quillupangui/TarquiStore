@@ -50,7 +50,7 @@
     <div class="card">
         <div class="card-body">
             <form action="{{ route('clientes.lista') }}" id="form-listarclientes"></form>
-
+            <form action="{{ route('productos.lista') }}" id="form-listarproductos"></form>
             <div class="form-group">
                 <div class="row">
 
@@ -106,7 +106,7 @@
                                 <input type="date" class="form-control" id="fechaActual" value="">
 
                                 <div class="input-group-append">
-                                    <input type="time" class="form-control" id="horaActual" value="">
+                                    <input type="time"  class="form-control" id="horaActual" value="">
                                 </div>
                             </div>
                         </div>
@@ -120,8 +120,8 @@
                                 <span class="input-group-text" id="basic-addon1"><i class="fa fa-user"></i></span>
                             </div>
                             {{-- <h1> {{ auth()->user()->name }} </h1> --}}
-                            <input type="text" class="form-control" placeholder="Colaborador" value={{ $name }}
-                                disabled id={{ auth()->user()->id }}>
+                            <input id="colaborador" type="text" class="form-control" placeholder="Colaborador" value={{ $name }}
+                                disabled id_colaborador={{ auth()->user()->id }}>
 
                             {{-- <input type="text" name="sexo" id="varon" value={{ $name }}> --}}
                             {{-- {!!  Form::text('Colaborador', "{{$name}}", ['class' => 'form-control' . ($errors->has('txtColaborador') ? ' is-invalid' : ''), 'placeholder' => 'Colaborador', 'id' => 'txtColaborador', 'disabled']) !!} --}}
@@ -137,7 +137,14 @@
                             <div class="input-group-prepend">
                                 <span class="input-group-text" id="basic-sector"><i class="far fa-list-alt"></i></span>
                             </div>
-                            {!!  Form::select('sectors', $sectors, 0, ['class' => 'custom-select']) !!}
+                            <select id="sectors" name="sectors" class="form-control">
+                                <option value=0 disabled>------Seleccionar------</option>
+                                @foreach($sectors as $sector)
+                                <option value="{{$sector->codigo}}">{{$sector->name}}</option>
+                                {{-- <option value="{{$sector->codigo}}"> {{$sector->name}} </option> --}}
+                                @endforeach
+                            </select>
+                            {{-- {!!  Form::select('sectors', $sectors, 0, ['class' => 'custom-select']) !!} --}}
                             @error('sectors')
                                 <span class="invalid-feedback">
                                     <strong>{{ $message }}</strong>
@@ -146,20 +153,27 @@
                         </div>
                     </div>
 
-                    {{-- <div class="col-md-6">
-                        <label for="category">Categorias:</label>
+                    <div class="col-md-6">
+                        <label for="city">Ciudad:</label>
                         <div class="input-group mb-3">
                             <div class="input-group-prepend">
                                 <span class="input-group-text" id="basic-addon1"><i class="far fa-list-alt"></i></span>
                             </div>
-                            {!!  Form::select('category', $category, 0, ['class' => 'custom-select']) !!}
-                            @error('category')
+                            <select id="city" name="city" class="form-control">
+                                <option value=0 disabled>------Seleccionar------</option>
+                                @foreach($citySale as $cat)
+                                <option value="{{$cat->codigo}}">{{$cat->name}}</option>
+                                {{-- <option value="{{$sector->codigo}}"> {{$sector->name}} </option> --}}
+                                @endforeach
+                            </select>
+                            {{-- {!!  Form::select('category', $category, 0, ['class' => 'custom-select']) !!} --}}
+                            @error('city')
                                 <span class="invalid-feedback">
                                     <strong>{{ $message }}</strong>
                                 </span>
                             @enderror
                         </div>
-                    </div> --}}
+                    </div>
 
                 </div>
 
@@ -245,17 +259,17 @@
 
                     <div class="col-sm-5">
                         <div class="form-group row ">
-                            <label for="fac_sub_iva" class="col-sm-4 control-label ">Total Orden:</label>
+                            <label for="txtTotalOrden" class="col-sm-4 control-label ">Total Orden:</label>
                             <div class="col-sm-8">
-                                <input type="text" value="0.00" class="form-control fac_sub_iva text-right" id="fac_sub_iva"
-                                    name="fac_sub_iva" placeholder="" disabled="disabled">
+                                <input type="text" value="0.00" class="form-control txtTotalOrden text-right" id="txtTotalOrden"
+                                    name="txtTotalOrden" placeholder="" disabled="disabled">
                             </div>
                         </div>
                         <div class="form-group row ">
-                            <label for="fac_total_cero" class="col-sm-4 control-label ">Total Comision:</label>
+                            <label for="txt_totalComision" class="col-sm-4 control-label ">Total Comision:</label>
                             <div class="col-sm-8">
-                                <input type="text" value="0.00" class="form-control fac_total_cero text-right"
-                                    id="fac_total_cero" name="fac_total_cero" placeholder="" disabled="disabled">
+                                <input type="text" value="0.00" class="form-control txt_totalComision text-right"
+                                    id="txt_totalComision" name="txt_totalComision" placeholder="" disabled="disabled">
                             </div>
                         </div>
 
@@ -410,6 +424,29 @@
             </div>
         </div>
     </div>
+
+
+     <!-- Modal Buscar Producto -->
+     <div class="modal fade" id="modal-buscarProducto" data-backdrop="static" data-keyboard="false" tabindex="-1"
+     aria-labelledby="staticBackdropLabel" aria-hidden="true">
+     <div class="modal-dialog modal-lg modal-dialog-centered">
+         <div class="modal-content">
+             <div class="modal-header">
+                 <h5 class="modal-title" id="staticBackdropLabel">Lista de Productos</h5>
+                 {{-- <button type="button" class="btn-close" data-bs-dismiss="modal"
+                     aria-label="Close"></button> --}}
+             </div>
+             <div class="modal-body">
+                 <div class="row">
+                     <div id="producto-table"></div>
+                 </div>
+             </div>
+             <div class="modal-footer">
+                 <button type="button" id="btn-cancelar-producto" class="btn btn-danger">Cancelar</button>
+             </div>
+         </div>
+     </div>
+ </div>
 
 @stop
 

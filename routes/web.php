@@ -40,6 +40,7 @@ Route::resource('products',ProductController::class)->names('products');
 //Pedidos-Registro pedidos
 Route::get('create_orders',  [PedidosController::class, 'index' ])->name('orders');
 Route::get('list_clients', [PedidosController::class, 'listaClientes_json' ])->name('clientes.lista');
+Route::get('list_products', [PedidosController::class, 'listaProductos_json' ])->name('productos.lista');
 Route::post('generate_order', [PedidosController::class, 'createOrden' ])->name('orden.create');
 //Ciudades
 Route::resource('cities', CityController::class)

@@ -88,7 +88,7 @@ $(document).ready(function () {
 
     $(document).on("click", "#btn-buscarpersona",function(){
       
-      $('.loaders').removeClass('d-none');
+     // $('.loaders').removeClass('d-none');
         cargarClientes();
    
         $("#modal-buscarpersona").modal("show");

@@ -24,11 +24,11 @@ class PedidosController extends Controller
         $name = Auth::user()->name; 
        // $order = Order::all();
        //$categories = Category::all();
-       //$sectors = Sector::orderBy('id', 'asc')->pluck('name','id');
+       $sectors = Sector::orderBy('codigo', 'asc')->pluck('name','codigo');
        
       // $category = Category::orderBy('id', 'asc')->pluck('name','id');
 
-        return view('pedido.create', compact('name'));//compact('category','name','sectors'));
+        return view('pedido.create', compact('name','sectors'));//compact('category','name','sectors'));
     }
 
     
@@ -49,21 +49,29 @@ class PedidosController extends Controller
         
         
         
-        $cliente = Client:: where('status',  'A')
-        ->with([
-            'typeIdentification' => function($query) {
-                $query->select('codigo', 'name'); # Muchos a muchos
-            }
-        ])
-        ->get(
-            ['id', 
-        'identification', 'name','last_name',  'address', 
-        'phone1','phone2', 'email','status',  'type_identification_cod']
-    );
+        // $cliente = Client:: where('status',  'A')
+        // ->with([
+        //     'typeIdentification' => function($query) {
+        //         $query->select('codigo', 'name');//->where('status',  'A'); # Muchos a muchos
+        //     }
+        // ])
+        //     ->get(
+        //         ['id', 
+        //     'identification', 'name','last_name',  'address', 
+        //     'phone1','phone2', 'email','status',  'type_identification_cod']
+        // );
 
-        
+        $cliente = Client::join("type_identifications AS b","clients.type_identification_cod","=","b.codigo")
+        ->select('clients.id', 'clients.identification', 'clients.name', 
+                'clients.last_name', 'clients.address', 'clients.phone1', 'clients.phone2',
+                 'clients.email', 'clients.status', 'clients.type_identification_cod',
+                 'b.codigo', 'b.name AS name_document'
+                 )
+        ->where('clients.status','=','A')
+        ->get();
    
-    return response()->json(['data' => $cliente], 200);
+
+        return response()->json(['data' => $cliente], 200);
     
     }
 

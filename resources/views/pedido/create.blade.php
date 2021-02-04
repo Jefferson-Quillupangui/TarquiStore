@@ -130,7 +130,7 @@
 
                 </div>
 
-                {{-- <div class="row">
+                <div class="row">
                     <div class="col-md-6">
                         <label for="sectors">Sector:</label>
                         <div class="input-group mb-3">
@@ -146,7 +146,7 @@
                         </div>
                     </div>
 
-                    <div class="col-md-6">
+                    {{-- <div class="col-md-6">
                         <label for="category">Categorias:</label>
                         <div class="input-group mb-3">
                             <div class="input-group-prepend">
@@ -159,9 +159,9 @@
                                 </span>
                             @enderror
                         </div>
-                    </div>
+                    </div> --}}
 
-                </div> --}}
+                </div>
 
                 <div class="row">
                     <div class="col-md-6">

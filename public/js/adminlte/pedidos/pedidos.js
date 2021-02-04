@@ -108,7 +108,7 @@ $(document).ready(function () {
                                 $("#textbuscarcliente").attr("codigocliente", cell.getRow().getData().id);
                                 $("#modal-buscarpersona").modal("hide");
                             }},
-                {title:"ID", field:"id", sorter:"string", width:130, headerFilter:"input",visible:false},
+                {title:"ID", field:"id", sorter:"string", width:0, headerFilter:"input",visible:false},
                 {title:"Identificación", field:"identification", sorter:"string", width:130, headerFilter:"input"},
                 {title:"Nombre", field:"name", sorter:"string", width:200, headerFilter:"input"},
                 {title:"Apellidos", field:"last_name", sorter:"string", width:200, headerFilter:"input"},
@@ -116,7 +116,8 @@ $(document).ready(function () {
                 {title:"Telefono1", field:"phone1", sorter:"string", width:200, headerFilter:"input"},
                 {title:"Telefono2", field:"phone2", sorter:"string", width:200, headerFilter:"input"},
                 {title:"Email", field:"email", sorter:"string", width:200, headerFilter:"input"},
-                {title:"Tipo de documento", field:"tipo_documento", sorter:"string", width:200, headerFilter:"input"},
+                {title:"Tipo de documento", field:"name_document", sorter:"string", width:200, headerFilter:"input"},
+              
               
             ],
         });

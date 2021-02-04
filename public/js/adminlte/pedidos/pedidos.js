@@ -174,6 +174,15 @@ $(document).ready(function () {
           {formatter:printIconDelete, width:40, hozAlign:"center", cellClick:function(e, cell){
               if(confirm('Are you sure you want to delete this entry?')){
                   cell.getRow().delete();
+                  const uno = table_detalle_factura.getData();
+                  
+                    var total = 0;
+                    for (var i in uno) {
+                      total += parseFloat(uno[i].total_line)
+                    }
+
+                  $("#txtTotalOrden").val(total);
+
                   }
               }
           },

@@ -245,7 +245,6 @@ $(document).ready(function () {
 
   var table_detalle_producto = new Tabulator("#producto-table", {
         
-        
     //layout:"fitColumns",
     //ajaxURL: '',
     //ajaxProgressiveLoad:"scroll",
@@ -277,7 +276,6 @@ $(document).ready(function () {
       //{title:"Date Of Birth", field:"dob", hozAlign:"center"},
       ],
   
-
 
 
     // columns:[

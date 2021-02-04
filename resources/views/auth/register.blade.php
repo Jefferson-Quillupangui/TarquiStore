@@ -3,7 +3,7 @@
         <x-slot name="logo">
             {{-- <x-jet-authentication-card-logo /> --}}
              {{-- Reemplazar logo de jet --}}
-             <x-applogo />
+             <x-AppLogo />
         </x-slot>
 
         <x-jet-validation-errors class="mb-4" />

@@ -156,6 +156,7 @@ $(document).ready(function () {
      // paginationSize:6,
       height:"311px",
       placeholder:"No hay Datos",
+     // data: tabledata,
       //pagination:"remote",
       //paginationSizeSelector:[3, 6, 8, 10],
       //movableColumns:true,
@@ -176,19 +177,101 @@ $(document).ready(function () {
                   }
               }
           },
-          {title:"id_rgt_det", field:"id_rgt_det", sorter:"number", width:80},
-          {title:"id_product", field:"id_product", sorter:"string"},
-          {title:"cod_prod", field:"cod_prod", sorter:"string"},
-          {title:"CANTIDAD", field:"cantidad", sorter:"number", hozAlign:"center",editor:"input",
+          {title:"ID_PROCT", field:"product_id", sorter:"number", width:100},
+          // {title:"id_product", field:"id_product", sorter:"string"},
+          {title:"NOMBRE PRODUCTO", field:"name_product", sorter:"string"},
+          {title:"CANTIDAD", field:"quantity", sorter:"number", hozAlign:"center",editor:"input",
           cellEdited :function(cell){
-              let v_cantidad =  cell.getData().cantidad;
-              parseInt(v_cantidad);
-              let v_precio_unitario =  cell.getData().precio_unitario;
-              parseFloat(v_precio_unitario);
-              console.log(parseInt(v_cantidad)*parseFloat(v_precio_unitario));
-              table_detalle_factura.addData([{id_rgt_det:0, subtotal_prod: parseInt(v_cantidad)*parseFloat(v_precio_unitario)}]);
+
+
+             // console.log(cell.getData());
+           let id_cell = cell.getData().product_id;
+           let v_cantidad =  cell.getData().quantity;
+           parseInt(v_cantidad);
+           let v_precio_unitario =  cell.getData().price;
+           parseFloat(v_precio_unitario);
+
+           var v_final_total = parseInt(v_cantidad)*parseFloat(v_precio_unitario) ;
+           //parseFloat(v_precio_unitario) = parseInt(v_cantidad)*parseFloat(v_precio_unitario);
+
+
+        //console.log(v_final_total);
+
+           const uno = table_detalle_factura.getData();
+
+           var data_oj_detalle = [];
           
-              table_detalle_factura.updateOrAddData();
+           //var nuevo = uno.shift();
+           
+          for (var i in uno) {
+              if(uno[i].product_id === id_cell ){
+                    uno[i].total_line = v_final_total;
+                     data_oj_detalle.push(uno[i]);
+                     //console.log(uno[i]);
+              }else{
+                //console.log(uno[i]);
+                data_oj_detalle.push(uno[i]);
+              }
+               
+                
+            }
+          table_detalle_factura.clearData();
+          table_detalle_factura.updateOrAddData(data_oj_detalle);
+
+          var total = 0;
+          for (var i in uno) {
+            
+            total += parseFloat(uno[i].total_line);
+           
+              
+          }
+
+          $("#txtTotalOrden").val(total);
+          
+          
+
+
+          //  // console.log(cell.getData());
+          //      let v_cantidad =  cell.getData().quantity;
+          //      parseInt(v_cantidad);
+          //      let v_precio_unitario =  cell.getData().price;
+          //      parseFloat(v_precio_unitario);
+
+
+
+
+          //      const uno = table_detalle_factura.getData();
+              
+          //      var nuevo = uno.shift();
+          //       console.log(nuevo);
+
+
+              //  table_detalle_factura.updateData([{discount_porcentage: 0,
+              //   name_product: "Cacerola Betty Crocker 24 cm",
+              //   price: "39.99",
+              //   price_discount: "0.00",
+              //   product_id: 4,
+              //   quantity: "3",
+              //   total_line: 0,}]);
+
+               //table_detalle_factura.updateOrAddData(cell.getData());
+               //table_detalle_factura.update();
+
+               //console.log(cell.getData().total_line);
+              // cell.getData().total_line= 2;
+              // console.log(parseInt(v_cantidad)*parseFloat(v_precio_unitario));
+              // table_detalle_factura[0].total_line = parseInt(v_cantidad)*parseFloat(v_precio_unitario);
+               //$("#grid-table-detalle-pedido").Tabulator("updateData", [{id:1, "total_line":"25"}], false);
+               
+
+                //update columns and data without destroying the table
+                                // $("#grid-table-detalle-pedido").tabulator("setColumns", res["column"]);
+                                // $("#grid-table-detalle-pedido").tabulator("setData", res["data"]);
+              // table_detalle_factura.addData([{id_rgt_det:0, subtotal_prod: parseInt(v_cantidad)*parseFloat(v_precio_unitario)}]);
+          
+              // table_detalle_factura.updateOrAddData();
+
+
               // // const momentoComida = uno.map(function(comida) {
               // //     table_detalle_factura.updateOrAddData([
               // //             {
@@ -208,11 +291,16 @@ $(document).ready(function () {
               // // });
           
           }},
-          {title:"PVP UNITARIO", field:"precio_unitario", sorter:"number", hozAlign:"right", width:120},
-          {title:"subtotal_prod", field:"subtotal_prod", sorter:"number",  hozAlign:"right",width:100},
-          {title:"desct_prod_porcent", field:"desct_prod_porcent", sorter:"number", hozAlign:"right", width:100},
-          {title:"desct_prod_valor", field:"desct_prod_valor", sorter:"number",  hozAlign:"right",width:100},
-          {title:"total_prod", field:"total_prod", sorter:"number",  hozAlign:"right",width:100},
+          {title:"PVP UNITARIO", field:"price", sorter:"number", hozAlign:"right", width:120},
+          {title:"% DESCT", field:"discount_porcentage", sorter:"number",  hozAlign:"right",width:100},
+          {title:"DESCUENTO", field:"price_discount", sorter:"number", hozAlign:"right", width:100},
+          {title:"TOTAL", field:"total_line", sorter:"number",  hozAlign:"right",width:100
+          // ,mutator:function(value, data) {
+          //   return 12;//console.log(data)//Math.floor(data.views / data.users);
+          //  } 
+          },
+
+
           // {formatter:editIcon, width:40, hozAlign:"center", 
           //     cellClick:function(e, cell){
           //        // $("#inp_id_establecimiento").val(cell.getRow().getData().id_establecimientos);
@@ -227,7 +315,11 @@ $(document).ready(function () {
           //         //alert("Printing row data for: " + cell.getRow().getData().name)
           //     }
           // },
-         ],
+         ]
+        //  ,rowClick: function(e, row) {
+        //   alert("Row " + row.getData()+ " Clicked!!!!"); ,rowClick: function(e, row) {
+        //   alert("Row " + row.getData()+ " Clicked!!!!");
+      //},
   });
    
 
@@ -257,18 +349,50 @@ $(document).ready(function () {
       {formatter:printIconProduct, width:40, hozAlign:"center", 
                     cellClick:function(e, cell){
                                 //alert("Printing row data for: " + cell.getRow().getData().name)
-                               // console.log(cell.getRow().getData());
+
+                                // console.log(cell.getRow().getData());
+                                const obj = cell.getRow().getData();
+
+                                //update columns and data without destroying the table
+                                // $("#grid-table-detalle-pedido").tabulator("setColumns", res["column"]);
+                                // $("#grid-table-detalle-pedido").tabulator("setData", res["data"]);
+                                //var tablaliquidacion = FancyGrid.get('detalles_liquidacion_produccion');
+
+                                table_detalle_factura.updateOrAddData([
+                                  {
+                                    product_id : obj.id,
+                                    name_product : obj.name,
+                                    quantity : 0,//obj.quantity,
+                                    price :  obj.price,
+                                    discount_porcentage : obj.discount,
+                                    price_discount : obj.price_discount,
+                                    total_line : 0,
+                                      // id_rgt_det: 0, 
+                                      // id_product:o.item.data.id_product,
+                                      // cod_prod: o.item.data.cod_prod,
+                                      // cantidad: 0,
+                                      // precio_unitario: o.item.data.precio_unitario,
+                                      // subtotal_prod: 0,
+                                      // desct_prod_porcent: 0,
+                                      // desct_prod_valor: 0,
+                                      // total_prod: 0
+                                  }
+                              ]);
+
+                              $("#modal-buscarProducto").modal("hide");
+
                                 // $("#textidentification").val(cell.getRow().getData().identification);
                                 // $("#textbuscarcliente").val(cell.getRow().getData().name);
                                 // $("#textaddressdelivery").val(cell.getRow().getData().address);
                                 // $("#textbuscarcliente").attr("codigocliente", cell.getRow().getData().id);
-                                $("#modal-buscarProducto").modal("hide");
+                            
                             }},
       {title:"Id", field:"id"},
-      {title:"Name", field:"name", width:290},
+      {title:"Nombre Producto", field:"name", width:200},
       {title:"Precio", field:"price", sorter:"number"},
       {title:"Comision", field:"comission"},
       {title:"Cantidad", field:"quantity"},
+      {title:"% DESCT", field:"discount"},
       {title:"PVP DESCT", field:"price_discount"},
       //{title:"Date Of Birth", field:"dob", hozAlign:"center"},
       ],
@@ -363,7 +487,7 @@ $(document).ready(function () {
             // $('#btn-grb-empresa-form').addClass('d-none');
         },
         success: function (response) {
-          console.log(response);
+          //console.log(response);
 
             // if (response === 0) {
             //     Swal.fire({

@@ -87,10 +87,7 @@ $(document).ready(function () {
     }); 
 
     $(document).on("click", "#btn-buscarpersona",function(){
-      
-     // $('.loaders').removeClass('d-none');
-        cargarClientes();
-   
+        cargarClientes();   
         $("#modal-buscarpersona").modal("show");
         
     });

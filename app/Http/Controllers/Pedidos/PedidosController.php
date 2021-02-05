@@ -82,20 +82,7 @@ class PedidosController extends Controller
 
       public function createOrden(Request $request){
 
-        //return 'Hola';
-        // $p_in_opcio =  $request->opcion;//text, 
-        // $in_delivery_date = '2021-01-24 17:44:52'; //datetime,
-		// $in_delivery_address = $request->addresdelivery; // mediumtext,
-		// $in_total_order = $request->totalord; //decimal(8,2),
-		// $in_total_comission=3.99; //decimal(8,2),
-		// $in_observation='LLamar al cliente'; //mediumtext,
-		// $in_sector_id =1;//int,
-        // $in_city_sale_id =1;//int,
-        // $in_client_id = $request->clienteid; //int,
-        // $in_collaborator_id = 1;//int,
-        // $in_order_status = 1;//int,
-
-       // $in_id = $request->	//bigint
+      
         $in_client_id	= $request->client_id;//bigint//
         $in_delivery_date= $request->delivery_date;	//date
         $in_delivery_time= $request->delivery_time;	//time
@@ -110,36 +97,29 @@ class PedidosController extends Controller
         $in_total_comission= $request->total_comission;	//decimal
 
 
+        $p_in_tabla_detalle = $request->detalleProductos;
+        $json_tb_detalle_prodct = json_decode($p_in_tabla_detalle, true);
+        
+
 
         //
 
         try {
-            $insertado = DB::insert('insert orders (
-                                                        delivery_date ,
-                                                        delivery_time,
-                                                        delivery_address,
-                                                        total_order,
-                                                        total_comission , 
-                                                        observation,
-                                                        status_comission,
-                                                        sector_cod,
-                                                        city_sale_cod,
-                                                        client_id,
-                                                        collaborator_id,
-                                                        order_status_cod,
-                                                        created_at,
-                                                        updated_at
+            $insertado = DB::insert('insert orders (delivery_date , delivery_time, delivery_address,
+                                                        total_order, total_comission ,  observation,
+                                                        status_comission, sector_cod,  city_sale_cod,
+                                                        client_id, collaborator_id, order_status_cod,
+                                                        created_at, updated_at
             ) values (?,?,?,?,?,    ?,?,?,?,?,  ?,?,?,?)', [
-                                                        $in_delivery_date, 
-                                                        $in_delivery_time,
-                                                        $in_delivery_address,
+                                                        $in_delivery_date,  $in_delivery_time, $in_delivery_address,
                                                         $in_total_order, $in_total_comission,
                                                         $in_observation,$in_status_comission,$in_sector_cod,
                                                         $in_city_sale_cod,$in_client_id,$in_collaborator_id,
                                                         $in_order_status_cod,now(),now()]);
 
+                                                        $id_cab ;
+
                                                        
-                                                        
                                                         // $rpt_id;
                                                         // //echo "------- Sólo valores -------\n\n";
                                                         // foreach ($jsonObject->rates as $v){
@@ -149,8 +129,66 @@ class PedidosController extends Controller
                                                         $out_id_order = DB::selectOne('SELECT LAST_INSERT_ID() as id');
                                                         $out_cod = 7;
                                                         $out_msj = "Orden creada";
+
+                                                        foreach ($out_id_order as $key => $object) {
+                                                            $id_cab  = $object;
+                                                        }
+
+                                                        /**
+                                                         * procesar detalle
+                                                         */
+                                                        //$id_cab = (int)$out_id_order;
+                                                        // dd($out_id_order);
+                                                        if ( $out_cod == 7) {
+
+                                                            foreach ($json_tb_detalle_prodct as $value) {
+                                                                //dd($value);
+                                                                //$p_in_order_id =  $value['product_id'];//fk cabecera
+                                                                $p_in_product_id =  $value['product_id'];
+                                                                $p_in_name_product =  $value['name_product'];
+                                                                $p_in_quantity  =  $value['quantity'];
+                                                                $p_in_price =  $value['price'];
+                                                                $p_in_discount_porcentage =  $value['discount_porcentage'];
+                                                                $p_in_price_discount  =  $value['price_discount'];
+                                                                $p_in_total_line =  $value['total_line'];
+                                                                $p_in_comission  =  0.00;//$value['id_product'];
+                                                                $p_in_total_comission = 0.00; //$value['id_product'];
+
+
+                                                                $insertadoDetalle = DB::insert('insert order_product (
+                                                                    order_id,
+                                                                product_id,
+                                                                name_product,
+                                                                quantity,
+                                                                price,
+                                                                discount_porcentage,
+                                                                price_discount,
+                                                                total_line,
+                                                                comission,
+                                                                total_comission,
+                                                                created_at,
+                                                                updated_at
+                                                                    ) values (?,?,?,?,?,    ?,?,?,?,?,  ?,?)', [
+                                                                        $id_cab ,// $out_id_order,
+                                                                       $p_in_product_id ,
+                                                                        $p_in_name_product,
+                                                                        $p_in_quantity ,
+                                                                        $p_in_price ,
+                                                                        $p_in_discount_porcentage ,
+                                                                        $p_in_price_discount ,
+                                                                        $p_in_total_line,
+                                                                        $p_in_comission,
+                                                                        $p_in_total_comission,
+                                                                now(),now()]);
+                                                                
+                                                                //echo '<pre>'; print_r($insertadoDetalle);
+                                                                
+                                                            }
+                                                        }
             
-                                                        
+                                                        /**
+                                                         * respuesta de cabecera 
+                                                         */
                                                         $miArray = array('out_id_order'=>$out_id_order, 'out_cod'=>$out_cod, 'out_msj'=>$out_msj);
                                                         return response()->json(['data' => $miArray], 200);
                                                        
@@ -168,27 +206,7 @@ class PedidosController extends Controller
             DB::rollback();
             throw $e;
         }
-        
-        
-
-
-        
-        // $data = DB::select('call sp_trx_crear_orden(?,?,?,?,?,?,?,?,?,?,?,?,?,?)', 
-        //     array($p_in_opcio,
-        //             $in_delivery_date,
-        //             $in_delivery_address,
-        //             $in_total_order,
-        //             $in_total_comission,
-        //             $in_observation,
-        //             $in_sector_id,
-        //             $in_city_sale_id,
-        //             $in_client_id,
-        //             $in_collaborator_id,
-        //             $in_order_status,
-        //             "@val",
-        //             "@val",
-        //             "@val"));
-        //return response()->json(['data' => 'ok'], 200);
+    
     } 
 
     
@@ -269,5 +287,75 @@ class PedidosController extends Controller
     //     return response()->json(['data' => $cliente], 200);
     
     // }
+
+    //**************************************************************************************** */
+    // public function createOrden(Request $request){
+
+      
+    //     $in_client_id	= $request->client_id;//bigint//
+    //     $in_delivery_date= $request->delivery_date;	//date
+    //     $in_delivery_time= $request->delivery_time;	//time
+    //     $in_collaborator_id	= $request->collaborator_id; //bigint
+    //     $in_sector_cod= $request->sector_cod;	//varchar
+    //     $in_city_sale_cod	= $request->city_sale_cod;//varchar
+    //     $in_observation	= $request->observation;//mediumtext
+    //     $in_delivery_address= $request->delivery_address;	//mediumtext
+    //     $in_status_comission= 'f';	//varchar
+    //     $in_order_status_cod ='A';	//varchar
+    //     $in_total_order= $request->total_order;	//decimal
+    //     $in_total_comission= $request->total_comission;	//decimal
+        
+
+
+    //     //
+
+    //     try {
+    //         $insertado = DB::insert('insert orders (delivery_date , delivery_time, delivery_address,
+    //                                                     total_order, total_comission ,  observation,
+    //                                                     status_comission, sector_cod,  city_sale_cod,
+    //                                                     client_id, collaborator_id, order_status_cod,
+    //                                                     created_at, updated_at
+    //         ) values (?,?,?,?,?,    ?,?,?,?,?,  ?,?,?,?)', [
+    //                                                     $in_delivery_date, 
+    //                                                     $in_delivery_time,
+    //                                                     $in_delivery_address,
+    //                                                     $in_total_order, $in_total_comission,
+    //                                                     $in_observation,$in_status_comission,$in_sector_cod,
+    //                                                     $in_city_sale_cod,$in_client_id,$in_collaborator_id,
+    //                                                     $in_order_status_cod,now(),now()]);
+
+                                                       
+                                                        
+    //                                                     // $rpt_id;
+    //                                                     // //echo "------- Sólo valores -------\n\n";
+    //                                                     // foreach ($jsonObject->rates as $v){
+    //                                                     //     $rpt_id =  $v;
+    //                                                     // }
+                                                        
+    //                                                     $out_id_order = DB::selectOne('SELECT LAST_INSERT_ID() as id');
+    //                                                     $out_cod = 7;
+    //                                                     $out_msj = "Orden creada";
+            
+                                                        
+    //                                                     $miArray = array('out_id_order'=>$out_id_order, 'out_cod'=>$out_cod, 'out_msj'=>$out_msj);
+    //                                                     return response()->json(['data' => $miArray], 200);
+                                                       
+
+				
+                                                        
+    //         // if($insertado){
+    //         // $id = DB::selectOne('SELECT LAST_INSERT_ID() as "id"');
+    //         // DB::rollback();
+    //         //     //DB::commit();
+    //         //     return 'Insertado correctamente con id ' . $id->id;
+    //         // }
+            
+    //     } catch (\Throwable $e) {
+    //         DB::rollback();
+    //         throw $e;
+    //     }
+    
+    // } 
+
 
 }

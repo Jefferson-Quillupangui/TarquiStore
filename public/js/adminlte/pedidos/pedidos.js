@@ -1,6 +1,11 @@
 
 $(document).ready(function () {
 
+
+  var table_detalle_factura;
+
+
+
   var fecha = new Date(); //Fecha actual
   var mes = fecha.getMonth()+1; //obteniendo mes
   var dia = fecha.getDate(); //obteniendo dia
@@ -21,8 +26,19 @@ $(document).ready(function () {
   document.getElementById('fechaActual').value=fecha;
   document.getElementById('horaActual').value=hora;
 
+  /**
+   * Guardar el contenido del formulario de pedidos
+   */
     $(document).on("click", "#btn-generarorden",function(){
         $('.loaders').removeClass('d-none');
+
+
+        // var tableDetalleProducto = new Tabulator("#grid-table-detalle-pedido");
+         var tb_det_prodct = table_detalle_factura.getData();
+
+         
+
+        
         $.ajax(
             {
               url : $('#form-crearorden').attr("action"),
@@ -41,6 +57,7 @@ $(document).ready(function () {
                 // order_status_cod  : $('#').val(),
                 total_order : $('#txtTotalOrden').val(),
                 total_comission :  $('#txt_totalComision').val(),
+                detalleProductos : JSON.stringify(tb_det_prodct),
                 // opcion: 'AA', 
                 // clienteid: $('#textbuscarcliente').attr("codigocliente"),
                 // totalord: 22,
@@ -147,7 +164,10 @@ $(document).ready(function () {
       return "<i class='fa fa-trash fa-lg'></i>";
   };
   
-  var table_detalle_factura = new Tabulator("#grid-table-detalle-pedido", {
+  /**
+   * Tabla detalle para ingreso fde pedidos
+   */
+  table_detalle_factura = new Tabulator("#grid-table-detalle-pedido", {
       
       
       //layout:"fitColumns",

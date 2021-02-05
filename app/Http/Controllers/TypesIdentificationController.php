@@ -89,35 +89,29 @@ class TypesIdentificationController extends Controller
     public function update(Request $request,TypeIdentification $type_identification)
     {
         //Validar el nombre
-        
-        if($request->name == $type_identification->name){
-
-            $request->validate([
-                'name'          => 'required',
-            ],[
-                'name.required'         => 'Ingrese el nombre del tipo de identifición',
-            ]);   
-
-        }else{
-
-            $request->validate([
-                'name'          => 'required|unique:type_identifications,name',
-            ],[
-                'name.required'         => 'Ingrese el nombre del tipo de identifición',
-                'name.unique'           => 'El nombre del tipo de identifición ya existe',
-            ]);               
-        }
-
-        //Actualizar datos en la tabla
-         TypeIdentification::where("codigo", $type_identification->codigo)->update([
-                'name'          => strtoupper($request->name)
-            ]);
+        $request->validate([
+            'codigo'        => 'required|unique:type_identifications,codigo,'.$type_identification->codigo.',codigo',
+            'name'          => 'required|unique:type_identifications,name,'.$type_identification->codigo.',codigo',
             
-            //->update(['name'=> strtoupper($request->name]);
+        ],[
+            'codigo.required'       => 'Ingrese el codigo de identifición',
+            'codigo.unique'         => 'El codigo de identifición ya existe',
+            'name.unique'           => 'El nombre del tipo de identifición ya existe',
+            'name.required'         => 'Ingrese el nombre del tipo de identifición',
+           
+        ]);
+        //Actualizar datos en la tabla
+        //  TypeIdentification::where("codigo", $type_identification->codigo)->update([
+        //         'codigo' => $request->codigo,
+        //         'name' => strtoupper($request->name)
+        //     ]);
+            
+        //->update(['name'=> strtoupper($request->name]);
 
-        // $type_identification->update([
-        //     'name'          => strtoupper($request->name)
-        // ]);
+        $type_identification->update([
+            'codigo' => $request->codigo,            
+            'name'   => strtoupper($request->name)
+        ]);
 
         return redirect()->route('type_identification.index')
                     ->with('status','El tipo de identificación se actualizó correctamente.');

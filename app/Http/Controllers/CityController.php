@@ -41,7 +41,16 @@ class CityController extends Controller
     public function store(Request $request)
     {
         //Validaciones
-        $this->validaUnique($request);
+        $request->validate([
+            'name' => 'required|unique:city_sales,name',
+            'codigo' => 'required|unique:city_sales,codigo'
+        ],
+        [
+            'name.required' => 'El nombre de la ciudad es requerido',
+            'name.unique' => 'El nombre de la ciudad ya existe',
+            'codigo.unique' => 'Ingrese el código de la ciudad',
+            'codigo.unique' => 'El código de la ciudad ya existe'
+        ]);
 
         $city = CitySale::create([
             'codigo' => strtoupper($request->codigo),
@@ -70,16 +79,19 @@ class CityController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, CitySale $city)
-    {
+    {   
+        
         //Validación de datos
-        if($request->codigo == $city->codigo){
-
-            $this->validaUniqueCod($request);
-
-        }else{
-
-            $this->validaUnique($request);
-        }
+        $request->validate([
+            'name' => 'required|unique:city_sales,name,'.$city->codigo.',codigo', 
+            'codigo' => 'required|unique:city_sales,codigo,'.$city->codigo.',codigo',
+        ],
+        [
+            'name.required' => 'El nombre de la ciudad es requerido',
+            'name.unique' => 'El nombre de la ciudad ya existe',
+            'codigo.unique' => 'Ingrese el código de la ciudad',
+            'codigo.unique' => 'El código de la ciudad ya existe'
+        ]);
 
         //Actualizar datos en la tabla
         $city->update([
@@ -107,31 +119,6 @@ class CityController extends Controller
         
         
         return redirect()->route('ciudades.index')->with('status','La ciudad se eliminó correctamente.');
-    }
-
-    public function validaUnique(Request $request){
-
-        $request->validate([
-            'name' => 'required|unique:city_sales,name',
-            'codigo' => 'required|unique:city_sales,codigo'
-        ],
-        [
-            'name.required' => 'El nombre de la ciudad es requerido',
-            'name.unique' => 'El nombre de la ciudad ya existe',
-            'codigo.unique' => 'Ingrese el código de la ciudad',
-            'codigo.unique' => 'El código de la ciudad ya existe'
-        ]);
-    }
-
-    public function validaUniqueCod(Request $request){
-
-        $request->validate([
-            'name' => 'required|unique:city_sales,name'
-        ],
-        [
-            'name.required' => 'El nombre de la ciudad es requerido',
-            'name.unique' => 'El nombre de la ciudad ya existe'
-        ]);
     }
 
 }

@@ -82,8 +82,8 @@ class StatusOrderController extends Controller
     {
        //Validar el nombre
         $request->validate([
-            'codigo'        => 'required|unique:order_statuses,codigo',//.$status_order->codigo,
-            'name'          => 'required|unique:order_statuses,name',//.$status_order->name,
+            'codigo'        => 'required|unique:order_statuses,codigo,'.$status_order->codigo.',codigo',
+            'name'          => 'required|unique:order_statuses,name,'.$status_order->codigo.',codigo',
             'description'   => 'required'
         ],[
             'codigo.required'       => 'Ingrese el código del estado',
@@ -95,9 +95,9 @@ class StatusOrderController extends Controller
 
         //Actualizar datos en la tabla
         $status_order->update([
-            'codigo'        => strtoupper($request->name),
-            'name'          => ucwords(strtolower($request->name)),
-            'description'   => $request->description
+            'codigo'      => strtoupper($request->codigo),
+            'name'        => ucwords(strtolower($request->name)),
+            'description' => $request->description
         ]);
 
         return redirect()->route('status_order.index')

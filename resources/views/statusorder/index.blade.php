@@ -35,7 +35,18 @@
                 @forelse($statuses_sorder as $status_order )
                     <tr>
                         <td>{{ $status_order->codigo}}</td>
-                        <td>{{ $status_order->name}}</td>
+                        {{-- <td>{{ $status_order->name}}</td> --}}
+                        <td>
+                            @if($status_order->codigo=='OP')
+                                <span class="badge bg-warning">{{ $status_order->name}}</span>
+                            @elseif($status_order->codigo=='OC')
+                                <span class="badge bg-danger">{{ $status_order->name}}</span>
+                            @elseif($status_order->codigo=='OR')
+                                <span class="badge bg-primary">{{ $status_order->name}}</span>
+                            @else 
+                                <span class="badge bg-success">{{ $status_order->name}}</span>
+                            @endif
+                        </td>
                         <td>{{ $status_order->description}}</td>
                         
                         <td width="10px">

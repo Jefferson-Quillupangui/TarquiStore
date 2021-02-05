@@ -3,7 +3,7 @@
 @section('title', 'TarquiStore')
 
 @section('css')
-    <link rel="stylesheet" href="/css/admin_custom.css">
+    <link rel="stylesheet" href="/css/app.css">
 @stop
 
 @section('content_header')

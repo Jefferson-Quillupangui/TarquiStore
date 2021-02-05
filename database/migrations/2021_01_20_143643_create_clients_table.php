@@ -27,7 +27,8 @@ class CreateClientsTable extends Migration
 
             $table->foreign('type_identification_cod')
             ->references('codigo')
-            ->on('type_identifications');
+            ->on('type_identifications')
+            ->onUpdate('cascade');
 
             $table->timestamps();
         });

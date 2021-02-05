@@ -82,14 +82,18 @@ class SectorsController extends Controller
     public function update(Request $request,Sector $sector)
     {
         $request->validate([
-            'name' => 'required|unique:sectors,name'
+            'codigo'    => 'required|unique:sectors,codigo,'.$sector->codigo.',codigo', 
+            'name' => 'required|unique:sectors,name,'.$sector->codigo.',codigo',
         ],[
             'name.required' => 'Ingrese el nombre del sector',
-            'name.unique' => 'El nombre del sector ya existe'
+            'name.unique' => 'El nombre del sector ya existe',
+            'codigo.required'   => 'Ingrese el código del sector',
+            'codigo.unique'     => 'El codigo del sector ya existe',
         ]);
         
         //Actualizar datos en la tabla
         $sector->update([
+            'codigo' => strtoupper($request->codigo),
             'name' => ucwords(strtolower($request->name)),
         ]);
 

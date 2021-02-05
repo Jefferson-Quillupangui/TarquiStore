@@ -14,7 +14,7 @@ class CategoryController extends Controller
      */
     public function index()
     {
-        $categories = Category::all();
+        $categories = Category::where('status', '=', 'A')->get();
         return view('category.show',compact('categories'));
     }
 
@@ -80,11 +80,11 @@ class CategoryController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, Category $category)
-    {
+    {   
         //Validación de datos
         $request->validate([
             'name' => 'required',
-            'name' => 'required|unique:categories,name',
+            'name' => 'required|unique:categories,name,'.$category->id,
             'description' => 'required'
         ], 
         [
@@ -99,7 +99,7 @@ class CategoryController extends Controller
             'description' => $request->description,
         ]); 
 
-        return redirect()->route('categories.edit',$category)
+        return redirect()->route('categories.index',$category)
             ->with('status','La categoria se actualizó correctamente.');
     }
 
@@ -117,7 +117,7 @@ class CategoryController extends Controller
 
         } catch (\Illuminate\Database\QueryException $e) {
 
-            $errorc = 'No se puede eliminar la categoria porque contiene productos';
+            $errorc = 'No se puede eliminar la categoria porque contiene productos asociados';
             return redirect()->route('categories.index')
             ->with('errorc', $errorc);
         }

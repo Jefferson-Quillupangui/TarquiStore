@@ -36,7 +36,10 @@
                 <div class="input-group-prepend">
                     <span class="input-group-text" id="basic-addon1"><i class="fas fa-dollar-sign"></i></span>
                 </div>
-                {!! Form::number('price',null,['class' => 'form-control' . ($errors->has('price') ? ' is-invalid' : ''), 'placeholder' => 'Precio de venta del producto','step'=>'any']) !!}
+                {!! Form::text('price',null,['class' => 'form-control' . ($errors->has('price') ? ' is-invalid' : ''), 'placeholder' => 'Precio de venta del producto',
+                                                'step'=>'any',
+                                                'id'=>'in_price',
+                                                'onkeypress'=> 'return ((event.charCode >= 48 && event.charCode <= 57 ) || (event.charCode == 46))']) !!}
                 @error('price')
                 <span class="invalid-feedback">
                     <strong>{{$message}}</strong>
@@ -48,7 +51,10 @@
                 <div class="input-group-prepend">
                     <span class="input-group-text" id="basic-addon1"><i class="fas fa-dollar-sign"></i></span>
                 </div>
-                {!! Form::number('comission',null,['class' => 'form-control' . ($errors->has('comission') ? ' is-invalid' : ''), 'placeholder' => 'Valor de comisión del producto','step'=>'any']) !!}
+                {!! Form::text('comission',null,['class' => 'form-control' . ($errors->has('comission') ? ' is-invalid' : ''), 'placeholder' => 'Valor de comisión del producto',
+                                        'step'=>'any', 
+                                        'id' => 'in_comission',
+                                        'onkeypress'=> 'return ((event.charCode >= 48 && event.charCode <= 57 ) || (event.charCode == 46))']) !!}
                 @error('comission')
                 <span class="invalid-feedback">
                     <strong>{{$message}}</strong>
@@ -80,13 +86,54 @@
                 <div class="input-group-prepend">
                     <span class="input-group-text" id="basic-addon1"><i class="fas fa-percentage"></i></span>
                 </div>
-                {!! Form::number('discount',0.00,['class' => 'form-control' . ($errors->has('discount') ? ' is-invalid' : ''), 'placeholder' => 'Valor de descuento del producto','step'=>'any']) !!}
+                {!! Form::text('discount',0.00,['class' => 'form-control' . ($errors->has('discount') ? ' is-invalid' : ''), 
+                                    'placeholder' => 'Valor de descuento del producto',
+                                    'step'=>'any', 
+                                    'id' => 'in_discount_porcent',
+                                    'onkeypress'=> 'return ((event.charCode >= 48 && event.charCode <= 57 ) || (event.charCode == 46))',
+                                    'max' => '2']) !!}
                 @error('discount')
                 <span class="invalid-feedback">
                     <strong>{{$message}}</strong>
                 </span>
                 @enderror 
             </div>   
+        </div>
+        <div class="col-md-5">
+            <label for="price_discount">Precio descuento:</label>
+            <div class="input-group mb-3">
+                <div class="input-group-prepend">
+                    <span class="input-group-text" id="basic-addon1"><i class="fas fa-dollar-sign"></i></span>
+                </div>
+                {!! Form::text('price_discount',0.00,['class' => 'form-control' . ($errors->has('price_discount') ? ' is-invalid' : ''), 
+                            'placeholder' => 'Precio del producto con descuento',
+                            'step'=>'any','id'=>'in_price_discount',
+                            'onkeypress'=> 'return ((event.charCode >= 48 && event.charCode <= 57 ) || (event.charCode == 46))',
+                            'readonly']) !!}
+                @error('price_discount')
+                <span class="invalid-feedback">
+                    <strong>{{$message}}</strong>
+                </span>
+                @enderror 
+            </div>   
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-5">
+            <label for="quantity">Cantidad:</label>
+            <div class="input-group mb-3">
+                <div class="input-group-prepend">
+                    <span class="input-group-text" id="basic-addon1"><i class="fas fa-sort-numeric-up"></i></span>
+                </div>
+                {!! Form::text('quantity',null,['class' => 'form-control' . ($errors->has('quantity') ? ' is-invalid' : ''), 
+                                'placeholder'   => 'Cantidad disponible',
+                                'onkeypress'    => 'return (event.charCode >= 48 && event.charCode <= 57 )']) !!}
+                @error('quantity')
+                <span class="invalid-feedback">
+                    <strong>{{$message}}</strong>
+                </span>
+                @enderror 
+            </div>  
         </div>
         <div class="col-md-5">
             <label for="category">Categorias:</label>
@@ -103,21 +150,4 @@
             </div>   
         </div>
     </div>
-    <div class="row">
-        <div class="col-md-5">
-            <label for="quantity">Cantidad:</label>
-            <div class="input-group mb-3">
-                <div class="input-group-prepend">
-                    <span class="input-group-text" id="basic-addon1"><i class="fas fa-sort-numeric-up"></i></span>
-                </div>
-                {!! Form::number('quantity',null,['class' => 'form-control' . ($errors->has('quantity') ? ' is-invalid' : ''), 'placeholder' => 'Cantidad disponible']) !!}
-                @error('quantity')
-                <span class="invalid-feedback">
-                    <strong>{{$message}}</strong>
-                </span>
-                @enderror 
-            </div>  
-        </div>
-    </div>
 </div>
-

@@ -62,3 +62,7 @@ Route::resource( 'type_identifications', TypesIdentificationController::class)
 Route::resource('clients', ClientController::class)
     ->except(['show'])
     ->names('clients');
+//Listar pedidos
+Route::get('list_orders', function(){
+    return view('pedido.show');
+})->name('list_orders');

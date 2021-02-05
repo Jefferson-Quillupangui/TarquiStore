@@ -27,13 +27,15 @@ class CreateOrdersTable extends Migration
 
             $table->foreign('sector_cod')
             ->references('codigo')
-            ->on('sectors');
+            ->on('sectors')
+            ->onUpdate('cascade');
 
             $table->string('city_sale_cod');
 
             $table->foreign('city_sale_cod')
             ->references('codigo')
-            ->on('city_sales');
+            ->on('city_sales')
+            ->onUpdate('cascade');
 
             $table->unsignedBigInteger('client_id');
 
@@ -52,7 +54,8 @@ class CreateOrdersTable extends Migration
 
             $table->foreign('order_status_cod')
             ->references('codigo')
-            ->on('order_statuses');
+            ->on('order_statuses')
+            ->onUpdate('cascade');
 
             $table->timestamps();
         });

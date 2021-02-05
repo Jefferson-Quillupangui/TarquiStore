@@ -14,7 +14,7 @@
             <div class="input-group-prepend">
                 <span class="input-group-text" id="basic-addon1"><i class="fa fa-barcode"></i></span>
             </div>
-            {!! Form::text('codigo', null, ['class' => 'form-control' . ($errors->has('name') ? ' is-invalid' : ''),
+            {!! Form::text('codigo', null, ['class' => 'form-control' . ($errors->has('codigo') ? ' is-invalid' : ''),
             'placeholder' => 'Codigo de identificacion']) !!}
 
             @error('codigo')

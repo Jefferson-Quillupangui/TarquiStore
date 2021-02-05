@@ -319,7 +319,7 @@ return [
                 ],
                 [
                     'text'      => 'Lista de pedidos',
-                    'url'       => '#',
+                    'route'     => 'list_orders',
                     'icon'      => 'fas fa-shopping-basket',
                 ],
             ],

@@ -27,8 +27,8 @@ class PedidosController extends Controller
        // $order = Order::all();
        //$categories = Category::all();
        //$sectors = Sector::orderBy('codigo', 'asc')->pluck('name','codigo');
-       $sectors = Sector::all();
-       $citySale = CitySale::all();
+       $sectors = Sector::where('status', '=', 'A')->get();
+       $citySale = CitySale::where('status', '=', 'A')->get();
        
       // $category = Category::orderBy('id', 'asc')->pluck('name','id');
 

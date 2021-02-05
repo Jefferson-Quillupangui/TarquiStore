@@ -75,9 +75,10 @@
 @stop
 
 @section('css')
-    <link rel="stylesheet" href="/css/admin_custom.css">
+    <link rel="stylesheet" href="/css/app.css">
 @stop
 
 @section('js')
     <script type="text/javascript" src="{{ asset("js/adminlte/modales/windeliminar.js") }}"></script>
+   
 @stop

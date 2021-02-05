@@ -31,7 +31,9 @@ class ProductController extends Controller
     public function create()
     {   
         //Categorias
-        $category = Category::orderBy('id', 'asc')->pluck('name','id');
+        $category = Category::where('status', '=', 'A')
+                            ->orderBy('id', 'asc')
+                            ->pluck('name','id');
         $products = new Product;
 
         return view('product.create', compact('products','category'));
@@ -51,7 +53,7 @@ class ProductController extends Controller
             'price'         =>  'required',
             'comission'     =>  'required',
             'description'   =>  'required',
-            'discount'      =>  'integer',
+            'discount'      =>  'numeric',
             'quantity'      =>  'integer'
         ], 
         [   'name.required'         =>  'Ingrese el nombre del producto',
@@ -61,7 +63,7 @@ class ProductController extends Controller
             'image.image'           =>  'Debe ingresar una imagen del producto',
             'comission.required'    =>  'Ingrese el valor de la comisión',
             'description.required'  =>  'Ingrese la descripción del producto',
-            'discount.integer'      =>  'El porcentaje de descuento debe ser un valor entero o cero',
+            'discount.numeric'      =>  'El porcentaje de descuento debe ser un valor entero o cero',
             'quantity.integer'      =>  'Ingrese un valor entero de cantidad disponible',
             'name.unique'           =>  'El nombre de la categoria ya existe'
         ]);
@@ -123,7 +125,7 @@ class ProductController extends Controller
             'price'         =>  'required',
             'comission'     =>  'required',
             'description'   =>  'required',
-            'discount'      =>  'integer',
+            'discount'      =>  'required|integer',
             'quantity'      =>  'integer'
         ], 
         [   'name.required'         =>  'Ingrese el nombre del producto',
@@ -132,7 +134,8 @@ class ProductController extends Controller
             'image.image'           =>  'Debe ingresar una imagen del producto',
             'comission.required'    =>  'Ingrese el valor de la comisión',
             'description.required'  =>  'Ingrese la descripción del producto',
-            'discount.integer'      =>  'El porcentaje de descuento debe ser un valor entero o cero',
+            'discount.required'     =>  'El porcentaje de descuento debe ser un valor entero o valor cero',
+            'discount.integer'      =>  'El porcentaje de descuento debe ser un valor entero o valor cero',
             'quantity.integer'      =>  'Ingrese un valor entero de cantidad disponible',
             'name.unique'           =>  'El nombre de la categoria ya existe'
         ]);

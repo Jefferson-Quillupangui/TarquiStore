@@ -11,7 +11,7 @@ class CitySale extends Model
 {
     use HasFactory;
     protected $fillable = ['codigo', 'name'];
-    protected $primaryKey="codigo";
+    protected $primaryKey ='codigo';
     protected $keyType = 'string';
 
     //Relacion de uno a muchos

@@ -27,7 +27,7 @@ class ClientController extends Controller
      */
     public function create()
     {
-        $type_identification = TypeIdentification::orderBy('id', 'asc')->pluck('name','id');
+        $type_identification = TypeIdentification::orderBy('codigo', 'asc')->pluck('name','codigo');
         $client = new Client;
 
         return view('clientes.create', compact('client','type_identification'));
@@ -40,17 +40,24 @@ class ClientController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
-    {
+    {   
         //Validación de campos
-        if($request->identification==null){
-
-            $this->validaIdentificacionNull($request);
-
-        }else{
-
-            $this->validaIdentificacionUniq($request);
-
-        }
+        $request->validate([
+            'identification'            => 'unique:clients,identification',
+            'name'                      => 'required',
+            'last_name'                 => 'required',
+            'address'                   => 'required',
+            'phone1'                    => 'required',
+            'type_identification'       => 'required',
+        ], 
+        [
+            'identification.unique'         => 'La identificación ya existe en el sistema',
+            'name.required'                 => 'Ingrese el nombre del cliente',
+            'last_name.required'            => 'Ingrese el apellido del cliente',
+            'address.required'              => 'Ingrese la dirección del cliente',
+            'phone1'                        => 'Ingrese un teléfono de contacto',
+            'type_identification.required'  => 'Ingrese un tipo de identificación',
+        ]);
 
         //Crear categoria
         $client = Client::create([
@@ -61,7 +68,7 @@ class ClientController extends Controller
             'phone1'            => $request->phone1,
             'phone2'            => $request->phone2,
             'email'             => $request->email,
-            'type_identification_id' => $request->type_identification,
+            'type_identification_cod' => $request->type_identification,
         ]);
 
         return redirect()->route('clients.index')
@@ -76,7 +83,7 @@ class ClientController extends Controller
      */
     public function edit(Client $client)
     {
-        $type_identification = TypeIdentification::orderBy('id', 'asc')->pluck('name','id');
+        $type_identification = TypeIdentification::orderBy('codigo', 'asc')->pluck('name','codigo');
         return view('clientes.edit', compact('client','type_identification'));
     }
 
@@ -90,28 +97,23 @@ class ClientController extends Controller
     public function update(Request $request,Client $client)
     {
         //Validación de datos
-        if($request->identification==null){
+        $request->validate([
+            'identification'            => 'unique:clients,identification,'.$client->id,
+            'name'                      => 'required',
+            'last_name'                 => 'required',
+            'address'                   => 'required',
+            'phone1'                    => 'required',
+            'type_identification'       => 'required',
+        ], 
+        [
+            'identification.unique'         => 'La identificación ya existe en el sistema',
+            'name.required'                 => 'Ingrese el nombre del cliente',
+            'last_name.required'            => 'Ingrese el apellido del cliente',
+            'address.required'              => 'Ingrese la dirección del cliente',
+            'phone1'                        => 'Ingrese un teléfono de contacto',
+            'type_identification.required'  => 'Ingrese un tipo de identificación',
+        ]);
 
-            $this->validaIdentificacionNull($request);
-
-        }else{
-            if($request->identification == $client->identification){
-               
-                $this->validaIdentificacionNull($request);
-                
-                $client->update([
-                    'name'              => $request->name,
-                    'last_name'         => $request->last_name,
-                    'address'           => $request->address,
-                    'phone1'            => $request->phone1,
-                    'phone2'            => $request->phone2,
-                    'email'             => $request->email,
-                    'type_identification_id' => $request->type_identification,
-                ]);
-            }else{
-                $this->validaIdentificacionUniq($request);
-            }
-        }
 
         //Actualizar datos en la tabla
         $client->update([
@@ -122,10 +124,10 @@ class ClientController extends Controller
             'phone1'            => $request->phone1,
             'phone2'            => $request->phone2,
             'email'             => $request->email,
-            'type_identification_id' => $request->type_identification,
+            'type_identification_cod' => $request->type_identification,
         ]);
 
-        return redirect()->route('clients.edit',$client)
+        return redirect()->route('clients.index',$client)
                 ->with('status','El cliente se actualizó correctamente.');
     }
 
@@ -143,43 +145,5 @@ class ClientController extends Controller
             ->with('status','El cliente se eliminó correctamente.');
     }
 
-    public function validaIdentificacionUniq(Request $request){
-
-        $request->validate([
-            'identification'            => 'unique:clients,identification',
-            'name'                      => 'required',
-            'last_name'                 => 'required',
-            'address'                   => 'required',
-            'phone1'                    => 'required',
-            'type_identification'       => 'required',
-        ], 
-        [
-            'identification.unique'         => 'La identificación ya existe en el sistema',
-            'name.required'                 => 'Ingrese el nombre del cliente',
-            'last_name.required'            => 'Ingrese el apellido del cliente',
-            'address.required'              => 'Ingrese la dirección del cliente',
-            'phone1'                        => 'Ingrese un teléfono de contacto',
-            'type_identification.required'  => 'Ingrese un tipo de identificación',
-        ]);
-    }
-
-    public function validaIdentificacionNull(Request $request){
-
-        $request->validate([
-            'name'                      => 'required',
-            'last_name'                 => 'required',
-            'address'                   => 'required',
-            'phone1'                    => 'required',
-            'type_identification'       => 'required',
-        ], 
-        [
-            'name.required'                 => 'Ingrese el nombre del cliente',
-            'last_name.required'            => 'Ingrese el apellido del cliente',
-            'address.required'              => 'Ingrese la dirección del cliente',
-            'phone1.required'               => 'Ingrese un teléfono de contacto',
-            'type_identification.required'  => 'Ingrese un tipo de identificación',
-
-        ]);
-    }
 
 }

@@ -26,10 +26,29 @@
 @stop
 
 @section('css')
-    <link rel="stylesheet" href="/css/admin_custom.css">
     <style  type="text/css">textarea{ resize : none;}</style>
 @stop
 
 @section('js')
+    <script type="text/javascript">
+        $(document).ready(function () {
+            
+            $(document).on("keyup", "#in_discount_porcent",function(){
+            //var desct_pvp = $('#in_price_discount').val();//Precio descuento:
+            
+            var porcentaje = $('#in_discount_porcent').val();//Porcentaje descuento:  
+            var pvp = $('#in_price').val();//Precio:
 
+            var descuento = (parseFloat (pvp)*parseFloat(porcentaje))/100;
+            var pvpFinal = parseFloat (pvp)-parseFloat (descuento)
+
+            if (isNaN(pvpFinal)) {
+                $('#in_price_discount').val(0.00);
+            }else{
+                $('#in_price_discount').val(pvpFinal.toFixed(2));
+            }
+
+            });
+        });
+    </script>
 @stop

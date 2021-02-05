@@ -29,8 +29,8 @@ class CreateOrderProductTable extends Migration
             $table->string('name_product',75);
             $table->integer('quantity');
             $table->decimal('price', $precision = 8, $scale = 2); 
-            $table->integer('discount_porcentage'); 
-            $table->decimal('price_discount', $precision = 8, $scale = 2);                        
+            $table->decimal('discount_porcentage', $precision = 8, $scale = 2)->default(0); 
+            $table->decimal('price_discount', $precision = 8, $scale = 2)->default(0);                        
             $table->decimal('total_line', $precision = 8, $scale = 2);
             $table->decimal('comission', $precision = 8, $scale = 2);
             $table->decimal('total_comission', $precision = 8, $scale = 2);

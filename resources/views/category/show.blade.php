@@ -40,7 +40,7 @@
                         </td>
 
                         <td width="10px">
-                            <form action="{{route('categories.destroy',$category)}}" method="POST">
+                            <form action="{{route('categories.destroy',$category)}}" method="POST" class="op-eliminar">
                                 @method('delete')
                                 @csrf
 
@@ -67,5 +67,5 @@
 @stop
 
 @section('js')
-
+    <script type="text/javascript" src="{{ asset("js/adminlte/modales/windeliminar.js") }}"></script>
 @stop

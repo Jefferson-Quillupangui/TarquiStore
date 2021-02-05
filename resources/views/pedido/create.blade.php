@@ -66,9 +66,8 @@
                                     <i class="fa fa-user-plus"></i>
                                 </span>
                             </div>
-                            <input type="search" class="form-control" placeholder="Buscar cliente"
-                                aria-label="Search" aria-describedby="search-addon" id="textbuscarcliente" codigocliente=0
-                                disabled />
+                            <input type="search" class="form-control" placeholder="Buscar cliente" aria-label="Search"
+                                aria-describedby="search-addon" id="textbuscarcliente" codigocliente=0 disabled />
                             <div class="input-group-append">
                                 <div class="input-group-text" type="button" id="btn-buscarpersona"><i
                                         class="fa fa-search"></i></div>
@@ -106,7 +105,7 @@
                                 <input type="date" class="form-control" id="fechaActual" value="">
 
                                 <div class="input-group-append">
-                                    <input type="time"  class="form-control" id="horaActual" value="">
+                                    <input type="time" class="form-control" id="horaActual" value="">
                                 </div>
                             </div>
                         </div>
@@ -120,8 +119,8 @@
                                 <span class="input-group-text" id="basic-addon1"><i class="fa fa-user"></i></span>
                             </div>
                             {{-- <h1> {{ auth()->user()->name }} </h1> --}}
-                            <input id="colaborador" type="text" class="form-control" placeholder="Colaborador" value={{ $name }}
-                                disabled id_colaborador={{ auth()->user()->id }}>
+                            <input id="colaborador" type="text" class="form-control" placeholder="Colaborador"
+                                value={{ $name }} disabled id_colaborador={{ auth()->user()->id }}>
 
                             {{-- <input type="text" name="sexo" id="varon" value={{ $name }}> --}}
                             {{-- {!!  Form::text('Colaborador', "{{$name}}", ['class' => 'form-control' . ($errors->has('txtColaborador') ? ' is-invalid' : ''), 'placeholder' => 'Colaborador', 'id' => 'txtColaborador', 'disabled']) !!} --}}
@@ -139,9 +138,9 @@
                             </div>
                             <select id="sectors" name="sectors" class="form-control">
                                 <option value=0 disabled>------Seleccionar------</option>
-                                @foreach($sectors as $sector)
-                                <option value="{{$sector->codigo}}">{{$sector->name}}</option>
-                                {{-- <option value="{{$sector->codigo}}"> {{$sector->name}} </option> --}}
+                                @foreach ($sectors as $sector)
+                                    <option value="{{ $sector->codigo }}">{{ $sector->name }}</option>
+                                    {{-- <option value="{{$sector->codigo}}"> {{$sector->name}} </option> --}}
                                 @endforeach
                             </select>
                             {{-- {!!  Form::select('sectors', $sectors, 0, ['class' => 'custom-select']) !!} --}}
@@ -161,9 +160,9 @@
                             </div>
                             <select id="city" name="city" class="form-control">
                                 <option value=0 disabled>------Seleccionar------</option>
-                                @foreach($citySale as $cat)
-                                <option value="{{$cat->codigo}}">{{$cat->name}}</option>
-                                {{-- <option value="{{$sector->codigo}}"> {{$sector->name}} </option> --}}
+                                @foreach ($citySale as $cat)
+                                    <option value="{{ $cat->codigo }}">{{ $cat->name }}</option>
+                                    {{-- <option value="{{$sector->codigo}}"> {{$sector->name}} </option> --}}
                                 @endforeach
                             </select>
                             {{-- {!!  Form::select('category', $category, 0, ['class' => 'custom-select']) !!} --}}
@@ -261,8 +260,8 @@
                         <div class="form-group row ">
                             <label for="txtTotalOrden" class="col-sm-4 control-label ">Total Orden:</label>
                             <div class="col-sm-8">
-                                <input type="text" value="0.00" class="form-control txtTotalOrden text-right" id="txtTotalOrden"
-                                    name="txtTotalOrden" placeholder="" disabled="disabled">
+                                <input type="text" value="0.00" class="form-control txtTotalOrden text-right"
+                                    id="txtTotalOrden" name="txtTotalOrden" placeholder="" disabled="disabled">
                             </div>
                         </div>
                         <div class="form-group row ">
@@ -426,32 +425,32 @@
     </div>
 
 
-     <!-- Modal Buscar Producto -->
-     <div class="modal fade" id="modal-buscarProducto" data-backdrop="static" data-keyboard="false" tabindex="-1"
-     aria-labelledby="staticBackdropLabel" aria-hidden="true">
-     <div class="modal-dialog modal-lg modal-dialog-centered">
-         <div class="modal-content">
-             <div class="modal-header">
-                 <h5 class="modal-title" id="staticBackdropLabel">Lista de Productos</h5>
-                 {{-- <button type="button" class="btn-close" data-bs-dismiss="modal"
+    <!-- Modal Buscar Producto -->
+    <div class="modal fade" id="modal-buscarProducto" data-backdrop="static" data-keyboard="false" tabindex="-1"
+        aria-labelledby="staticBackdropLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="staticBackdropLabel">Lista de Productos</h5>
+                    {{-- <button type="button" class="btn-close" data-bs-dismiss="modal"
                      aria-label="Close"></button> --}}
-             </div>
-             <div class="modal-body">
-                 <div class="row">
-                     <div id="producto-table"></div>
-                 </div>
-             </div>
-             <div class="modal-footer">
-                 <button type="button" id="btn-cancelar-producto" class="btn btn-danger">Cancelar</button>
-             </div>
-         </div>
-     </div>
- </div>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div id="producto-table"></div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" id="btn-cancelar-producto" class="btn btn-danger">Cancelar</button>
+                </div>
+            </div>
+        </div>
+    </div>
 
 @stop
 
 @section('js')
     <script type="text/javascript" src="{{ asset('/plugin_tabullator/dist/js/tabulator.min.js') }}"></script>
-    <script type="text/javascript" src="{{ asset('js/adminlte/pedidos/pedidos.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('js/adminlte/pedidos/pedidos.js?vs=01') }}"></script>
 
 @stop

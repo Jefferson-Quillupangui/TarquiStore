@@ -15,16 +15,23 @@
             </div>
         </div>
         <div class="col-md-5">
-            <label for="image">Imagen: </label>
-            <div class="input-group mb-4">
+            <div class="form-group">
+                <label for="image">Imagen: </label>
                 <div class="form-input">
-                    {!! Form::file('image',null,['class' => ($errors->has('image') ? 'is-invalid' : ''),'accept' => 'image/png,image/jpeg']) !!}
+                    <input name ="image" id="file" type="file" accept="image/png,image/jpeg"/>
+                    {{-- {!! Form::file('image',null,['class' => 'form-control-file',
+                                    'accept' => 'image/png,image/jpeg', 'id' => 'image']) !!} --}}
                     @error('image')
                         <br>
                         <small class="invalid-feedback">
                             <strong>{{$message}}</strong>
                         </small>
                     @enderror
+                </div>
+            </div>
+            <div class="card" style="width: 18rem;">  
+                <div class="image-wrapper">
+                    <img id="picture" src="https://fesu.edu.co/wp-content/themes/simbolo/assets/images/no-icono.png" alt="" style="max-width:100%;width:auto;height:auto;">
                 </div>
             </div>
         </div>
@@ -69,7 +76,10 @@
                     <div class="input-group-prepend">
                       <span class="input-group-text"><i class="far fa-keyboard"></i></span>
                     </div>
-                    {!! Form::textarea('description',null,['class' => 'form-control' . ($errors->has('description') ? ' is-invalid' : ''), 'placeholder' => 'Ingrese descripción del producto', 'rows' => '4 ']) !!}
+                    {!! Form::textarea('description',null,['class' => 'form-control' . ($errors->has('description') ? ' is-invalid' : ''), 
+                                            'placeholder' => 'Ingrese descripción del producto', 
+                                            'rows'  => '4',
+                                            'id'    =>  'descript']) !!}
                     @error('description')
                     <span class="invalid-feedback">
                         <strong>{{$message}}</strong>

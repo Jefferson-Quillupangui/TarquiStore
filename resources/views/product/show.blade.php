@@ -2,6 +2,10 @@
 
 @section('title', 'TarquiStore')
 
+@section('css')
+    <link rel="stylesheet" href="/css/app.css">
+@stop
+
 @section('content_header')
     <h1><i class="fas fa-gifts"></i> Productos</h1>
 @stop
@@ -39,7 +43,7 @@
                     <tr>
                         <td>{{ $product->id}}</td>
                         <td>{{ $product->name}}</td>
-                        <td><img src="{{ asset($product->image) }}"  height="100"/></td>
+                        <td><img src="{{ asset($product->image) }}" style="width:300px;"/></td>
                         <td>${{ $product->price}}</td>
                         <td>{{ $product->description}}</td>
                         <td>${{ $product->comission}}</td>
@@ -72,10 +76,6 @@
         </table>
     </div>
 </div>
-@stop
-
-@section('css')
-    <link rel="stylesheet" href="/css/app.css">
 @stop
 
 @section('js')

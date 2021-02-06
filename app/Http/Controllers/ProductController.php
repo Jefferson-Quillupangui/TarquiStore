@@ -7,6 +7,8 @@ use App\Models\Product;
 use App\Models\Category;
 
 use Illuminate\Support\Facades\Storage; 
+use Intervention\Image\Facades\Image;
+use Illuminate\Support\Str;
 
 class ProductController extends Controller
 {
@@ -68,13 +70,23 @@ class ProductController extends Controller
             'name.unique'           =>  'El nombre de la categoria ya existe'
         ]);
 
-        $imagenes = $request->file('image')->store('public/img');
+        // $imagenes = $request->file('image')->store('public/img');
 
-        $url = Storage::url($imagenes);
+        // $url = Storage::url($imagenes);
+        
+        //Subida de imagen mediante intervention image pck
+        $nombre = Str::random(10).$request->file('image')->getClientOriginalName();
+
+        $ruta = storage_path().'\app\public\img/'.$nombre;
+
+        Image::make($request->file('image'))
+                ->resize(1200, null, function ($constraint) {
+                    $constraint->aspectRatio();
+                })->save($ruta);
 
         $product = Product::create([
             'name'          => $request->name,
-            'image'         => $url,
+            'image'         => '/storage/img/'.$nombre,
             'price'         => $request->price,
             'description'   => $request->description,
             'comission'     => $request->comission,
@@ -140,13 +152,30 @@ class ProductController extends Controller
             'name.unique'           =>  'El nombre de la categoria ya existe'
         ]);
 
-        $imagenes = $request->file('image')->store('public/img');
+        // $imagenes = $request->file('image')->store('public/img');
 
-        $url = Storage::url($imagenes);
+        // $url = Storage::url($imagenes);
+
+        //Subida de imagen mediante intervention image pck
+        $nombre = Str::random(10).$request->file('image')->getClientOriginalName();
+
+        $ruta = storage_path().'\app\public\img/'.$nombre;
+
+        $image = '/storage/img/'.$nombre;
+
+        Image::make($request->file('image'))
+                ->resize(1200, null, function ($constraint) {
+                    $constraint->aspectRatio();
+                })->save($ruta);    
+
+        //Borrar imagen anterior
+        $url = str_replace('storage', 'public',$product->image);
+        
+        storage::delete($url);
 
         $product->update([
             'name'          => $request->name,
-            'image'         => $url,
+            'image'         => $image,
             'price'         => $request->price,
             'description'   => $request->description,
             'comission'     => $request->comission,

@@ -13,6 +13,8 @@ use Laravel\Jetstream\HasTeams;
 use Laravel\Sanctum\HasApiTokens;
 use Spatie\Permission\Traits\HasRoles;
 
+use Illuminate\Auth\Notifications\VerifyEmail;
+
 
 
 
@@ -78,4 +80,16 @@ class User extends Authenticatable implements MustVerifyEmail
         //return $this->hasMany(Jetstream::collaboratorModel());
         return $this->hasMany(Collaborator::class);
     }
+
+
+     /**
+     * Send the email verification notification.
+     *  use Illuminate\Auth\Notifications\VerifyEmail;
+     * @return void
+     */
+    public function sendEmailVerificationNotification()
+    {
+        $this->notify(new VerifyEmail);
+    }
+
 }

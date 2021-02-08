@@ -23,7 +23,7 @@ use App\Http\Controllers\ClientController;
 |
 */
 
-Route::get('/', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+Route::get('/', [App\Http\Controllers\HomeController::class, 'index'])->name('home');//->middleware('verified');
 //->middleware('verified');
 
 Route::middleware(['auth:sanctum', 'verified'])->get('/dash', function () {

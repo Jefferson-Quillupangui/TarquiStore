@@ -3,6 +3,7 @@ $(document).ready(function () {
 
 
   var table_detalle_factura;
+  var table_lista_ordenes;
 
 
 
@@ -137,6 +138,10 @@ $(document).ready(function () {
                                 $("#textbuscarcliente").val(cell.getRow().getData().name);
                                 $("#textaddressdelivery").val(cell.getRow().getData().address);
                                 $("#textbuscarcliente").attr("codigocliente", cell.getRow().getData().id);
+                                $("#textphone1").val(cell.getRow().getData().phone1);
+                                $("#textphone2").val(cell.getRow().getData().phone2);
+                                $("#textEmail").val(cell.getRow().getData().email);
+                                
                                 $("#modal-buscarpersona").modal("hide");
                             }},
                 {title:"ID", field:"id", sorter:"string", width:0, headerFilter:"input",visible:false},
@@ -206,21 +211,24 @@ $(document).ready(function () {
                   }
               }
           },
-          {title:"ID_PROCT", field:"product_id", sorter:"number", width:100},
+          {title:"ID_PROCT", field:"product_id", sorter:"number", width:80},
           // {title:"id_product", field:"id_product", sorter:"string"},
           {title:"NOMBRE PRODUCTO", field:"name_product", sorter:"string"},
           {title:"CANTIDAD", field:"quantity", sorter:"number", hozAlign:"center",editor:"input",
           cellEdited :function(cell){
 
 
-             // console.log(cell.getData());
+              //console.log(cell.getData());
            let id_cell = cell.getData().product_id;
            let v_cantidad =  cell.getData().quantity;
            parseInt(v_cantidad);
            let v_precio_unitario =  cell.getData().price;
            parseFloat(v_precio_unitario);
 
+           let v_comission = cell.getData().comission;
+
            var v_final_total = parseInt(v_cantidad)*parseFloat(v_precio_unitario) ;
+           var v_total_comission = parseInt(v_cantidad)*parseFloat(v_comission) ;
            //parseFloat(v_precio_unitario) = parseInt(v_cantidad)*parseFloat(v_precio_unitario);
 
 
@@ -235,6 +243,7 @@ $(document).ready(function () {
           for (var i in uno) {
               if(uno[i].product_id === id_cell ){
                     uno[i].total_line = v_final_total;
+                    uno[i].total_comission = v_total_comission;
                      data_oj_detalle.push(uno[i]);
                      //console.log(uno[i]);
               }else{
@@ -247,15 +256,19 @@ $(document).ready(function () {
           table_detalle_factura.clearData();
           table_detalle_factura.updateOrAddData(data_oj_detalle);
 
-          var total = 0;
+          var total_prod = 0;
+          var total_comis = 0;
           for (var i in uno) {
             
-            total += parseFloat(uno[i].total_line);
+            total_prod += parseFloat(uno[i].total_line);
+            total_comis += parseFloat(uno[i].total_comission);
+
            
               
           }
 
-          $("#txtTotalOrden").val(total);
+          $("#txtTotalOrden").val(total_prod);
+          $("#txt_totalComision").val(total_comis);
           
           
 
@@ -323,6 +336,8 @@ $(document).ready(function () {
           {title:"PVP UNITARIO", field:"price", sorter:"number", hozAlign:"right", width:120},
           {title:"% DESCT", field:"discount_porcentage", sorter:"number",  hozAlign:"right",width:100},
           {title:"DESCUENTO", field:"price_discount", sorter:"number", hozAlign:"right", width:100},
+          {title:"COMISION", field:"comission", sorter:"number", hozAlign:"right", width:100},
+          {title:"TOTAL COMISION", field:"total_comission", sorter:"number", hozAlign:"right", width:100},
           {title:"TOTAL", field:"total_line", sorter:"number",  hozAlign:"right",width:100
           // ,mutator:function(value, data) {
           //   return 12;//console.log(data)//Math.floor(data.views / data.users);
@@ -395,6 +410,8 @@ $(document).ready(function () {
                                     price :  obj.price,
                                     discount_porcentage : obj.discount,
                                     price_discount : obj.price_discount,
+                                    comission : obj.comission,
+                                    total_comission : obj.comission,
                                     total_line : 0,
                                       // id_rgt_det: 0, 
                                       // id_product:o.item.data.id_product,
@@ -417,7 +434,7 @@ $(document).ready(function () {
                             
                             }},
       {title:"Id", field:"id"},
-      {title:"Nombre Producto", field:"name", width:200},
+      {title:"Nombre Producto", field:"name", width:200,headerFilter:"input"},
       {title:"Precio", field:"price", sorter:"number"},
       {title:"Comision", field:"comission"},
       {title:"Cantidad", field:"quantity"},
@@ -544,8 +561,130 @@ $(document).ready(function () {
 
   }
 
+  /**
+   * Buscar pedidos
+   */
+  $(document).on("click", "#btn-buscar-pedido",function(){
 
+      cargarListaPedidos();
+      $("#modal-buscarPedido").modal("show");
+  });
 
+  $(document).on("click", "#btn-cancelar-modal-pedido",function(){
+    $("#modal-buscarPedido").modal("hide");
+  });
  
+
+  function cargarListaPedidos(){
+    $.ajax({
+        type: 'GET',
+        url: $('#form-lista-pedidos').attr("action"),
+        // data: {
+        //     opcion: 'AC',//dat_busq === '' ? 'AA' : 'AB',
+        //     cod_prod: dat_busq
+        // },
+        // dataType: "dataType",
+        beforeSend: function () {
+            $('.loaders').removeClass('d-none');
+            // $('#load-grb').removeClass('d-none');
+            // $('#btn-grb-empresa-form').addClass('d-none');
+        },
+        success: function (response) {
+         // console.log(response);
+
+            // if (response === 0) {
+            //     Swal.fire({
+            //         icon: 'error',
+            //         title: 'Alerta!',
+            //         text: 'No Exite Registro!'
+            //         //footer: '<a href>Why do I have this issue?</a>'
+            //     });
+            // } else {
+
+           table_lista_ordenes.replaceData(response.data);
+            //     tab_producto = new FancyGrid.get('tb-producto-modal');
+            //     tab_producto.setData(response);
+            //     tab_producto.update();
+            //     tab_producto.show();
+            // }
+
+
+        }, complete: function () {
+            $('.loaders').addClass('d-none');
+            // $('#load-grb').addClass('d-none');
+            // $('#btn-grb-empresa-form').removeClass('d-none');
+        }
+    });
+
+  }
+
+
+  var selectOrderIcon = function(cell, formatterParams, onRendered){ //plain text value
+      return "<i class='fas fa-check'></i>";
+  };
+
+  table_lista_ordenes = new Tabulator("#table-lista-ordenes", {
+        
+    //layout:"fitColumns",
+    //ajaxURL: '',
+    //ajaxProgressiveLoad:"scroll",
+  // paginationSize:6,
+    height:"211px",
+    placeholder:"No hay Datos",
+    ajaxProgressiveLoad:"scroll",
+            paginationSize:20,
+    //pagination:"remote",
+    //paginationSizeSelector:[3, 6, 8, 10],
+    //movableColumns:true,
+    columns:[
+      {formatter:selectOrderIcon, width:40, hozAlign:"center", 
+                    cellClick:function(e, cell){
+                                //alert("Printing row data for: " + cell.getRow().getData().name)
+                               // console.log(cell.getRow().getData());
+                                // // $("#textidentification").val(cell.getRow().getData().identification);
+                                // // $("#textbuscarcliente").val(cell.getRow().getData().name);
+                                // // $("#textaddressdelivery").val(cell.getRow().getData().address);
+                                // // $("#textbuscarcliente").attr("codigocliente", cell.getRow().getData().id);
+                                // // $("#textphone1").val(cell.getRow().getData().phone1);
+                                // // $("#textphone2").val(cell.getRow().getData().phone2);
+                                // // $("#textEmail").val(cell.getRow().getData().email);
+                                $('#textbuscarPedido').val(cell.getRow().getData().id);
+                                $("#textbuscarcliente").val(cell.getRow().getData().nombre_cliente);
+                                $("#textidentification").val(cell.getRow().getData().identification);
+                                $("#textEmail").val(cell.getRow().getData().email_cliente);
+                                $("#textphone1").val(cell.getRow().getData().phone1);
+                                $("#textphone2").val(cell.getRow().getData().phone2);
+                                $("#colaborador").val(cell.getRow().getData().nombre_usuario);
+                                $("#fechaActual").val(cell.getRow().getData().delivery_date);
+                                $("#horaActual").val(cell.getRow().getData().delivery_time);
+                                $("#textaddressdelivery").val(cell.getRow().getData().delivery_address);
+                                $("#textObservacion").val(cell.getRow().getData().observation);
+
+                                $("#txtTotalOrden").val(cell.getRow().getData().total_order);
+                                $("#txt_totalComision").val(cell.getRow().getData().total_comission);
+                                $("#modal-buscarPedido").modal("hide");
+                            }},
+      {title:"Id", field:"id",headerFilter:"input"},
+      {title:"Fecha Orden", field:"delivery_date"},
+      {title:"Hora", field:"delivery_time"},
+      {title:"Direccion", field:"delivery_address"},//
+      {title:"Total Orden", field:"total_order"},//
+      {title:"Total Comision", field:"total_comission"},//
+      {title:"Observacion", field:"observation"},//
+      {title:"status_comission", field:"status_comission"},///
+      {title:"Cod Sector", field:"sector_cod"},//
+      {title:"Cod Ciudad", field:"city_sale_cod"},//
+      {title:"Id CLiente", field:"client_id"},//
+      {title:"Id Colaborador", field:"collaborator_id"},//
+      {title:"Cod orden Estado", field:"order_status_cod"},//
+      {title:"Nombre del Sector", field:"nombre_sector"},
+      {title:"Nombre de Ciudad", field:"nombre_ciudad"},
+      {title:"Nombre Estado Orden", field:"nombre_estado_ord"},
+      {title:"Identicacion", field:"identification"},
+      {title:"Nombre Colaborador", field:"nombre_colaborador"}
+      //{title:"Date Of Birth", field:"dob", hozAlign:"center"},
+      ],
+  });
+
 
 });

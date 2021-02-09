@@ -39,7 +39,67 @@
 
 
 @section('content_header')
-    <h1> <i class="fab fa-creative-commons-share"></i> Registrar pedido</h1>
+    <div class="row">
+        <div class="col-md-6">
+            <h1> <i class="fab fa-creative-commons-share"></i> Registrar pedido</h1>
+        </div>
+
+        {{-- <div class="col-md-5">
+
+            <div class="input-group mb-4"><label for="orderStatus">Estado de Pedido : </label>
+                <div class="input-group-prepend">
+                    <span class="input-group-text" id="basic-sector"><i class="far fa-list-alt"></i></span>
+                </div>
+                <select id="orderStatus" name="orderStatus" class="form-control">
+                    <option value=0 disabled>------Seleccionar------</option>
+                    @foreach ($orderStatus as $estado)
+                        <option value="{{ $estado->codigo }}">{{ $estado->name }}</option>
+                      
+                    @endforeach
+                </select>
+
+            </div>
+        </div> --}}
+    </div>
+
+    <div class="row">
+
+        <div class="col-md-6">
+            <label for="name_client">Buscar Pedido:</label>
+            <div class="input-group mb-3">
+                <div class="input-group-prepend">
+                    <span class="input-group-text">
+                        <i class="fa fa-clipboard"></i>
+                    </span>
+                </div>
+                <input type="search" class="form-control" placeholder="Buscar Pedido" aria-label="Search"
+                    aria-describedby="search-addon" id="textbuscarPedido" codigocliente=0 disabled />
+                <div class="input-group-append">
+                    <div class="input-group-text" type="button" id="btn-buscar-pedido"><i class="fa fa-search"></i></div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-6">
+            <label for="orderStatus">Estado de Pedido : </label>
+            <div class="input-group mb-4">
+                <div class="input-group-prepend">
+                    <span class="input-group-text" id="basic-sector"><i class="fa fa-exclamation-triangle"></i></span>
+                </div>
+                <select id="orderStatus" name="orderStatus" class="form-control">
+                    <option value=0 disabled>------Seleccionar------</option>
+                    @foreach ($orderStatus as $estado)
+                        <option value="{{ $estado->codigo }}">{{ $estado->name }}</option>
+                        {{-- <option value="{{$sector->codigo}}"> {{$sector->name}} </option> --}}
+                    @endforeach
+                </select>
+
+            </div>
+        </div>
+    </div>
+
+
+
 @stop
 
 @section('content')
@@ -51,6 +111,7 @@
         <div class="card-body">
             <form action="{{ route('clientes.lista') }}" id="form-listarclientes"></form>
             <form action="{{ route('productos.lista') }}" id="form-listarproductos"></form>
+            <form action="{{ route('orders.lista') }}" id="form-lista-pedidos"></form>
             <div class="form-group">
                 <div class="row">
 
@@ -90,6 +151,83 @@
                         </div>
                     </div>
                 </div>
+
+
+                <div class="row">
+
+                    <div class="col-md-6">
+                        <label for="phone1">Telefonos:</label>
+                        <div class="input-group mb-6">
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text">
+                                        <i class="fa fa-phone"></i>
+                                    </span>
+                                </div>
+
+                                {!! Form::text('phone1', null, [
+                                'class' =>
+                                'form-control' .
+                                ($errors->has('phone1')
+                                ? '
+                                is-invalid'
+                                : ''),
+                                'placeholder' => 'Telefono 1',
+                                'id' => 'textphone1',
+                                'disabled',
+                                ]) !!}
+
+                                {!! Form::text('phone2', null, [
+                                'class' =>
+                                'form-control' .
+                                ($errors->has('phone2')
+                                ? '
+                                is-invalid'
+                                : ''),
+                                'placeholder' => 'Telefono 2',
+                                'id' => 'textphone2',
+                                'disabled',
+                                ]) !!}
+
+
+                            </div>
+                        </div>
+                        {{-- <div class="input-group mb-3">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text">
+                                    <i class="fa fa-user-plus"></i>
+                                </span>
+                            </div>
+                            <input type="search" class="form-control" placeholder="Buscar cliente" aria-label="Search"
+                                aria-describedby="search-addon" id="textbuscarcliente" codigocliente=0 disabled />
+                            <div class="input-group-append">
+                                <div class="input-group-text" type="button" id="btn-buscarpersona"><i
+                                        class="fa fa-search"></i></div>
+                            </div>
+                        </div> --}}
+                    </div>
+                    <div class="col-md-6">
+                        <label for="email">Correo:</label>
+                        <div class="input-group mb-3">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text" id="basic-addon1"><i class="fa fa-envelope"
+                                        aria-hidden="true"></i></span>
+                            </div>
+                            {!! Form::text('email', null, [
+                            'class' =>
+                            'form-control' .
+                            ($errors->has('email')
+                            ? '
+                            is-invalid'
+                            : ''),
+                            'placeholder' => 'Email',
+                            'id' => 'textEmail',
+                            'disabled',
+                            ]) !!}
+                        </div>
+                    </div>
+                </div>
+
 
                 <div class="row">
                     <div class='col-sm-6'>
@@ -418,7 +556,7 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" id="btn-cancelar-pedido" class="btn btn-danger">Cancelar</button>
-                    <button type="button" id="btn-guardar-estb" class="btn btn-success">Guardar</button>
+                    {{-- <button type="button" id="btn-guardar-estb" class="btn btn-success">Guardar</button> --}}
                 </div>
             </div>
         </div>
@@ -442,6 +580,28 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" id="btn-cancelar-producto" class="btn btn-danger">Cancelar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal Buscar Pedidos -->
+    <div class="modal fade" id="modal-buscarPedido" data-backdrop="static" data-keyboard="false" tabindex="-1"
+        aria-labelledby="staticBackdropLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="staticBackdropLabel">Lista de Pedidos</h5>
+                    {{-- <button type="button" class="btn-close" data-bs-dismiss="modal"
+                  aria-label="Close"></button> --}}
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div id="table-lista-ordenes"></div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" id="btn-cancelar-modal-pedido" class="btn btn-danger">Cancelar</button>
                 </div>
             </div>
         </div>

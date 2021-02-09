@@ -10,6 +10,7 @@ use App\Models\Category;
 use App\Models\TypeIdentification;
 use Spatie\Permission\Models\Permission;
 use App\Models\Product;
+use App\Models\OrderStatus;
 
 class TablesSeeder extends Seeder
 {
@@ -34,6 +35,10 @@ class TablesSeeder extends Seeder
 
         $typeIdentification = new TablesSeeder();
         $typeIdentification->typeIdentificationTable();
+
+        $orderStatus = new OrderStatus();
+        $orderStatus->orderStatusTable();
+        
         
     }
 
@@ -156,4 +161,33 @@ class TablesSeeder extends Seeder
            // 'status' => 'A'
         ]);
     }
+
+
+    public function orderStatusTable()
+    {
+        OrderStatus::create([
+            'codigo'      => 'OP',
+            'name'     => 'Pendiente',
+            'description'     => 'La orden ha sido ingresada'
+        ]);
+
+        OrderStatus::create([
+            'codigo'      => 'OC',
+            'name'     => 'Cancelado',
+            'description'     => 'El pedido ha sido cancelado'
+        ]);
+
+        OrderStatus::create([
+            'codigo'      => 'OE',
+            'name'     => 'Entregado',
+            'description'     => 'El pedido ha sido entregado'
+        ]);
+
+        OrderStatus::create([
+            'codigo'      => 'OR',
+            'name'     => 'PendienteReagendado',
+            'description'     => 'El pedido ha cambiado la fecha de entrega'
+        ]);
+    }
+
 }

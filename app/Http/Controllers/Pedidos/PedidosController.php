@@ -13,6 +13,8 @@ use App\Models\Sector;
 use App\Models\Client;
 use App\Models\CitySale;
 use App\Models\Product;
+use App\Models\OrderStatus;
+
 
 
 use Illuminate\Support\Facades\Redis;
@@ -29,10 +31,10 @@ class PedidosController extends Controller
        //$sectors = Sector::orderBy('codigo', 'asc')->pluck('name','codigo');
        $sectors = Sector::where('status', '=', 'A')->get();
        $citySale = CitySale::where('status', '=', 'A')->get();
-       
+       $orderStatus = OrderStatus::all();
       // $category = Category::orderBy('id', 'asc')->pluck('name','id');
 
-        return view('pedido.create', compact('name','sectors','citySale'));//compact('category','name','sectors'));
+        return view('pedido.create', compact('name','sectors','citySale', 'orderStatus'));//compact('category','name','sectors'));
     }
 
     
@@ -72,13 +74,56 @@ class PedidosController extends Controller
                     'products.category_id' ,
                     'b.name AS name_categories'
                  )
-        ->where('products.status','=','A')
+        ->where('products.status','=','A' )
+        ->where('products.quantity','>',0  )
         ->get();
    
          return response()->json(['data' => $product], 200);
     
     }
 
+    public function listaOrders_json(){
+        
+       
+        
+        $orders = Order::join("sectors AS b","orders.sector_cod","=","b.codigo")
+        ->join("city_sales AS c","orders.city_sale_cod","=","c.codigo")
+        ->join("order_statuses AS d","orders.order_status_cod","=","d.codigo")
+        ->join("collaborators AS e","orders.collaborator_id","=","e.id")
+        ->join("clients AS f","orders.client_id","=","f.id")
+        ->join("users AS g","orders.collaborator_id","=","g.id")
+        ->select(
+            'orders.id',
+            'orders.delivery_date',
+            'orders.delivery_time',
+            'orders.delivery_address',
+            'orders.total_order',
+            'orders.total_comission',
+            'orders.observation',
+            'orders.status_comission',
+            'orders.sector_cod',
+            'orders.city_sale_cod',
+            'orders.client_id',
+            'orders.collaborator_id',
+            'orders.order_status_cod',
+            'b.name AS nombre_sector',
+            'c.name AS nombre_ciudad',
+            'd.name AS nombre_estado_ord',
+            'e.identification',
+            'e.name AS nombre_colaborador',
+            'f.phone1' ,
+            'f.phone2',
+            'f.email',
+            'f.identification',
+            'f.name AS nombre_cliente',
+            'g.name AS nombre_usuario',
+            'g.email AS email_cliente'
+                 )
+        ->where('orders.order_status_cod','=','OP' )
+        //->where('products.quantity','>',0  )
+        ->get();
+        return response()->json(['data' => $orders], 200);
+    }
 
       public function createOrden(Request $request){
 
@@ -151,8 +196,8 @@ class PedidosController extends Controller
                                                                 $p_in_discount_porcentage =  $value['discount_porcentage'];
                                                                 $p_in_price_discount  =  $value['price_discount'];
                                                                 $p_in_total_line =  $value['total_line'];
-                                                                $p_in_comission  =  0.00;//$value['id_product'];
-                                                                $p_in_total_comission = 0.00; //$value['id_product'];
+                                                                $p_in_comission  =  $value['comission'];
+                                                                $p_in_total_comission = $value['total_comission'];
 
 
                                                                 $insertadoDetalle = DB::insert('insert order_product (

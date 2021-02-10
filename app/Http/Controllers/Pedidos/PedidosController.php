@@ -14,12 +14,15 @@ use App\Models\Client;
 use App\Models\CitySale;
 use App\Models\Product;
 use App\Models\OrderStatus;
-
+use App\Models\OrderProduct;
+use App\Models\Pivot;
 
 
 use Illuminate\Support\Facades\Redis;
 use Spatie\Permission\Models\Role;
 use Illuminate\Support\Facades\Auth;
+
+
 
 class PedidosController extends Controller
 {
@@ -123,6 +126,37 @@ class PedidosController extends Controller
         //->where('products.quantity','>',0  )
         ->get();
         return response()->json(['data' => $orders], 200);
+    }
+
+
+    public function detalleOrders_json(Request $request ){
+        $v_id_orden = $request->id_orden;
+      //Eloquent ORM
+        //$detalle_orders = OrderProduct:://join("orders AS a","order_product.order","=","a.id")
+        //->join("products AS b","order_product.product_id","=","b.id")
+
+        
+        
+         //Database: Query Builder
+        $detalle_orders = DB::table('order_product')
+        ->join('orders AS a', 'order_product.order_id', '=', 'a.id')
+        ->join('products AS b', 'order_product.product_id', '=', 'b.id')
+        ->select(
+            'order_product.order_id',
+            'order_product.product_id',
+            'order_product.name_product',
+            'order_product.quantity',
+            'order_product.price',
+            'order_product.discount_porcentage',
+            'order_product.price_discount',
+            'order_product.total_line',
+            'order_product.comission',
+            'order_product.total_comission'
+                 )
+        ->where('order_product.order_id','=',$v_id_orden ) 
+        ->where('a.id','=',$v_id_orden)
+        ->get();
+        return response()->json(['data' => $detalle_orders], 200);
     }
 
       public function createOrden(Request $request){

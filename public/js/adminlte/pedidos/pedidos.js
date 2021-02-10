@@ -618,6 +618,53 @@ $(document).ready(function () {
 
   }
 
+  /**
+   * 
+   */
+  function cargarDetallePedido(v_id_orden){
+    $.ajax({
+        type: 'GET',
+        url: $('#form-detalle-pedidos').attr("action"),
+        data: {
+            //opcion: 'AC',//dat_busq === '' ? 'AA' : 'AB',
+            id_orden: v_id_orden
+        },
+        // dataType: "dataType",
+        beforeSend: function () {
+            $('.loaders').removeClass('d-none');
+            // $('#load-grb').removeClass('d-none');
+            // $('#btn-grb-empresa-form').addClass('d-none');
+        },
+        success: function (response) {
+
+          table_detalle_factura.replaceData(response.data);
+          //console.log(response);
+
+            // if (response === 0) {
+            //     Swal.fire({
+            //         icon: 'error',
+            //         title: 'Alerta!',
+            //         text: 'No Exite Registro!'
+            //         //footer: '<a href>Why do I have this issue?</a>'
+            //     });
+            // } else {
+
+         /////  table_lista_ordenes.replaceData(response.data);
+            //     tab_producto = new FancyGrid.get('tb-producto-modal');
+            //     tab_producto.setData(response);
+            //     tab_producto.update();
+            //     tab_producto.show();
+            // }
+
+
+        }, complete: function () {
+            $('.loaders').addClass('d-none');
+            // $('#load-grb').addClass('d-none');
+            // $('#btn-grb-empresa-form').removeClass('d-none');
+        }
+    });
+
+  }
 
   var selectOrderIcon = function(cell, formatterParams, onRendered){ //plain text value
       return "<i class='fas fa-check'></i>";
@@ -640,7 +687,7 @@ $(document).ready(function () {
       {formatter:selectOrderIcon, width:40, hozAlign:"center", 
                     cellClick:function(e, cell){
                                 //alert("Printing row data for: " + cell.getRow().getData().name)
-                               // console.log(cell.getRow().getData());
+                               //console.log(cell.getRow().getData());
                                 // // $("#textidentification").val(cell.getRow().getData().identification);
                                 // // $("#textbuscarcliente").val(cell.getRow().getData().name);
                                 // // $("#textaddressdelivery").val(cell.getRow().getData().address);
@@ -650,6 +697,7 @@ $(document).ready(function () {
                                 // // $("#textEmail").val(cell.getRow().getData().email);
                                 $('#textbuscarPedido').val(cell.getRow().getData().id);
                                 $("#textbuscarcliente").val(cell.getRow().getData().nombre_cliente);
+                                $("#textbuscarcliente").attr("codigocliente",cell.getRow().getData().client_id);
                                 $("#textidentification").val(cell.getRow().getData().identification);
                                 $("#textEmail").val(cell.getRow().getData().email_cliente);
                                 $("#textphone1").val(cell.getRow().getData().phone1);
@@ -659,10 +707,15 @@ $(document).ready(function () {
                                 $("#horaActual").val(cell.getRow().getData().delivery_time);
                                 $("#textaddressdelivery").val(cell.getRow().getData().delivery_address);
                                 $("#textObservacion").val(cell.getRow().getData().observation);
-
+                                $('#sectors').val(cell.getRow().getData().sector_cod).change();
+                                $('#city').val(cell.getRow().getData().city_sale_cod).change();
+                                $('#orderStatus').val(cell.getRow().getData().order_status_cod).change();
                                 $("#txtTotalOrden").val(cell.getRow().getData().total_order);
                                 $("#txt_totalComision").val(cell.getRow().getData().total_comission);
                                 $("#modal-buscarPedido").modal("hide");
+                                const id_order_cab = cell.getRow().getData().id;
+                                cargarDetallePedido(id_order_cab);
+
                             }},
       {title:"Id", field:"id",headerFilter:"input"},
       {title:"Fecha Orden", field:"delivery_date"},

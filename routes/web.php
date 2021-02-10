@@ -42,6 +42,7 @@ Route::get('create_orders',  [PedidosController::class, 'index' ])->name('orders
 Route::get('list_clients', [PedidosController::class, 'listaClientes_json' ])->name('clientes.lista');
 Route::get('list_products', [PedidosController::class, 'listaProductos_json' ])->name('productos.lista');
 Route::get('lista_orders', [PedidosController::class, 'listaOrders_json' ])->name('orders.lista');
+Route::get('detalle_orders', [PedidosController::class, 'detalleOrders_json' ])->name('orders.detalle');
 Route::post('generate_order', [PedidosController::class, 'createOrden' ])->name('orden.create');
 //Ciudades
 Route::resource('cities', CityController::class)

@@ -112,6 +112,7 @@
             <form action="{{ route('clientes.lista') }}" id="form-listarclientes"></form>
             <form action="{{ route('productos.lista') }}" id="form-listarproductos"></form>
             <form action="{{ route('orders.lista') }}" id="form-lista-pedidos"></form>
+            <form action="{{ route('orders.detalle') }}" id="form-detalle-pedidos"></form>
             <div class="form-group">
                 <div class="row">
 

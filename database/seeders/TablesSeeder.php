@@ -33,14 +33,15 @@ class TablesSeeder extends Seeder
 
         $products = new TablesSeeder();
         $products->productTable();
-
+     
         $typeIdentification = new TablesSeeder();
         $typeIdentification->typeIdentificationTable();
 
-        $orderStatus = new OrderStatus();
-        $orderStatus->orderStatusTable();
+        $orderStatus = new TablesSeeder();
+        $orderStatus->orderstatusTable();
 
-        $collaborator = new Collaborator();
+    
+        $collaborator = new TablesSeeder();
         $collaborator->collaboratorTable();
         
         
@@ -167,8 +168,7 @@ class TablesSeeder extends Seeder
     }
 
 
-    public function orderStatusTable()
-    {
+    public function orderstatusTable(){
         OrderStatus::create([
             'codigo'      => 'OP',
             'name'     => 'Pendiente',
@@ -193,7 +193,7 @@ class TablesSeeder extends Seeder
             'description'     => 'El pedido ha cambiado la fecha de entrega'
         ]);
     }
-
+   
 
 
     public function collaboratorTable()

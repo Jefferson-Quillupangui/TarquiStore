@@ -11,6 +11,7 @@ class OrderStatus extends Model
 {
     use HasFactory;
 
+    protected $table = 'order_statuses';
     protected $fillable = ['codigo','name','description'];
     protected $primaryKey="codigo";
     protected $keyType = 'string';

@@ -11,6 +11,7 @@ use App\Models\TypeIdentification;
 use Spatie\Permission\Models\Permission;
 use App\Models\Product;
 use App\Models\OrderStatus;
+use App\Models\Collaborator;
 
 class TablesSeeder extends Seeder
 {
@@ -38,6 +39,9 @@ class TablesSeeder extends Seeder
 
         $orderStatus = new OrderStatus();
         $orderStatus->orderStatusTable();
+
+        $collaborator = new Collaborator();
+        $collaborator->collaboratorTable();
         
         
     }
@@ -189,5 +193,28 @@ class TablesSeeder extends Seeder
             'description'     => 'El pedido ha cambiado la fecha de entrega'
         ]);
     }
+
+
+
+    public function collaboratorTable()
+    {
+        Collaborator::create([
+            'identification'      => '099999999',
+            'name'     => 'Admin',
+            'phone'     => '099999999',
+            'status'     => 'A',
+            'user_id'     => 1,
+        ]);
+
+        Collaborator::create([
+            'identification'      => '0111111111',
+            'name'     => 'Vendedor',
+            'phone'     => '0111111111',
+            'status'     => 'A',
+            'user_id'     => 2,
+        ]);
+    }
+
+   
 
 }

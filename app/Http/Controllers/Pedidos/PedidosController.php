@@ -128,6 +128,19 @@ class PedidosController extends Controller
         return response()->json(['data' => $orders], 200);
     }
 
+    
+    public function stock_product_json(Request $request){
+        
+        $v_id_producto = $request->id_producto;
+        
+        $stock_product = Product::
+            select(
+                'quantity'
+            )
+        ->where('products.id','=',$v_id_producto)
+        ->get();
+        return response()->json(['data' => $stock_product], 200);
+    }
 
     public function detalleOrders_json(Request $request ){
         $v_id_orden = $request->id_orden;
@@ -288,6 +301,7 @@ class PedidosController extends Controller
     
     } 
 
+    
     
 
     // public function createOrden(Request $request){

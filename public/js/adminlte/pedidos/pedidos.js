@@ -33,13 +33,22 @@ $(document).ready(function () {
     $(document).on("click", "#btn-generarorden",function(){
         $('.loaders').removeClass('d-none');
 
-
         // var tableDetalleProducto = new Tabulator("#grid-table-detalle-pedido");
-         var tb_det_prodct = table_detalle_factura.getData();
+        var tb_det_prodct = table_detalle_factura.getData();
 
-         
-
-        
+        if(tb_det_prodct.length == 0){
+          $('.loaders').addClass('d-none');
+            
+            $.toast({
+              heading: 'Error',
+              text: 'Debe agregar productos',
+              showHideTransition: 'fade',
+              icon: 'error',
+              position: 'top-center',
+          })
+          
+         return false;
+       }
         $.ajax(
             {
               url : $('#form-crearorden').attr("action"),
@@ -53,7 +62,7 @@ $(document).ready(function () {
                 sector_cod  : $('#sectors').val(),
                 city_sale_cod  : $('#city').val(),
                 delivery_address : $('#textaddressdelivery').val(),
-                observation : $('#textObservacion').val(),
+                observation : $('#textObservacion').val()==="" ? "-" : $('#textObservacion').val(),
                 // status_comission : $('#').val(),
                 // order_status_cod  : $('#').val(),
                 total_order : $('#txtTotalOrden').val(),
@@ -186,7 +195,7 @@ $(document).ready(function () {
       //paginationSizeSelector:[3, 6, 8, 10],
       //movableColumns:true,
       columns:[
-
+        
          // : 0,
                               //     : o.item.data.id_product,
                               //     : o.item.data.cod_prod,
@@ -197,7 +206,7 @@ $(document).ready(function () {
                               //     : 0,
                               //     : 0
           {formatter:printIconDelete, width:40, hozAlign:"center", cellClick:function(e, cell){
-              if(confirm('Are you sure you want to delete this entry?')){
+              if(confirm('Desea borrar producto')){
                   cell.getRow().delete();
                   const uno = table_detalle_factura.getData();
                   
@@ -217,8 +226,16 @@ $(document).ready(function () {
           {title:"CANTIDAD", field:"quantity", sorter:"number", hozAlign:"center",editor:"input",
           cellEdited :function(cell){
 
-
+            let rpt_func_stock= 0;
+            consultarStockProducto(cell.getData().product_id)
+            .then(function(datosDevueltos){// Aquí el código para hacer algo con datosDevueltos
+              rpt_func_stock = datosDevueltos;
+              console.log(rpt_func_stock);
+            }, function(errorLanzado){// Aquí el código para hacer algo cuando ocurra un error.
+              console.log(errorLanzado);
+            });
               //console.log(cell.getData());
+              
            let id_cell = cell.getData().product_id;
            let v_cantidad =  cell.getData().quantity;
            parseInt(v_cantidad);
@@ -619,7 +636,7 @@ $(document).ready(function () {
   }
 
   /**
-   * 
+   * CArgar el detalle del pedido
    */
   function cargarDetallePedido(v_id_orden){
     $.ajax({
@@ -665,6 +682,50 @@ $(document).ready(function () {
     });
 
   }
+
+  /**
+   * consultar el stock del producto
+   * @param {*} cell 
+   * @param {*} formatterParams 
+   * @param {*} onRendered 
+   */
+  function consultarStockProducto (v_id_product){
+    // La primera diferencia es que no se le pasa un callback,
+    // La función devuelve una Promise
+    return new Promise(function(resolver, rechazar){
+      jQuery.ajax({
+        type: 'GET',
+        url:$('#form-stock-productos').attr("action"),
+        data: {
+          id_producto: v_id_product
+        },
+        success : function(response){
+          resolver(response.data[0].quantity);
+        },
+        error : function(error){rechazar(error)}
+      });
+    });
+  }
+  // function consultarStockProducto(v_id_product){
+    
+  //     var $valor=0;
+  //     $.ajax({
+  //         type: 'GET',
+  //         url: $('#form-stock-productos').attr("action"),
+  //         data: {
+  //             //opcion: 'AC',//dat_busq === '' ? 'AA' : 'AB',
+  //             id_producto: v_id_product
+  //         },
+  //         // dataType: "dataType",
+  //         beforeSend: function () {
+  //             $('.loaders').removeClass('d-none');
+  //         }, success: function (response) {
+  //          $valor = response.data[0].quantity;
+  //         }, complete: function () {
+  //             $('.loaders').addClass('d-none');
+  //         }
+  //   });
+  // }
 
   var selectOrderIcon = function(cell, formatterParams, onRendered){ //plain text value
       return "<i class='fas fa-check'></i>";

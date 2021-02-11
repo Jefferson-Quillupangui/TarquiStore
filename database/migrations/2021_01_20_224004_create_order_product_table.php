@@ -14,6 +14,9 @@ class CreateOrderProductTable extends Migration
     public function up()
     {
         Schema::create('order_product', function (Blueprint $table) {
+            
+            $table->integer('id_detalle_product')->index()->autoIncrement(); 
+
             $table->unsignedBigInteger('order_id');
 
             $table->foreign('order_id')

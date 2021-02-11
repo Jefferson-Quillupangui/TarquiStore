@@ -318,7 +318,7 @@ return [
                     'icon'  => 'fas fa-id-card-alt',
                 ],
                 [
-                    'text'      => 'Lista de pedidos',
+                    'text'      => 'Revisión de pedidos',
                     'route'     => 'list_orders',
                     'icon'      => 'fas fa-shopping-basket',
                 ],

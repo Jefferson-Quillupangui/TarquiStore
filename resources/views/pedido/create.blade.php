@@ -86,14 +86,26 @@
                 <div class="input-group-prepend">
                     <span class="input-group-text" id="basic-sector"><i class="fa fa-exclamation-triangle"></i></span>
                 </div>
+                @can('Administrar pedidos')                
+                    <select id="orderStatus" name="orderStatus" class="form-control">
+                        <option value=0 disabled>------Seleccionar------</option>
+                        @foreach ($orderStatus as $estado)
+                            <option value="{{ $estado->codigo }}">{{ $estado->name }}</option>
+                            {{-- <option value="{{$sector->codigo}}"> {{$sector->name}} </option> --}}
+                        @endforeach
+                    </select>
+                @else                
                 <select id="orderStatus" name="orderStatus" class="form-control">
                     <option value=0 disabled>------Seleccionar------</option>
                     @foreach ($orderStatus as $estado)
+                        @if (  $estado->codigo != 'OE')
                         <option value="{{ $estado->codigo }}">{{ $estado->name }}</option>
+                        @endif
+                       
                         {{-- <option value="{{$sector->codigo}}"> {{$sector->name}} </option> --}}
                     @endforeach
                 </select>
-
+                @endcan
             </div>
         </div>
     </div>

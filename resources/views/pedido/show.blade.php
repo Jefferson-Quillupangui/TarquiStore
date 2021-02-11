@@ -3,7 +3,7 @@
 @section('title', 'TarquiStore')
 
 @section('content_header')
-    <h1><i class="fas fa-th-large"></i> Lista de pedidos</h1>
+    <h1><i class="fas fa-th-large"></i> Revisión de pedidos</h1>
 @stop
 
 @section('css')

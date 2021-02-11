@@ -189,7 +189,7 @@ class TablesSeeder extends Seeder
 
         OrderStatus::create([
             'codigo'      => 'OR',
-            'name'     => 'PendienteReagendado',
+            'name'     => 'Reagendado',
             'description'     => 'El pedido ha cambiado la fecha de entrega'
         ]);
     }

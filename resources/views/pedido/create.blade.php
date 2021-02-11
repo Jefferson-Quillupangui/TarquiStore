@@ -39,7 +39,7 @@
 
 
 @section('content_header')
-    <div class="row">
+    <div class="row mb-4">
         <div class="col-md-6">
             <h1> <i class="fab fa-creative-commons-share"></i> Registrar pedido</h1>
         </div>
@@ -63,7 +63,6 @@
     </div>
 
     <div class="row">
-
         <div class="col-md-6">
             <label for="name_client">Buscar Pedido:</label>
             <div class="input-group mb-3">
@@ -101,7 +100,7 @@
                         @if (  $estado->codigo != 'OE')
                         <option value="{{ $estado->codigo }}">{{ $estado->name }}</option>
                         @endif
-                       
+                    
                         {{-- <option value="{{$sector->codigo}}"> {{$sector->name}} </option> --}}
                     @endforeach
                 </select>

@@ -18,12 +18,43 @@
         {{ csrf_field() }}
 
         {{-- Name field --}}
+
+        <div class="input-group mb-3">
+            <input type="text" name="identification" class="form-control {{ $errors->has('identification') ? 'is-invalid' : '' }}"
+                   value="{{ old('identification') }}" placeholder="{{ __('Cédula') }}" autofocus>
+            <div class="input-group-append">
+                <div class="input-group-text">
+                    <span class="fas fa-id-card-alt {{ config('adminlte.classes_auth_icon', '') }}"></span>
+                </div>
+            </div>
+            @if($errors->has('name'))
+                <div class="invalid-feedback">
+                    <strong>{{ $errors->first('name') }}</strong>
+                </div>
+            @endif
+        </div>
+
         <div class="input-group mb-3">
             <input type="text" name="name" class="form-control {{ $errors->has('name') ? 'is-invalid' : '' }}"
                    value="{{ old('name') }}" placeholder="{{ __('adminlte::adminlte.full_name') }}" autofocus>
             <div class="input-group-append">
                 <div class="input-group-text">
                     <span class="fas fa-user {{ config('adminlte.classes_auth_icon', '') }}"></span>
+                </div>
+            </div>
+            @if($errors->has('name'))
+                <div class="invalid-feedback">
+                    <strong>{{ $errors->first('name') }}</strong>
+                </div>
+            @endif
+        </div>
+        
+        <div class="input-group mb-3">
+            <input type="text" name="phone" class="form-control {{ $errors->has('phone') ? 'is-invalid' : '' }}"
+                   value="{{ old('phone') }}" placeholder="{{ __('Teléfono') }}" autofocus>
+            <div class="input-group-append">
+                <div class="input-group-text">
+                    <span class="fas fa-phone {{ config('adminlte.classes_auth_icon', '') }}"></span>
                 </div>
             </div>
             @if($errors->has('name'))

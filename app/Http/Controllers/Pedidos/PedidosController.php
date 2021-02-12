@@ -125,7 +125,9 @@ class PedidosController extends Controller
             'g.email AS email_cliente'
                  )
         //->where('orders.order_status_cod','=','OP' )
-        ->where('orders.order_status_cod',['OR','OP'] )
+        ->where('orders.order_status_cod','=','OR')
+                ->orWhere('orders.order_status_cod','=','OP')
+        //->where('orders.order_status_cod',['OR'] )
         //->where('products.quantity','>',0  )
         ->get();
         return response()->json(['data' => $orders], 200);

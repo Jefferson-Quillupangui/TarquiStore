@@ -1,4 +1,9 @@
 <x-guest-layout>
+    <!--Link de registro -->
+    <div class="fixed top-0 right-0 px-6 py-4 sm:block">
+        <a href="{{ route('register') }}" class="ml-4 text-sm text-gray-900 underline">Registrarse</a>
+    </div>
+
     <x-jet-authentication-card>
         <x-slot name="logo">
             {{-- <x-jet-authentication-card-logo /> --}}
@@ -32,7 +37,7 @@
             <div class="block mt-4">
                 <label for="remember_me" class="flex items-center">
                     <x-jet-checkbox id="remember_me" name="remember" />
-                    <span class="ml-2 text-sm text-gray-600">{{ __('Remember me') }}</span>
+                    <span class="ml-2 text-sm text-gray-600">{{ __('Recordarme') }}</span>
                 </label>
             </div>
 
@@ -40,7 +45,7 @@
                 @if (Route::has('password.request'))
                     <a class="underline text-sm text-gray-600 hover:text-gray-900"
                         href="{{ route('password.request') }}">
-                        {{ __('Forgot your password?') }}
+                        {{ __('¿Olvidaste tu contraseña?') }}
                     </a>
                 @endif
 

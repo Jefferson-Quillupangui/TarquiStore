@@ -17,6 +17,7 @@ use App\Models\OrderStatus;
 use App\Models\OrderProduct;
 use App\Models\Pivot;
 
+//use App\Class\C_Order;
 
 use Illuminate\Support\Facades\Redis;
 use Spatie\Permission\Models\Role;
@@ -41,7 +42,8 @@ class PedidosController extends Controller
     }
 
     
-
+  
+    
     
     public function listaClientes_json(){
 
@@ -155,6 +157,7 @@ class PedidosController extends Controller
         ->join('orders AS a', 'order_product.order_id', '=', 'a.id')
         ->join('products AS b', 'order_product.product_id', '=', 'b.id')
         ->select(
+            'order_product.id_detalle_product',
             'order_product.order_id',
             'order_product.product_id',
             'order_product.name_product',
@@ -174,7 +177,9 @@ class PedidosController extends Controller
 
       public function createOrden(Request $request){
 
-      
+        $opcion = $request->opcion;
+        $id_cab_pedido = $request->id_pedido;//pk auto
+
         $in_client_id	= $request->client_id;//bigint//
         $in_delivery_date= $request->delivery_date;	//date
         $in_delivery_time= $request->delivery_time;	//time
@@ -191,48 +196,52 @@ class PedidosController extends Controller
 
         $p_in_tabla_detalle = $request->detalleProductos;
         $json_tb_detalle_prodct = json_decode($p_in_tabla_detalle, true);
-        
+       
+        $dat_cab = $request;
 
+         DB::beginTransaction();
+         
+         if( $opcion == 'AA' ){
+             //Metodo de Guardar
+            
 
-        //
-
-        try {
-            $insertado = DB::insert('insert orders (delivery_date , delivery_time, delivery_address,
-                                                        total_order, total_comission ,  observation,
-                                                        status_comission, sector_cod,  city_sale_cod,
-                                                        client_id, collaborator_id, order_status_cod,
-                                                        created_at, updated_at
-            ) values (?,?,?,?,?,    ?,?,?,?,?,  ?,?,?,?)', [
-                                                        $in_delivery_date,  $in_delivery_time, $in_delivery_address,
-                                                        $in_total_order, $in_total_comission,
-                                                        $in_observation,$in_status_comission,$in_sector_cod,
-                                                        $in_city_sale_cod,$in_client_id,$in_collaborator_id,
-                                                        $in_order_status_cod,now(),now()]);
-
-                                                        $id_cab ;
-
-                                                       
-                                                        // $rpt_id;
-                                                        // //echo "------- Sólo valores -------\n\n";
-                                                        // foreach ($jsonObject->rates as $v){
-                                                        //     $rpt_id =  $v;
-                                                        // }
-                                                        
-                                                        $out_id_order = DB::selectOne('SELECT LAST_INSERT_ID() as id');
-                                                        $out_cod = 7;
-                                                        $out_msj = "Orden creada";
-
-                                                        foreach ($out_id_order as $key => $object) {
-                                                            $id_cab  = $object;
-                                                        }
+             try {
+                 $insertado = DB::insert('insert orders (delivery_date , delivery_time, delivery_address,
+                                                             total_order, total_comission ,  observation,
+                                                             status_comission, sector_cod,  city_sale_cod,
+                                                             client_id, collaborator_id, order_status_cod,
+                                                             created_at, updated_at
+                 ) values (?,?,?,?,?,    ?,?,?,?,?,  ?,?,?,?)', [
+                                                             $in_delivery_date,  $in_delivery_time, $in_delivery_address,
+                                                             $in_total_order, $in_total_comission,
+                                                             $in_observation,$in_status_comission,$in_sector_cod,
+                                                             $in_city_sale_cod,$in_client_id,$in_collaborator_id,
+                                                             $in_order_status_cod,now(),now()]);
+     
+                                                             $id_cab ;
+     
+                                                            
+                                                             // $rpt_id;
+                                                             // //echo "------- Sólo valores -------\n\n";
+                                                             // foreach ($jsonObject->rates as $v){
+                                                             //     $rpt_id =  $v;
+                                                             // }
+                                                             
+                                                             $out_id_order = DB::selectOne('SELECT LAST_INSERT_ID() as id');
+                                                             $out_cod = 7;
+                                                             $out_msj = "Orden creada";
+     
+                                                             foreach ($out_id_order as $key => $object) {
+                                                                 $id_cab  = $object;
+                                                             }
 
                                                         /**
-                                                         * procesar detalle
-                                                         */
+                                                        * procesar detalle
+                                                        */
                                                         //$id_cab = (int)$out_id_order;
                                                         // dd($out_id_order);
                                                         if ( $out_cod == 7) {
-
+                                                            DB::commit();
                                                             foreach ($json_tb_detalle_prodct as $value) {
                                                                 //dd($value);
                                                                 //$p_in_order_id =  $value['product_id'];//fk cabecera
@@ -273,35 +282,318 @@ class PedidosController extends Controller
                                                                         $p_in_total_comission,
                                                                 now(),now()]);
                                                                 
-                                                                //echo '<pre>'; print_r($insertadoDetalle);
-                                                                
-                                                            }
-                                                        }
-            
-                                                        /**
-                                                         * respuesta de cabecera 
-                                                         */
-                                                        $miArray = array('out_id_order'=>$out_id_order, 'out_cod'=>$out_cod, 'out_msj'=>$out_msj);
-                                                        return response()->json(['data' => $miArray], 200);
-                                                       
+                                                                $cantidad_actual;
+                                                                $product_quantity = DB::table('products')->where('id',$p_in_product_id )->pluck('quantity');
 
-				
-                                                        
-            // if($insertado){
-            // $id = DB::selectOne('SELECT LAST_INSERT_ID() as "id"');
-            // DB::rollback();
-            //     //DB::commit();
-            //     return 'Insertado correctamente con id ' . $id->id;
-            // }
+                                                                foreach ($product_quantity as $key => $object) {
+                                                                    $cantidad_actual  = $object;
+                                                                }
+                                                                
+                                                                
+                                                                $inventario = DB::table('products')
+                                                                ->where('id', $p_in_product_id )
+                                                                ->update(['quantity' => ($cantidad_actual - $p_in_quantity) ,
+                                                                          'updated_at' => now() ]);
+                                                            }
+
+                                                            DB::insert('insert into order_transaction (
+                                                            order_id, user_id, status_order, created_at, updated_at
+                                                            ) values (?, ?, ?, ?,? )', [ $id_cab, $in_collaborator_id, $in_order_status_cod,now(),now()]);
+                                                            
+                                                        }else{
+                                                            DB::rollback();
+                                                        }
+     
+                                                       
+                 
+                                                             /**
+                                                              * respuesta de cabecera 
+                                                              */
+                                                         $miArray = array('out_id_order'=>$out_id_order, 'out_cod'=>$out_cod, 'out_msj'=>$out_msj);
+                                                         return response()->json(['data' => $miArray], 200);
+                                                            
+                                            
+                 
+             } catch (\Exception $ex) {
+                 // $queries = DB::getQueryLog();
+                 // echo $ex->getMessage();
+                 DB::rollback();
+                 return response()->json(['data' =>$ex->getMessage()],500 );
+             }die("End");
+             
+         }elseif ($opcion == 'AB') {
+            //Metodo de Actualizar
+            try {
+
+                $actulizar = DB::table('orders')
+              ->where('id', $id_cab_pedido)
+              ->update(['delivery_date' => $in_delivery_date ,
+                        'delivery_time' => $in_delivery_time ,
+                        'delivery_address' => $in_delivery_address ,
+                        'total_order' => $in_total_order ,
+                        'total_comission' => $in_total_comission ,
+                        'observation' => $in_observation ,
+                        'status_comission' => $in_status_comission ,
+                        'sector_cod' => $in_sector_cod ,
+                        'city_sale_cod' => $in_city_sale_cod ,
+                        'collaborator_id' => $in_collaborator_id ,
+                        'order_status_cod' => $in_order_status_cod ,
+                        'updated_at' => now() ]);
+              
+               
+                                                            
+                        $out_id_order = $id_cab_pedido;
+                        $out_cod = 7;
+                        $out_msj = "Orden Actualizada";
+    
+                        // foreach ($out_id_order as $key => $object) {
+                        //     $id_cab  = $object;
+                        // }
+    
+                        //DB::commit();
+                        if ( $out_cod == 7) {
+                            DB::commit();
+                                foreach ($json_tb_detalle_prodct as $value) {
+                                    //dd($value);
+                                    //$p_in_order_id =  $value['product_id'];//fk cabecera
+                                    $p_in_id_detalle_product =  $value['id_detalle_product'];
+                                    $p_in_product_id =  $value['product_id'];
+                                    $p_in_name_product =  $value['name_product'];
+                                    $p_in_quantity  =  $value['quantity'];
+                                    $p_in_price =  $value['price'];
+                                    $p_in_discount_porcentage =  $value['discount_porcentage'];
+                                    $p_in_price_discount  =  $value['price_discount'];
+                                    $p_in_total_line =  $value['total_line'];
+                                    $p_in_comission  =  $value['comission'];
+                                    $p_in_total_comission = $value['total_comission'];
+
+
+                                    if($p_in_id_detalle_product > 0){
+                                        $detalle_pedido_actualizar = DB::table('order_product')
+                                        ->where('id_detalle_product' , $p_in_id_detalle_product)
+                                        ->update(
+                                            ['order_id' => $id_cab_pedido, 
+                                                'product_id' =>  $p_in_product_id,
+                                                'name_product' =>  $p_in_name_product ,
+                                                'quantity' => $p_in_quantity ,
+                                                'price' => $p_in_price,
+                                                'discount_porcentage' =>  $p_in_discount_porcentage,
+                                                'price_discount' =>  $p_in_price_discount,
+                                                'total_line' => $p_in_total_line,
+                                                'comission' => $p_in_comission,
+                                                'total_comission' => $p_in_total_comission,
+                                                'updated_at' => now()]);
+                                    }else{
+                                        $insertadoDetalle = DB::insert('insert order_product (
+                                            order_id,
+                                        product_id,
+                                        name_product,
+                                        quantity,
+                                        price,
+                                        discount_porcentage,
+                                        price_discount,
+                                        total_line,
+                                        comission,
+                                        total_comission,
+                                        created_at,
+                                        updated_at
+                                            ) values (?,?,?,?,?,    ?,?,?,?,?,  ?,?)', [
+                                                $id_cab_pedido ,// $out_id_order,
+                                               $p_in_product_id ,
+                                                $p_in_name_product,
+                                                $p_in_quantity ,
+                                                $p_in_price ,
+                                                $p_in_discount_porcentage ,
+                                                $p_in_price_discount ,
+                                                $p_in_total_line,
+                                                $p_in_comission,
+                                                $p_in_total_comission,
+                                        now(),now()]);
+                                    }
+                                    
+                                    
+                                }
+
+
+                                                                
+                                                                // $cantidad_actual;
+                                                                // $product_quantity = DB::table('products')->where('id',$p_in_product_id )->pluck('quantity');
+
+                                                                // foreach ($product_quantity as $key => $object) {
+                                                                //     $cantidad_actual  = $object;
+                                                                // }
+                                                                
+                                                                
+                                                                // $inventario = DB::table('products')
+                                                                // ->where('id', $p_in_product_id )
+                                                                // ->update(['quantity' => ($cantidad_actual - $p_in_quantity) ,
+                                                                //           'updated_at' => now() ]);
+                                
+                                
+                                DB::insert('insert into order_transaction (
+                                order_id, user_id, status_order, created_at, updated_at
+                                ) values (?, ?, ?, ?,? )', [ $id_cab_pedido, $in_collaborator_id, $in_order_status_cod,now(),now()]);
+                                                            
+                        }else{
+                            DB::rollback();
+                        }
+                
+                        /**
+                         * respuesta de cabecera 
+                         */
+                        $miArray = array('out_id_order'=>$out_id_order, 'out_cod'=>$out_cod, 'out_msj'=>$out_msj);
+                        return response()->json(['data' => $miArray], 200);
+                                                           
+                                                            
+                
+            } catch (\Exception $ex) {
+                // $queries = DB::getQueryLog();
+                // echo $ex->getMessage();
+                DB::rollback();
+                return response()->json(['data' =>$ex->getMessage()],500 );
+            }die("End");
             
-        } catch (\Throwable $e) {
-            DB::rollback();
-            throw $e;
+        } else {
+            // No existe Opcion para el metodo
+            return response()->json(['data' =>'Opcion no definida'],500 );
         }
+        
+        //
+       
     
     } 
 
     
+
+    // public function createOrden(Request $request){
+
+      
+    //     $in_client_id	= $request->client_id;//bigint//
+    //     $in_delivery_date= $request->delivery_date;	//date
+    //     $in_delivery_time= $request->delivery_time;	//time
+    //     $in_collaborator_id	= $request->collaborator_id; //bigint
+    //     $in_sector_cod= $request->sector_cod;	//varchar
+    //     $in_city_sale_cod	= $request->city_sale_cod;//varchar
+    //     $in_observation	= $request->observation;//mediumtext
+    //     $in_delivery_address= $request->delivery_address;	//mediumtext
+    //     $in_status_comission= 'f';	//varchar
+    //     $in_order_status_cod ='OP';	//varchar
+    //     $in_total_order= $request->total_order;	//decimal
+    //     $in_total_comission= $request->total_comission;	//decimal
+
+
+    //     $p_in_tabla_detalle = $request->detalleProductos;
+    //     $json_tb_detalle_prodct = json_decode($p_in_tabla_detalle, true);
+        
+
+
+    //     //
+
+    //     try {
+    //         $insertado = DB::insert('insert orders (delivery_date , delivery_time, delivery_address,
+    //                                                     total_order, total_comission ,  observation,
+    //                                                     status_comission, sector_cod,  city_sale_cod,
+    //                                                     client_id, collaborator_id, order_status_cod,
+    //                                                     created_at, updated_at
+    //         ) values (?,?,?,?,?,    ?,?,?,?,?,  ?,?,?,?)', [
+    //                                                     $in_delivery_date,  $in_delivery_time, $in_delivery_address,
+    //                                                     $in_total_order, $in_total_comission,
+    //                                                     $in_observation,$in_status_comission,$in_sector_cod,
+    //                                                     $in_city_sale_cod,$in_client_id,$in_collaborator_id,
+    //                                                     $in_order_status_cod,now(),now()]);
+
+    //                                                     $id_cab ;
+
+                                                       
+    //                                                     // $rpt_id;
+    //                                                     // //echo "------- Sólo valores -------\n\n";
+    //                                                     // foreach ($jsonObject->rates as $v){
+    //                                                     //     $rpt_id =  $v;
+    //                                                     // }
+                                                        
+    //                                                     $out_id_order = DB::selectOne('SELECT LAST_INSERT_ID() as id');
+    //                                                     $out_cod = 7;
+    //                                                     $out_msj = "Orden creada";
+
+    //                                                     foreach ($out_id_order as $key => $object) {
+    //                                                         $id_cab  = $object;
+    //                                                     }
+
+    //                                                     /**
+    //                                                      * procesar detalle
+    //                                                      */
+    //                                                     //$id_cab = (int)$out_id_order;
+    //                                                     // dd($out_id_order);
+    //                                                     if ( $out_cod == 7) {
+
+    //                                                         foreach ($json_tb_detalle_prodct as $value) {
+    //                                                             //dd($value);
+    //                                                             //$p_in_order_id =  $value['product_id'];//fk cabecera
+    //                                                             $p_in_product_id =  $value['product_id'];
+    //                                                             $p_in_name_product =  $value['name_product'];
+    //                                                             $p_in_quantity  =  $value['quantity'];
+    //                                                             $p_in_price =  $value['price'];
+    //                                                             $p_in_discount_porcentage =  $value['discount_porcentage'];
+    //                                                             $p_in_price_discount  =  $value['price_discount'];
+    //                                                             $p_in_total_line =  $value['total_line'];
+    //                                                             $p_in_comission  =  $value['comission'];
+    //                                                             $p_in_total_comission = $value['total_comission'];
+
+
+    //                                                             $insertadoDetalle = DB::insert('insert order_product (
+    //                                                                 order_id,
+    //                                                             product_id,
+    //                                                             name_product,
+    //                                                             quantity,
+    //                                                             price,
+    //                                                             discount_porcentage,
+    //                                                             price_discount,
+    //                                                             total_line,
+    //                                                             comission,
+    //                                                             total_comission,
+    //                                                             created_at,
+    //                                                             updated_at
+    //                                                                 ) values (?,?,?,?,?,    ?,?,?,?,?,  ?,?)', [
+    //                                                                     $id_cab ,// $out_id_order,
+    //                                                                    $p_in_product_id ,
+    //                                                                     $p_in_name_product,
+    //                                                                     $p_in_quantity ,
+    //                                                                     $p_in_price ,
+    //                                                                     $p_in_discount_porcentage ,
+    //                                                                     $p_in_price_discount ,
+    //                                                                     $p_in_total_line,
+    //                                                                     $p_in_comission,
+    //                                                                     $p_in_total_comission,
+    //                                                             now(),now()]);
+                                                                
+    //                                                             //echo '<pre>'; print_r($insertadoDetalle);
+                                                                
+    //                                                         }
+    //                                                     }
+            
+    //                                                     /**
+    //                                                      * respuesta de cabecera 
+    //                                                      */
+    //                                                     $miArray = array('out_id_order'=>$out_id_order, 'out_cod'=>$out_cod, 'out_msj'=>$out_msj);
+    //                                                     return response()->json(['data' => $miArray], 200);
+                                                       
+
+				
+                                                        
+    //         // if($insertado){
+    //         // $id = DB::selectOne('SELECT LAST_INSERT_ID() as "id"');
+    //         // DB::rollback();
+    //         //     //DB::commit();
+    //         //     return 'Insertado correctamente con id ' . $id->id;
+    //         // }
+            
+    //     } catch (\Throwable $e) {
+    //         DB::rollback();
+    //         throw $e;
+    //     }
+    
+    // } 
+
     
 
     // public function createOrden(Request $request){

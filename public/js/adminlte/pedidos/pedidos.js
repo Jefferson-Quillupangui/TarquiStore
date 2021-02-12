@@ -31,7 +31,10 @@ $(document).ready(function () {
    * Guardar el contenido del formulario de pedidos
    */
     $(document).on("click", "#btn-generarorden",function(){
-        $('.loaders').removeClass('d-none');
+        
+       let id_orden = $('#txt_id_cab_orden').val();
+
+        let msj = id_orden == '0' ? 'Guardar Pedido' : 'Actualizar Pedido';
 
         // var tableDetalleProducto = new Tabulator("#grid-table-detalle-pedido");
         var tb_det_prodct = table_detalle_factura.getData();
@@ -49,12 +52,32 @@ $(document).ready(function () {
           
          return false;
        }
-        $.ajax(
+
+      Swal.fire({
+        title: '<strong>' + msj + '</strong>',
+        icon: 'info',
+        html:
+            'Confirmar...',
+        showCloseButton: true,
+        showCancelButton: true,
+        focusConfirm: false,
+        confirmButtonText:
+            '<i class="fa fa-check"></i>',
+        confirmButtonAriaLabel: 'Thumbs up, great!',
+        cancelButtonText:
+            '<i class="fa fa-times"></i>',
+        cancelButtonAriaLabel: 'Thumbs down'
+      }).then((result) => {
+        if (result.value === true){
+          $('.loaders').removeClass('d-none');
+          $.ajax(
             {
               url : $('#form-crearorden').attr("action"),
               type: "POST",
               data : {
                 _token: $('#token').val(),
+                opcion : id_orden=="0" ?'AA' : 'AB',
+                id_pedido : id_orden,
                 client_id  :  $('#textbuscarcliente').attr("codigocliente"),
                 delivery_date  : $('#fechaActual').val(),
                 delivery_time : $('#horaActual').val(),
@@ -62,7 +85,7 @@ $(document).ready(function () {
                 sector_cod  : $('#sectors').val(),
                 city_sale_cod  : $('#city').val(),
                 delivery_address : $('#textaddressdelivery').val(),
-                observation : $('#textObservacion').val()==="" ? "-" : $('#textObservacion').val(),
+                observation : $('#textObservacion').val(),//$('#textObservacion').val()==="" ? "-" : $('#textObservacion').val(),
                 // status_comission : $('#').val(),
                 // order_status_cod  : $('#').val(),
                 total_order : $('#txtTotalOrden').val(),
@@ -74,7 +97,8 @@ $(document).ready(function () {
                 // addresdelivery:  $('#textaddressdelivery').val(),
               }
             }).done(function(dt) {
-                
+                console.log(dt);
+              $('.loaders').addClass('d-none');
                 if(dt.data.out_cod === 7){
                     $('.loaders').addClass('d-none');
                     Swal.fire({
@@ -108,9 +132,10 @@ $(document).ready(function () {
                 //alert( "complete" );
             });
 
-       
-       
 
+        }
+      });
+    
     }); 
 
     $(document).on("click", "#btn-buscarpersona",function(){
@@ -220,10 +245,11 @@ $(document).ready(function () {
                   }
               }
           },
+          {title:"ID DET", field:"id_detalle_product", sorter:"number", width:80},
           {title:"ID_PROCT", field:"product_id", sorter:"number", width:80},
           // {title:"id_product", field:"id_product", sorter:"string"},
           {title:"NOMBRE PRODUCTO", field:"name_product", sorter:"string"},
-          {title:"CANTIDAD", field:"quantity", sorter:"number", hozAlign:"center",editor:"input",
+          {title:"CANTIDAD", field:"quantity", sorter:"number", validator:["min:1", "max:10000", "numeric"],hozAlign:"center",editor:"input",
           cellEdited :function(cell){
 
             let rpt_func_stock= 0;
@@ -421,6 +447,7 @@ $(document).ready(function () {
 
                                 table_detalle_factura.updateOrAddData([
                                   {
+                                    id_detalle_product :0,
                                     product_id : obj.id,
                                     name_product : obj.name,
                                     quantity : 0,//obj.quantity,
@@ -757,6 +784,7 @@ $(document).ready(function () {
                                 // // $("#textphone2").val(cell.getRow().getData().phone2);
                                 // // $("#textEmail").val(cell.getRow().getData().email);
                                 $('#textbuscarPedido').val(cell.getRow().getData().id);
+                                $('#txt_id_cab_orden').val(cell.getRow().getData().id);
                                 $("#textbuscarcliente").val(cell.getRow().getData().nombre_cliente);
                                 $("#textbuscarcliente").attr("codigocliente",cell.getRow().getData().client_id);
                                 $("#textidentification").val(cell.getRow().getData().identification);

@@ -73,7 +73,7 @@
                     </span>
                 </div>
                 <input type="search" class="form-control" placeholder="Buscar Pedido" aria-label="Search"
-                    aria-describedby="search-addon" id="textbuscarPedido" codigocliente=0 disabled />
+                    aria-describedby="search-addon" id="textbuscarPedido" disabled />
                 <div class="input-group-append">
                     <div class="input-group-text" type="button" id="btn-buscar-pedido"><i class="fa fa-search"></i></div>
                 </div>
@@ -86,7 +86,7 @@
                 <div class="input-group-prepend">
                     <span class="input-group-text" id="basic-sector"><i class="fa fa-exclamation-triangle"></i></span>
                 </div>
-                @can('Administrar pedidos')                
+                @can('Administrar pedidos')
                     <select id="orderStatus" name="orderStatus" class="form-control">
                         <option value=0 disabled>------Seleccionar------</option>
                         @foreach ($orderStatus as $estado)
@@ -94,17 +94,17 @@
                             {{-- <option value="{{$sector->codigo}}"> {{$sector->name}} </option> --}}
                         @endforeach
                     </select>
-                @else                
-                <select id="orderStatus" name="orderStatus" class="form-control">
-                    <option value=0 disabled>------Seleccionar------</option>
-                    @foreach ($orderStatus as $estado)
-                        @if (  $estado->codigo != 'OE')
-                        <option value="{{ $estado->codigo }}">{{ $estado->name }}</option>
-                        @endif
-                       
-                        {{-- <option value="{{$sector->codigo}}"> {{$sector->name}} </option> --}}
-                    @endforeach
-                </select>
+                @else
+                    <select id="orderStatus" name="orderStatus" class="form-control">
+                        <option value=0 disabled>------Seleccionar------</option>
+                        @foreach ($orderStatus as $estado)
+                            @if ($estado->codigo != 'OE')
+                                <option value="{{ $estado->codigo }}">{{ $estado->name }}</option>
+                            @endif
+
+                            {{-- <option value="{{$sector->codigo}}"> {{$sector->name}} </option> --}}
+                        @endforeach
+                    </select>
                 @endcan
             </div>
         </div>
@@ -127,6 +127,14 @@
             <form action="{{ route('orders.detalle') }}" id="form-detalle-pedidos"></form>
             <form action="{{ route('stock.product') }}" id="form-stock-productos"></form>
             <div class="form-group">
+
+                <div class="row">
+
+                    <div class="input-group mb-3">
+                        ID :<input type="text" id="txt_id_cab_orden" name="txt_id_cab_orden" value=0 disabled>
+                    </div>
+                </div>
+
                 <div class="row">
 
                     {{-- <div class="input-group">

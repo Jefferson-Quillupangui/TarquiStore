@@ -124,7 +124,8 @@ class PedidosController extends Controller
             'g.name AS nombre_usuario',
             'g.email AS email_cliente'
                  )
-        ->where('orders.order_status_cod','=','OP' )
+        //->where('orders.order_status_cod','=','OP' )
+        ->where('orders.order_status_cod',['OR','OP'] )
         //->where('products.quantity','>',0  )
         ->get();
         return response()->json(['data' => $orders], 200);
@@ -189,7 +190,7 @@ class PedidosController extends Controller
         $in_observation	= $request->observation;//mediumtext
         $in_delivery_address= $request->delivery_address;	//mediumtext
         $in_status_comission= 'f';	//varchar
-        $in_order_status_cod ='OP';	//varchar
+        $in_order_status_cod = $request->order_status_cod;//'OP';	//varchar
         $in_total_order= $request->total_order;	//decimal
         $in_total_comission= $request->total_comission;	//decimal
 

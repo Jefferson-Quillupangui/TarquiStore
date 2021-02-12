@@ -5,7 +5,8 @@ $(document).ready(function () {
   var table_detalle_factura;
   var table_lista_ordenes;
 
-
+  $('#orderStatus').val('OP').change();
+    //$('#orderStatus').prop('disabled', false);
 
   var fecha = new Date(); //Fecha actual
   var mes = fecha.getMonth()+1; //obteniendo mes
@@ -85,9 +86,9 @@ $(document).ready(function () {
                 sector_cod  : $('#sectors').val(),
                 city_sale_cod  : $('#city').val(),
                 delivery_address : $('#textaddressdelivery').val(),
-                observation : $('#textObservacion').val(),//$('#textObservacion').val()==="" ? "-" : $('#textObservacion').val(),
+                observation : $('#textObservacion').val()==="" ? "-" : $('#textObservacion').val(),
                 // status_comission : $('#').val(),
-                // order_status_cod  : $('#').val(),
+                order_status_cod  : $('#orderStatus').val(),
                 total_order : $('#txtTotalOrden').val(),
                 total_comission :  $('#txt_totalComision').val(),
                 detalleProductos : JSON.stringify(tb_det_prodct),
@@ -139,10 +140,17 @@ $(document).ready(function () {
     }); 
 
     $(document).on("click", "#btn-buscarpersona",function(){
-        cargarClientes();   
-        $("#modal-buscarpersona").modal("show");
-        
+      // if( $('#textbuscarcliente').val() != ""){
+      //   document.getElementById("btn-modal-buscar-producto").disabled = false
+      // }else{
+      //   document.getElementById("btn-modal-buscar-producto").disabled = true
+      // }
+
+      cargarClientes();   
+      $("#modal-buscarpersona").modal("show");
+  
     });
+
     $(document).on("click", "#btn-cancelar-pedido",function(){
         $("#modal-buscarpersona").modal("hide");
     });
@@ -221,15 +229,6 @@ $(document).ready(function () {
       //movableColumns:true,
       columns:[
         
-         // : 0,
-                              //     : o.item.data.id_product,
-                              //     : o.item.data.cod_prod,
-                              //     cantidad: 0,
-                              //     : o.item.data.precio_unitario,
-                              //     : 0,
-                              //     : 0,
-                              //     : 0,
-                              //     : 0
           {formatter:printIconDelete, width:40, hozAlign:"center", cellClick:function(e, cell){
               if(confirm('Desea borrar producto')){
                   cell.getRow().delete();
@@ -277,21 +276,21 @@ $(document).ready(function () {
 
         //console.log(v_final_total);
 
-           const uno = table_detalle_factura.getData();
+           const get_data_detalle = table_detalle_factura.getData();
 
            var data_oj_detalle = [];
           
-           //var nuevo = uno.shift();
+           //var nuevo = get_data_detalle.shift();
            
-          for (var i in uno) {
-              if(uno[i].product_id === id_cell ){
-                    uno[i].total_line = v_final_total;
-                    uno[i].total_comission = v_total_comission;
-                     data_oj_detalle.push(uno[i]);
-                     //console.log(uno[i]);
+          for (var i in get_data_detalle) {
+              if(get_data_detalle[i].product_id === id_cell ){
+                  get_data_detalle[i].total_line = v_final_total;
+                  get_data_detalle[i].total_comission = v_total_comission;
+                  data_oj_detalle.push(get_data_detalle[i]);
+                     //console.log(get_data_detalle[i]);
               }else{
-                //console.log(uno[i]);
-                data_oj_detalle.push(uno[i]);
+                //console.log(get_data_detalle[i]);
+                data_oj_detalle.push(get_data_detalle[i]);
               }
                
                 
@@ -301,10 +300,10 @@ $(document).ready(function () {
 
           var total_prod = 0;
           var total_comis = 0;
-          for (var i in uno) {
+          for (var i in get_data_detalle) {
             
-            total_prod += parseFloat(uno[i].total_line);
-            total_comis += parseFloat(uno[i].total_comission);
+            total_prod += parseFloat(get_data_detalle[i].total_line);
+            total_comis += parseFloat(get_data_detalle[i].total_comission);
 
            
               
@@ -435,40 +434,75 @@ $(document).ready(function () {
     columns:[
       {formatter:printIconProduct, width:40, hozAlign:"center", 
                     cellClick:function(e, cell){
-                                //alert("Printing row data for: " + cell.getRow().getData().name)
+                                
+                      //alert("Printing row data for: " + cell.getRow().getData().name)
 
-                                // console.log(cell.getRow().getData());
-                                const obj = cell.getRow().getData();
-
-                                //update columns and data without destroying the table
-                                // $("#grid-table-detalle-pedido").tabulator("setColumns", res["column"]);
-                                // $("#grid-table-detalle-pedido").tabulator("setData", res["data"]);
-                                //var tablaliquidacion = FancyGrid.get('detalles_liquidacion_produccion');
-
-                                table_detalle_factura.updateOrAddData([
-                                  {
-                                    id_detalle_product :0,
-                                    product_id : obj.id,
-                                    name_product : obj.name,
-                                    quantity : 0,//obj.quantity,
-                                    price :  obj.price,
-                                    discount_porcentage : obj.discount,
-                                    price_discount : obj.price_discount,
-                                    comission : obj.comission,
-                                    total_comission : obj.comission,
-                                    total_line : 0,
-                                      // id_rgt_det: 0, 
-                                      // id_product:o.item.data.id_product,
-                                      // cod_prod: o.item.data.cod_prod,
-                                      // cantidad: 0,
-                                      // precio_unitario: o.item.data.precio_unitario,
-                                      // subtotal_prod: 0,
-                                      // desct_prod_porcent: 0,
-                                      // desct_prod_valor: 0,
-                                      // total_prod: 0
+                                 //console.log(cell.getRow().getData());
+                                 let id_prod = cell.getRow().getData().id;
+                                 const obj = cell.getRow().getData();
+                                 let bandera = true;
+ 
+                                  const get_data_detalle = table_detalle_factura.getData();
+                                  if( get_data_detalle.length != 0){
+ 
+                                     for (var i in get_data_detalle) {
+                                       
+                                       if(get_data_detalle[i].product_id === id_prod ){
+                                            $.toast({
+                                              heading: 'Warning',
+                                               text: 'El producto ya se encuentra en la lista. Seleccione otro Producto',
+                                               showHideTransition: 'fade',
+                                               icon: 'warning',
+                                               position: 'top-right'
+                                           })
+                                         bandera = false;
+                                         return false;
+                                        }
+                                     }
+ 
+                                     if(bandera != false){
+                                       table_detalle_factura.updateOrAddData([
+                                           {
+                                             id_detalle_product :0,
+                                             product_id : obj.id,
+                                             name_product : obj.name,
+                                             quantity : 0,//obj.quantity,
+                                             price :  obj.price,
+                                             discount_porcentage : obj.discount,
+                                             price_discount : obj.price_discount,
+                                             comission : obj.comission,
+                                             total_comission : obj.comission,
+                                             total_line : 0
+                                           }
+                                       ]);
+                                     }
+ 
+                                  }else{
+                                     table_detalle_factura.updateOrAddData([
+                                       {
+                                         id_detalle_product :0,
+                                         product_id : obj.id,
+                                         name_product : obj.name,
+                                         quantity : 0,//obj.quantity,
+                                         price :  obj.price,
+                                         discount_porcentage : obj.discount,
+                                         price_discount : obj.price_discount,
+                                         comission : obj.comission,
+                                         total_comission : obj.comission,
+                                         total_line : 0,
+                                           // id_rgt_det: 0, 
+                                           // id_product:o.item.data.id_product,
+                                           // cod_prod: o.item.data.cod_prod,
+                                           // cantidad: 0,
+                                           // precio_unitario: o.item.data.precio_unitario,
+                                           // subtotal_prod: 0,
+                                           // desct_prod_porcent: 0,
+                                           // desct_prod_valor: 0,
+                                           // total_prod: 0
+                                       }
+                                   ]);
                                   }
-                              ]);
-
+           
                               $("#modal-buscarProducto").modal("hide");
 
                                 // $("#textidentification").val(cell.getRow().getData().identification);
@@ -548,9 +582,52 @@ $(document).ready(function () {
 
   $(document).on("click", "#btn-modal-buscar-producto",function(){
 
+    let bandera = true;
+
+    const get_data_detalle_producto = table_detalle_factura.getData();
+
+    if( get_data_detalle_producto.length != 0){
+          for (var i in get_data_detalle_producto) {
+             if(get_data_detalle_producto[i].quantity === 0 || get_data_detalle_producto[i].quantity === '' ){
+                   
+                msj_productos_sin_cantidad(); 
+                bandera = false;
+                return false;
+             } 
+          }
+
+          if (bandera === false) {
+
+            msj_productos_sin_cantidad();   
+
+            bandera = false;
+            return false;
+
+          }else{
+               cargarListaProductos();
+              $("#modal-buscarProducto").modal("show");
+               return false;
+          }
+        
+    }else{
       cargarListaProductos();
       $("#modal-buscarProducto").modal("show");
+    }
   });
+
+
+  /**
+   * funcion de mensaje de productos
+   */
+  function msj_productos_sin_cantidad(){
+    $.toast({
+      heading: 'Warning',
+      text: 'Existe un producto que no tiene cantidad. Por favor ingrese cantidad para que pueda añadir un nuevo producto',
+      position: 'top-right',
+       icon: 'warning',
+      stack: false
+    })
+  }
 
   $(document).on("click", "#btn-cancelar-producto",function(){
     $("#modal-buscarProducto").modal("hide");
@@ -776,13 +853,7 @@ $(document).ready(function () {
                     cellClick:function(e, cell){
                                 //alert("Printing row data for: " + cell.getRow().getData().name)
                                //console.log(cell.getRow().getData());
-                                // // $("#textidentification").val(cell.getRow().getData().identification);
-                                // // $("#textbuscarcliente").val(cell.getRow().getData().name);
-                                // // $("#textaddressdelivery").val(cell.getRow().getData().address);
-                                // // $("#textbuscarcliente").attr("codigocliente", cell.getRow().getData().id);
-                                // // $("#textphone1").val(cell.getRow().getData().phone1);
-                                // // $("#textphone2").val(cell.getRow().getData().phone2);
-                                // // $("#textEmail").val(cell.getRow().getData().email);
+                             
                                 $('#textbuscarPedido').val(cell.getRow().getData().id);
                                 $('#txt_id_cab_orden').val(cell.getRow().getData().id);
                                 $("#textbuscarcliente").val(cell.getRow().getData().nombre_cliente);
@@ -798,7 +869,8 @@ $(document).ready(function () {
                                 $("#textObservacion").val(cell.getRow().getData().observation);
                                 $('#sectors').val(cell.getRow().getData().sector_cod).change();
                                 $('#city').val(cell.getRow().getData().city_sale_cod).change();
-                                $('#orderStatus').val(cell.getRow().getData().order_status_cod).change();
+                                $('#orderStatus').val(cell.getRow().getData().order_status_cod).change().prop('disabled', false);
+                                //$('#orderStatus').prop('disabled', false);
                                 $("#txtTotalOrden").val(cell.getRow().getData().total_order);
                                 $("#txt_totalComision").val(cell.getRow().getData().total_comission);
                                 $("#modal-buscarPedido").modal("hide");
@@ -806,27 +878,39 @@ $(document).ready(function () {
                                 cargarDetallePedido(id_order_cab);
 
                             }},
-      {title:"Id", field:"id",headerFilter:"input"},
-      {title:"Fecha Orden", field:"delivery_date"},
-      {title:"Hora", field:"delivery_time"},
-      {title:"Direccion", field:"delivery_address"},//
-      {title:"Total Orden", field:"total_order"},//
-      {title:"Total Comision", field:"total_comission"},//
-      {title:"Observacion", field:"observation"},//
-      {title:"status_comission", field:"status_comission"},///
-      {title:"Cod Sector", field:"sector_cod"},//
-      {title:"Cod Ciudad", field:"city_sale_cod"},//
-      {title:"Id CLiente", field:"client_id"},//
-      {title:"Id Colaborador", field:"collaborator_id"},//
-      {title:"Cod orden Estado", field:"order_status_cod"},//
-      {title:"Nombre del Sector", field:"nombre_sector"},
-      {title:"Nombre de Ciudad", field:"nombre_ciudad"},
-      {title:"Nombre Estado Orden", field:"nombre_estado_ord"},
-      {title:"Identicacion", field:"identification"},
-      {title:"Nombre Colaborador", field:"nombre_colaborador"}
-      //{title:"Date Of Birth", field:"dob", hozAlign:"center"},
+        {title:"N# Pedido", field:"id",hozAlign:"center",headerFilter:"input",headerFilterPlaceholder:"N# Pedido"},
+        {title:"Nombre Clientes", field:"nombre_cliente",headerFilter:"input",headerFilterPlaceholder:"Cliente"},
+        {title:"Identicacion", field:"identification",hozAlign:"center",headerFilter:"input",headerFilterPlaceholder:"Identificacion"},
+        {title:"Fecha Orden", field:"delivery_date" },
+        {title:"Hora", field:"delivery_time"},
+        {title:"Direccion", field:"delivery_address"},//
+        {title:"Total Orden", field:"total_order"},//
+        {title:"Total Comision", field:"total_comission"},//
+        {title:"Observacion", field:"observation"},//
+        {title:"status_comission", field:"status_comission"},///
+        {title:"Cod Sector", field:"sector_cod"},//
+        {title:"Cod Ciudad", field:"city_sale_cod"},//
+        {title:"Id CLiente", field:"client_id"},//
+        {title:"Id Colaborador", field:"collaborator_id"},//
+        {title:"Cod orden Estado", field:"order_status_cod"},//
+        {title:"Nombre del Sector", field:"nombre_sector"},
+        {title:"Nombre de Ciudad", field:"nombre_ciudad"},
+        {title:"Nombre Estado Orden", field:"nombre_estado_ord"},
+        {title:"Nombre Colaborador", field:"nombre_colaborador"},
+        // {//create column group
+        //   title: "ID",
+        //   columns: [
+        //     {title:"Cod Sector", field:"sector_cod"},//
+        //     {title:"Cod Ciudad", field:"city_sale_cod"},//
+        //     {title:"Id CLiente", field:"client_id"},//
+        //     {title:"Id Colaborador", field:"collaborator_id"}//
+              
+        //   ]
+        // },
       ],
   });
 
+  //table_lista_ordenes.hideColumn("sector_cod");
 
+  
 });

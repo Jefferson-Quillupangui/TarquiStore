@@ -39,76 +39,76 @@
 
 
 @section('content_header')
-    <div class="row mb-4">
+
+    <div class="card card-blue">
+        <div class="card-header">
+            <h3 class="card-title">Buscar Pedidos</h3>
+        </div>
+        <div class="card-body">
+            <div class="row">
+                <div class="col-md-6">
+                    <label for="name_client">Buscar Pedido:</label>
+                    <div class="input-group mb-3">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text">
+                                <i class="fa fa-clipboard"></i>
+                            </span>
+                        </div>
+                        <input type="search" class="form-control" placeholder="Buscar Pedido" aria-label="Search"
+                            aria-describedby="search-addon" id="textbuscarPedido" disabled />
+                        <div class="input-group-append">
+                            <div class="input-group-text" type="button" id="btn-buscar-pedido"><i class="fa fa-search"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-6 ">
+                    <label for="orderStatus">Estado de Pedido : </label>
+                    <div class="input-group mb-4">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text" id="basic-sector"><i
+                                    class="fa fa-exclamation-triangle"></i></span>
+                        </div>
+                        @can('Administrar pedidos')
+                            <select id="orderStatus" name="orderStatus" class="form-control" disabled>
+                                <option value=0 disabled>------Seleccionar------</option>
+                                @foreach ($orderStatus as $estado)
+                                    <option value="{{ $estado->codigo }}">{{ $estado->name }}</option>
+                                    {{-- <option selected="true" value="{{$sector->codigo}}"> {{$sector->name}} </option> --}}
+                                @endforeach
+                            </select>
+                        @else
+                            <select id="orderStatus" name="orderStatus" class="form-control" disabled>
+                                <option value=0 disabled>------Seleccionar------</option>
+                                @foreach ($orderStatus as $estado)
+                                    @if ($estado->codigo != 'OE')
+                                        <option value="{{ $estado->codigo }}">{{ $estado->name }}</option>
+                                    @endif
+
+                                    {{-- <option value="{{$sector->codigo}}"> {{$sector->name}} </option> --}}
+                                @endforeach
+                            </select>
+
+                        @endcan
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- /.card-body -->
+    </div>
+
+
+
+    {{-- <div class="row mb-4">
         <div class="col-md-6">
             <h1> <i class="fab fa-creative-commons-share"></i> Registrar pedido</h1>
         </div>
 
-        {{-- <div class="col-md-5">
+       
+    </div> --}}
 
-            <div class="input-group mb-4"><label for="orderStatus">Estado de Pedido : </label>
-                <div class="input-group-prepend">
-                    <span class="input-group-text" id="basic-sector"><i class="far fa-list-alt"></i></span>
-                </div>
-                <select id="orderStatus" name="orderStatus" class="form-control">
-                    <option value=0 disabled>------Seleccionar------</option>
-                    @foreach ($orderStatus as $estado)
-                        <option value="{{ $estado->codigo }}">{{ $estado->name }}</option>
-                      
-                    @endforeach
-                </select>
 
-            </div>
-        </div> --}}
-    </div>
-
-    <div class="row">
-        <div class="col-md-6">
-            <label for="name_client">Buscar Pedido:</label>
-            <div class="input-group mb-3">
-                <div class="input-group-prepend">
-                    <span class="input-group-text">
-                        <i class="fa fa-clipboard"></i>
-                    </span>
-                </div>
-                <input type="search" class="form-control" placeholder="Buscar Pedido" aria-label="Search"
-                    aria-describedby="search-addon" id="textbuscarPedido" disabled />
-                <div class="input-group-append">
-                    <div class="input-group-text" type="button" id="btn-buscar-pedido"><i class="fa fa-search"></i></div>
-                </div>
-            </div>
-        </div>
-
-        <div class="col-md-6">
-            <label for="orderStatus">Estado de Pedido : </label>
-            <div class="input-group mb-4">
-                <div class="input-group-prepend">
-                    <span class="input-group-text" id="basic-sector"><i class="fa fa-exclamation-triangle"></i></span>
-                </div>
-                @can('Administrar pedidos')                
-                    <select id="orderStatus" name="orderStatus" class="form-control">
-                        <option value=0 disabled>------Seleccionar------</option>
-                        @foreach ($orderStatus as $estado)
-                            <option value="{{ $estado->codigo }}">{{ $estado->name }}</option>
-                            {{-- <option value="{{$sector->codigo}}"> {{$sector->name}} </option> --}}
-                        @endforeach
-                    </select>
-                    @else                
-                    <select id="orderStatus" name="orderStatus" class="form-control">
-                        <option value=0 disabled>------Seleccionar------</option>
-                        @foreach ($orderStatus as $estado)
-                            @if (  $estado->codigo != 'OE')
-                            <option value="{{ $estado->codigo }}">{{ $estado->name }}</option>
-                            @endif
-
-                            {{-- <option value="{{$sector->codigo}}"> {{$sector->name}} </option> --}}
-                        @endforeach
-                    </select>
-
-                @endcan
-            </div>
-        </div>
-    </div>
 
 
 
@@ -119,7 +119,11 @@
 
 
 
-    <div class="card">
+    <div class="card card-cyan">
+        <div class="card-header ">
+            <h4 style="margin: 0px 0px 0px 0px;"> <i class="fab fa-creative-commons-share "></i> Registrar pedido</h4>
+        </div>
+
         <div class="card-body">
             <form action="{{ route('clientes.lista') }}" id="form-listarclientes"></form>
             <form action="{{ route('productos.lista') }}" id="form-listarproductos"></form>
@@ -152,8 +156,8 @@
                             <input type="search" class="form-control" placeholder="Buscar cliente" aria-label="Search"
                                 aria-describedby="search-addon" id="textbuscarcliente" codigocliente=0 disabled />
                             <div class="input-group-append">
-                                <div class="input-group-text" type="button" id="btn-buscarpersona"><i
-                                        class="fa fa-search"></i></div>
+                                <div class="input-group-text" type="button" id="btn-buscarpersona"><i class="fa fa-search"
+                                        title="Buscar Clientes"></i></div>
                             </div>
                             {{-- <input type="search" class="form-control rounded" placeholder="Buscar cliente"
                                 aria-label="Search" aria-describedby="search-addon" id="textbuscarcliente" codigocliente=0
@@ -392,7 +396,8 @@
                         <p><Strong>Detalle del Pedido </Strong></p>
                     </div>
                     <div class="col-md-2">
-                        <button type="button" id="btn-modal-buscar-producto" class="btn btn-success">
+                        <button type="button" id="btn-modal-buscar-producto" class="btn btn-success"
+                            title="Agregar un Producto">
                             <i class="fas fa-plus"></i> Agregar
                         </button>
                     </div>
@@ -633,6 +638,6 @@
 
 @section('js')
     <script type="text/javascript" src="{{ asset('/plugin_tabullator/dist/js/tabulator.min.js') }}"></script>
-    <script type="text/javascript" src="{{ asset('js/adminlte/pedidos/pedidos.js?vs=01') }}"></script>
+    <script type="text/javascript" src="{{ asset('js/adminlte/pedidos/pedidos.js?vs=02') }}"></script>
 
 @stop

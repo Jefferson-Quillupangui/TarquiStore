@@ -34,11 +34,9 @@
                         <td>{{ $category->id}}</td>
                         <td>{{ $category->name}}</td>
                         <td>{{ $category->description}}</td>
-                        
                         <td width="10px">
                             <a class="btn btn-secondary" href="{{route('categories.edit',$category)}}">Editar</a>
                         </td>
-
                         <td width="10px">
                             <form action="{{route('categories.destroy',$category)}}" method="POST" class="op-eliminar">
                                 @method('delete')
@@ -48,14 +46,11 @@
                             </form>
                         </td>
                     </tr>
-
                 @empty
                     <tr>
                         <td colspan="4">No hay ninguna categoria registrada</td>
                     </tr>
-
                 @endforelse
-
             </tbody>
         </table>
     </div>

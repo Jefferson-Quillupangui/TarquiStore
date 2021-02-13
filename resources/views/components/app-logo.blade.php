@@ -1,3 +1,3 @@
 <div>
-    <img src="{{ asset('/gif/logo_tarquisore.png') }}">
+    <img src="{{ asset('/gif/logo_tarqui.png') }}">
 </div>

@@ -18,7 +18,7 @@
             <div class="form-group">
                 <label for="image">Imagen: </label>
                 <div class="form-input">
-                    <input name ="image" id="file" type="file" accept="image/png,image/jpeg"/>
+                    <input name ="image" id="file" type="file" accept="image/png,image/jpeg" required/>
                     {{-- {!! Form::file('image',null,['class' => 'form-control-file',
                                     'accept' => 'image/png,image/jpeg', 'id' => 'image']) !!} --}}
                     @error('image')
@@ -31,7 +31,11 @@
             </div>
             <div class="card" style="width: 18rem;">  
                 <div class="image-wrapper">
-                    <img id="picture" src="https://fesu.edu.co/wp-content/themes/simbolo/assets/images/no-icono.png" alt="" style="max-width:100%;width:auto;height:auto;">
+                    @isset($product->image)
+                        <img id="picture" src="{{$product->image}}" alt="" style="max-width:100%;width:auto;height:auto;">
+                    @else 
+                        <img id="picture" src="https://fesu.edu.co/wp-content/themes/simbolo/assets/images/no-icono.png" alt="" style="max-width:100%;width:auto;height:auto;">    
+                    @endisset
                 </div>
             </div>
         </div>

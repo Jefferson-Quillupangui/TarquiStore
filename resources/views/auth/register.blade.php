@@ -13,7 +13,8 @@
 
             <div>
                 <x-jet-label for="identification" value="{{ __('Cédula') }}" />
-                <x-jet-input id="identification" class="block mt-1 w-full" type="number" name="identification" :value="old('identification')" required autofocus autocomplete="identification" />
+                <x-jet-input id="identification" class="block mt-1 w-full" type="number" name="identification" 
+                                :value="old('identification')" required autofocus autocomplete="identification" />
             </div>
             
             <div class="mt-4">
@@ -22,7 +23,7 @@
             </div>
 
             <div class="mt-4">
-                <x-jet-label for="phone" value="{{ __('Telefono') }}" />
+                <x-jet-label for="phone" value="{{ __('Teléfono') }}" />
                 <x-jet-input id="phone" class="block mt-1 w-full" type="number" name="phone" :value="old('phone')" required autofocus autocomplete="phone" />
             </div>
 

@@ -23,7 +23,7 @@ use Illuminate\Support\Facades\Redis;
 use Spatie\Permission\Models\Role;
 use Illuminate\Support\Facades\Auth;
 
-
+use App\Classes\PedidosClass;
 
 class PedidosController extends Controller
 {
@@ -126,7 +126,7 @@ class PedidosController extends Controller
                  )
         //->where('orders.order_status_cod','=','OP' )
         ->where('orders.order_status_cod','=','OR')
-                ->orWhere('orders.order_status_cod','=','OP')
+        ->orWhere('orders.order_status_cod','=','OP')
         //->where('orders.order_status_cod',['OR'] )
         //->where('products.quantity','>',0  )
         ->get();
@@ -230,14 +230,15 @@ class PedidosController extends Controller
                                                              //     $rpt_id =  $v;
                                                              // }
                                                              
-                                                             $out_id_order = DB::selectOne('SELECT LAST_INSERT_ID() as id');
-                                                             $out_cod = 7;
-                                                             $out_msj = "Orden creada";
-     
-                                                             foreach ($out_id_order as $key => $object) {
+                                                             
+                                                             $out_id_od = DB::selectOne('SELECT LAST_INSERT_ID() as id');
+                                                             foreach ($out_id_od as $key => $object) {
                                                                  $id_cab  = $object;
                                                              }
 
+                                                             $out_id_order = $id_cab;
+                                                             $out_cod = 7;
+                                                             $out_msj = "Orden creada";
                                                         /**
                                                         * procesar detalle
                                                         */
@@ -285,18 +286,13 @@ class PedidosController extends Controller
                                                                         $p_in_total_comission,
                                                                 now(),now()]);
                                                                 
-                                                                $cantidad_actual;
-                                                                $product_quantity = DB::table('products')->where('id',$p_in_product_id )->pluck('quantity');
-
-                                                                foreach ($product_quantity as $key => $object) {
-                                                                    $cantidad_actual  = $object;
-                                                                }
+                                                                
+                                                                $c_pedidos = new PedidosClass();
+                                                                $c_pedidos->Egreso_inventario($p_in_product_id , $p_in_quantity );
+                                                            
                                                                 
                                                                 
-                                                                $inventario = DB::table('products')
-                                                                ->where('id', $p_in_product_id )
-                                                                ->update(['quantity' => ($cantidad_actual - $p_in_quantity) ,
-                                                                          'updated_at' => now() ]);
+                                                                
                                                             }
 
                                                             DB::insert('insert into order_transaction (
@@ -386,6 +382,8 @@ class PedidosController extends Controller
                                                 'comission' => $p_in_comission,
                                                 'total_comission' => $p_in_total_comission,
                                                 'updated_at' => now()]);
+
+                                         
                                     }else{
                                         $insertadoDetalle = DB::insert('insert order_product (
                                             order_id,
@@ -412,25 +410,16 @@ class PedidosController extends Controller
                                                 $p_in_comission,
                                                 $p_in_total_comission,
                                         now(),now()]);
+
+                                        $c_pedidos = new PedidosClass();
+                                        $c_pedidos->Egreso_inventario($p_in_product_id , $p_in_quantity );
                                     }
                                     
                                     
                                 }
 
 
-                                                                
-                                                                // $cantidad_actual;
-                                                                // $product_quantity = DB::table('products')->where('id',$p_in_product_id )->pluck('quantity');
-
-                                                                // foreach ($product_quantity as $key => $object) {
-                                                                //     $cantidad_actual  = $object;
-                                                                // }
-                                                                
-                                                                
-                                                                // $inventario = DB::table('products')
-                                                                // ->where('id', $p_in_product_id )
-                                                                // ->update(['quantity' => ($cantidad_actual - $p_in_quantity) ,
-                                                                //           'updated_at' => now() ]);
+                                                              
                                 
                                 
                                 DB::insert('insert into order_transaction (
@@ -456,6 +445,7 @@ class PedidosController extends Controller
                 return response()->json(['data' =>$ex->getMessage()],500 );
             }die("End");
             
+            
         } else {
             // No existe Opcion para el metodo
             return response()->json(['data' =>'Opcion no definida'],500 );
@@ -467,7 +457,7 @@ class PedidosController extends Controller
     } 
 
     
-
+   
     // public function createOrden(Request $request){
 
       

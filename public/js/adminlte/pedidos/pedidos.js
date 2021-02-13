@@ -105,7 +105,7 @@ $(document).ready(function () {
                     Swal.fire({
                          position: 'top-end',
                          icon: 'success',
-                         title: dt.data.out_msj+" Nro Orden: 000"+dt.data.out_id_order.id,
+                         title: dt.data.out_msj+" Nro Orden: 000"+dt.data.out_id_order,
                          showConfirmButton: false,
                          timer: 1500
                         });
@@ -148,6 +148,7 @@ $(document).ready(function () {
 
       cargarClientes();   
       $("#modal-buscarpersona").modal("show");
+      
   
     });
 
@@ -163,7 +164,7 @@ $(document).ready(function () {
 
     function cargarClientes(){
     
-           
+     
         var table = new Tabulator("#clientes-table", {
             height:"311px",
             layout:"fitColumns",
@@ -200,7 +201,7 @@ $(document).ready(function () {
             ],
         });
 
-        
+       
         
     }
 

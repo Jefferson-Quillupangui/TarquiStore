@@ -4,6 +4,8 @@ $(document).ready(function () {
 
   var table_detalle_factura;
   var table_lista_ordenes;
+  var array_detalle_factura_eliminados = [];
+
 
   $('#orderStatus').val('OP').change();
     //$('#orderStatus').prop('disabled', false);
@@ -215,8 +217,8 @@ $(document).ready(function () {
   /**
    * Tabla detalle para ingreso fde pedidos
    */
+
   table_detalle_factura = new Tabulator("#grid-table-detalle-pedido", {
-      
       
       //layout:"fitColumns",
       //ajaxURL: '',
@@ -232,15 +234,24 @@ $(document).ready(function () {
         
           {formatter:printIconDelete, width:40, hozAlign:"center", cellClick:function(e, cell){
               if(confirm('Desea borrar producto')){
+
+                  if( cell.getData().id_detalle_product != 0){
+                    array_detalle_factura_eliminados.push(cell.getData());
+                    console.log(array_detalle_factura_eliminados);
+                  }
+                  
                   cell.getRow().delete();
                   const uno = table_detalle_factura.getData();
                   
                     var total = 0;
+                    var total_comi = 0;
                     for (var i in uno) {
+                      total_comi += parseFloat(uno[i].total_comission);
                       total += parseFloat(uno[i].total_line)
                     }
 
                   $("#txtTotalOrden").val(total);
+                  $("#txt_totalComision").val(total_comi);
 
                   }
               }
@@ -447,8 +458,60 @@ $(document).ready(function () {
                                   if( get_data_detalle.length != 0){
  
                                      for (var i in get_data_detalle) {
-                                       
-                                       if(get_data_detalle[i].product_id === id_prod ){
+                                       /* caso de que ubira sido elimindao*/
+                                       if( (array_detalle_factura_eliminados.length) > 0  && ( get_data_detalle[i].product_id !== id_prod ) ){
+                                        console.log("for de otro array de memoria");
+                                          for (var x in array_detalle_factura_eliminados){
+                                            if(array_detalle_factura_eliminados[x].product_id === id_prod ){
+                                                $.toast({
+                                                  heading: 'Warning',
+                                                  text: '.......',
+                                                  showHideTransition: 'fade',
+                                                  icon: 'warning',
+                                                  position: 'top-right'
+                                              })
+                                              //console.log(array_detalle_factura_eliminados[x]);
+
+                                                table_detalle_factura.updateOrAddData([
+                                                  {
+                                                    id_detalle_product :array_detalle_factura_eliminados[x].id_detalle_product,
+                                                    product_id : array_detalle_factura_eliminados[x].product_id,
+                                                    name_product : array_detalle_factura_eliminados[x].name_product,
+                                                    quantity : array_detalle_factura_eliminados[x].quantity,
+                                                    price :  array_detalle_factura_eliminados[x].price,
+                                                    discount_porcentage : array_detalle_factura_eliminados[x].discount_porcentage,
+                                                    price_discount : array_detalle_factura_eliminados[x].price_discount,
+                                                    comission : array_detalle_factura_eliminados[x].comission,
+                                                    total_comission : array_detalle_factura_eliminados[x].total_comission,
+                                                    total_line : array_detalle_factura_eliminados[x].total_line
+                                                  }
+                                                ]);
+
+                                                //delete array_detalle_factura_eliminados[x];
+                                                array_detalle_factura_eliminados.splice(array_detalle_factura_eliminados[x], 1);
+                                                console.log(array_detalle_factura_eliminados[x]);
+                                                const uno = table_detalle_factura.getData();
+                  
+                                                var total = 0;
+                                                var total_comi = 0;
+                                                for (var i in uno) {
+                                                  total_comi += parseFloat(uno[i].total_comission);
+                                                  total += parseFloat(uno[i].total_line)
+                                                }
+                            
+                                                $("#txtTotalOrden").val(total);
+                                                $("#txt_totalComision").val(total_comi);
+                            
+
+                                                $("#modal-buscarProducto").modal("hide");
+                                              bandera = false;
+                                              return false;
+
+                                            }
+                                          }
+                                          
+                                       }//caso normal
+                                       else if(get_data_detalle[i].product_id === id_prod ){
                                             $.toast({
                                               heading: 'Warning',
                                                text: 'El producto ya se encuentra en la lista. Seleccione otro Producto',

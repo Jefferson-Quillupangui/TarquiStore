@@ -180,6 +180,7 @@ class PedidosController extends Controller
 
       public function createOrden(Request $request){
 
+        $c_pedidos = new PedidosClass();
         $opcion = $request->opcion;
         $id_cab_pedido = $request->id_pedido;//pk auto
 
@@ -287,7 +288,7 @@ class PedidosController extends Controller
                                                                 now(),now()]);
                                                                 
                                                                 
-                                                                $c_pedidos = new PedidosClass();
+                                                               
                                                                 $c_pedidos->Egreso_inventario($p_in_product_id , $p_in_quantity );
                                                             
                                                                 
@@ -368,13 +369,48 @@ class PedidosController extends Controller
 
 
                                     if($p_in_id_detalle_product > 0){
+
+                                        
+                                        $bd_quantity_prod_det;
+                                        $bd_cantidad_prod_det = DB::table('order_product')->where('product_id',$p_in_product_id )->pluck('quantity');
+
+                                        foreach ($bd_cantidad_prod_det as $key => $object) {
+                                            $bd_quantity_prod_det  = $object;
+                                        }
+
+                                        if( $bd_quantity_prod_det != $p_in_quantity ){
+
+                                            $cantidad_mayor = max($bd_quantity_prod_det, $p_in_quantity); 
+                                            $cantidad_menor = min($bd_quantity_prod_det, $p_in_quantity); 
+                                            $p_quantity_result = $cantidad_mayor - $cantidad_menor;
+                                            
+                                            if( $p_in_quantity > $bd_quantity_prod_det ){
+                                                //Egreso de inventario
+                                                $c_pedidos->Egreso_inventario($p_in_product_id , $p_quantity_result );
+                                            }else if( $p_in_quantity < $bd_quantity_prod_det){
+                                                //Ingreso de inventario
+                                                 $c_pedidos->Ingreso_inventario($p_in_product_id , $p_quantity_result );
+                                            }
+                                            
+                                          
+
+                                            
+                                        }
+
+                                        // $bd_quantity_prod_det_actual;
+                                        // $bd_cantidad_prod_det_op = DB::table('order_product')->where('product_id',$p_in_product_id )->pluck('quantity');
+
+                                        // foreach ($bd_cantidad_prod_det_op as $key => $object) {
+                                        //     $bd_quantity_prod_det_actual  = $object;
+                                        // }
+                                        
                                         $detalle_pedido_actualizar = DB::table('order_product')
                                         ->where('id_detalle_product' , $p_in_id_detalle_product)
                                         ->update(
                                             ['order_id' => $id_cab_pedido, 
                                                 'product_id' =>  $p_in_product_id,
                                                 'name_product' =>  $p_in_name_product ,
-                                                'quantity' => $p_in_quantity ,
+                                                'quantity' => $p_in_quantity,//$bd_quantity_prod_det_actual,//$p_in_quantity ,
                                                 'price' => $p_in_price,
                                                 'discount_porcentage' =>  $p_in_discount_porcentage,
                                                 'price_discount' =>  $p_in_price_discount,

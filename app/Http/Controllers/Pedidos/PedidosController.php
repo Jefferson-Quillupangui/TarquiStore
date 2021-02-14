@@ -125,8 +125,8 @@ class PedidosController extends Controller
             'g.email AS email_cliente'
                  )
         //->where('orders.order_status_cod','=','OP' )
-        ->where('orders.order_status_cod','=','OR')
-        ->orWhere('orders.order_status_cod','=','OP')
+        //// ->where('orders.order_status_cod','=','OR') ADMIN VE TODOS LOS ESTADOS, DIFERENTE DE 1 SOLO VE OR, OP, OC
+        //// ->orWhere('orders.order_status_cod','=','OP')
         //->where('orders.order_status_cod',['OR'] )
         //->where('products.quantity','>',0  )
         ->get();

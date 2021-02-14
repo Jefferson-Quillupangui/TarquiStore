@@ -40,9 +40,9 @@
 
 @section('content_header')
 
-    <div class="card card-blue">
+    <div class="card card-cyan">
         <div class="card-header">
-            <h4 class="card-title" style="margin: 0px 0px 0px 0px;"> <i class="fa fa-tasks"></i> Buscar Pedidos</h4>
+            <h4 class="card-title" style="margin: 0px 0px 0px 0px;"> <i class="fas fa-search"></i> Buscar Pedidos</h4>
         </div>
         <div class="card-body">
             <div class="row">
@@ -121,7 +121,7 @@
 
     <div class="card card-cyan">
         <div class="card-header ">
-            <h4 style="margin: 0px 0px 0px 0px;"> <i class="fab fa-creative-commons-share "></i> Registrar pedido</h4>
+            <h4 class="card-title" style="margin: 0px 0px 0px 0px;"> <i class="far fa-plus-square"></i> Registrar pedido</h4>
         </div>
 
         <div class="card-body">

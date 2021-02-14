@@ -339,7 +339,7 @@ return [
 
         ['header' => 'GANANCIAS'],
         [
-            'text' => 'Mis Ganancias',
+            'text' => 'Mis Comisiones',
             'url'  => '#',
             'icon' => 'fas fa-hand-holding-usd',
         ],

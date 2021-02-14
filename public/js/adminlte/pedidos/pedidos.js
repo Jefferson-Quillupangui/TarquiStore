@@ -94,6 +94,7 @@ $(document).ready(function () {
                 total_order : $('#txtTotalOrden').val(),
                 total_comission :  $('#txt_totalComision').val(),
                 detalleProductos : JSON.stringify(tb_det_prodct),
+                detalleProductosBorrar : JSON.stringify(array_detalle_factura_eliminados),
                 // opcion: 'AA', 
                 // clienteid: $('#textbuscarcliente').attr("codigocliente"),
                 // totalord: 22,
@@ -237,7 +238,7 @@ $(document).ready(function () {
 
                   if( cell.getData().id_detalle_product != 0){
                     array_detalle_factura_eliminados.push(cell.getData());
-                    console.log(array_detalle_factura_eliminados);
+                   // console.log(array_detalle_factura_eliminados);
                   }
                   
                   cell.getRow().delete();
@@ -464,10 +465,10 @@ $(document).ready(function () {
                                           for (var x in array_detalle_factura_eliminados){
                                             if(array_detalle_factura_eliminados[x].product_id === id_prod ){
                                                 $.toast({
-                                                  heading: 'Warning',
-                                                  text: '.......',
+                                                  heading: 'Information',
+                                                  text: 'El producto seleccionado se agregara con la cantidad que antes tenia',
                                                   showHideTransition: 'fade',
-                                                  icon: 'warning',
+                                                  icon: 'info',
                                                   position: 'top-right'
                                               })
                                               //console.log(array_detalle_factura_eliminados[x]);

@@ -200,6 +200,11 @@ class PedidosController extends Controller
 
         $p_in_tabla_detalle = $request->detalleProductos;
         $json_tb_detalle_prodct = json_decode($p_in_tabla_detalle, true);
+        
+
+        $p_in_tabla_detalle_borrar = $request->detalleProductosBorrar;
+        $json_tb_detalle_prodct_borrar = json_decode($p_in_tabla_detalle_borrar, true);
+        
        
         $dat_cab = $request;
 
@@ -353,6 +358,35 @@ class PedidosController extends Controller
                         //DB::commit();
                         if ( $out_cod == 7) {
                             DB::commit();
+
+
+                                if (!empty($json_tb_detalle_prodct_borrar )) {
+                                    // Hacer cosas porque el $miArray tiene elementos
+                                    foreach ($json_tb_detalle_prodct_borrar as $value) {
+                                        //dd($value);
+                                        //$p_in_order_id =  $value['product_id'];//fk cabecera
+                                        $delete_in_id_detalle_product =  $value['id_detalle_product'];
+                                        $delete_in_product_id =  $value['product_id'];
+                                        $delete_in_name_product =  $value['name_product'];
+                                        $delete_in_quantity  =  $value['quantity'];
+                                        $delete_in_price =  $value['price'];
+                                        $delete_in_discount_porcentage =  $value['discount_porcentage'];
+                                        $delete_in_price_discount  =  $value['price_discount'];
+                                        $delete_in_total_line =  $value['total_line'];
+                                        $delete_in_comission  =  $value['comission'];
+                                        $delete_in_total_comission = $value['total_comission'];
+                                        $delete_in_order_id = $value['order_id'];//cabecera
+
+                                        $c_pedidos->Ingreso_inventario($delete_in_product_id , $delete_in_quantity );
+
+                                        $borrar_Detalle = DB::table('order_product')
+                                        ->where('id_detalle_product', '=', $delete_in_id_detalle_product)
+                                        ->where('order_id', '=', $delete_in_order_id)
+                                        ->delete();
+
+                                        $borrar_Detalle =  DB::commit();
+                                    }
+                                }
                                 foreach ($json_tb_detalle_prodct as $value) {
                                     //dd($value);
                                     //$p_in_order_id =  $value['product_id'];//fk cabecera
@@ -447,7 +481,7 @@ class PedidosController extends Controller
                                                 $p_in_total_comission,
                                         now(),now()]);
 
-                                        $c_pedidos = new PedidosClass();
+                                       // $c_pedidos = new PedidosClass();
                                         $c_pedidos->Egreso_inventario($p_in_product_id , $p_in_quantity );
                                     }
                                     

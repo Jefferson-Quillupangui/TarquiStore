@@ -42,7 +42,7 @@
 
     <div class="card card-cyan">
         <div class="card-header">
-            <h4 class="card-title" style="margin: 0px 0px 0px 0px;"> <i class="fas fa-search"></i> Buscar Pedidos</h4>
+            <h4 class="card-title" style="margin: 0px 0px 0px 0px;"> <i class="fas fa-search"></i> Buscar Pedido</h4>
         </div>
         <div class="card-body">
             <div class="row">

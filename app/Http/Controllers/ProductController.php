@@ -65,7 +65,7 @@ class ProductController extends Controller
             'image.image'           =>  'Debe ingresar una imagen del producto',
             'comission.required'    =>  'Ingrese el valor de la comisión',
             'description.required'  =>  'Ingrese la descripción del producto',
-            'discount.numeric'      =>  'El porcentaje de descuento debe ser un valor entero o cero',
+            'discount.numeric'      =>  'Ingrese el valor de porcentaje de descuento o ingrese cero',
             'quantity.integer'      =>  'Ingrese un valor entero de cantidad disponible',
             'name.unique'           =>  'El nombre de la categoria ya existe'
         ]);
@@ -146,8 +146,8 @@ class ProductController extends Controller
             'image.image'           =>  'Debe ingresar una imagen del producto',
             'comission.required'    =>  'Ingrese el valor de la comisión',
             'description.required'  =>  'Ingrese la descripción del producto',
-            'discount.required'     =>  'El porcentaje de descuento debe ser un valor entero o valor cero',
-            'discount.integer'      =>  'El porcentaje de descuento debe ser un valor entero o valor cero',
+            'discount.required'     =>  'Ingrese el valor de porcentaje de descuento o ingrese cero',
+            'discount.integer'      =>  'Ingrese el valor de porcentaje de descuento o ingrese cero',
             'quantity.integer'      =>  'Ingrese un valor entero de cantidad disponible',
             'name.unique'           =>  'El nombre de la categoria ya existe'
         ]);

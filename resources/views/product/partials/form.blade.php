@@ -100,7 +100,7 @@
                 <div class="input-group-prepend">
                     <span class="input-group-text" id="basic-addon1"><i class="fas fa-percentage"></i></span>
                 </div>
-                {!! Form::text('discount',0.00,['class' => 'form-control' . ($errors->has('discount') ? ' is-invalid' : ''), 
+                {!! Form::text('discount',null,['class' => 'form-control' . ($errors->has('discount') ? ' is-invalid' : ''), 
                                     'placeholder' => 'Valor de descuento del producto',
                                     'step'=>'any', 
                                     'id' => 'in_discount_porcent',

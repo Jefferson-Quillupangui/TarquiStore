@@ -292,7 +292,7 @@ return [
                 [   
                     'text'  => 'Productos',
                     'route' => 'products.index',
-                    'icon'  => 'fas fa-gifts',
+                    'icon'  => 'fas fa-store',
                 ],
             ],
         ],

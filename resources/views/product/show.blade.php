@@ -1,15 +1,12 @@
 @extends('adminlte::page')
 
-@section('title', 'TarquiStore')
+@section('title', 'Productos')
 
 @section('css')
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.2/css/bootstrap.css">
     <link rel="stylesheet" href="https://cdn.datatables.net/1.10.23/css/dataTables.bootstrap4.min.css">
     <link rel="stylesheet" href="https://cdn.datatables.net/responsive/2.2.7/css/responsive.bootstrap4.min.css">
-
 @stop
-
-
 
 @section('content_header')
     <h1><i class="fas fa-store"></i> Productos</h1>
@@ -32,7 +29,7 @@
      <table class="table table-striped" id="productos">
             <thead>
                 <tr>
-                    <th>ID</th>
+                    <th>Cod</th>
                     <th>Nombre</th>
                     <th>Imagen</th>
                     <th>Precio</th>
@@ -40,6 +37,7 @@
                     <th>Cantidad</th>
                     <th>Porcentaje Descuento</th>
                     <th>Precio descuento</th>
+                    <th>Accciones</th>
                     <th>Categoria</th>
                     <th>Descripción</th>
                 </tr>
@@ -47,7 +45,7 @@
             <tbody>
                 @forelse($products as $product )
                     <tr>
-                        <td>{{ $product->id}}</td>
+                        <td>000{{ $product->id}}</td>
                         <td>{{ $product->name}}</td>
                         <td><img src="{{ asset($product->image) }}" style="width:100px;"/></td>
                         <td>${{ $product->price}}</td>
@@ -55,21 +53,16 @@
                         <td>{{ $product->quantity}} UND</td>
                         <td>{{ $product->discount}}%</td>
                         <td>${{ $product->price_discount}}</td>
-                        <td>{{ $product->Category->name }}</td>
-                        <td><p align="justify" >{{ $product->description}}</p></td>
-                        
-                        {{-- <td width="10px">
-                            <a class="btn btn-secondary" href="{{route('products.edit',$product)}}">Editar</a>
-                        </td>
-
-                        <td width="10px">
+                        <td>
                             <form action="{{route('products.destroy',$product)}}" method="POST" class="op-eliminar">
+                                <a class="btn btn-secondary" href="{{route('products.edit',$product)}}"><i class="fas fa-edit"></i></a>
                                 @method('delete')
                                 @csrf
-
-                                <button class="btn btn-danger" type="submit">Eliminar</button>
+                                <button class="btn btn-danger" type="submit"><i class="fas fa-trash"></i></button>
                             </form>
-                        </td> --}}
+                        </td>
+                        <td>{{ $product->Category->name }}</td>
+                        <td><div class="row ml-auto">{{ $product->description}}</div></td>
                     </tr>
 
                 @empty
@@ -96,7 +89,14 @@
            autoWidth: false,
 
            "language": {
-            "lengthMenu": "Mostrar _MENU_ registros por pagina",
+            "lengthMenu": "Mostrar "+ 
+                            `<select class="custom-select custom-select-sm form-control form-control-sm">
+                                <option value = '10'>10</option>
+                                <option value = '25'>25</option>
+                                <option value = '50'>50</option>
+                                <option value = '100'>100</option>
+                                <option value = '-1'>Todos</option>
+                            </select>`+ " registros por pagina",
             "zeroRecords": "No se encontró nada",
             "info": "Mostrando página _PAGE_ de _PAGES_",
             "infoEmpty": "No hay registros disponibles",
@@ -105,11 +105,9 @@
             'paginate': {
                 'next': 'Siguiente',
                 'previous': 'Anterior'
-
-            }
-        }
-
-         });
+                }
+            }   
+        });
     </script>
     <script type="text/javascript" src="{{ asset("js/adminlte/modales/windeliminar.js") }}"></script>
    

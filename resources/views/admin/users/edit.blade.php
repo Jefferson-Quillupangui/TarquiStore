@@ -12,8 +12,15 @@
 
     <div class="card">
         <div class="card-body">
+            
+            <div class="col-md-4">
+                <div class="w-50 p-3" >
+                    <img class="img-fluid mb-4" src="/img/create.svg" alt="Ingreso de datos">
+                </div>
+             </div> 
+
             <h1 class="h5">Nombre</h1>
-            <p class="form-control" >{{$user->name}}</p>
+            <p class="form-control col-md-6" >{{$user->name}}</p>
             
             <h1 class="h5">Lista de roles</h1>
             {!! Form::model($user, ['route' => ['admin.users.update', $user], 'method' => 'put' ]) !!}

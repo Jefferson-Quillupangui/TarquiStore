@@ -1,13 +1,15 @@
 @extends('adminlte::page')
 
-@section('title', 'TarquiStore')
+@section('title', 'Roles')
 
 @section('content_header')
     <h1><i class="fas fa-user-cog"></i> Lista de roles</h1>
 @stop
 
 @section('css')
-    <link rel="stylesheet" href="/css/admin_custom.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.2/css/bootstrap.css">
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.10.23/css/dataTables.bootstrap4.min.css">
+    <link rel="stylesheet" href="https://cdn.datatables.net/responsive/2.2.7/css/responsive.bootstrap4.min.css">
 @stop
 
 @section('content')
@@ -23,12 +25,12 @@
         </div>
 
         <div class="card-body">
-            <table class="table table-striped">
+            <table class="table table-striped" id="roles">
                 <thead>
                     <tr>
                         <th>ID</th>
                         <th>Name</th>
-                        <th colspan="2"></th>
+                        <th>Acciones</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -36,18 +38,15 @@
                         <tr>
                             <td>{{ $role->id}}</td>
                             <td>{{ $role->name}}</td>
-                            
-                            <td width="10px">
-                                <a class="btn btn-secondary" href="{{route('admin.roles.edit',$role)}}">Editar</a>
-                            </td>
-
-                            <td width="10px">
-                                <form action="{{route('admin.roles.destroy',$role)}}" method="POST" class="op-eliminar">
-                                    @method('delete')
-                                    @csrf
-
-                                    <button class="btn btn-danger" type="submit">Eliminar</button>
-                                </form>
+                            <td>
+                                <div class="row ml-auto">
+                                    <form action="{{route('admin.roles.destroy',$role)}}" method="POST" class="op-eliminar">
+                                        <a class="btn btn-secondary" href="{{route('admin.roles.edit',$role)}}"><i class="fas fa-edit"></i></a>
+                                        @method('delete')
+                                        @csrf
+                                        <button class="btn btn-danger" type="submit"><i class="fas fa-trash"></i></button>
+                                    </form>
+                                </div>
                             </td>
                         </tr>
 
@@ -65,5 +64,35 @@
 @stop
 
 @section('js')
-<script type="text/javascript" src="{{ asset("js/adminlte/modales/windeliminar.js") }}"></script>
+<script src="https://cdn.datatables.net/1.10.23/js/jquery.dataTables.min.js"></script>
+<script src="https://cdn.datatables.net/1.10.23/js/dataTables.bootstrap4.min.js"></script>
+<script src="https://cdn.datatables.net/responsive/2.2.7/js/dataTables.responsive.min.js"></script>
+<script src="https://cdn.datatables.net/responsive/2.2.7/js/responsive.bootstrap4.min.js"></script>
+<script>
+        $('#roles').DataTable({
+        responsive: true,
+        autoWidth: false,
+
+        "language": {
+            "lengthMenu": "Mostrar "+ 
+                            `<select class="custom-select custom-select-sm form-control form-control-sm">
+                                <option value = '10'>10</option>
+                                <option value = '25'>25</option>
+                                <option value = '50'>50</option>
+                                <option value = '100'>100</option>
+                                <option value = '-1'>Todos</option>
+                            </select>`+ " registros por pagina",
+            "zeroRecords": "No se encontró nada",
+            "info": "Mostrando página _PAGE_ de _PAGES_",
+            "infoEmpty": "No hay registros disponibles",
+            "infoFiltered": "(filtrado de _MAX_ registros totales)",
+            'search': 'Buscar:',
+            'paginate': {
+                'next': 'Siguiente',
+                'previous': 'Anterior'
+                }
+            }   
+        });
+    </script>
+    <script type="text/javascript" src="{{ asset("js/adminlte/modales/windeliminar.js") }}"></script>
 @stop

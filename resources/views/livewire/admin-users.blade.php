@@ -1,21 +1,21 @@
 <div>
     <div class="card">
 
-        <div wire:keydown="limpiar_page" wire:model="search" class="card-header">
+        {{-- <div wire:keydown="limpiar_page" wire:model="search" class="card-header">
             <input class="form-control w-100" placeholder="Buscar usuario por nombre o por correo">
-        </div>
+        </div> --}}
 
 
         @if($users->count())
 
             <div class="card-body">
-                <table class="table table-striped">
+                <table class="table table-striped" id="usuarios">
                     <thead>
                         <tr>
-                            <th>ID</th>
+                            <th>Cod</th>
                             <th>Nombre</th>
                             <th>Email</th>
-                            <th></th>
+                            <th>Acciones</th>
                         </tr>
                     </thead>
 
@@ -27,9 +27,15 @@
                                 <td>{{$user->name}}</td>
                                 {{-- <td><img src="{{ asset($user->profile_photo_path) }}"  height="100"/></td> --}}
                                 <td>{{$user->email}}</td>
-                                <td width="10px">
-                                    <a class="btn btn-info" href="{{route('admin.users.edit', $user)}}">Editar</a>
+                                <td>
+                                    <a class="btn btn-secondary" href="{{route('admin.users.edit', $user)}}"><i class="fas fa-edit"></i></a>
                                 </td>
+                                {{-- <td>
+                                    @foreach ($users as $user)
+                                        $users->posts;
+                                    @endforeach
+                                </td> --}}
+                                {{-- <td>{{$user->Role->name}}</td> --}}
                             </tr>
                             
                         @endforeach

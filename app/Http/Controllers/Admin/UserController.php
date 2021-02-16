@@ -18,6 +18,7 @@ class UserController extends Controller
     public function index()
     {      
         $users = User::all();
+        // $users = User::with('roles')->pluck('name','id');
         return view('admin.users.index', compact('users'));
     }
 

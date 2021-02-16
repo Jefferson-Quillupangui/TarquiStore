@@ -1,5 +1,5 @@
 <div class="col-md-4">
-    <div class="col-12 col-lg-6 col-sm-6 ">
+    <div class="w-50 p-3">
         <img class="img-fluid mb-4" src="/img/create.svg" alt="Ingreso de datos">
     </div>
  </div>

@@ -1,6 +1,7 @@
 $(document).ready(function () {
 
     let table_lista_ordenes;
+    let table_list_detalle_factura;
 
    
 
@@ -245,8 +246,8 @@ $(document).ready(function () {
         },
         success: function (response) {
 
-          //table_detalle_factura.replaceData(response.data);
-          console.log(response);
+            table_list_detalle_factura.replaceData(response.data);
+          //console.log(response);
 
         }, complete: function () {
             $('.loaders').addClass('d-none');
@@ -254,6 +255,104 @@ $(document).ready(function () {
     });
   }
 
+
+   /**
+   * Tabla detalle para ingreso fde pedidos
+   */
+
+  table_list_detalle_factura = new Tabulator("#grid-table-list-detalle-pedido", {
+      
+    //layout:"fitColumns",
+    //ajaxURL: '',
+    //ajaxProgressiveLoad:"scroll",
+   // paginationSize:6,
+    height:"311px",
+    placeholder:"No hay Datos",
+   // data: tabledata,
+    //pagination:"remote",
+    //paginationSizeSelector:[3, 6, 8, 10],
+    //movableColumns:true,
+    columns:[
+      
+      
+        {title:"ID DET", field:"id_detalle_product", sorter:"number", width:80},
+        {title:"ID_PROCT", field:"product_id", sorter:"number", width:80},
+        // {title:"id_product", field:"id_product", sorter:"string"},
+        {title:"NOMBRE PRODUCTO", field:"name_product", sorter:"string"},
+        {title:"CANTIDAD", field:"quantity", sorter:"number",hozAlign:"center"},
+        //{title:"PVP UNITARIO", field:"price", sorter:"number", hozAlign:"right", width:120},
+        {title:"PVP UNITARIO", field:"price", formatter:"money", hozAlign:"right", width:120, formatterParams:{
+          decimal:".",
+          thousand:".",
+          symbol:"$",
+          symbolAfter:false,
+          precision:2,
+        }},
+        {title:"% DESCT", field:"discount_porcentage", formatter:"money",  hozAlign:"right",width:100, formatterParams:{
+                decimal:".",
+                thousand:".",
+                symbol:"%",
+                symbolAfter:"p",
+                precision:false,
+            }
+        },
+        {title:"DESCUENTO", field:"price_discount",  formatter:"money", hozAlign:"right", width:100,formatterParams:{
+              decimal:".",
+              thousand:".",
+              symbol:"$",
+              symbolAfter:false,
+              precision:2,
+          }
+        },
+        {title:"COMISION", field:"comission",  formatter:"money", hozAlign:"right", width:100, formatterParams:{
+              decimal:".",
+              thousand:".",
+              symbol:"$",
+              symbolAfter:false,
+              precision:2,
+          }
+        },
+        {title:"TOTAL COMISION", field:"total_comission",  formatter:"money", hozAlign:"right", width:100, formatterParams:{
+          decimal:".",
+          thousand:".",
+          symbol:"$",
+          symbolAfter:false,
+          precision:2,
+          }
+        },
+        {title:"TOTAL", field:"total_line", formatter:"money",  hozAlign:"right",width:100, formatterParams:{
+              decimal:".",
+              thousand:".",
+              symbol:"$",
+              symbolAfter:false,
+              precision:2,
+          }
+        // ,mutator:function(value, data) {
+        //   return 12;//console.log(data)//Math.floor(data.views / data.users);
+        //  } 
+        },
+
+
+        // {formatter:editIcon, width:40, hozAlign:"center", 
+        //     cellClick:function(e, cell){
+        //        // $("#inp_id_establecimiento").val(cell.getRow().getData().id_establecimientos);
+        //        //  $("#inp_id_empresa").val(cell.getRow().getData().id_empresa);
+        //        //  $("#inp_num_establecimiento").val(cell.getRow().getData().num_establecimiento);
+        //        //  $("#inp_nombre_estb").val(cell.getRow().getData().nombre_estb);
+        //        //  $("#inp_direccion_estb").val(cell.getRow().getData().direccion_estb);
+        //        //  $('#select_estado').val(cell.getRow().getData().estado).change();
+               
+        //        //  $("#modal-establecimiento").modal("show");
+        //         //console.log(cell.getRow().getData());
+        //         //alert("Printing row data for: " + cell.getRow().getData().name)
+        //     }
+        // },
+       ]
+      //  ,rowClick: function(e, row) {
+      //   alert("Row " + row.getData()+ " Clicked!!!!"); ,rowClick: function(e, row) {
+      //   alert("Row " + row.getData()+ " Clicked!!!!");
+    //},
+    });
 
 
 });

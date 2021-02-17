@@ -398,7 +398,19 @@
 
             </div>
 
-
+            <hr>
+            <div class="row">
+                <div class="col-md-10">
+                    <p><Strong>Detalle del Pedido </Strong></p>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <div id="grid-table-list-detalle-pedido"></div>
+                </div>
+            </div>
+            <hr>
+            
 
         </div>
 

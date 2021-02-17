@@ -27,8 +27,7 @@ use App\Classes\PedidosClass;
 
 class PedidosController extends Controller
 {
-    public function index()
-    {
+    public function index(){
         $name = Auth::user()->name; 
        // $order = Order::all();
        //$categories = Category::all();
@@ -41,9 +40,6 @@ class PedidosController extends Controller
         return view('pedido.create', compact('name','sectors','citySale', 'orderStatus'));//compact('category','name','sectors'));
     }
 
-    
-  
-    
     
     public function listaClientes_json(){
 
@@ -178,7 +174,7 @@ class PedidosController extends Controller
         return response()->json(['data' => $detalle_orders], 200);
     }
 
-      public function createOrden(Request $request){
+    public function createOrden(Request $request){
 
         $c_pedidos = new PedidosClass();
         $opcion = $request->opcion;
@@ -292,30 +288,25 @@ class PedidosController extends Controller
                                                                         $p_in_total_comission,
                                                                 now(),now()]);
                                                                 
-                                                                
-                                                               
-                                                                $c_pedidos->Egreso_inventario($p_in_product_id , $p_in_quantity );
+                                                                $c_pedidos->Egreso_inventario($p_in_product_id , $p_in_quantity , $in_delivery_date);
                                                             
-                                                                
-                                                                
-                                                                
                                                             }
-
+                                                            
                                                             DB::insert('insert into order_transaction (
                                                             order_id, user_id, status_order, created_at, updated_at
                                                             ) values (?, ?, ?, ?,? )', [ $id_cab, $in_collaborator_id, $in_order_status_cod,now(),now()]);
-                                                            
+ 
                                                         }else{
                                                             DB::rollback();
                                                         }
      
                                                        
-                 
-                                                             /**
-                                                              * respuesta de cabecera 
-                                                              */
+                                                        /**
+                                                        * respuesta de cabecera 
+                                                        */
+                                                             
                                                          $miArray = array('out_id_order'=>$out_id_order, 'out_cod'=>$out_cod, 'out_msj'=>$out_msj);
-                                                         return response()->json(['data' => $miArray], 200);
+                                                         return response()->json(['data' =>  $miArray  ], 200);
                                                             
                                             
                  
@@ -516,7 +507,7 @@ class PedidosController extends Controller
             }die("End");
             
             
-        } else {
+        }else {
             // No existe Opcion para el metodo
             return response()->json(['data' =>'Opcion no definida'],500 );
         }
@@ -526,8 +517,184 @@ class PedidosController extends Controller
     
     } 
 
+
+    public function ProcesarOrden(Request $request){
+
+        $c_pedidos = new PedidosClass();
+         $id_cab_pedido = $request->id_pedido;//pk auto
+
+        // $in_client_id	= $request->client_id;//bigint//
+         $in_delivery_date= $request->delivery_date;	//date
+        // $in_delivery_time= $request->delivery_time;	//time
+         $in_collaborator_id	= $request->collaborator_id; //bigint
+        // $in_sector_cod= $request->sector_cod;	//varchar
+        // $in_city_sale_cod	= $request->city_sale_cod;//varchar
+        // $in_observation	= $request->observation;//mediumtext
+        // $in_delivery_address= $request->delivery_address;	//mediumtext
+         $in_order_status_cod = $request->order_status_cod;//'OP';	//varchar
+        // $in_total_order= $request->total_order;	//decimal
+         $in_total_comission= $request->total_comission;	//decimal
+
+         $p_in_tabla_detalle = $request->detalleProductos;
+        $json_tb_detalle_prodct = json_decode($p_in_tabla_detalle, true);
+         
+        switch ($in_order_status_cod){
+            case "OE":
+                //Entregado
+                $ordenEstado = $c_pedidos->Verificar_Estado_Orden( $id_cab_pedido,  $in_order_status_cod );
+
+                if( $ordenEstado > 0 ){
+                    $out_id_order = $id_cab_pedido;
+                    $out_cod = 8; 
+                    $out_msj = 'Pedido '.$id_cab_pedido.'. Ya se encuentra Guardado como Entregado';
+                    return ($this->msj_estado_orden($out_id_order, $out_cod, $out_msj));
+                }else{
+                    //Suma Comision
+                    $operacion = "SU";
+                    $pedidosClase = new PedidosClass();
+                    $msj = $pedidosClase->RegistarComisionColaborador($id_cab_pedido, $in_total_comission,$in_order_status_cod,$in_delivery_date,$in_collaborator_id, $operacion, "Entregado");
+                }
+                break;
+            case "OP":
+                //Pendiente
+                $ordenEstado = $c_pedidos->Verificar_Estado_Orden( $id_cab_pedido,  $in_order_status_cod );
+
+                if( $ordenEstado > 0 ){
+                    $out_id_order = $id_cab_pedido;
+                    $out_cod = 8; 
+                    $out_msj = 'Pedido '.$id_cab_pedido.'. Ya se encuentra Guardado como Pendiente';
+                    return ($this->msj_estado_orden($out_id_order, $out_cod, $out_msj));
+                }else{
+                    //Suma Comision
+                    $operacion = "RE";
+                    $pedidosClase = new PedidosClass();
+                    $msj = $pedidosClase->RegistarComisionColaborador($id_cab_pedido, $in_total_comission,$in_order_status_cod,$in_delivery_date,$in_collaborator_id, $operacion, "Pendiente");
+                }
+                break;
+            case "OP":
+                //Reagendado
+                $ordenEstado = $c_pedidos->Verificar_Estado_Orden( $id_cab_pedido,  $in_order_status_cod );
     
+                if( $ordenEstado > 0 ){
+                    $out_id_order = $id_cab_pedido;
+                    $out_cod = 8; 
+                    $out_msj = 'Pedido '.$id_cab_pedido.'. Ya se encuentra Guardado como Pendiente';
+                    return ($this->msj_estado_orden($out_id_order, $out_cod, $out_msj));
+                }else{
+                    //Resta Comision
+                    $operacion = "RE";
+                    $pedidosClase = new PedidosClass();
+                    $msj = $pedidosClase->RegistarComisionColaborador($id_cab_pedido, $in_total_comission,$in_order_status_cod,$in_delivery_date,$in_collaborator_id, $operacion, "Pendiente");
+                }
+                break;
+            case "OR":
+                //Reagendado
+                $ordenEstado = $c_pedidos->Verificar_Estado_Orden( $id_cab_pedido,  $in_order_status_cod );
+        
+                if( $ordenEstado > 0 ){
+                        $out_id_order = $id_cab_pedido;
+                        $out_cod = 8; 
+                        $out_msj = 'Pedido '.$id_cab_pedido.'. Ya se encuentra Guardado como Reagendado';
+                        return ($this->msj_estado_orden($out_id_order, $out_cod, $out_msj));
+                }else{
+                     //Resta Comision
+                    $pedidosClase = new PedidosClass();
+                   
+
+                    $estadoOrden = $pedidosClase->ConsultarEstadoOrden($id_cab_pedido);
+                    if($estadoOrden == 'OC'){
+                        //ingresa inventario 
+                        $this->PedidoEstadoInventario($json_tb_detalle_prodct);
+                        //cambiar de Estado a la Orden
+                        $pedidosClase->Cambiar_Estado_Orden($id_cab_pedido, $in_order_status_cod);
+                        $out_id_order = $id_cab_pedido;
+                        $out_cod = 7; 
+                        $out_msj = 'Pedido '.$id_cab_pedido.'. Cancelado';
+                    
+                       return $msj = $this->msj_estado_orden($out_id_order, $out_cod, $out_msj);
+                            
+                    }
+                    //     //Resta Comision
+                    // $operacion = "RE";
+                    // $pedidosClase = new PedidosClass();
+                    // $msj = $pedidosClase->RegistarComisionColaborador($id_cab_pedido, $in_total_comission,$in_order_status_cod,$in_delivery_date,$in_collaborator_id, $operacion, "Reagendado");
+                }
+                break;
+
+            case "OC":
+                //Cancelado
+                $ordenEstado = $c_pedidos->Verificar_Estado_Orden( $id_cab_pedido,  $in_order_status_cod );
+        
+                if( $ordenEstado > 0 ){
+                        $out_id_order = $id_cab_pedido;
+                        $out_cod = 8; 
+                        $out_msj = 'Pedido '.$id_cab_pedido.'. Ya se encuentra Guardado como Cancelado';
+                        return ($this->msj_estado_orden($out_id_order, $out_cod, $out_msj));
+                }else{
+                    //Resta Comision
+                    $pedidosClase = new PedidosClass();
+                   
+                    $operacion = "RE";
+
+                    $estadoOrden = $pedidosClase->ConsultarEstadoOrden($id_cab_pedido);
+                    if($estadoOrden == 'OP'){
+                        //ingresa inventario 
+                        $this->PedidoEstadoInventario($json_tb_detalle_prodct);
+                        //cambiar de Estado a la Orden
+                        $pedidosClase->Cambiar_Estado_Orden($id_cab_pedido, $in_order_status_cod);
+                        $out_id_order = $id_cab_pedido;
+                        $out_cod = 7; 
+                        $out_msj = 'Pedido '.$id_cab_pedido.'. Cancelado';
+                    
+                        $msj = $this->msj_estado_orden($out_id_order, $out_cod, $out_msj);
+                            
+                    }
+                    //$msj = $pedidosClase->RegistarComisionColaborador($id_cab_pedido, $in_total_comission,$in_order_status_cod,$in_delivery_date,$in_collaborator_id, $operacion, "Cancelado");
+                }
+                break;
+
+                
+        }
+        
+       // return $msj ;
+         
+        //  $miArray = array('out_id_order'=>$out_id_order, 'out_cod'=>$out_cod, 'out_msj'=>$out_msj);
+        //                 return response()->json(['data' => $miArray], 200);
+    }
+    
+    public function msj_estado_orden($out_id_order, $out_cod, $out_msj){
+        
+        $miArray = array('out_id_order'=>$out_id_order, 'out_cod'=>$out_cod, 'out_msj'=>$out_msj);
+        return response()->json(['data' => $miArray], 200);
+        //return $miArray;
+    }
    
+
+    public function PedidoEstadoInventario($json_tb_detalle_prodct){
+
+       
+        $pedidosClase = new PedidosClass();
+        foreach ($json_tb_detalle_prodct as $value) {
+            //dd($value);
+            //$p_in_order_id =  $value['product_id'];//fk cabecera
+            $p_in_product_id =  $value['product_id'];
+            $p_in_name_product =  $value['name_product'];
+            $p_in_quantity  =  $value['quantity'];
+            $p_in_price =  $value['price'];
+            $p_in_discount_porcentage =  $value['discount_porcentage'];
+            $p_in_price_discount  =  $value['price_discount'];
+            $p_in_total_line =  $value['total_line'];
+            $p_in_comission  =  $value['comission'];
+            $p_in_total_comission = $value['total_comission'];
+                                                    
+            $pedidosClase->Ingreso_inventario($p_in_product_id , $p_in_quantity );
+                                                            
+        }
+        // $miArray = array('out_id_order'=>$out_id_order, 'out_cod'=>$out_cod, 'out_msj'=>$out_msj);
+        // return response()->json(['data' => $miArray], 200);
+        
+    }
+    
     // public function createOrden(Request $request){
 
       

@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\CityController;
 use App\Http\Controllers\Pedidos\PedidosController;
+use App\Http\Controllers\Pedidos\ListaPedidosController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\SectorsController;
 use App\Http\Controllers\StatusOrderController;
@@ -66,7 +67,13 @@ Route::resource( 'type_identifications', TypesIdentificationController::class)
 Route::resource('clients', ClientController::class)
     ->except(['show'])
     ->names('clients');
+
+
+    
 //Listar pedidos
-Route::get('list_orders', function(){
-    return view('pedido.show');
-})->name('list_orders');
+Route::get('list_orders',  [ListaPedidosController::class, 'index' ])->name('list_orders');
+Route::get('list_orders_json',  [ListaPedidosController::class, 'listaRevisionOrders_json' ])->name('list_orders_json');
+Route::post('buscar_order', [ListaPedidosController::class, 'buscarFiltrandoOrdenes' ])->name('orden.procesar.buscar');
+// Route::get('list_orders', function(){
+//     return view('pedido.show');
+// })->name('list_orders');

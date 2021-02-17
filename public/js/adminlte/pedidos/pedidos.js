@@ -42,6 +42,7 @@ $(document).ready(function () {
         // var tableDetalleProducto = new Tabulator("#grid-table-detalle-pedido");
         var tb_det_prodct = table_detalle_factura.getData();
 
+      
         if(tb_det_prodct.length == 0){
           $('.loaders').addClass('d-none');
             
@@ -54,8 +55,23 @@ $(document).ready(function () {
           })
           
          return false;
+       }else if( tb_det_prodct.length > 0 ){
+        for (const z in tb_det_prodct) {
+          //console.log(tb_det_prodct[z]);
+          if(tb_det_prodct[z].quantity === 0 || tb_det_prodct[z].quantity === ''){
+            $.toast({
+              heading: 'Error',
+              text: 'No se puede guardar la orden. Ingrese Cantidad en el producto : '+tb_det_prodct[z].name_product,
+              showHideTransition: 'fade',
+              icon: 'error',
+              position: 'top-right',
+            })
+            return false;
+          }
+        }
        }
 
+       
       Swal.fire({
         title: '<strong>' + msj + '</strong>',
         icon: 'info',
@@ -388,12 +404,53 @@ $(document).ready(function () {
               // // });
           
           }},
-          {title:"PVP UNITARIO", field:"price", sorter:"number", hozAlign:"right", width:120},
-          {title:"% DESCT", field:"discount_porcentage", sorter:"number",  hozAlign:"right",width:100},
-          {title:"DESCUENTO", field:"price_discount", sorter:"number", hozAlign:"right", width:100},
-          {title:"COMISION", field:"comission", sorter:"number", hozAlign:"right", width:100},
-          {title:"TOTAL COMISION", field:"total_comission", sorter:"number", hozAlign:"right", width:100},
-          {title:"TOTAL", field:"total_line", sorter:"number",  hozAlign:"right",width:100
+          //{title:"PVP UNITARIO", field:"price", sorter:"number", hozAlign:"right", width:120},
+          {title:"PVP UNITARIO", field:"price", formatter:"money", hozAlign:"right", width:120, formatterParams:{
+            decimal:".",
+            thousand:".",
+            symbol:"$",
+            symbolAfter:false,
+            precision:2,
+        }},
+          {title:"% DESCT", field:"discount_porcentage", formatter:"money",  hozAlign:"right",width:100, formatterParams:{
+                  decimal:".",
+                  thousand:".",
+                  symbol:"%",
+                  symbolAfter:"p",
+                  precision:false,
+              }
+          },
+          {title:"DESCUENTO", field:"price_discount",  formatter:"money", hozAlign:"right", width:100,formatterParams:{
+                decimal:".",
+                thousand:".",
+                symbol:"$",
+                symbolAfter:false,
+                precision:2,
+            }
+          },
+          {title:"COMISION", field:"comission",  formatter:"money", hozAlign:"right", width:100, formatterParams:{
+                decimal:".",
+                thousand:".",
+                symbol:"$",
+                symbolAfter:false,
+                precision:2,
+            }
+          },
+          {title:"TOTAL COMISION", field:"total_comission",  formatter:"money", hozAlign:"right", width:100, formatterParams:{
+            decimal:".",
+            thousand:".",
+            symbol:"$",
+            symbolAfter:false,
+            precision:2,
+            }
+          },
+          {title:"TOTAL", field:"total_line", formatter:"money",  hozAlign:"right",width:100, formatterParams:{
+                decimal:".",
+                thousand:".",
+                symbol:"$",
+                symbolAfter:false,
+                precision:2,
+            }
           // ,mutator:function(value, data) {
           //   return 12;//console.log(data)//Math.floor(data.views / data.users);
           //  } 
@@ -919,6 +976,7 @@ $(document).ready(function () {
                                 //alert("Printing row data for: " + cell.getRow().getData().name)
                                //console.log(cell.getRow().getData());
                              
+                                $("#textbuscarPedido").attr("id_orden",cell.getRow().getData().id);
                                 $('#textbuscarPedido').val(cell.getRow().getData().id);
                                 $('#txt_id_cab_orden').val(cell.getRow().getData().id);
                                 $("#textbuscarcliente").val(cell.getRow().getData().nombre_cliente);
@@ -977,5 +1035,133 @@ $(document).ready(function () {
 
   //table_lista_ordenes.hideColumn("sector_cod");
 
+  /**
+   * Procesar orden 
+   */
+  $(document).on("click", "#btn-procesar-orden",function(){
+
+
+
+    let id_orden = $('#textbuscarPedido').attr('id_orden');
+    let msj =  "Cambiar de estado";
+    var tb_det_prodct = table_detalle_factura.getData();
+
+
+    if(id_orden == 0){
+      $('.loaders').addClass('d-none');
+        
+        $.toast({
+          heading: 'Error',
+          text: 'Debe seleccionar Pedido',
+          showHideTransition: 'fade',
+          icon: 'error',
+          position: 'top-right',
+      })
+     return false;
+    }
+    Swal.fire({
+      title: '<strong>' + msj + '</strong>',
+      icon: 'info',
+      html:
+          'Procesar Orden',
+      showCloseButton: true,
+      showCancelButton: true,
+      focusConfirm: false,
+      confirmButtonText:
+          '<i class="fa fa-check"></i>',
+      confirmButtonAriaLabel: 'Thumbs up, great!',
+      cancelButtonText:
+          '<i class="fa fa-times"></i>',
+      cancelButtonAriaLabel: 'Thumbs down'
+    }).then((result) => {
+      if (result.value === true){
+        $('.loaders').removeClass('d-none');
+        $.ajax(
+          {
+            url : $('#form-procesar-orden').attr("action"),
+            type: "POST",
+            data : {
+              _token: $('#token_procesar').val(),
+              // opcion : id_orden=="0" ?'AA' : 'AB',
+               id_pedido : id_orden,
+              // client_id  :  $('#textbuscarcliente').attr("codigocliente"),
+               delivery_date  : $('#fechaActual').val(),
+              // delivery_time : $('#horaActual').val(),
+               collaborator_id  : $('#colaborador').attr('id_colaborador'),
+              // sector_cod  : $('#sectors').val(),
+              // city_sale_cod  : $('#city').val(),
+              // delivery_address : $('#textaddressdelivery').val(),
+              // observation : $('#textObservacion').val()==="" ? "-" : $('#textObservacion').val(),
+              // // status_comission : $('#').val(),
+               order_status_cod  : $('#orderStatus').val(),
+              // total_order : $('#txtTotalOrden').val(),
+               total_comission :  $('#txt_totalComision').val(),
+               detalleProductos : JSON.stringify(tb_det_prodct),
+              // detalleProductosBorrar : JSON.stringify(array_detalle_factura_eliminados),
+
+              
+             
+            }
+          }).done(function(dt) {
+              console.log(dt);
+            $('.loaders').addClass('d-none');
+            if(dt.data.out_cod === 8){
+                  $('.loaders').addClass('d-none');
+                  Swal.fire({
+                       position: 'top-center',
+                       icon: 'success',
+                       title: dt.data.out_msj+" Nro Orden: "+dt.data.out_id_order.padStart(6, 0) ,
+                       showConfirmButton: false,
+                       timer: 1500
+                  });
+              }else if(dt.data.out_cod === 7){
+                $('.loaders').addClass('d-none');
+                Swal.fire({
+                     position: 'top-center',
+                     icon: 'success',
+                     title: dt.data.out_msj+" Nro Orden: "+dt.data.out_id_order.padStart(6, 0) ,
+                     showConfirmButton: false,
+                     timer: 1500
+                });
+                window.location.reload();
+              }
+              // if(dt.data.out_cod === 7){
+              //     $('.loaders').addClass('d-none');
+              //     Swal.fire({
+              //          position: 'top-end',
+              //          icon: 'success',
+              //          title: dt.data.out_msj+" Nro Orden: 000"+dt.data.out_id_order,
+              //          showConfirmButton: false,
+              //          timer: 1500
+              //         });
+              //         window.location.reload(); // Recargar página
+              // }else{
+              //             Swal.fire({
+              //               icon: 'error',
+              //               title: 'Oops...',
+              //               text: 'Error 07 al crear orden'
+              //             })
+              // }
+          }).fail(function(data) {
+              console.log(data);    
+              //alert( "error" );
+              $('.loaders').addClass('d-none');
+              if(data.status===500){
+                  Swal.fire({
+                  icon: 'error',
+                  title: 'Error al Procesar Pedidos',
+                  text: 'Error al Procesar Pedidos'
+                })}
+          }).always(function(data) {
+              $('.loaders').addClass('d-none');
+              //console.log(data);    
+              //alert( "complete" );
+          });
+
+
+      }
+    });
+
+  });
   
 });

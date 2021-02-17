@@ -45,6 +45,7 @@ Route::get('lista_orders', [PedidosController::class, 'listaOrders_json' ])->nam
 Route::get('detalle_orders', [PedidosController::class, 'detalleOrders_json' ])->name('orders.detalle');
 Route::get('stock_product', [PedidosController::class, 'stock_product_json' ])->name('stock.product');
 Route::post('generate_order', [PedidosController::class, 'createOrden' ])->name('orden.create');
+Route::post('procesar_order', [PedidosController::class, 'ProcesarOrden' ])->name('orden.procesar');
 //Ciudades
 Route::resource('cities', CityController::class)
     ->except(['show'])

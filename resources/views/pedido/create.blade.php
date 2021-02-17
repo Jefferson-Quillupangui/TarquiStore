@@ -46,7 +46,7 @@
         </div>
         <div class="card-body">
             <div class="row">
-                <div class="col-md-6">
+                <div class="col-md-5">
                     <label for="name_client">Buscar Pedido:</label>
                     <div class="input-group mb-3">
                         <div class="input-group-prepend">
@@ -55,7 +55,7 @@
                             </span>
                         </div>
                         <input type="search" class="form-control" placeholder="Buscar Pedido" aria-label="Search"
-                            aria-describedby="search-addon" id="textbuscarPedido" disabled />
+                            aria-describedby="search-addon" id_orden=0 id="textbuscarPedido" disabled />
                         <div class="input-group-append">
                             <div class="input-group-text" type="button" id="btn-buscar-pedido"><i class="fa fa-search"></i>
                             </div>
@@ -63,7 +63,7 @@
                     </div>
                 </div>
 
-                <div class="col-md-6 ">
+                <div class="col-md-5 ">
                     <label for="orderStatus">Estado de Pedido : </label>
                     <div class="input-group mb-4">
                         <div class="input-group-prepend">
@@ -93,6 +93,20 @@
                         @endcan
                     </div>
                 </div>
+
+
+
+                <div class="col-md-2 ">
+                    <label for="orderStatus">Procesar </label>
+                    <div class="form-group row ">
+                        <form action="{{ route('orden.procesar') }}" id="form-procesar-orden" method="POST">
+                            <input type="hidden" name="_token" id="token_procesar" value="{{ csrf_token() }}">
+                            <button class="btn btn-info " id="btn-procesar-orden" type="button"> <i class="fas fa-save"></i>
+                                Procesar Orden</button>
+                        </form>
+                    </div>
+                </div>
+
             </div>
         </div>
         <!-- /.card-body -->
@@ -121,7 +135,8 @@
 
     <div class="card card-cyan">
         <div class="card-header ">
-            <h4 class="card-title" style="margin: 0px 0px 0px 0px;"> <i class="far fa-plus-square"></i> Registrar pedido</h4>
+            <h4 class="card-title" style="margin: 0px 0px 0px 0px;"> <i class="far fa-plus-square"></i> Registrar pedido
+            </h4>
         </div>
 
         <div class="card-body">
@@ -638,6 +653,6 @@
 
 @section('js')
     <script type="text/javascript" src="{{ asset('/plugin_tabullator/dist/js/tabulator.min.js') }}"></script>
-    <script type="text/javascript" src="{{ asset('js/adminlte/pedidos/pedidos.js?vs=06') }}"></script>
+    <script type="text/javascript" src="{{ asset('js/adminlte/pedidos/pedidos.js?vs=08') }}"></script>
 
 @stop

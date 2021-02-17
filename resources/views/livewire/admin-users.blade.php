@@ -15,6 +15,7 @@
                             <th>Cod</th>
                             <th>Nombre</th>
                             <th>Email</th>
+                            <th>Roles</th>
                             <th>Acciones</th>
                         </tr>
                     </thead>
@@ -27,17 +28,11 @@
                                 <td>{{$user->name}}</td>
                                 {{-- <td><img src="{{ asset($user->profile_photo_path) }}"  height="100"/></td> --}}
                                 <td>{{$user->email}}</td>
+                                <td>{{$user->getRoleNames()->implode(',')}}</td>
                                 <td>
                                     <a class="btn btn-secondary" href="{{route('admin.users.edit', $user)}}"><i class="fas fa-edit"></i></a>
                                 </td>
-                                {{-- <td>
-                                    @foreach ($users as $user)
-                                        $users->posts;
-                                    @endforeach
-                                </td> --}}
-                                {{-- <td>{{$user->Role->name}}</td> --}}
                             </tr>
-                            
                         @endforeach
                     </tbody>
                 </table>

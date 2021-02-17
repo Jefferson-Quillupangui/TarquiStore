@@ -30,7 +30,7 @@
                     <tr>
                         <th>ID</th>
                         <th>Name</th>
-                        <th>Acciones</th>
+                        <th><div class="row justify-content-center">Acciones</div></th>
                     </tr>
                 </thead>
                 <tbody>
@@ -39,7 +39,7 @@
                             <td>{{ $role->id}}</td>
                             <td>{{ $role->name}}</td>
                             <td>
-                                <div class="row ml-auto">
+                                <div class="row justify-content-center">
                                     <form action="{{route('admin.roles.destroy',$role)}}" method="POST" class="op-eliminar">
                                         <a class="btn btn-secondary" href="{{route('admin.roles.edit',$role)}}"><i class="fas fa-edit"></i></a>
                                         @method('delete')

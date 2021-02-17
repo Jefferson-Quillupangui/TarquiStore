@@ -68,8 +68,17 @@ Route::resource('clients', ClientController::class)
     ->except(['show'])
     ->names('clients');
 
-
+//Comisiones index
+Route::get('list_comission', function(){
+    return view('comision.index ');
+})->name('list_comission');
     
+//Reportes index
+Route::get('reports', function(){
+    return view('reportes.index ');
+})->name('reports');
+    
+
 //Listar pedidos
 Route::get('list_orders',  [ListaPedidosController::class, 'index' ])->name('list_orders');
 Route::get('list_orders_json',  [ListaPedidosController::class, 'listaRevisionOrders_json' ])->name('list_orders_json');

@@ -7,6 +7,7 @@ use App\Models\OrderStatus;
 use App\Models\Order;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
 class ListaPedidosController extends Controller
 {
@@ -103,6 +104,30 @@ class ListaPedidosController extends Controller
     }
 
 
+    public function ListaDetalleOrders_json(Request $request ){
+        $v_id_orden = $request->id_orden;
+     
+        $detalle_orders = DB::table('order_product')
+        ->join('orders AS a', 'order_product.order_id', '=', 'a.id')
+        ->join('products AS b', 'order_product.product_id', '=', 'b.id')
+        ->select(
+            'order_product.id_detalle_product',
+            'order_product.order_id',
+            'order_product.product_id',
+            'order_product.name_product',
+            'order_product.quantity',
+            'order_product.price',
+            'order_product.discount_porcentage',
+            'order_product.price_discount',
+            'order_product.total_line',
+            'order_product.comission',
+            'order_product.total_comission'
+                 )
+        ->where('order_product.order_id','=',$v_id_orden ) 
+        ->where('a.id','=',$v_id_orden)
+        ->get();
+        return response()->json(['data' => $detalle_orders], 200);
+    }
 
 
     public function buscarFiltrandoOrdenes( Request $request){

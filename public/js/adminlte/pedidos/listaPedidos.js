@@ -168,27 +168,31 @@ $(document).ready(function () {
                                  
                                     // $("#textbuscarPedido").attr("id_orden",cell.getRow().getData().id);
                                     // $('#textbuscarPedido').val(cell.getRow().getData().id);
-                                    // $('#txt_id_cab_orden').val(cell.getRow().getData().id);
-                                    // $("#textbuscarcliente").val(cell.getRow().getData().nombre_cliente);
-                                    // $("#textbuscarcliente").attr("codigocliente",cell.getRow().getData().client_id);
-                                    // $("#textidentification").val(cell.getRow().getData().identification);
-                                    // $("#textEmail").val(cell.getRow().getData().email_cliente);
-                                    // $("#textphone1").val(cell.getRow().getData().phone1);
-                                    // $("#textphone2").val(cell.getRow().getData().phone2);
-                                    // $("#colaborador").val(cell.getRow().getData().nombre_usuario);
-                                    // $("#fechaActual").val(cell.getRow().getData().delivery_date);
-                                    // $("#horaActual").val(cell.getRow().getData().delivery_time);
-                                    // $("#textaddressdelivery").val(cell.getRow().getData().delivery_address);
-                                    // $("#textObservacion").val(cell.getRow().getData().observation);
-                                    // $('#sectors').val(cell.getRow().getData().sector_cod).change();
-                                    // $('#city').val(cell.getRow().getData().city_sale_cod).change();
+                                     $('#txtEstadoOrden').val(cell.getRow().getData().nombre_estado_ord);
+                                     $('#txt_id_cab_orden').val(cell.getRow().getData().id);
+                                     $("#txtCliente").val(cell.getRow().getData().nombre_cliente);
+                                     $("#txtCliente").attr("codigocliente",cell.getRow().getData().client_id);
+                                     $("#txtIdentificacion").val(cell.getRow().getData().identification);
+                                     $("#txtEmail").val(cell.getRow().getData().email_cliente);
+                                     $("#txtPhone1").val(cell.getRow().getData().phone1);
+                                     $("#txtPhone2").val(cell.getRow().getData().phone2);
+                                     $("#colaborador").val(cell.getRow().getData().nombre_usuario);
+                                     $("#fechaActual").val(cell.getRow().getData().delivery_date);
+                                     $("#horaActual").val(cell.getRow().getData().delivery_time);
+                                     $("#txtDireccion").val(cell.getRow().getData().delivery_address);
+                                     $("#txtObservacion").val(cell.getRow().getData().observation);
+                                     $('#txtSector').val(cell.getRow().getData().nombre_sector);
+                                     $('#txtCiudad').val(cell.getRow().getData().nombre_ciudad);
+                                    //  $('#txtSector').val(cell.getRow().getData().sector_cod);
+                                    //  $('#txtCiudad').val(cell.getRow().getData().city_sale_cod);
                                     // $('#orderStatus').val(cell.getRow().getData().order_status_cod).change().prop('disabled', false);
                                     // //$('#orderStatus').prop('disabled', false);
-                                    // $("#txtTotalOrden").val(cell.getRow().getData().total_order);
-                                    // $("#txt_totalComision").val(cell.getRow().getData().total_comission);
-                                    // $("#modal-buscarPedido").modal("hide");
-                                    // const id_order_cab = cell.getRow().getData().id;
-                                    // cargarDetallePedido(id_order_cab);
+                                     $("#txtTotalOrden").val("$ "+cell.getRow().getData().total_order);
+                                     $("#txtTotalComision").val("$ "+cell.getRow().getData().total_comission);
+                                      const id_order_cab = cell.getRow().getData().id;
+                                      cargarDetalleOrden(id_order_cab);
+                                     $("#modal-buscarRevisionPedido").modal("hide");
+                                    
     
                                 }},
             {title:"N# Pedido", field:"id",hozAlign:"center",headerFilter:"input",headerFilterPlaceholder:"N# Pedido"},
@@ -222,6 +226,33 @@ $(document).ready(function () {
             // },
           ],
     });
+
+
+    /**
+   * CArgar el detalle del pedido
+   */
+  function cargarDetalleOrden(v_id_orden){
+    $.ajax({
+        type: 'GET',
+        url: $('#form-detalle-lista-pedidos').attr("action"),
+        data: {
+            id_orden: v_id_orden
+        },
+        // dataType: "dataType",
+        beforeSend: function () {
+            $('.loaders').removeClass('d-none');
+           
+        },
+        success: function (response) {
+
+          //table_detalle_factura.replaceData(response.data);
+          console.log(response);
+
+        }, complete: function () {
+            $('.loaders').addClass('d-none');
+        }
+    });
+  }
 
 
 

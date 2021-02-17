@@ -44,6 +44,7 @@
 
     <div class="card card-cyan">
         <form action="{{ route('list_orders_json') }}" id="form-revision-lista-pedidos" class="d-none"></form>
+        <form action="{{ route('lista.orders.detalle') }}" id="form-detalle-lista-pedidos" class="d-none"></form>
 
         <div class="card-header">
             <h4 class="card-title" style="margin: 0px 0px 0px 0px;"> <i class="fas fa-search"></i> Buscar Pedidos</h4>
@@ -184,8 +185,224 @@
         </div>
 
         <div class="card-body">
+            <div class="row">
+
+                <div class="input-group mb-3">
+                    ID :<input type="text" id="txt_id_cab_orden" name="txt_id_cab_orden" value=0 disabled>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-6">
+                    <label for="name_client">Estado Orden:</label>
+                    <div class="input-group mb-3">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text">
+                                <i class="fa fa-eject"></i>
+                            </span>
+                        </div>
+                        <input type="text" class="form-control" placeholder="Estado" aria-label="Search"
+                            aria-describedby="search-addon" id="txtEstadoOrden" codigocliente=0 disabled />
+
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    {{-- <label for="identification">Identificación:</label>
+                    <div class="input-group mb-3">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text" id="basic-addon1"><i class="fa fa-id-card"></i></span>
+                        </div>
+                        <input class="form-control" placeholder="Identificación" id="txtIdentificacion" disabled=""
+                            name="identification" type="text">
+                    </div> --}}
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-6">
+                    <label for="name_client">Cliente:</label>
+                    <div class="input-group mb-3">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text">
+                                <i class="fa fa-user-plus"></i>
+                            </span>
+                        </div>
+                        <input type="text" class="form-control" placeholder="Cliente" aria-label="Search"
+                            aria-describedby="search-addon" id="txtCliente" codigocliente=0 disabled />
+
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <label for="identification">Identificación:</label>
+                    <div class="input-group mb-3">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text" id="basic-addon1"><i class="fa fa-id-card"></i></span>
+                        </div>
+                        <input class="form-control" placeholder="Identificación" id="txtIdentificacion" disabled=""
+                            name="identification" type="text">
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="row">
+
+                <div class="col-md-6">
+                    <label for="phone1">Telefonos:</label>
+                    <div class="input-group mb-6">
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text">
+                                    <i class="fa fa-phone"></i>
+                                </span>
+                            </div>
+
+                            <input class="form-control" placeholder="Telefono 1" id="txtPhone1" disabled="" name="phone1"
+                                type="text">
+
+                            <input class="form-control" placeholder="Telefono 2" id="txtPhone2" disabled="" name="phone2"
+                                type="text">
+
+
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <label for="email">Correo:</label>
+                    <div class="input-group mb-3">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text" id="basic-addon1"><i class="fa fa-envelope"
+                                    aria-hidden="true"></i></span>
+                        </div>
+                        <input class="form-control" placeholder="Email" id="txtEmail" disabled="" name="email" type="text">
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="row">
+                <div class='col-sm-6'>
+                    <label for="identification">Fecha/Hora:</label>
+                    <div class="input-group mb-3">
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text">
+                                    <i class="fa fa-circle"></i>
+                                </span>
+                            </div>
+
+                            <input type="date" class="form-control" id="fechaActual" disabled="" value="">
+
+                            <div class="input-group-append">
+                                <input type="time" class="form-control" id="horaActual" disabled="" value="">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+                <div class="col-md-6">
+                    <label for="txtColaborador">Colaborador:</label>
+                    <div class="input-group mb-3">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text" id="basic-addon1"><i class="fa fa-user"></i></span>
+                        </div>
+
+                        <input id="colaborador" type="text" disabled="" class="form-control" placeholder="Colaborador"
+                            value="">
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="row">
+                <div class="col-md-6">
+                    <label for="sectors">Sector:</label>
+                    <div class="input-group mb-3">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text" id="basic-addon1"><i class="far fa-list-alt"
+                                    aria-hidden="true"></i></span>
+                        </div>
+                        <input class="form-control" placeholder="Sector" id="txtSector" disabled="" name="email"
+                            type="text">
+                    </div>
+                </div>
+
+                <div class="col-md-6">
+                    <label for="city">Ciudad:</label>
+                    <div class="input-group mb-3">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text" id="basic-addon1"><i class="far fa-list-alt"
+                                    aria-hidden="true"></i></span>
+                        </div>
+                        <input class="form-control" placeholder="Ciudad" id="txtCiudad" disabled="" name="email"
+                            type="text">
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="row">
+                <div class="col-md-6">
+                    <label for="address_delivery">Dirección/Ubicación:</label>
+                    <div class="input-group mb-3 ">
+                        <div class="input-group resize:none">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text"><i class="fa fa-map-marker"></i></span>
+                            </div>
+                            <textarea class="form-control" placeholder="Ingrese direccion " disabled="" rows="2"
+                                id="txtDireccion" spellcheck="false" name="address_delivery" cols="50"></textarea>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-6">
+                    <label for="textObservacion">Observacion:</label>
+                    <div class="input-group mb-3 ">
+                        <div class="input-group resize:none">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text"><i class="fa fa-sticky-note"></i></span>
+                            </div>
+                            <textarea class="form-control" placeholder="Ingrese observacion" disabled="" rows="2"
+                                id="txtObservacion" spellcheck="false" name="textObservacion" cols="50"></textarea>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="row">
+                <div class="col-md-6">
+                    <label for="sectors">Total Orden:</label>
+                    <div class="input-group mb-3">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text" id="basic-addon1"><i class="far fa-list-alt"
+                                    aria-hidden="true"></i></span>
+                        </div>
+                        <input class="form-control" placeholder="Total Orden" id="txtTotalOrden" disabled="" name="email"
+                            type="text">
+                    </div>
+                </div>
+
+                <div class="col-md-6">
+                    <label for="city">Total Comision:</label>
+                    <div class="input-group mb-3">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text" id="basic-addon1"><i class="far fa-list-alt"
+                                    aria-hidden="true"></i></span>
+                        </div>
+                        <input class="form-control" placeholder="Total Comision" id="txtTotalComision" disabled=""
+                            name="email" type="text">
+                    </div>
+                </div>
+
+            </div>
+
+
 
         </div>
+
+    </div>
     </div>
 
 

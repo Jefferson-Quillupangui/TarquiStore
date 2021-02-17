@@ -74,6 +74,7 @@ Route::resource('clients', ClientController::class)
 Route::get('list_orders',  [ListaPedidosController::class, 'index' ])->name('list_orders');
 Route::get('list_orders_json',  [ListaPedidosController::class, 'listaRevisionOrders_json' ])->name('list_orders_json');
 Route::post('buscar_order', [ListaPedidosController::class, 'buscarFiltrandoOrdenes' ])->name('orden.procesar.buscar');
+Route::get('list_detalle_orders', [ListaPedidosController::class, 'ListaDetalleOrders_json' ])->name('lista.orders.detalle');
 // Route::get('list_orders', function(){
 //     return view('pedido.show');
 // })->name('list_orders');

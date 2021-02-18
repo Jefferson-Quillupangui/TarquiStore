@@ -10,6 +10,16 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.2/css/bootstrap.css">
     <link rel="stylesheet" href="https://cdn.datatables.net/1.10.23/css/dataTables.bootstrap4.min.css">
     <link rel="stylesheet" href="https://cdn.datatables.net/responsive/2.2.7/css/responsive.bootstrap4.min.css">
+    <style>
+        .page-item.active .page-link {
+            background-color: #17A2B8 !important;
+            border: 1px solid #17A2B8;
+            color: white !important;
+        }
+        .page-link {
+            color: black !important;
+        }
+    </style>
 @stop
 
 @section('content')
@@ -26,11 +36,11 @@
 
         <div class="card-body">
             <table class="table table-striped" id="roles">
-                <thead>
+                <thead style="background-color:#17A2B8;color:white;">
                     <tr>
                         <th>ID</th>
                         <th>Name</th>
-                        <th>Acciones</th>
+                        <th><div class="row justify-content-center">Acciones</div></th>
                     </tr>
                 </thead>
                 <tbody>
@@ -39,7 +49,7 @@
                             <td>{{ $role->id}}</td>
                             <td>{{ $role->name}}</td>
                             <td>
-                                <div class="row ml-auto">
+                                <div class="row justify-content-center">
                                     <form action="{{route('admin.roles.destroy',$role)}}" method="POST" class="op-eliminar">
                                         <a class="btn btn-secondary" href="{{route('admin.roles.edit',$role)}}"><i class="fas fa-edit"></i></a>
                                         @method('delete')

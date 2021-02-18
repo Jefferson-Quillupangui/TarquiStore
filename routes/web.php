@@ -195,6 +195,17 @@ Route::get('list_detalle_orders', [ListaPedidosController::class, 'ListaDetalleO
 
 //Route::get('report', [ReportesController::class, 'generateReport' ])->name('reportes');
 Route::get('reportNuevo', [ReportesController::class, 'index' ]);
+Route::get('reportCompileHola', [ReportesController::class, 'reporteHola' ]);
+Route::get('reportCompileHolaJasper', [ReportesController::class, 'reporteHolaCompilarPhp' ]);
+Route::get('reportJasperBlanco', [ReportesController::class, 'reporteBlanco' ]);
+
+
+//https://minhbangchu.blogspot.com/2015/11/su-dung-jaspersoft-report-lam-report.html
+//Route::get('/reporting', ['uses' =>'ReportController@index', 'as' => 'Report']);
+//Route::post('/reporting', ['uses' =>'ReportController@post']);
+//Route::post('reporting', [ReportesController::class, 'post' ]);
+
+
 // Route::get('list_orders', function(){
 //     return view('pedido.show');
 // })->name('list_orders');

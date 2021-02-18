@@ -9,6 +9,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 
+
 class ListaPedidosController extends Controller
 {
     public function index(){
@@ -182,4 +183,8 @@ class ListaPedidosController extends Controller
        
     }
 
+    
+  
+
+ 
 }

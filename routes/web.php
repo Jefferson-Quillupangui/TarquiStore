@@ -181,9 +181,9 @@ Route::get('list_comission', function(){
 })->name('list_comission');
     
 //Reportes index
-Route::get('reports', function(){
+Route::get('reporteComision', function(){
     return view('reportes.index ');
-})->name('reports');
+})->name('reporteComision');
     
 
 //Listar pedidos

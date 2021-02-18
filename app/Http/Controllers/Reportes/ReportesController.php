@@ -6,10 +6,53 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 //use JasperPHP;
 use JasperPHP\JasperPHP;
+use PHPJasper\PHPJasper; 
 
 class ReportesController extends Controller
 {
 
+
+    
+    
+
+    public function post()
+    {
+        $database = \Config::get('database.connections.mysql');
+
+        $output = public_path() . '/report/'.time().'_codelution';
+
+        $ext = "pdf";
+
+        \JasperPHP::process(
+            public_path() . '/report/OrdenesCabecera.jasper',
+            $output,
+            array($ext),
+            array(),
+            $database,
+            false,
+            false
+        )->execute();
+
+        header('Content-Description: File Transfer');
+        header('Content-Type: application/octet-stream');
+        header('Content-Disposition: attachment; filename='.time().'_codelution.'.$ext);
+        header('Content-Transfer-Encoding: binary');
+        header('Expires: 0');
+        header('Cache-Control: must-revalidate, post-check=0, pre-check=0');
+        header('Pragma: public');
+        header('Content-Length: ' . filesize($output.'.'.$ext));
+        flush();
+        readfile($output.'.'.$ext);
+        unlink($output.'.'.$ext); // deletes the temporary file
+
+        return Redirect::to('/reportNuevo');
+
+
+        
+    }
+
+
+    
     /**
      * Reporna um array com os parametros de conexão
      * @return Array
@@ -36,7 +79,7 @@ class ReportesController extends Controller
         public function index()
         {
         // coloca na variavel o caminho do novo relatório que será gerado
-            $output = public_path() . '/reports/' . time() . '__OrdenesCabecera';
+            $output = public_path() . '/reports/' . time() . '___OrdenesCabecera';
         // instancia um novo objeto JasperPHP
             
             $report = new JasperPHP;
@@ -52,20 +95,21 @@ class ReportesController extends Controller
                 ['pdf'],
                 [],
                 $this->getDatabaseConfig()
-            )->output();
-
-            //execute    output
-        $file = $output . '.pdf';
-            $path = $file;
+            )->execute();
             
-            // caso o arquivo não tenha sido gerado retorno um erro 404
-            if (!file_exists($file)) {
-                abort(404);
-            }
-        //caso tenha sido gerado pego o conteudo
-            $file = file_get_contents($file);
-        //deleto o arquivo gerado, pois iremos mandar o conteudo para o navegador
-            unlink($path);
+            //execute    output
+            $file = $output . '.pdf';
+        //     $path = $file;
+            
+        //     //dd($path);
+        //     // caso o arquivo não tenha sido gerado retorno um erro 404
+        //     if (!file_exists($file)) {
+        //         abort(404);
+        //     }
+        // //caso tenha sido gerado pego o conteudo
+        //     $file = file_get_contents($file);
+        // //deleto o arquivo gerado, pois iremos mandar o conteudo para o navegador
+        //     unlink($path);
         // retornamos o conteudo para o navegador que íra abrir o PDF
             return response($file, 200)
                 ->header('Content-Type', 'application/pdf')
@@ -73,6 +117,81 @@ class ReportesController extends Controller
         
         }
 
+
+
+        public function reporteHola(){
+            $input = base_path() .
+            '/public/reports/blanco.jrxml';
+            //'/vendor/geekcom/phpjasper/examples/blanco.jrxml';
+            //dd( $input);
+            $jasper = new PHPJasper;
+            $jasper->compile($input)->execute();
+
+            return response()->json([
+                'status' => 'ok',
+                'msj' => '¡Reporte compilado..!'
+            ]);
+        }
+
+        public function reporteHolaCompilarPhp(){
+            $input = base_path() .
+            '/public/reports/blanco.jasper';
+            //'/vendor/geekcom/phpjasper/examples/blanco.jasper';
+            $output = base_path() .
+            '/public/reports';
+            //'/vendor/geekcom/phpjasper/examples';
+            $options = [
+                'format' => ['pdf']
+            ];
+        
+            $jasper = new PHPJasper;
+        
+            $jasper->process(
+                $input,
+                $output,
+                $options
+            )->execute();
+        
+            $pathToFile = base_path() .
+            '/public/reports/blanco.pdf';
+            return response()->file($pathToFile);
+        }
+
+
+
+
+        public function reporteBlanco(){
+            $input = base_path() .'/public/reports/blanco.jrxml';
+
+            $jasper = new PHPJasper;
+            $jasper->compile($input)->execute();
+            //if ok
+
+            $input2 = base_path() .'/public/reports/blanco.jasper';
+
+            $output = base_path() . '/public/reports';
+           
+            $options = [
+                'format' => ['pdf']
+            ];
+
+
+            $jasper->process(
+                $input,
+                $output,
+                $options
+            )->execute();
+        
+            $pathToFile = base_path() .'/public/reports/blanco.pdf';
+            return response()->file($pathToFile);
+            // return response()->json([
+            //     'status' => 'ok',
+            //     'msj' => '¡Reporte compilado..!'
+            // ]);
+        }
+
+
+        
 //     public function getDatabaseConfig()
 //     {
 //         //'C:\xampp\htdocs\JasperReport\vendor\cossou\jasperphp\src\JasperStarter\jdbc'

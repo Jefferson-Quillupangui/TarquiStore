@@ -331,7 +331,7 @@ return [
             'submenu' =>  [
                 [
                     'text'  => 'Mis reportes',
-                    'route'  => 'reports',
+                    'route'  => 'reporteComision',
                     'icon'  => 'fas fa-vote-yea',
                 ],
             ],

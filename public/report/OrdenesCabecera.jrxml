@@ -1,0 +1,176 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.16.0.final using JasperReports Library version 6.16.0-48579d909b7943b64690c65c71e07e0b80981928  -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="OrdenesCabecera" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="03f110e5-481d-4caa-a64d-4a217b7f6f97">
+	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="MySql"/>
+	<queryString language="SQL">
+		<![CDATA[select id,
+delivery_date,
+delivery_time,
+delivery_address,
+total_order,
+total_comission,
+observation,
+status_comission,
+sector_cod,
+city_sale_cod,
+client_id,
+collaborator_id,
+order_status_cod,
+created_at,
+updated_at
+from orders]]>
+	</queryString>
+	<field name="id" class="java.math.BigInteger">
+		<property name="com.jaspersoft.studio.field.name" value="id"/>
+		<property name="com.jaspersoft.studio.field.label" value="id"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="orders"/>
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="delivery_date" class="java.sql.Date">
+		<property name="com.jaspersoft.studio.field.name" value="delivery_date"/>
+		<property name="com.jaspersoft.studio.field.label" value="delivery_date"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="orders"/>
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="delivery_time" class="java.sql.Time">
+		<property name="com.jaspersoft.studio.field.name" value="delivery_time"/>
+		<property name="com.jaspersoft.studio.field.label" value="delivery_time"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="orders"/>
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="delivery_address" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="delivery_address"/>
+		<property name="com.jaspersoft.studio.field.label" value="delivery_address"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="orders"/>
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="total_order" class="java.math.BigDecimal">
+		<property name="com.jaspersoft.studio.field.name" value="total_order"/>
+		<property name="com.jaspersoft.studio.field.label" value="total_order"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="orders"/>
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="total_comission" class="java.math.BigDecimal">
+		<property name="com.jaspersoft.studio.field.name" value="total_comission"/>
+		<property name="com.jaspersoft.studio.field.label" value="total_comission"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="orders"/>
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="observation" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="observation"/>
+		<property name="com.jaspersoft.studio.field.label" value="observation"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="orders"/>
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="status_comission" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="status_comission"/>
+		<property name="com.jaspersoft.studio.field.label" value="status_comission"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="orders"/>
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="sector_cod" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="sector_cod"/>
+		<property name="com.jaspersoft.studio.field.label" value="sector_cod"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="orders"/>
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="city_sale_cod" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="city_sale_cod"/>
+		<property name="com.jaspersoft.studio.field.label" value="city_sale_cod"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="orders"/>
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="client_id" class="java.math.BigInteger">
+		<property name="com.jaspersoft.studio.field.name" value="client_id"/>
+		<property name="com.jaspersoft.studio.field.label" value="client_id"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="orders"/>
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="collaborator_id" class="java.math.BigInteger">
+		<property name="com.jaspersoft.studio.field.name" value="collaborator_id"/>
+		<property name="com.jaspersoft.studio.field.label" value="collaborator_id"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="orders"/>
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="order_status_cod" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="order_status_cod"/>
+		<property name="com.jaspersoft.studio.field.label" value="order_status_cod"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="orders"/>
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="created_at" class="java.sql.Timestamp">
+		<property name="com.jaspersoft.studio.field.name" value="created_at"/>
+		<property name="com.jaspersoft.studio.field.label" value="created_at"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="orders"/>
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="updated_at" class="java.sql.Timestamp">
+		<property name="com.jaspersoft.studio.field.name" value="updated_at"/>
+		<property name="com.jaspersoft.studio.field.label" value="updated_at"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="orders"/>
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="79" splitType="Stretch"/>
+	</title>
+	<pageHeader>
+		<band height="35" splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band height="37" splitType="Stretch">
+			<staticText>
+				<reportElement x="404" y="0" width="100" height="30" uuid="4426c182-f7eb-49fc-a71f-db7a18b03fa4">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="b13a6482-da22-47b4-b31b-92993f156814"/>
+				</reportElement>
+				<text><![CDATA[total_order]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="270" y="0" width="100" height="30" uuid="97f890ed-7300-4472-9d6f-064fa26b43f6">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="9106327c-2b95-4427-bd5a-c2b6c1c5e26f"/>
+				</reportElement>
+				<text><![CDATA[total_comission]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="136" y="0" width="100" height="30" uuid="27e2d275-667f-4028-965c-7ce24eca1a7a">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="d2779167-b813-4c4e-b615-303fd1d4740e"/>
+				</reportElement>
+				<text><![CDATA[client_id]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="56" splitType="Stretch">
+			<textField>
+				<reportElement x="340" y="0" width="100" height="30" uuid="d33066cc-2985-4a55-9312-8738c11312dc">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="b13a6482-da22-47b4-b31b-92993f156814"/>
+				</reportElement>
+				<textFieldExpression><![CDATA[$F{total_order}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="240" y="0" width="100" height="30" uuid="eb6fed3e-a4c7-4b81-a2bb-2de5876c5ed1">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="9106327c-2b95-4427-bd5a-c2b6c1c5e26f"/>
+				</reportElement>
+				<textFieldExpression><![CDATA[$F{total_comission}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="120" y="0" width="100" height="30" uuid="8d807db8-ff8a-4af8-a631-3ffb7a4238fc">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="d2779167-b813-4c4e-b615-303fd1d4740e"/>
+				</reportElement>
+				<textFieldExpression><![CDATA[$F{client_id}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="45" splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="54" splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band height="42" splitType="Stretch"/>
+	</summary>
+</jasperReport>

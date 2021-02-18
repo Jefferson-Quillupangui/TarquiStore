@@ -7,12 +7,119 @@ use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\CityController;
 use App\Http\Controllers\Pedidos\PedidosController;
 use App\Http\Controllers\Pedidos\ListaPedidosController;
+use App\Http\Controllers\Reportes\ReportesController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\SectorsController;
 use App\Http\Controllers\StatusOrderController;
 use App\Http\Controllers\TypesIdentificationController;
 use App\Http\Controllers\ClientController;
 
+use PHPJasper\PHPJasper; 
+
+
+
+
+Route::get('/compilarReporte', function () {
+    $input = base_path() .
+    '/vendor/geekcom/phpjasper/examples/hello_world.jrxml';
+
+    $jasper = new PHPJasper;
+    $jasper->compile($input)->execute();
+
+    return response()->json([
+        'status' => 'ok',
+        'msj' => '¡Reporte compilado!'
+    ]);
+});
+
+
+
+
+Route::get('/reporte', function () {
+    $input = base_path() .
+    '/vendor/geekcom/phpjasper/examples/hello_world.jasper';
+    $output = base_path() .
+    '/vendor/geekcom/phpjasper/examples';
+    $options = [
+        'format' => ['pdf']
+    ];
+
+    $jasper = new PHPJasper;
+
+    $jasper->process(
+        $input,
+        $output,
+        $options
+    )->execute();
+
+    $pathToFile = base_path() .
+    '/vendor/geekcom/phpjasper/examples/hello_world.pdf';
+    return response()->file($pathToFile);
+});
+
+
+Route::get('/listarParametrosReporte', function () {
+    $input = base_path() .
+    '/vendor/geekcom/phpjasper/examples/hello_world_params.jrxml';
+
+    $jasper = new PHPJasper;
+    $output = $jasper->listParameters($input)->execute();
+
+    return response()->json([
+        'status' => 'ok',
+        'parms' => $output
+    ]);
+});
+
+
+Route::get('/compilarReporteParametros', function () {
+    $input = base_path() .
+    '/vendor/geekcom/phpjasper/examples/hello_world_params.jrxml';
+
+    $jasper = new PHPJasper;
+    $jasper->compile($input)->execute();
+
+    return response()->json([
+        'status' => 'ok',
+        'msj' => '¡Reporte compilado!'
+    ]);
+});
+
+Route::get('/reporteParametros', function () {
+    $input = base_path() .
+    '/vendor/geekcom/phpjasper/examples/hello_world_params.jasper';
+    $output = base_path() .
+    '/vendor/geekcom/phpjasper/examples';
+    $options = [
+        'format' => ['pdf'],
+        'params' => [
+            'myInt' => 7,
+            'myDate' => date('y-m-d'),
+            'myImage' => base_path() .
+            '/vendor/geekcom/phpjasper/examples/jasperreports_logo.png',
+            'myString' => 'Hola Mundo!'
+        ]
+    ];
+
+    $jasper = new PHPJasper;
+
+    // $jasper->process(
+    //     $input,
+    //     $output,
+    //     $options
+    // )->execute();
+
+    // $pathToFile = base_path() .
+    // '/vendor/geekcom/phpjasper/examples/hello_world_params.pdf';
+    // return response()->file($pathToFile);
+
+        // Depuración de errores
+        dd($jasper->process(
+            $input,
+            $output,
+            $options
+        )->output());
+});
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -68,13 +175,26 @@ Route::resource('clients', ClientController::class)
     ->except(['show'])
     ->names('clients');
 
-
+//Comisiones index
+Route::get('list_comission', function(){
+    return view('comision.index ');
+})->name('list_comission');
     
+//Reportes index
+Route::get('reports', function(){
+    return view('reportes.index ');
+})->name('reports');
+    
+
 //Listar pedidos
 Route::get('list_orders',  [ListaPedidosController::class, 'index' ])->name('list_orders');
 Route::get('list_orders_json',  [ListaPedidosController::class, 'listaRevisionOrders_json' ])->name('list_orders_json');
 Route::post('buscar_order', [ListaPedidosController::class, 'buscarFiltrandoOrdenes' ])->name('orden.procesar.buscar');
 Route::get('list_detalle_orders', [ListaPedidosController::class, 'ListaDetalleOrders_json' ])->name('lista.orders.detalle');
+
+
+//Route::get('report', [ReportesController::class, 'generateReport' ])->name('reportes');
+Route::get('reportNuevo', [ReportesController::class, 'index' ]);
 // Route::get('list_orders', function(){
 //     return view('pedido.show');
 // })->name('list_orders');

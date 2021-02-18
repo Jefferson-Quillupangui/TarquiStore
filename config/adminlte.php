@@ -331,16 +331,16 @@ return [
             'submenu' =>  [
                 [
                     'text'  => 'Mis reportes',
-                    'url'  => '#',
+                    'route'  => 'reports',
                     'icon'  => 'fas fa-vote-yea',
                 ],
             ],
         ],
 
-        ['header' => 'GANANCIAS'],
+        ['header' => 'COMISIONES'],
         [
             'text' => 'Mis Comisiones',
-            'url'  => '#',
+            'route'  => 'list_comission',
             'icon' => 'fas fa-hand-holding-usd',
         ],
 

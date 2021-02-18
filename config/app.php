@@ -162,6 +162,8 @@ return [
         Illuminate\Validation\ValidationServiceProvider::class,
         Illuminate\View\ViewServiceProvider::class,
         Intervention\Image\ImageServiceProvider::class,
+        //insert jasper service provider here
+        JasperPHP\JasperPHPServiceProvider::class,
         /*
          * Package Service Providers...
          */
@@ -179,6 +181,10 @@ return [
 
         // ...
         Intervention\Image\ImageServiceProvider::class,
+
+
+       
+        
 
     ],
 

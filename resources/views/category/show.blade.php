@@ -6,6 +6,16 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.2/css/bootstrap.css">
     <link rel="stylesheet" href="https://cdn.datatables.net/1.10.23/css/dataTables.bootstrap4.min.css">
     <link rel="stylesheet" href="https://cdn.datatables.net/responsive/2.2.7/css/responsive.bootstrap4.min.css">
+    <style>
+        .page-item.active .page-link {
+            background-color: #17A2B8 !important;
+            border: 1px solid #17A2B8;
+            color: white !important;
+        }
+        .page-link {
+            color: black !important;
+        }
+    </style>
 @stop
 
 @section('content_header')
@@ -26,7 +36,7 @@
 
     <div class="card-body">
         <table class="table table-striped" id="categorias">
-            <thead>
+            <thead style="background-color:#17A2B8;color:white;">
                 <tr>
                     <th>Cod</th>
                     <th>Nombre</th>
@@ -71,7 +81,7 @@
         $('#categorias').DataTable({
         responsive: true,
         autoWidth: false,
-
+        
         "language": {
             "lengthMenu": "Mostrar "+ 
                             `<select class="custom-select custom-select-sm form-control form-control-sm">

@@ -6,6 +6,16 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.2/css/bootstrap.css">
     <link rel="stylesheet" href="https://cdn.datatables.net/1.10.23/css/dataTables.bootstrap4.min.css">
     <link rel="stylesheet" href="https://cdn.datatables.net/responsive/2.2.7/css/responsive.bootstrap4.min.css">
+    <style>
+        .page-item.active .page-link {
+            background-color: #17A2B8 !important;
+            border: 1px solid #17A2B8;
+            color: white !important;
+        }
+        .page-link {
+            color: black !important;
+        }
+    </style>
 @stop
 
 @section('content_header')
@@ -27,7 +37,7 @@
 
     <div class="card-body">
      <table class="table table-striped" id="productos">
-            <thead>
+            <thead style="background-color:#17A2B8;color:white;">
                 <tr>
                     <th>Cod</th>
                     <th>Nombre</th>
@@ -35,8 +45,8 @@
                     <th>Precio</th>
                     <th>Comisión</th>
                     <th>Cantidad</th>
-                    <th>Porcentaje Descuento</th>
-                    <th>Precio descuento</th>
+                    <th>%Desc</th>
+                    <th>PrecioDesc</th>
                     <th>Accciones</th>
                     <th>Categoria</th>
                     <th>Descripción</th>
@@ -45,8 +55,8 @@
             <tbody>
                 @forelse($products as $product )
                     <tr>
-                        <td>000{{ $product->id}}</td>
-                        <td>{{ $product->name}}</td>
+                        <td><div class="row" align="center">000{{ $product->id}}</div></td>
+                        <td><div class="row">{{ $product->name}}</div></td>
                         <td><img src="{{ asset($product->image) }}" style="width:100px;"/></td>
                         <td>${{ $product->price}}</td>
                         <td>${{ $product->comission}}</td>

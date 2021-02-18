@@ -10,7 +10,7 @@
 
             <div class="card-body">
                 <table class="table table-striped" id="usuarios">
-                    <thead>
+                    <thead style="background-color:#17A2B8;color:white;">
                         <tr>
                             <th>Cod</th>
                             <th>Nombre</th>

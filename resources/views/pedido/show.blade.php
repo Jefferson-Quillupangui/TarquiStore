@@ -180,8 +180,15 @@
     </div>
 
     <div class="card card-cyan">
+        {{-- <input type="hidden" name="_token" id="token_orden_busqd" value="{{ csrf_token() }}">
+        <form action="{{ route('reporte.orden.datos') }}" id="form-datos-orden" class="d-none"></form> --}}
         <div class="card-header">
-            <h4 class="card-title" style="margin: 0px 0px 0px 0px;"> <i class="fa fa-file"></i> Visualizacion Orden</h4>
+            <h4 class="card-title" style="margin: 6px 0px 0px 0px;"> <i class="fa fa-file"></i> Visualizacion Orden</h4>
+            {{-- href="{{url('reporteFecha',array('fechaMenor'=>$fechaMenor,'fechaMayor'=>$fechaMayor))}}" --}}
+            <a type="button" href="{{ route('reporte.orden.datos', ['id' => 0]) }}" class="btn btn-danger float-right"
+                target="_blank" title="Pdf Orden" id="generar-pdf-orden"><i class="far fa-file-pdf"></i></a>
+            {{-- <button type="button" id="generar-pdf-orden" class="btn btn-default float-right" title="Pdf Orden"><i class="far fa-file-pdf"></i></button> --}}
+
         </div>
 
         <div class="card-body">
@@ -410,7 +417,7 @@
                 </div>
             </div>
             <hr>
-            
+
 
         </div>
 
@@ -449,5 +456,6 @@
 @section('js')
     <script type="text/javascript" src="{{ asset('/plugin_tabullator/dist/js/tabulator.min.js') }}"></script>
     <script type="text/javascript" src="{{ asset('js/adminlte/pedidos/listaPedidos.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('js/adminlte/reportes/reportesPdf.js') }}"></script>
 
 @stop

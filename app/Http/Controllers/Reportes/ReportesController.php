@@ -79,7 +79,7 @@ class ReportesController extends Controller
         public function index()
         {
         // coloca na variavel o caminho do novo relatório que será gerado
-            $output = public_path() . '/reports/' . time() . '___OrdenesCabecera';
+            $output = public_path() . '/reports/' . time() . '____OrdenesCabecera';
         // instancia um novo objeto JasperPHP
             
             $report = new JasperPHP;
@@ -95,22 +95,22 @@ class ReportesController extends Controller
                 ['pdf'],
                 [],
                 $this->getDatabaseConfig()
-            )->execute();
+            )->output();
             
             //execute    output
             $file = $output . '.pdf';
-        //     $path = $file;
+            $path = $file;
             
-        //     //dd($path);
-        //     // caso o arquivo não tenha sido gerado retorno um erro 404
-        //     if (!file_exists($file)) {
-        //         abort(404);
-        //     }
-        // //caso tenha sido gerado pego o conteudo
-        //     $file = file_get_contents($file);
-        // //deleto o arquivo gerado, pois iremos mandar o conteudo para o navegador
-        //     unlink($path);
-        // retornamos o conteudo para o navegador que íra abrir o PDF
+            //dd($path);
+            // caso o arquivo não tenha sido gerado retorno um erro 404
+            if (!file_exists($file)) {
+                abort(404);
+            }
+        //caso tenha sido gerado pego o conteudo
+            $file = file_get_contents($file);
+        //deleto o arquivo gerado, pois iremos mandar o conteudo para o navegador
+            unlink($path);
+        //retornamos o conteudo para o navegador que íra abrir o PDF
             return response($file, 200)
                 ->header('Content-Type', 'application/pdf')
                 ->header('Content-Disposition', 'inline; filename="cliente.pdf"');
@@ -160,35 +160,6 @@ class ReportesController extends Controller
 
 
 
-        public function reporteBlanco(){
-            $input = base_path() .'/public/reports/blanco.jrxml';
-
-            $jasper = new PHPJasper;
-            $jasper->compile($input)->execute();
-            //if ok
-
-            $input2 = base_path() .'/public/reports/blanco.jasper';
-
-            $output = base_path() . '/public/reports';
-           
-            $options = [
-                'format' => ['pdf']
-            ];
-
-
-            $jasper->process(
-                $input,
-                $output,
-                $options
-            )->execute();
-        
-            $pathToFile = base_path() .'/public/reports/blanco.pdf';
-            return response()->file($pathToFile);
-            // return response()->json([
-            //     'status' => 'ok',
-            //     'msj' => '¡Reporte compilado..!'
-            // ]);
-        }
 
 
         
@@ -284,4 +255,55 @@ class ReportesController extends Controller
     
 //     */
 //     }
+
+
+
+    
+    public function reporteBlanco(){
+
+        //$jdbc_dir = 'C:\laragon\www\TarquiStore\vendor\cossou\jasperphp\src\JasperStarter\jdbc';
+       // $jdbc_dir = __DIR__ . '/vendor/geekcom/phpjasper/bin/jaspertarter/jdbc';
+        $input = base_path() .'/public/reports/OrdenesCabecera.jrxml';
+       // $database = \Config::get('database.connections.mysql');
+        $jasper = new PHPJasper;
+        $jasper->compile($input)->execute();
+        //if ok
+
+        $input2 = base_path() .'/public/reports/OrdenesCabecera.jasper';
+
+        $output = base_path() . '/public/reports';
+      
+        $options = [
+            'format' => ['pdf'],
+            //'db_connection' => [$database]
+            // 'locale' => 'en',
+            // 'params' => [],
+            // 'db_connection' => [
+            //     'driver' => 'mysql',
+            //     'host' => '127.0.0.1',
+            //     'port' => '3306',
+            //     'database' => 'tarquistore',
+            //     'username' => 'root',
+            //     'password' => '',
+            //     'jdbc_driver' => 'com.mysql.jdbc.Driver',
+            //     'jdbc_url' => 'jdbc:sqlserver://127.0.0.1;databaseName=tarquistore',
+            //     'jdbc_dir' => $jdbc_dir
+            // ]
+        ];
+
+    
+        $jasper->process(
+            $input,
+            $output,
+            $options
+        )->execute();
+
+        $pathToFile = base_path() .'/public/reports/OrdenesCabecera.pdf';
+        return response()->file($pathToFile);
+        // return response()->json([
+        //     'status' => 'ok',
+        //     'msj' => '¡Reporte compilado..!'
+        // ]);
+    }
+
 }

@@ -8,6 +8,7 @@ use App\Http\Controllers\CityController;
 use App\Http\Controllers\Pedidos\PedidosController;
 use App\Http\Controllers\Pedidos\ListaPedidosController;
 use App\Http\Controllers\Reportes\ReportesController;
+use App\Http\Controllers\Reportes\ReportController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\SectorsController;
 use App\Http\Controllers\StatusOrderController;
@@ -192,13 +193,20 @@ Route::get('list_orders_json',  [ListaPedidosController::class, 'listaRevisionOr
 Route::post('buscar_order', [ListaPedidosController::class, 'buscarFiltrandoOrdenes' ])->name('orden.procesar.buscar');
 Route::get('list_detalle_orders', [ListaPedidosController::class, 'ListaDetalleOrders_json' ])->name('lista.orders.detalle');
 
+//PDF Reportes
+Route::get('reporte_orden', [ReportController::class, 'PDF' ])->name('reporte.orden');
+Route::get('reporte_orden_datos/{id}', [ReportController::class, 'OrdenPDF' ])->name('reporte.orden.datos');
+//Route::post('reporte_orden_datos', [ReportController::class, 'ordenDatosPDF' ])->name('reporte.orden.datos');
+
+//Route::get('reporte_orden_datos', [ReportController::class, 'ordenDatosPDF' ])->name('reporte.orden.datos');
 
 //Route::get('report', [ReportesController::class, 'generateReport' ])->name('reportes');
-Route::get('reportNuevo', [ReportesController::class, 'index' ]);
+/*
+Route::get('reportNuevos', [ReportesController::class, 'index' ]);
 Route::get('reportCompileHola', [ReportesController::class, 'reporteHola' ]);
 Route::get('reportCompileHolaJasper', [ReportesController::class, 'reporteHolaCompilarPhp' ]);
 Route::get('reportJasperBlanco', [ReportesController::class, 'reporteBlanco' ]);
-
+*/
 
 //https://minhbangchu.blogspot.com/2015/11/su-dung-jaspersoft-report-lam-report.html
 //Route::get('/reporting', ['uses' =>'ReportController@index', 'as' => 'Report']);

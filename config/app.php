@@ -164,6 +164,7 @@ return [
         Intervention\Image\ImageServiceProvider::class,
         //insert jasper service provider here
         JasperPHP\JasperPHPServiceProvider::class,
+        Barryvdh\DomPDF\ServiceProvider::class,
         /*
          * Package Service Providers...
          */
@@ -239,6 +240,7 @@ return [
         'View' => Illuminate\Support\Facades\View::class,
         // ...
         'Image' => Intervention\Image\Facades\Image::class,
+        'PDF' => Barryvdh\DomPDF\Facade::class,
 
     ],
 

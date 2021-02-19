@@ -281,66 +281,141 @@ $(document).ready(function () {
           cellEdited :function(cell){
 
             let rpt_func_stock= 0;
-            consultarStockProducto(cell.getData().product_id)
-            .then(function(datosDevueltos){// Aquí el código para hacer algo con datosDevueltos
-              rpt_func_stock = datosDevueltos;
-              console.log(rpt_func_stock);
-            }, function(errorLanzado){// Aquí el código para hacer algo cuando ocurra un error.
-              console.log(errorLanzado);
-            });
+            rpt_func_stock = consultarStockProducto(cell.getData().product_id);
+           if(cell.getData().quantity >= rpt_func_stock ){
+             alert("Actualmente solo hay en stock la cantidad : "+rpt_func_stock);
+             const get_data_detalle_nueva = table_detalle_factura.getData();
+
+          //    for (var i in get_data_detalle_nueva) {
+          //     if(get_data_detalle[i].product_id === id_cell ){
+          //         get_data_detalle[i].total_line = v_final_total;
+          //         get_data_detalle[i].total_comission = v_total_comission;
+          //         data_oj_detalle.push(get_data_detalle[i]);
+                     
+          //     }else{
+                
+          //       data_oj_detalle.push(get_data_detalle[i]);
+          //     }
+                
+                
+          //   }
+          // table_detalle_factura.clearData();
+          // table_detalle_factura.updateOrAddData(data_oj_detalle);
+
+
+             return false;
+           }else{
+                let id_cell = cell.getData().product_id;
+                let v_cantidad =  cell.getData().quantity;
+                parseInt(v_cantidad);
+                let v_precio_unitario =  cell.getData().price;
+                parseFloat(v_precio_unitario);
+    
+                let v_comission = cell.getData().comission;
+    
+                var v_final_total = parseInt(v_cantidad)*parseFloat(v_precio_unitario) ;
+                var v_total_comission = parseInt(v_cantidad)*parseFloat(v_comission) ;
+                //parseFloat(v_precio_unitario) = parseInt(v_cantidad)*parseFloat(v_precio_unitario);
+    
+    
+            //console.log(v_final_total);
+    
+                const get_data_detalle = table_detalle_factura.getData();
+    
+                var data_oj_detalle = [];
+              
+                //var nuevo = get_data_detalle.shift();
+                
+              for (var i in get_data_detalle) {
+                  if(get_data_detalle[i].product_id === id_cell ){
+                      get_data_detalle[i].total_line = v_final_total;
+                      get_data_detalle[i].total_comission = v_total_comission;
+                      data_oj_detalle.push(get_data_detalle[i]);
+                          //console.log(get_data_detalle[i]);
+                  }else{
+                    //console.log(get_data_detalle[i]);
+                    data_oj_detalle.push(get_data_detalle[i]);
+                  }
+                    
+                    
+                }
+              table_detalle_factura.clearData();
+              table_detalle_factura.updateOrAddData(data_oj_detalle);
+    
+              var total_prod = 0;
+              var total_comis = 0;
+              for (var i in get_data_detalle) {
+                
+                total_prod += parseFloat(get_data_detalle[i].total_line);
+                total_comis += parseFloat(get_data_detalle[i].total_comission);
+    
+                
+                  
+              }
+    
+              $("#txtTotalOrden").val(total_prod);
+              $("#txt_totalComision").val(total_comis);
+           }
+            // .then(function(datosDevueltos){// Aquí el código para hacer algo con datosDevueltos
+            //   rpt_func_stock = datosDevueltos;
+            //   console.log(rpt_func_stock);
+            // }, function(errorLanzado){// Aquí el código para hacer algo cuando ocurra un error.
+            //   console.log(errorLanzado);
+            // });
               //console.log(cell.getData());
               
-           let id_cell = cell.getData().product_id;
-           let v_cantidad =  cell.getData().quantity;
-           parseInt(v_cantidad);
-           let v_precio_unitario =  cell.getData().price;
-           parseFloat(v_precio_unitario);
+              ///------------------------------------------------------
+        // // //    let id_cell = cell.getData().product_id;
+        // // //    let v_cantidad =  cell.getData().quantity;
+        // // //    parseInt(v_cantidad);
+        // // //    let v_precio_unitario =  cell.getData().price;
+        // // //    parseFloat(v_precio_unitario);
 
-           let v_comission = cell.getData().comission;
+        // // //    let v_comission = cell.getData().comission;
 
-           var v_final_total = parseInt(v_cantidad)*parseFloat(v_precio_unitario) ;
-           var v_total_comission = parseInt(v_cantidad)*parseFloat(v_comission) ;
-           //parseFloat(v_precio_unitario) = parseInt(v_cantidad)*parseFloat(v_precio_unitario);
+        // // //    var v_final_total = parseInt(v_cantidad)*parseFloat(v_precio_unitario) ;
+        // // //    var v_total_comission = parseInt(v_cantidad)*parseFloat(v_comission) ;
+        // // //    //parseFloat(v_precio_unitario) = parseInt(v_cantidad)*parseFloat(v_precio_unitario);
 
 
-        //console.log(v_final_total);
+        // // // //console.log(v_final_total);
 
-           const get_data_detalle = table_detalle_factura.getData();
+        // // //    const get_data_detalle = table_detalle_factura.getData();
 
-           var data_oj_detalle = [];
+        // // //    var data_oj_detalle = [];
           
-           //var nuevo = get_data_detalle.shift();
+        // // //    //var nuevo = get_data_detalle.shift();
            
-          for (var i in get_data_detalle) {
-              if(get_data_detalle[i].product_id === id_cell ){
-                  get_data_detalle[i].total_line = v_final_total;
-                  get_data_detalle[i].total_comission = v_total_comission;
-                  data_oj_detalle.push(get_data_detalle[i]);
-                     //console.log(get_data_detalle[i]);
-              }else{
-                //console.log(get_data_detalle[i]);
-                data_oj_detalle.push(get_data_detalle[i]);
-              }
+        // // //   for (var i in get_data_detalle) {
+        // // //       if(get_data_detalle[i].product_id === id_cell ){
+        // // //           get_data_detalle[i].total_line = v_final_total;
+        // // //           get_data_detalle[i].total_comission = v_total_comission;
+        // // //           data_oj_detalle.push(get_data_detalle[i]);
+        // // //              //console.log(get_data_detalle[i]);
+        // // //       }else{
+        // // //         //console.log(get_data_detalle[i]);
+        // // //         data_oj_detalle.push(get_data_detalle[i]);
+        // // //       }
                
                 
-            }
-          table_detalle_factura.clearData();
-          table_detalle_factura.updateOrAddData(data_oj_detalle);
+        // // //     }
+        // // //   table_detalle_factura.clearData();
+        // // //   table_detalle_factura.updateOrAddData(data_oj_detalle);
 
-          var total_prod = 0;
-          var total_comis = 0;
-          for (var i in get_data_detalle) {
+        // // //   var total_prod = 0;
+        // // //   var total_comis = 0;
+        // // //   for (var i in get_data_detalle) {
             
-            total_prod += parseFloat(get_data_detalle[i].total_line);
-            total_comis += parseFloat(get_data_detalle[i].total_comission);
+        // // //     total_prod += parseFloat(get_data_detalle[i].total_line);
+        // // //     total_comis += parseFloat(get_data_detalle[i].total_comission);
 
            
               
-          }
+        // // //   }
 
-          $("#txtTotalOrden").val(total_prod);
-          $("#txt_totalComision").val(total_comis);
-          
+        // // //   $("#txtTotalOrden").val(total_prod);
+        // // //   $("#txt_totalComision").val(total_comis);
+          ////************************************** */
           
 
 
@@ -916,22 +991,43 @@ $(document).ready(function () {
    * @param {*} onRendered 
    */
   function consultarStockProducto (v_id_product){
+    var stock_en_bd;
     // La primera diferencia es que no se le pasa un callback,
     // La función devuelve una Promise
-    return new Promise(function(resolver, rechazar){
+  
       jQuery.ajax({
         type: 'GET',
         url:$('#form-stock-productos').attr("action"),
         data: {
           id_producto: v_id_product
         },
+        async: false,
         success : function(response){
-          resolver(response.data[0].quantity);
+          stock_en_bd = response.data[0].quantity;
         },
         error : function(error){rechazar(error)}
       });
-    });
+      return stock_en_bd;
   }
+  // function consultarStockProducto (v_id_product){
+  //   //var stock;
+  //   // La primera diferencia es que no se le pasa un callback,
+  //   // La función devuelve una Promise
+  //   return new Promise(function(resolver, rechazar){
+  //     jQuery.ajax({
+  //       type: 'GET',
+  //       url:$('#form-stock-productos').attr("action"),
+  //       data: {
+  //         id_producto: v_id_product
+  //       },
+  //       async: false,
+  //       success : function(response){
+  //         resolver(response.data[0].quantity);
+  //       },
+  //       error : function(error){rechazar(error)}
+  //     });
+  //   });
+  // }
   // function consultarStockProducto(v_id_product){
     
   //     var $valor=0;

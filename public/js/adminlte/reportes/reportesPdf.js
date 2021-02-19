@@ -2,11 +2,25 @@ $(document).ready(function () {
 
     $(document).on("click", "#generar-pdf-orden",function(){
 
+
+
         var id = $("#txt_id_cab_orden").val();
         var url =$("#generar-pdf-orden").attr("href");
 
-        var nuevaUrl = url .replace('0', id);
-        $("#generar-pdf-orden").attr("href",nuevaUrl);
+        if(id===0 || id==="0"){
+            $.toast({
+                heading: 'Warning',
+                 text: 'Debe Seleccionar una orden',
+                 showHideTransition: 'fade',
+                 icon: 'warning',
+                 position: 'top-right'
+             })
+        }else{
+            var nuevaUrl = url .replace('0', id);
+            $("#generar-pdf-orden").attr("href",nuevaUrl);
+        }
+
+       
  
     });
 

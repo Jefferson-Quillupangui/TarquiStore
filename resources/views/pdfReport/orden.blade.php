@@ -56,7 +56,7 @@
         <tbody>
             @foreach ($detalle_orders as $item)
                 <tr>
-                    <td>{{ $item->id_detalle_product }} </td>
+                    <td>{{ $item->product_id }} </td>
                     <td>{{ $item->name_product }}</td>
                     <td>{{ $item->quantity }}</td>
                     <td>{{ $item->price }}</td>

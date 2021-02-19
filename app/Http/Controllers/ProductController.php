@@ -67,7 +67,7 @@ class ProductController extends Controller
             'description.required'  =>  'Ingrese la descripción del producto',
             'discount.numeric'      =>  'Ingrese el valor de porcentaje de descuento o ingrese cero',
             'quantity.integer'      =>  'Ingrese un valor entero de cantidad disponible',
-            'name.unique'           =>  'El nombre de la categoria ya existe'
+            'name.unique'           =>  'El nombre del producto ya existe'
         ]);
 
         // $imagenes = $request->file('image')->store('public/img');
@@ -149,7 +149,7 @@ class ProductController extends Controller
             'discount.required'     =>  'Ingrese el valor de porcentaje de descuento o ingrese cero',
             'discount.integer'      =>  'Ingrese el valor de porcentaje de descuento o ingrese cero',
             'quantity.integer'      =>  'Ingrese un valor entero de cantidad disponible',
-            'name.unique'           =>  'El nombre de la categoria ya existe'
+            'name.unique'           =>  'El nombre del producto ya existe'
         ]);
 
         // $imagenes = $request->file('image')->store('public/img');

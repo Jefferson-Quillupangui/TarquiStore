@@ -86,7 +86,7 @@
     <script type="text/javascript" src="{{ asset("datatables/js/dataTables.bootstrap4.min.js") }}"></script>
     <script type="text/javascript" src="{{ asset("datatables/js/dataTables.responsive.min.js") }}"></script>
     <script type="text/javascript" src="{{ asset("datatables/js/responsive.bootstrap4.min.js") }}"></script>
-<script>
+    <script>
         $('#roles').DataTable({
         responsive: true,
         autoWidth: false,

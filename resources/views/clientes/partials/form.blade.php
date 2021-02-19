@@ -7,7 +7,7 @@
                     <span class="input-group-text" id="basic-addon1"><i class="fas fa-keyboard"></i></span>
                 </div>
                 {!! Form::text('identification',null,['class' => 'form-control' . ($errors->has('identification') ? ' is-invalid' : ''), 
-                                        'placeholder' => 'Nombre del cliente',
+                                        'placeholder' => 'Identificación',
                                         'id' => 'input-identificacion']) !!}
                 @error('identification')
                 <span class="invalid-feedback">

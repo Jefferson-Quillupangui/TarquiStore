@@ -30,7 +30,9 @@
                                 <td>{{$user->email}}</td>
                                 <td>{{$user->getRoleNames()->implode(',')}}</td>
                                 <td>
-                                    <a class="btn btn-secondary" href="{{route('admin.users.edit', $user)}}"><i class="fas fa-edit"></i></a>
+                                    <div class="row ml-4">
+                                        <a class="btn btn-secondary" href="{{route('admin.users.edit', $user)}}"><i class="fas fa-edit"></i></a>
+                                    </div>
                                 </td>
                             </tr>
                         @endforeach

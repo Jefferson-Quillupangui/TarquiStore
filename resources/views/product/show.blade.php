@@ -3,9 +3,13 @@
 @section('title', 'Productos')
 
 @section('css')
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.2/css/bootstrap.css">
+    {{-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.2/css/bootstrap.css">
     <link rel="stylesheet" href="https://cdn.datatables.net/1.10.23/css/dataTables.bootstrap4.min.css">
-    <link rel="stylesheet" href="https://cdn.datatables.net/responsive/2.2.7/css/responsive.bootstrap4.min.css">
+    <link rel="stylesheet" href="https://cdn.datatables.net/responsive/2.2.7/css/responsive.bootstrap4.min.css"> --}}
+
+    <link rel="stylesheet" href="{{ asset("datatables/css/bootstrap.css") }}">
+    <link rel="stylesheet" href="{{ asset("datatables/css/dataTables.bootstrap4.min.css") }}">
+    <link rel="stylesheet" href="{{ asset("datatables/css/responsive.bootstrap4.min.css") }}">
     <style>
         .page-item.active .page-link {
             background-color: #17A2B8 !important;
@@ -55,7 +59,7 @@
             <tbody>
                 @forelse($products as $product )
                     <tr>
-                        <td><div class="row" align="center">000{{ $product->id}}</div></td>
+                        <td><div class="row mx-1">000{{ $product->id}}</div></td>
                         <td><div class="row">{{ $product->name}}</div></td>
                         <td><img src="{{ asset($product->image) }}" style="width:100px;"/></td>
                         <td>${{ $product->price}}</td>
@@ -89,10 +93,14 @@
 @stop
 
 @section('js')
-    <script src="https://cdn.datatables.net/1.10.23/js/jquery.dataTables.min.js"></script>
+    {{-- <script src="https://cdn.datatables.net/1.10.23/js/jquery.dataTables.min.js"></script>
     <script src="https://cdn.datatables.net/1.10.23/js/dataTables.bootstrap4.min.js"></script>
     <script src="https://cdn.datatables.net/responsive/2.2.7/js/dataTables.responsive.min.js"></script>
-    <script src="https://cdn.datatables.net/responsive/2.2.7/js/responsive.bootstrap4.min.js"></script>
+    <script src="https://cdn.datatables.net/responsive/2.2.7/js/responsive.bootstrap4.min.js"></script> --}}
+    <script type="text/javascript" src="{{ asset("datatables/js/jquery.dataTables.min.js") }}"></script>
+    <script type="text/javascript" src="{{ asset("datatables/js/dataTables.bootstrap4.min.js") }}"></script>
+    <script type="text/javascript" src="{{ asset("datatables/js/dataTables.responsive.min.js") }}"></script>
+    <script type="text/javascript" src="{{ asset("datatables/js/responsive.bootstrap4.min.js") }}"></script>
     <script>
         $('#productos').DataTable({
            responsive: true,

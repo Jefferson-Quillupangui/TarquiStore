@@ -7,9 +7,13 @@
 @stop
 
 @section('css')
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.2/css/bootstrap.css">
+    {{-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.2/css/bootstrap.css">
     <link rel="stylesheet" href="https://cdn.datatables.net/1.10.23/css/dataTables.bootstrap4.min.css">
-    <link rel="stylesheet" href="https://cdn.datatables.net/responsive/2.2.7/css/responsive.bootstrap4.min.css">
+    <link rel="stylesheet" href="https://cdn.datatables.net/responsive/2.2.7/css/responsive.bootstrap4.min.css"> --}}
+
+    <link rel="stylesheet" href="{{ asset("datatables/css/bootstrap.css") }}">
+    <link rel="stylesheet" href="{{ asset("datatables/css/dataTables.bootstrap4.min.css") }}">
+    <link rel="stylesheet" href="{{ asset("datatables/css/responsive.bootstrap4.min.css") }}">
     <style>
         .page-item.active .page-link {
             background-color: #17A2B8 !important;
@@ -38,9 +42,9 @@
             <table class="table table-striped" id="roles">
                 <thead style="background-color:#17A2B8;color:white;">
                     <tr>
-                        <th>ID</th>
+                        <th>Cod</th>
                         <th>Name</th>
-                        <th><div class="row justify-content-center">Acciones</div></th>
+                        <th><div class="row justify-content-center" >Acciones</div></th>
                     </tr>
                 </thead>
                 <tbody>
@@ -49,7 +53,7 @@
                             <td>{{ $role->id}}</td>
                             <td>{{ $role->name}}</td>
                             <td>
-                                <div class="row justify-content-center">
+                                <div class="row mr-1" style="justify-content: flex-end">
                                     <form action="{{route('admin.roles.destroy',$role)}}" method="POST" class="op-eliminar">
                                         <a class="btn btn-secondary" href="{{route('admin.roles.edit',$role)}}"><i class="fas fa-edit"></i></a>
                                         @method('delete')
@@ -74,10 +78,14 @@
 @stop
 
 @section('js')
-<script src="https://cdn.datatables.net/1.10.23/js/jquery.dataTables.min.js"></script>
-<script src="https://cdn.datatables.net/1.10.23/js/dataTables.bootstrap4.min.js"></script>
-<script src="https://cdn.datatables.net/responsive/2.2.7/js/dataTables.responsive.min.js"></script>
-<script src="https://cdn.datatables.net/responsive/2.2.7/js/responsive.bootstrap4.min.js"></script>
+    {{-- <script src="https://cdn.datatables.net/1.10.23/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.10.23/js/dataTables.bootstrap4.min.js"></script>
+    <script src="https://cdn.datatables.net/responsive/2.2.7/js/dataTables.responsive.min.js"></script>
+    <script src="https://cdn.datatables.net/responsive/2.2.7/js/responsive.bootstrap4.min.js"></script> --}}
+    <script type="text/javascript" src="{{ asset("datatables/js/jquery.dataTables.min.js") }}"></script>
+    <script type="text/javascript" src="{{ asset("datatables/js/dataTables.bootstrap4.min.js") }}"></script>
+    <script type="text/javascript" src="{{ asset("datatables/js/dataTables.responsive.min.js") }}"></script>
+    <script type="text/javascript" src="{{ asset("datatables/js/responsive.bootstrap4.min.js") }}"></script>
 <script>
         $('#roles').DataTable({
         responsive: true,

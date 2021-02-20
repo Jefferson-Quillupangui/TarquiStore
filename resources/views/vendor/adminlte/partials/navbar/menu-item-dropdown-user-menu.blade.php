@@ -18,12 +18,18 @@
     {{-- User menu toggler --}}
     <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">
         @if(config('adminlte.usermenu_image'))
-            <img src="{{ Auth::user()->adminlte_image() }}"
+            @if(Auth::user()->profile_photo_path)
+                <img src="{{ asset("storage/".Auth::user()->profile_photo_path) }}"
+                    class="user-image img-circle elevation-2"
+                    alt="{{ Auth::user()->name }}">
+             @else
+                 <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ3tYRm6oxtL_4-zSGVjtGyHZ5wfH1FsU1ZPQ&usqp=CAU"
                  class="user-image img-circle elevation-2"
                  alt="{{ Auth::user()->name }}">
+             @endif
         @endif
         <span @if(config('adminlte.usermenu_image')) class="d-none d-md-inline" @endif>
-            {{ Auth::user()->name }}
+            {{-- {{ Auth::user()->name }} --}}
         </span>
     </a>
 
@@ -35,14 +41,20 @@
             <li class="user-header {{ config('adminlte.usermenu_header_class', 'bg-primary') }}
                 @if(!config('adminlte.usermenu_image')) h-auto @endif">
                 @if(config('adminlte.usermenu_image'))
-                    <img src="{{ Auth::user()->adminlte_image() }}"
-                         class="img-circle elevation-2"
-                         alt="{{ Auth::user()->name }}">
+                    @if(Auth::user()->profile_photo_path)
+                            <img src="{{ asset("storage/".Auth::user()->profile_photo_path) }}"
+                            class="img-circle elevation-3"
+                            alt="{{ Auth::user()->name }}" id="imagep">
+                    @else
+                        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ3tYRm6oxtL_4-zSGVjtGyHZ5wfH1FsU1ZPQ&usqp=CAU"
+                        class="img-circle elevation-3"
+                        alt="{{ Auth::user()->name }}" id="imagep">
+                    @endif
                 @endif
                 <p class="@if(!config('adminlte.usermenu_image')) mt-0 @endif">
                     {{ Auth::user()->name }}
                     @if(config('adminlte.usermenu_desc'))
-                        <small>{{ Auth::user()->adminlte_desc() }}</small>
+                        <small>{{ Auth::user()->getRoleNames()->implode(',') }}</small>
                     @endif
                 </p>
             </li>

@@ -537,8 +537,100 @@ class PedidosController extends Controller
 
          $p_in_tabla_detalle = $request->detalleProductos;
         $json_tb_detalle_prodct = json_decode($p_in_tabla_detalle, true);
+
+
+       
          
         switch ($in_order_status_cod){
+            case "OP":
+                //PENDIENTE
+                $ordenEstado = $c_pedidos->Verificar_Estado_Orden( $id_cab_pedido,  $in_order_status_cod );
+                if( $ordenEstado > 0 ){
+                    $out_id_order = $id_cab_pedido;
+                    $out_cod = 8; 
+                    $out_msj = 'Pedido '.$id_cab_pedido.'. Ya se encuentra Guardado como Pendiente.';
+                    return ($this->msj_estado_orden($out_id_order, $out_cod, $out_msj));
+                }else{
+                    
+                    //CAMBIO DE PENDIENTE -> REAGENDADO(SOLO SE CAMBIA EL ESTADO)
+                     $c_pedidos->Cambiar_Estado_Orden($id_cab_pedido, $in_order_status_cod);
+                     $c_pedidos->Registar_Transaciones_Ordenes($id_cab_pedido, $in_collaborator_id, $in_order_status_cod);
+                     $out_id_order = $id_cab_pedido;
+                     $out_cod = 7; 
+                     $out_msj = 'Pedido '.$id_cab_pedido.'. Movido a Pendiente.';
+                 
+                    return $msj = $this->msj_estado_orden($out_id_order, $out_cod, $out_msj);
+                }
+                break;
+            case "OR":
+                //REAGENDADO
+                $ordenEstado = $c_pedidos->Verificar_Estado_Orden( $id_cab_pedido,  $in_order_status_cod );
+                if( $ordenEstado > 0 ){
+                    $out_id_order = $id_cab_pedido;
+                    $out_cod = 8; 
+                    $out_msj = 'Pedido '.$id_cab_pedido.'. Ya se encuentra Guardado como Reagendado';
+                    return ($this->msj_estado_orden($out_id_order, $out_cod, $out_msj));
+                }else{
+                    //CAMBIO DE PENDIENTE -> REAGENDADO(SOLO SE CAMBIA EL ESTADO)
+                     $c_pedidos->Cambiar_Estado_Orden($id_cab_pedido, $in_order_status_cod);
+                     $c_pedidos->Registar_Transaciones_Ordenes($id_cab_pedido, $in_collaborator_id, $in_order_status_cod);
+                     $out_id_order = $id_cab_pedido;
+                     $out_cod = 7; 
+                     $out_msj = 'Pedido '.$id_cab_pedido.'. Movido a Reagendado';
+                 
+                    return $msj = $this->msj_estado_orden($out_id_order, $out_cod, $out_msj);
+                }
+                break;
+            case "OC":
+                //CANCELALO
+                $ordenEstado = $c_pedidos->Verificar_Estado_Orden( $id_cab_pedido,  $in_order_status_cod );
+                if( $ordenEstado > 0 ){
+                    $out_id_order = $id_cab_pedido;
+                    $out_cod = 8; 
+                    $out_msj = 'Pedido '.$id_cab_pedido.'. Ya se encuentra Guardado como Cancelado';
+                    return ($this->msj_estado_orden($out_id_order, $out_cod, $out_msj));
+                }else{
+                    $verificarExistenciComision = $c_pedidos->Verificar_Comision($in_collaborator_id, $in_delivery_date);
+                    
+                    if($verificarExistenciComision > 0) {
+                        //existe la comision y se tiene q DESCONTAR 
+                        //cambiar de estado de OC( CANCELADO ) -> OP (pENDIENTE)
+                        $c_pedidos->Cambiar_Estado_Orden($id_cab_pedido, $in_order_status_cod);
+                        $c_pedidos->Registar_Transaciones_Ordenes($id_cab_pedido, $in_collaborator_id, $in_order_status_cod);
+                        //ingresa inventario (suma inventario - libera lo de la orden)
+                        $this->PedidoEstadoInventario($json_tb_detalle_prodct,"igr");
+                        //Resta Comision
+                        $operacion = "RE";
+                        $msj = $c_pedidos->RegistarComisionColaborador($id_cab_pedido, $in_total_comission,$in_order_status_cod,$in_delivery_date,$in_collaborator_id, $operacion, "Cancelado");
+             
+                        return $msj ;
+                        // $c_pedidos->Registar_Transaciones_Ordenes($id_cab_pedido, $in_collaborator_id, $in_order_status_cod);
+                        // $out_id_order = $id_cab_pedido;
+                        // $out_cod = 7; 
+                        // $out_msj = 'Pedido '.$id_cab_pedido.'. Movido a Pendiente.';
+                        
+                    }
+                }
+                break;
+            case "OE":
+                //ENTREGADO
+                $ordenEstado = $c_pedidos->Verificar_Estado_Orden( $id_cab_pedido,  $in_order_status_cod );
+                if( $ordenEstado > 0 ){
+                    $out_id_order = $id_cab_pedido;
+                    $out_cod = 8; 
+                    $out_msj = 'Pedido '.$id_cab_pedido.'. Ya se encuentra Guardado como Entregado';
+                    return ($this->msj_estado_orden($out_id_order, $out_cod, $out_msj));
+                }else{
+                    //Suma Comision caso que no exista se inserta 
+                    //cambia de estado en la orden 
+                    $operacion = "SU";
+                    $pedidosClase = new PedidosClass();
+                    $msj = $pedidosClase->RegistarComisionColaborador($id_cab_pedido, $in_total_comission,$in_order_status_cod,$in_delivery_date,$in_collaborator_id, $operacion, "Entregado");
+                    return $msj;
+                }
+                break;
+                
+            /*
             case "OE":
                 //Entregado
                 $ordenEstado = $c_pedidos->Verificar_Estado_Orden( $id_cab_pedido,  $in_order_status_cod );
@@ -679,7 +771,7 @@ class PedidosController extends Controller
                     //$msj = $pedidosClase->RegistarComisionColaborador($id_cab_pedido, $in_total_comission,$in_order_status_cod,$in_delivery_date,$in_collaborator_id, $operacion, "Cancelado");
                 }
                 break;
-
+            */
                 
         }
         
@@ -697,7 +789,7 @@ class PedidosController extends Controller
     }
    
 
-    public function PedidoEstadoInventario($json_tb_detalle_prodct){
+    public function PedidoEstadoInventario($json_tb_detalle_prodct, $operacion){
 
        
         $pedidosClase = new PedidosClass();
@@ -713,8 +805,13 @@ class PedidosController extends Controller
             $p_in_total_line =  $value['total_line'];
             $p_in_comission  =  $value['comission'];
             $p_in_total_comission = $value['total_comission'];
-                                                    
-            $pedidosClase->Ingreso_inventario($p_in_product_id , $p_in_quantity );
+               
+            if($operacion == "igr"){
+                $pedidosClase->Ingreso_inventario($p_in_product_id , $p_in_quantity );
+            }else if($operacion == "egr"){
+                $pedidosClase->Egreso_inventario($p_in_product_id , $p_in_quantity );
+            }
+           
                                                             
         }
         // $miArray = array('out_id_order'=>$out_id_order, 'out_cod'=>$out_cod, 'out_msj'=>$out_msj);

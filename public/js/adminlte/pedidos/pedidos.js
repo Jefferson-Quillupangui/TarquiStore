@@ -1205,8 +1205,8 @@ $(document).ready(function () {
                   $('.loaders').addClass('d-none');
                   Swal.fire({
                        position: 'top-center',
-                       icon: 'success',
-                       title: dt.data.out_msj+" Nro Orden: "+dt.data.out_id_order.padStart(6, 0) ,
+                       icon: 'warning',
+                       title: dt.data.out_msj+"<br/> Nro Orden: "+dt.data.out_id_order.padStart(6, 0) ,
                        showConfirmButton: false,
                        timer: 1500
                   });
@@ -1215,7 +1215,7 @@ $(document).ready(function () {
                 Swal.fire({
                      position: 'top-center',
                      icon: 'success',
-                     title: dt.data.out_msj+" Nro Orden: "+dt.data.out_id_order.padStart(6, 0) ,
+                     title: dt.data.out_msj+"<br/>  Nro Orden: "+dt.data.out_id_order.padStart(6, 0) ,
                      showConfirmButton: false,
                      timer: 1500
                 });

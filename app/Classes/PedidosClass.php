@@ -154,6 +154,7 @@ class PedidosClass
                 DB::commit();
 
                 self::Cambiar_Estado_Orden($id_cab_pedido, $order_status_cod);
+                self::Registar_Transaciones_Ordenes($id_cab_pedido, $p_in_collaborator_id, $order_status_cod);
                 $out_id_order = $id_cab_pedido;
                 $out_cod = 7; 
                 $out_msj = 'Pedido '.$id_cab_pedido.'. Guardado como '.$mensaje_orden;
@@ -182,6 +183,8 @@ class PedidosClass
                         $totalComision = ($comision_mayor - $comision_menor);//($total_comision_actual - $p_in_total_comission);
                         $cantidadOrdenes = ($num_ordenes - 1);
                         $respuesta = self::ActualizarComision($id_comis,$id_colab,$totalComision,$cantidadOrdenes , $id_cab_pedido, $p_in_status, $mensaje_orden);
+                        
+                        self::Borrar_Comsion_Cerro($p_in_collaborator_id, $fecha_orden);
                         
                         return $respuesta;
                     break;
@@ -294,6 +297,83 @@ class PedidosClass
             return response()->json(['data' =>$ex->getMessage()],500 );
         } 
         //die("End");
+    }
+
+
+    /**
+    *registrar la transaccion de cambio de estado 
+    */
+    public static function Registar_Transaciones_Ordenes($id_cab_pedido, $in_collaborator_id, $in_order_status_cod){
+        
+        DB::beginTransaction();
+          
+        try{
+            
+            DB::insert('insert into order_transaction (
+                order_id, user_id, status_order, created_at, updated_at
+                ) values (?, ?, ?, ?,? )', [ $id_cab_pedido, $in_collaborator_id, $in_order_status_cod,now(),now()]);
+                 
+            DB::commit();
+          
+        } catch (\Exception $ex) {
+                 // $queries = DB::getQueryLog();
+                 // echo $ex->getMessage();
+            DB::rollback();
+            return response()->json(['data' =>$ex->getMessage()],500 );
+        } 
+        //die("End");
+    }
+   
+    /**
+     * Ayuda a verificar si la comision existe o no
+     */
+    public static function Verificar_Comision($p_in_collaborator_id, $fecha_orden){
+        
+        $count_colaborador = "";
+        try{
+           
+            $verificar_ = DB::select('select count(*) as rft from comissions where collaborator_id = '.$p_in_collaborator_id.' and '."'$fecha_orden'".' BETWEEN month_start_date AND month_end_date GROUP BY id,total_comission,collaborator_id,quantity_orders');
+
+            foreach ($verificar_ as $key => $object) {
+                // $id_comis= $object->id;
+                // $total_comision_actual  = $object->total_comission;
+                // $id_colab  = $object->collaborator_id;
+                // $num_ordenes  = $object->quantity_orders;
+                $count_colaborador  = $object->rft ;
+            }
+
+            return $count_colaborador;
+          
+        } catch (\Exception $ex) {
+            return response()->json(['data' =>$ex->getMessage()],500 );
+        } 
+        //die("End");
+    }
+
+    /**
+     * Borrar la comision cuando  quede en CERO cuando se resten 
+     */
+    public static function Borrar_Comsion_Cerro($p_in_collaborator_id, $fecha_orden){
+         
+        $count_colaborador="";
+        $id_comis= ""; 
+        $num_ordenes="";
+        $total_comision_actual="";
+        $id_colab = "";
+        
+        $verificar_fecha_colaborador = DB::select('select id,total_comission,collaborator_id,quantity_orders,count(*) as rft from comissions where collaborator_id = '.$p_in_collaborator_id.' and '."'$fecha_orden'".' BETWEEN month_start_date AND month_end_date GROUP BY id,total_comission,collaborator_id,quantity_orders');
+
+        foreach ($verificar_fecha_colaborador as $key => $object) {
+            $id_comis= $object->id;
+            $total_comision_actual  = $object->total_comission;
+            $id_colab  = $object->collaborator_id;
+            $num_ordenes  = $object->quantity_orders;
+            $count_colaborador  = $object->rft ;
+        }
+        if($total_comision_actual == 0){
+            DB::table('comissions')->where('id', '=', $id_comis)->delete();
+        }
+        
     }
     
     

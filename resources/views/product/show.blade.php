@@ -45,15 +45,16 @@
                 <tr>
                     <th>Cod</th>
                     <th>Nombre</th>
-                    <th>Imagen</th>
+                    <th>Categoria</th>
+                    {{-- <th>Imagen</th> --}}
                     <th>Precio</th>
                     <th>Comisión</th>
                     <th>Cantidad</th>
-                    <th>%Desc</th>
+                    {{-- <th>%Desc</th> --}}
                     <th>PrecioDesc</th>
                     <th>Accciones</th>
-                    <th>Categoria</th>
-                    <th>Descripción</th>
+                    {{-- <th>Categoria</th>
+                    <th>Descripción</th> --}}
                 </tr>
             </thead>
             <tbody>
@@ -61,22 +62,28 @@
                     <tr>
                         <td><div class="row mx-1">000{{ $product->id}}</div></td>
                         <td><div class="row">{{ $product->name}}</div></td>
-                        <td><img src="{{ asset($product->image) }}" style="width:100px;"/></td>
-                        <td>${{ $product->price}}</td>
-                        <td>${{ $product->comission}}</td>
-                        <td>{{ $product->quantity}} UND</td>
-                        <td>{{ $product->discount}}%</td>
-                        <td>${{ $product->price_discount}}</td>
-                        <td>
-                            <form action="{{route('products.destroy',$product)}}" method="POST" class="op-eliminar">
-                                <a class="btn btn-secondary" href="{{route('products.edit',$product)}}"><i class="fas fa-edit"></i></a>
-                                @method('delete')
-                                @csrf
-                                <button class="btn btn-danger" type="submit"><i class="fas fa-trash"></i></button>
-                            </form>
+                        <td class="text-center border-0">{{ $product->Category->name }}</td>
+                        {{-- <td><img src="{{ asset($product->image) }}" style="width:100px;"/></td> --}}
+                        <td class="text-center border-0">${{ $product->price}}</td>
+                        <td class="text-center border-0">${{ $product->comission}}</td>
+                        <td class="text-center border-0">{{ $product->quantity}} UND</td>
+                        {{-- <td>{{ $product->discount}}%</td> --}}
+                        <td class="text-center border-0">${{ $product->price_discount}}</td>
+                        <td class="text-center border-0">
+                            <div class="row ml-auto">
+                                <form action="{{route('products.destroy',$product)}}" method="POST" class="op-eliminar">
+                                    <a class="btn btn-info" href="{{route('products.show',$product)}}"><i class="far fa-eye"></i></a>
+                                    <a class="btn btn-secondary" href="{{route('products.edit',$product)}}"><i class="fas fa-edit"></i></a>
+                                    @method('delete')
+                                    @csrf
+                                    <div class="col mt-1 text-center">
+                                        <button class="btn btn-danger" type="submit"><i class="fas fa-trash"></i></button>
+                                    </div>
+                                </form>
+                            </div>
                         </td>
-                        <td>{{ $product->Category->name }}</td>
-                        <td><div class="row ml-auto">{{ $product->description}}</div></td>
+                        {{-- <td>{{ $product->Category->name }}</td>
+                        <td><div class="row ml-auto">{{ $product->description}}</div></td> --}}
                     </tr>
 
                 @empty

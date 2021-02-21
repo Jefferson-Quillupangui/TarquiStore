@@ -14,6 +14,7 @@ use Illuminate\Support\Facades\DB;
 
 class ListaPedidosController extends Controller
 {
+    
     public function index(){
         $name = Auth::user()->name; 
 
@@ -22,7 +23,7 @@ class ListaPedidosController extends Controller
        return view('pedido.show', compact('name', 'orderStatus'));
     }
 
-
+   
 
     public function listaRevisionOrders_json(){
          

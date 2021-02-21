@@ -43,7 +43,45 @@ $(document).ready(function () {
         var tb_det_prodct = table_detalle_factura.getData();
 
       
-        if(tb_det_prodct.length == 0){
+        let id_cliente_facturar = $('#textbuscarcliente').attr("codigocliente");
+      
+        
+        if(id_cliente_facturar == '0'){
+          $('.loaders').addClass('d-none');
+            
+            $.toast({
+              heading: 'Error',
+              text: 'Debe seleccionar Cliente',
+              showHideTransition: 'fade',
+              icon: 'error',
+              position: 'top-right',
+          })
+         return false;
+        }else if($('#sectors').val() == 0 || $('#sectors').val() == "0" || $('#sectors').val() == ""){
+          $('.loaders').addClass('d-none');
+            
+            $.toast({
+              heading: 'Error',
+              text: 'Debe seleccionar un Sector',
+              showHideTransition: 'fade',
+              icon: 'error',
+              position: 'top-center',
+          })
+          
+         return false;
+        }else if($('#city').val() == 0 || $('#city').val() == "0" || $('#city').val() == ""){
+          $('.loaders').addClass('d-none');
+            
+            $.toast({
+              heading: 'Error',
+              text: 'Debe seleccionar una Ciudad',
+              showHideTransition: 'fade',
+              icon: 'error',
+              position: 'top-center',
+          })
+          
+         return false;
+        }else if(tb_det_prodct.length == 0){
           $('.loaders').addClass('d-none');
             
             $.toast({
@@ -103,7 +141,7 @@ $(document).ready(function () {
                 collaborator_id  : $('#colaborador').attr('id_colaborador'),
                 sector_cod  : $('#sectors').val(),
                 city_sale_cod  : $('#city').val(),
-                delivery_address : $('#textaddressdelivery').val(),
+                delivery_address : $('#textaddressdelivery').val()==="" ? "-" : $('#textaddressdelivery').val(),
                 observation : $('#textObservacion').val()==="" ? "-" : $('#textObservacion').val(),
                 // status_comission : $('#').val(),
                 order_status_cod  : $('#orderStatus').val(),
@@ -267,8 +305,8 @@ $(document).ready(function () {
                       total += parseFloat(uno[i].total_line)
                     }
 
-                  $("#txtTotalOrden").val(total);
-                  $("#txt_totalComision").val(total_comi);
+                  $("#txtTotalOrden").val(total.toFixed(2));
+                  $("#txt_totalComision").val(total_comi.toFixed(2));
 
                   }
               }
@@ -353,8 +391,8 @@ $(document).ready(function () {
                   
               }
     
-              $("#txtTotalOrden").val(total_prod);
-              $("#txt_totalComision").val(total_comis);
+              $("#txtTotalOrden").val(total_prod.toFixed(2));
+              $("#txt_totalComision").val(total_comis.toFixed(2));
            }
             // .then(function(datosDevueltos){// Aquí el código para hacer algo con datosDevueltos
             //   rpt_func_stock = datosDevueltos;
@@ -783,7 +821,22 @@ $(document).ready(function () {
 
     const get_data_detalle_producto = table_detalle_factura.getData();
 
-    if( get_data_detalle_producto.length != 0){
+    let id_cliente_facturar = $('#textbuscarcliente').attr("codigocliente");
+      
+        
+    if(id_cliente_facturar == '0'){
+      $('.loaders').addClass('d-none');
+            
+        $.toast({
+          heading: 'Error',
+          text: 'Debe seleccionar Cliente',
+          showHideTransition: 'fade',
+          icon: 'error',
+          position: 'top-right',
+        })
+        return false;
+    }
+    else if( get_data_detalle_producto.length != 0){
           for (var i in get_data_detalle_producto) {
              if(get_data_detalle_producto[i].quantity === 0 || get_data_detalle_producto[i].quantity === '' ){
                    

@@ -417,7 +417,7 @@
                         </button>
                     </div>
                 </div>
-                <div class="row">
+                <div class="row" id="grid-detalles-div">
                     <div class="col-md-12">
                         <div id="grid-table-detalle-pedido"></div>
                     </div>

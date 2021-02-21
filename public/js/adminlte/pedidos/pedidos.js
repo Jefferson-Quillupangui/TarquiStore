@@ -1142,6 +1142,16 @@ $(document).ready(function () {
                                 $("#textObservacion").val(cell.getRow().getData().observation);
                                 $('#sectors').val(cell.getRow().getData().sector_cod).change();
                                 $('#city').val(cell.getRow().getData().city_sale_cod).change();
+                                let estado_orden = cell.getRow().getData().order_status_cod ;
+                                if( estado_orden=== "OC" || estado_orden=== "OP" || estado_orden=== "OE" || estado_orden=== "OR"){
+                                  document.getElementById('btn-modal-buscar-producto').disabled=true;
+                                  document.getElementById('btn-generarorden').disabled=true;
+                                  document.getElementById("grid-detalles-div").disabled = true;
+                                }else{
+                                  document.getElementById('btn-modal-buscar-producto').disabled=false;
+                                  document.getElementById('btn-generarorden').disabled=false;
+                                  document.getElementById("grid-detalles-div").disabled = false;
+                                }
                                 $('#orderStatus').val(cell.getRow().getData().order_status_cod).change().prop('disabled', false);
                                 //$('#orderStatus').prop('disabled', false);
                                 $("#txtTotalOrden").val(cell.getRow().getData().total_order);

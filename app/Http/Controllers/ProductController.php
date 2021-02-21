@@ -132,20 +132,17 @@ class ProductController extends Controller
      */
     public function update(Request $request, Product $product)
     {
-        
+
         $request->validate([
             'name'          =>  'required',
-            'image'         =>  'required|image',
             'price'         =>  'required',
             'comission'     =>  'required',
             'description'   =>  'required',
-            'discount'      =>  'required|integer',
+            'discount'      =>  'required',
             'quantity'      =>  'integer'
         ], 
         [   'name.required'         =>  'Ingrese el nombre del producto',
             'price.required'        =>  'Ingrese el precio del producto',
-            'image.required'        =>  'Ingrese la imagen del producto',
-            'image.image'           =>  'Debe ingresar una imagen del producto',
             'comission.required'    =>  'Ingrese el valor de la comisión',
             'description.required'  =>  'Ingrese la descripción del producto',
             'discount.required'     =>  'Ingrese el valor de porcentaje de descuento o ingrese cero',
@@ -154,39 +151,83 @@ class ProductController extends Controller
             'name.unique'           =>  'El nombre del producto ya existe'
         ]);
 
+
+        if($request->file('image')){
+            
+            $nombre = Str::random(10).$request->file('image')->getClientOriginalName();
+
+            $ruta = storage_path().'\app\public\img/'.$nombre;
+    
+            //$image = '/storage/img/'.$nombre;
+    
+            Image::make($request->file('image'))
+            ->resize(1200, null, function ($constraint) {
+                $constraint->aspectRatio();
+            })->save($ruta);
+            
+            $product->update([
+                'name'          => $request->name,
+                'image'         => '/storage/img/'.$nombre,
+                'price'         => $request->price,
+                'description'   => $request->description,
+                'comission'     => $request->comission,
+                'quantity'      => $request->quantity,
+                'discount'      => $request->discount,
+                'category_id'   => $request->category
+            ]);
+
+            if($product->image){
+                //Borrar imagen anterior
+                $url = str_replace('storage', 'public',$product->image);
+                
+                storage::delete($url);
+            }
+        }else{
+            $product->update([
+                'name'          => $request->name,
+                'price'         => $request->price,
+                'description'   => $request->description,
+                'comission'     => $request->comission,
+                'quantity'      => $request->quantity,
+                'discount'      => $request->discount,
+                'category_id'   => $request->category
+            ]);  
+        }
+
         // $imagenes = $request->file('image')->store('public/img');
 
         // $url = Storage::url($imagenes);
 
         //Subida de imagen mediante intervention image pck
-        $nombre = Str::random(10).$request->file('image')->getClientOriginalName();
 
-        $ruta = storage_path().'\app\public\img/'.$nombre;
+        // $nombre = Str::random(10).$request->file('image')->getClientOriginalName();
 
-        $image = '/storage/img/'.$nombre;
+        // $ruta = storage_path().'\app\public\img/'.$nombre;
 
-        Image::make($request->file('image'))
-                ->resize(1200, null, function ($constraint) {
-                    $constraint->aspectRatio();
-                })->save($ruta);    
+        // $image = '/storage/img/'.$nombre;
+
+        // Image::make($request->file('image'))
+        //         ->resize(1200, null, function ($constraint) {
+        //             $constraint->aspectRatio();
+        //         })->save($ruta);    
 
         //Borrar imagen anterior
-        $url = str_replace('storage', 'public',$product->image);
+        // $url = str_replace('storage', 'public',$product->image);
         
-        storage::delete($url);
+        // storage::delete($url);
 
-        $product->update([
-            'name'          => $request->name,
-            'image'         => $image,
-            'price'         => $request->price,
-            'description'   => $request->description,
-            'comission'     => $request->comission,
-            'quantity'      => $request->quantity,
-            'discount'      => $request->discount,
-            'category_id'   => $request->category
-        ]);
+        // $product->update([
+        //     'name'          => $request->name,
+        //     'image'         => $image,
+        //     'price'         => $request->price,
+        //     'description'   => $request->description,
+        //     'comission'     => $request->comission,
+        //     'quantity'      => $request->quantity,
+        //     'discount'      => $request->discount,
+        //     'category_id'   => $request->category
+        // ]);
 
-        return redirect()->route('products.index')->with('status','El producto se creó correctamente');
+        return redirect()->route('products.index')->with('status','El producto se actualizó correctamente');
 
     }
 

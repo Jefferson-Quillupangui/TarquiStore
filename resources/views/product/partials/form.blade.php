@@ -18,7 +18,7 @@
             <div class="form-group">
                 <label for="image">Imagen: </label>
                 <div class="form-input">
-                    <input name ="image" id="file" type="file" accept="image/png,image/jpeg" required/>
+                    <input name ="image" id="file" type="file" accept="image/png,image/jpeg"/>
                     {{-- {!! Form::file('image',null,['class' => 'form-control-file',
                                     'accept' => 'image/png,image/jpeg', 'id' => 'image']) !!} --}}
                     @error('image')

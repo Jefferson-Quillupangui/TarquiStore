@@ -40,14 +40,14 @@
   
         <h5>{{$product->name}}</h5>
         <p class="mb-2 text-muted text-uppercase small">{{ $product->Category->name }}</p>
-            <p><span class="mr-1"><strong>${{$product->price}}</strong></span></p>
+            <p><span class="mr-1"><strong>$ {{$product->price}}</strong></span></p>
         <p class="pt-1">{{ $product->description}}</p>
         <div class="table-responsive">
           <table class="table table-sm table-borderless mb-0">
             <tbody>
               <tr>
                 <th class="pl-0 w-25" scope="row"><strong>Comisión</strong></th>
-                <td>${{ $product->comission}}</td>
+                <td>$ {{ $product->comission}}</td>
               </tr>
               <tr>
                 <th class="pl-0 w-25" scope="row"><strong>% Descto.</strong></th>
@@ -55,7 +55,7 @@
               </tr>
               <tr>
                 <th class="pl-0 w-25" scope="row"><strong>Precio Descto.</strong></th>
-                <td>${{ $product->price_discount}}</td>
+                <td>$ {{ $product->price_discount}}</td>
               </tr>
             </tbody>
           </table>

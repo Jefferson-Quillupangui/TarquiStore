@@ -78,10 +78,10 @@
 
                 $('#file').change(function(e){
 
-                    let file= e.target.files[0];
+                let file= e.target.files[0];
+                let reader= new FileReader();
 
-                    let reader= new FileReader();
-
+                if(e.target.files[0]) {
                 reader.onload= (event) => {
 
                     $('#picture').attr('src', event.target.result)
@@ -89,6 +89,11 @@
                 };
 
                     reader.readAsDataURL(file);
+                    
+                }else{
+
+                    $('#picture').attr('src', "https://fesu.edu.co/wp-content/themes/simbolo/assets/images/no-icono.png");
+                }
 
                 })
 

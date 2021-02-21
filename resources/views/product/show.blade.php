@@ -43,6 +43,7 @@
      <table class="table table-striped" id="productos">
             <thead style="background-color:#17A2B8;color:white;">
                 <tr>
+                    {{-- <th>&nbsp;</th> --}}
                     <th>Cod</th>
                     <th>Nombre</th>
                     <th>Categoria</th>
@@ -60,25 +61,34 @@
             <tbody>
                 @forelse($products as $product )
                     <tr>
-                        <td><div class="row mx-1">000{{ $product->id}}</div></td>
+                        {{-- <th>&nbsp;</th> --}}
+                        <td class="text-center border-0"><div class="row mx-1">000{{ $product->id}}</div></td>
                         <td><div class="row">{{ $product->name}}</div></td>
                         <td class="text-center border-0">{{ $product->Category->name }}</td>
                         {{-- <td><img src="{{ asset($product->image) }}" style="width:100px;"/></td> --}}
-                        <td class="text-center border-0">${{ $product->price}}</td>
-                        <td class="text-center border-0">${{ $product->comission}}</td>
+                        <td class="text-center border-0">$ {{ $product->price}}</td>
+                        <td class="text-center border-0">$ {{ $product->comission}}</td>
                         <td class="text-center border-0">{{ $product->quantity}} UND</td>
                         {{-- <td>{{ $product->discount}}%</td> --}}
-                        <td class="text-center border-0">${{ $product->price_discount}}</td>
+                        <td class="text-center border-0">$ {{ $product->price_discount}}</td>
                         <td class="text-center border-0">
                             <div class="row ml-auto">
                                 <form action="{{route('products.destroy',$product)}}" method="POST" class="op-eliminar">
-                                    <a class="btn btn-info" href="{{route('products.show',$product)}}"><i class="far fa-eye"></i></a>
-                                    <a class="btn btn-secondary" href="{{route('products.edit',$product)}}"><i class="fas fa-edit"></i></a>
+                                    {{-- <a class="btn btn-info" href="{{route('products.show',$product)}}"><i class="far fa-eye"></i></a>
+                                    <a class="btn btn-secondary" href="{{route('products.edit',$product)}}"><i class="fas fa-edit"></i></a> --}}
                                     @method('delete')
                                     @csrf
-                                    <div class="col mt-1 text-center">
+                                    {{-- <div class="col mt-1 text-center">
                                         <button class="btn btn-danger" type="submit"><i class="fas fa-trash"></i></button>
-                                    </div>
+                                    </div> --}}
+
+                                    <div class="btn-group mr-3">
+                                        <a class="btn btn-info btn-group-sm" href="{{route('products.show',$product)}}"><i class="far fa-eye"></i></a>
+                                        <a class="btn btn-secondary btn-group-sm" href="{{route('products.edit',$product)}}"><i class="fas fa-edit"></i></a>{{--              
+                                        <button type="button" class="btn btn-primary"><i class="far fa-eye"></i></button>
+                                        <button type="button" class="btn btn-danger"><i class="far fa-eye"></i></button> --}}
+                                        <button class="btn btn-danger" type="submit"><i class="fas fa-trash"></i></button>
+                                      </div>
                                 </form>
                             </div>
                         </td>

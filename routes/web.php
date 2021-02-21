@@ -9,6 +9,7 @@ use App\Http\Controllers\Pedidos\PedidosController;
 use App\Http\Controllers\Pedidos\ListaPedidosController;
 use App\Http\Controllers\Reportes\ReportesController;
 use App\Http\Controllers\Reportes\ReportController;
+use App\Http\Controllers\Comisiones\ComisionesController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\SectorsController;
 use App\Http\Controllers\StatusOrderController;
@@ -177,9 +178,9 @@ Route::resource('clients', ClientController::class)
     ->names('clients');
 
 //Comisiones index
-Route::get('list_comission', function(){
-    return view('comision.index ');
-})->name('list_comission');
+Route::get('list_comission',  [ComisionesController::class, 'index' ])->name('list_comission');
+Route::get('list_comision_json', [ComisionesController::class, 'verComisiones' ])->name('list_comision_json');
+
     
 //Reportes index
 Route::get('reporteComision', function(){

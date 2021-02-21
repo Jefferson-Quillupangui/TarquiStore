@@ -240,11 +240,13 @@ class ListaPedidosController extends Controller
         ->join("users AS b","a.user_id","=","b.id")
          ->join("order_statuses AS c","a.status_order","=","c.codigo")
         ->where('a.order_id' , $id_orden)
+        //
         ->select('a.id',
                 'a.order_id',
                 'c.name AS nombre_estado',
                'b.name AS nombre_usuario',
                 DB::raw('DATE_FORMAT(a.created_at, "%d-%b-%Y %h:%i:%s") as created_at'))
+                ->orderBy('a.id', 'DESC')
         ->get();
         
             //  $OrderTransaction = OrderTransaction::join("users AS b","order_transaction.user_id","=","b.id")

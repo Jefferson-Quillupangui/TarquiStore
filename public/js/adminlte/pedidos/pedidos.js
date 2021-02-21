@@ -1135,6 +1135,7 @@ $(document).ready(function () {
                                 $("#textphone1").val(cell.getRow().getData().phone1);
                                 $("#textphone2").val(cell.getRow().getData().phone2);
                                 $("#colaborador").val(cell.getRow().getData().nombre_usuario);
+                                $("#colaborador").attr("id_colaborador",cell.getRow().getData().collaborator_id);
                                 $("#fechaActual").val(cell.getRow().getData().delivery_date);
                                 $("#horaActual").val(cell.getRow().getData().delivery_time);
                                 $("#textaddressdelivery").val(cell.getRow().getData().delivery_address);

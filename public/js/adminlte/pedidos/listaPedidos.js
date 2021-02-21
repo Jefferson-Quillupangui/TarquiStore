@@ -2,6 +2,7 @@ $(document).ready(function () {
 
     let table_lista_ordenes;
     let table_list_detalle_factura;
+    let table_auditoria_orden;
 
    
 
@@ -247,6 +248,36 @@ $(document).ready(function () {
         success: function (response) {
 
             table_list_detalle_factura.replaceData(response.data);
+            cargarAuditoriaOrden(v_id_orden);
+          //console.log(response);
+
+        }, complete: function () {
+            $('.loaders').addClass('d-none');
+        }
+    });
+  }
+
+
+  /**
+   * Cargar los movimientos de la orden
+   * @param {*} v_id_orden 
+   */
+  function cargarAuditoriaOrden(v_id_orden){
+    $.ajax({
+        type: 'GET',
+        url: $('#form-auditoria-orden').attr("action"),
+        data: {
+            id_orden: v_id_orden
+        },
+        // dataType: "dataType",
+        beforeSend: function () {
+            $('.loaders').removeClass('d-none');
+           
+        },
+        success: function (response) {
+
+          table_auditoria_orden.replaceData(response.data);
+            
           //console.log(response);
 
         }, complete: function () {
@@ -275,8 +306,8 @@ $(document).ready(function () {
     columns:[
       
       
-        {title:"ID DET", field:"id_detalle_product", sorter:"number", width:80},
-        {title:"ID_PROCT", field:"product_id", sorter:"number", width:80},
+        {title:"ID DET", field:"id_detalle_product", sorter:"number",visible:false},
+        {title:"CODIGO", field:"product_id", sorter:"number", width:100,  hozAlign:"center"},
         // {title:"id_product", field:"id_product", sorter:"string"},
         {title:"NOMBRE PRODUCTO", field:"name_product", sorter:"string"},
         {title:"CANTIDAD", field:"quantity", sorter:"number",hozAlign:"center"},
@@ -353,6 +384,36 @@ $(document).ready(function () {
       //   alert("Row " + row.getData()+ " Clicked!!!!");
     //},
     });
+
+
+
+    var iconAudito = function(cell, formatterParams, onRendered){ //plain text value
+      return "<i class='fas fa-angle-right'></i>";
+  };
+
+    table_auditoria_orden = new Tabulator("#grid-table-auditoria-estados", {
+        
+      //layout:"fitColumns",
+      //ajaxURL: '',
+   
+    // paginationSize:6,
+      height:"211px",
+      layout:"fitColumns",
+      placeholder:"No hay Datos",
+     // ajaxProgressiveLoad:"scroll",
+    
+      //pagination:"remote",
+      //paginationSizeSelector:[3, 6, 8, 10],
+      //movableColumns:true,
+      columns:[
+          {formatter:iconAudito, width:40, hozAlign:"center"},
+          {title:"N# Pedido", field:"order_id",hozAlign:"center"},
+          {title:"Nombre Usuario", field:"nombre_usuario",},
+          {title:"Estado", field:"nombre_estado",hozAlign:"center"},
+          {title:"Fecha Movimiento", field:"created_at", formatter:"html" },
+         // {title:"Hora", field:"delivery_time",visible:false},
+        ],
+  });
 
 
 });

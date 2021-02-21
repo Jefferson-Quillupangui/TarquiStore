@@ -1221,23 +1221,6 @@ $(document).ready(function () {
                 });
                 window.location.reload();
               }
-              // if(dt.data.out_cod === 7){
-              //     $('.loaders').addClass('d-none');
-              //     Swal.fire({
-              //          position: 'top-end',
-              //          icon: 'success',
-              //          title: dt.data.out_msj+" Nro Orden: 000"+dt.data.out_id_order,
-              //          showConfirmButton: false,
-              //          timer: 1500
-              //         });
-              //         window.location.reload(); // Recargar página
-              // }else{
-              //             Swal.fire({
-              //               icon: 'error',
-              //               title: 'Oops...',
-              //               text: 'Error 07 al crear orden'
-              //             })
-              // }
           }).fail(function(data) {
               console.log(data);    
               //alert( "error" );

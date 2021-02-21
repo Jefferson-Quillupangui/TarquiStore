@@ -5,6 +5,8 @@ namespace App\Http\Controllers\Pedidos;
 use App\Http\Controllers\Controller;
 use App\Models\OrderStatus;
 use App\Models\Order;
+use App\Models\OrderTransaction;
+
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -28,7 +30,7 @@ class ListaPedidosController extends Controller
         $id = Auth::user()->id;
         $name = Auth::user()->name;
         
-        if( $id == 1 || $name == "Admin"){
+        if( $id == 1 || $name == "Admin"){//todos
              $orders = Order::join("sectors AS b","orders.sector_cod","=","b.codigo")
             ->join("city_sales AS c","orders.city_sale_cod","=","c.codigo")
             ->join("order_statuses AS d","orders.order_status_cod","=","d.codigo")
@@ -63,7 +65,7 @@ class ListaPedidosController extends Controller
                 'g.email AS email_cliente')
                 ->get();
                 return response()->json(['data' => $orders], 200);
-        }else{
+        }else{//solo lo q es del usuario
             $orders = Order::join("sectors AS b","orders.sector_cod","=","b.codigo")
             ->join("city_sales AS c","orders.city_sale_cod","=","c.codigo")
             ->join("order_statuses AS d","orders.order_status_cod","=","d.codigo")
@@ -139,43 +141,84 @@ class ListaPedidosController extends Controller
         $order_status_cod = $request->estadoOrden;
         $fechaDesde = $request->fechaDesde;
         $fechaHasta = $request->fechaHasta;
-           
-        $orders = Order::join("sectors AS b","orders.sector_cod","=","b.codigo")
-        ->join("city_sales AS c","orders.city_sale_cod","=","c.codigo")
-        ->join("order_statuses AS d","orders.order_status_cod","=","d.codigo")
-        ->join("collaborators AS e","orders.collaborator_id","=","e.id")
-        ->join("clients AS f","orders.client_id","=","f.id")
-        ->join("users AS g","orders.collaborator_id","=","g.id")
-        ->select(
-            'orders.id',
-            'orders.delivery_date',
-            'orders.delivery_time',
-            'orders.delivery_address',
-            'orders.total_order',
-            'orders.total_comission',
-            'orders.observation',
-            'orders.status_comission',
-            'orders.sector_cod',
-            'orders.city_sale_cod',
-            'orders.client_id',
-            'orders.collaborator_id',
-            'orders.order_status_cod',
-            'b.name AS nombre_sector',
-            'c.name AS nombre_ciudad',
-            'd.name AS nombre_estado_ord',
-            'e.identification',
-            'e.name AS nombre_colaborador',
-            'f.phone1' ,
-            'f.phone2',
-            'f.email',
-            'f.identification',
-            'f.name AS nombre_cliente',
-            'g.name AS nombre_usuario',
-            'g.email AS email_cliente')
+        
+        if( $id == 1 || $name == "Admin"){//todos
+            $orders = Order::join("sectors AS b","orders.sector_cod","=","b.codigo")
+            ->join("city_sales AS c","orders.city_sale_cod","=","c.codigo")
+            ->join("order_statuses AS d","orders.order_status_cod","=","d.codigo")
+            ->join("collaborators AS e","orders.collaborator_id","=","e.id")
+            ->join("clients AS f","orders.client_id","=","f.id")
+            ->join("users AS g","orders.collaborator_id","=","g.id")
+            ->select(
+                'orders.id',
+                'orders.delivery_date',
+                'orders.delivery_time',
+                'orders.delivery_address',
+                'orders.total_order',
+                'orders.total_comission',
+                'orders.observation',
+                'orders.status_comission',
+                'orders.sector_cod',
+                'orders.city_sale_cod',
+                'orders.client_id',
+                'orders.collaborator_id',
+                'orders.order_status_cod',
+                'b.name AS nombre_sector',
+                'c.name AS nombre_ciudad',
+                'd.name AS nombre_estado_ord',
+                'e.identification',
+                'e.name AS nombre_colaborador',
+                'f.phone1' ,
+                'f.phone2',
+                'f.email',
+                'f.identification',
+                'f.name AS nombre_cliente',
+                'g.name AS nombre_usuario',
+                'g.email AS email_cliente')
             ->where('orders.order_status_cod','=',$order_status_cod ,'and' ,'orders.delivery_date','BETWEEN', $fechaDesde,'and' , $fechaHasta )
-            //->orWhereBetween('orders.delivery_date', [$fechaDesde, $fechaHasta]) column_name BETWEEN value1 AND value2;
+                //->orWhereBetween('orders.delivery_date', [$fechaDesde, $fechaHasta]) column_name BETWEEN value1 AND value2;
             ->get();
             return response()->json(['data' => $orders], 200);
+        }else{//solo lo q es del usuario(vendedor)
+            $orders = Order::join("sectors AS b","orders.sector_cod","=","b.codigo")
+            ->join("city_sales AS c","orders.city_sale_cod","=","c.codigo")
+            ->join("order_statuses AS d","orders.order_status_cod","=","d.codigo")
+            ->join("collaborators AS e","orders.collaborator_id","=","e.id")
+            ->join("clients AS f","orders.client_id","=","f.id")
+            ->join("users AS g","orders.collaborator_id","=","g.id")
+            ->select(
+                'orders.id',
+                'orders.delivery_date',
+                'orders.delivery_time',
+                'orders.delivery_address',
+                'orders.total_order',
+                'orders.total_comission',
+                'orders.observation',
+                'orders.status_comission',
+                'orders.sector_cod',
+                'orders.city_sale_cod',
+                'orders.client_id',
+                'orders.collaborator_id',
+                'orders.order_status_cod',
+                'b.name AS nombre_sector',
+                'c.name AS nombre_ciudad',
+                'd.name AS nombre_estado_ord',
+                'e.identification',
+                'e.name AS nombre_colaborador',
+                'f.phone1' ,
+                'f.phone2',
+                'f.email',
+                'f.identification',
+                'f.name AS nombre_cliente',
+                'g.name AS nombre_usuario',
+                'g.email AS email_cliente')
+            ->where('orders.order_status_cod','=',$order_status_cod ,'and' ,'orders.delivery_date','BETWEEN', $fechaDesde,'and' , $fechaHasta )
+            ->where('orders.collaborator_id','=',$id )
+                //->orWhereBetween('orders.delivery_date', [$fechaDesde, $fechaHasta]) column_name BETWEEN value1 AND value2;
+            ->get();
+            return response()->json(['data' => $orders], 200);
+        }   
+        
         
         // if( $id == 1 || $name == "Admin"){
         // }else{
@@ -184,6 +227,46 @@ class ListaPedidosController extends Controller
     }
 
     
+    /**
+     * retona los movimientos que ha tenido la orden
+     */
+    public function listaAuditoriaOrden_json(Request $request){
+         
+
+        
+        $id_orden = $request->id_orden;
+
+        $OrderTransaction = DB::table('order_transaction as a')
+        ->join("users AS b","a.user_id","=","b.id")
+         ->join("order_statuses AS c","a.status_order","=","c.codigo")
+        ->where('a.order_id' , $id_orden)
+        ->select('a.id',
+                'a.order_id',
+                'c.name AS nombre_estado',
+               'b.name AS nombre_usuario',
+                DB::raw('DATE_FORMAT(a.created_at, "%d-%b-%Y %h:%i:%s") as created_at'))
+        ->get();
+        
+            //  $OrderTransaction = OrderTransaction::join("users AS b","order_transaction.user_id","=","b.id")
+            // ->join("order_statuses AS c","order_transaction.status_order","=","c.codigo")
+            // ->select(
+            //     'order_transaction.id', 
+            //     'order_transaction.order_id',
+            //     'c.name AS nombre_estado',
+            //     'b.name AS nombre_usuario',
+            //     //'order_transaction.created_at'
+            //     DB::raw("DATE_FORMAT(order_transaction.created_at, '%Y-%M-%d %h:%i:%s %p') AS created_at")
+             
+            //     //'Date_format(order_transaction.created_at,%Y-%M-%d %h:%i:%s %p) AS created_at' 
+
+            //     )
+            //     ->where('order_transaction.order_id' , $id_orden)
+            //     ->orderBy('order_transaction.id', 'ASC')
+            //     ->get();
+                return response()->json(['data' => $OrderTransaction], 200);
+       
+       
+    }
   
 
  

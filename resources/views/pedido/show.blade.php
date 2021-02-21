@@ -45,7 +45,7 @@
     <div class="card card-cyan">
         <form action="{{ route('list_orders_json') }}" id="form-revision-lista-pedidos" class="d-none"></form>
         <form action="{{ route('lista.orders.detalle') }}" id="form-detalle-lista-pedidos" class="d-none"></form>
-
+        <form action="{{ route('list_orders_auditoria_json') }}" id="form-auditoria-orden" class="d-none"></form>
         <div class="card-header">
             <h4 class="card-title" style="margin: 0px 0px 0px 0px;"> <i class="fas fa-search"></i> Buscar Pedidos</h4>
         </div>
@@ -414,6 +414,18 @@
             <div class="row">
                 <div class="col-md-12">
                     <div id="grid-table-list-detalle-pedido"></div>
+                </div>
+            </div>
+            <hr>
+
+            <div class="row">
+                <div class="col-md-10">
+                    <p><Strong>Registro de Movimientos</Strong></p>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <div id="grid-table-auditoria-estados"></div>
                 </div>
             </div>
             <hr>

@@ -192,6 +192,7 @@ Route::get('list_orders',  [ListaPedidosController::class, 'index' ])->name('lis
 Route::get('list_orders_json',  [ListaPedidosController::class, 'listaRevisionOrders_json' ])->name('list_orders_json');
 Route::post('buscar_order', [ListaPedidosController::class, 'buscarFiltrandoOrdenes' ])->name('orden.procesar.buscar');
 Route::get('list_detalle_orders', [ListaPedidosController::class, 'ListaDetalleOrders_json' ])->name('lista.orders.detalle');
+Route::get('list_auditoria_json',  [ListaPedidosController::class, 'listaAuditoriaOrden_json' ])->name('list_orders_auditoria_json');
 
 //PDF Reportes
 Route::get('reporte_orden', [ReportController::class, 'PDF' ])->name('reporte.orden');

@@ -653,6 +653,6 @@
 
 @section('js')
     <script type="text/javascript" src="{{ asset('/plugin_tabullator/dist/js/tabulator.min.js') }}"></script>
-    <script type="text/javascript" src="{{ asset('js/adminlte/pedidos/pedidos.js?vs=08') }}"></script>
+    <script type="text/javascript" src="{{ asset('js/adminlte/pedidos/pedidos.js?vs=10') }}"></script>
 
 @stop

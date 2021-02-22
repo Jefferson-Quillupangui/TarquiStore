@@ -45,13 +45,14 @@
         <form action="{{ route('comision.buscar.colaborador') }}" id="form-buscar-comision" class="d-none"></form>
         <div class="card-header">
             <h4 class="card-title" style="margin: 0px 0px 0px 0px;"> <i class="fas fa-search"></i> Consulta de comisión</h4>
-          <div class="card-tools">
-            <button type="button" class="btn btn-tool mt-0" data-card-widget="collapse" ><i class="fas fa-plus"></i></button>
-          </div>
+            <div class="card-tools">
+                <button type="button" class="btn btn-tool mt-0" data-card-widget="collapse"><i
+                        class="fas fa-plus"></i></button>
+            </div>
         </div>
         <div class="card-body">
             <div class="row">
-    
+
                 @can('Administrar pedidos')
                     <div class="col-md-5">
                         <label for="name_client">Buscar Colaboraderes:</label>
@@ -89,9 +90,9 @@
                         </div>
                     </div>
                 @endcan
-    
-    
-    
+
+
+
                 <div class="col-md-5 ">
                     <label for="anio_order">Año : </label>
                     <div class="input-group mb-4">
@@ -105,16 +106,16 @@
                                 <option value="{{ $estado->anio }}">{{ $estado->anio }}</option>
                             @endforeach
                         </select>
-    
+
                     </div>
                 </div>
-    
-    
-    
+
+
+
                 <div class="col-md-2 ">
                     <label for="orderStatus">Procesar </label>
                     <div class="form-group row ">
-    
+
                         {{-- <input type="hidden" name="_token" id="token_buscar" value="{{ csrf_token() }}"> --}}
                         <button class="btn btn-info " id="btn-buscar-comision" type="button" title="Buscar Comision"> <i
                                 class="fas fa-search"></i>
@@ -122,16 +123,19 @@
                         </form>
                     </div>
                 </div>
-    
+
             </div>
             <hr>
             <div class="row">
                 <div class="col-md-12">
                     {{-- <button id="download-csv">Download CSV</button> --}}
                     {{-- <button id="download-json">Download JSON</button> --}}
-                    <button id="download-xlsx" class="btn btn-success float-right"><i class="fa fa-file-excel-o"
-                            aria-hidden="true"></i>Descargar Excel</button>
-                    {{-- <button id="download-pdf">Download PDF</button> --}}
+
+                    <button id="download-comision-xlsx" type="button" class="btn btn-success float-right"> <i
+                            class="fas fa-excel"></i>Descargar Excel</button>
+                    <button id="download-comision-pdf" class="btn btn-danger float-right"><i class="fa fa-file-pdf-o"
+                            aria-hidden="true"></i>Descargar PDF</button>
+
                     {{-- <button id="download-html">Download HTML</button> --}}
                 </div>
             </div>
@@ -142,29 +146,112 @@
                 </div>
             </div>
             <hr>
-    
-        </div>
-      </div>    
-
-      <div class="card card-cyan collapsed-card">
-        <form action="{{ route('list_colaboradores_json') }}" id="form-buscar-colaboradores" class="d-none"></form>
-        <form action="{{ route('comision.buscar.colaborador') }}" id="form-buscar-comision" class="d-none"></form>
-        <div class="card-header">
-            <h4 class="card-title" style="margin: 0px 0px 0px 0px;"> <i class="fas fa-search"></i> Consulta de comisión general</h4>
-          <div class="card-tools">
-            <button type="button" class="btn btn-tool mt-0" data-card-widget="collapse" ><i class="fas fa-plus"></i></button>
-          </div>
-        </div>
-        <div class="card-body">
-            <div class="row">
-    
-                <!-- Contenido -->
 
         </div>
-      </div>    
-     
-      
-      <!-- Modal Buscar Colaboradores -->
+    </div>
+
+
+    @can('Administrar pedidos')
+        <div class="card card-cyan collapsed-card">
+            {{-- <form action="{{ route('list_colaboradores_json') }}" id="form-buscar-colaboradores" class="d-none"></form> --}}
+            <form action="{{ route('comisiones.colaboradores.mes.anio') }}" id="form-buscar-comisiones-generales"
+                class="d-none"></form>
+            <div class="card-header">
+                <h4 class="card-title" style="margin: 0px 0px 0px 0px;"> <i class="fas fa-search"></i> Consulta de comisión
+                    general</h4>
+                <div class="card-tools">
+                    <button type="button" class="btn btn-tool mt-0" data-card-widget="collapse"><i
+                            class="fas fa-plus"></i></button>
+                </div>
+            </div>
+            <div class="card-body">
+                <div class="row">
+
+
+                    <div class="col-md-5">
+                        <label for="name_client">Mes:</label>
+                        <div class="input-group mb-3">
+                            <select id="select-mes" class="form-control">
+                                <option value="0" disabled>------Seleccionar------</option>
+                                <option value="01">Enero</option>
+                                <option value="02">Febrero</option>
+                                <option value="03">Marzo</option>
+                                <option value="04">Abril</option>
+                                <option value="05">Mayo</option>
+                                <option value="06">Junio</option>
+                                <option value="07">Julio</option>
+                                <option value="08">Agosto</option>
+                                <option value="09">Septiembre</option>
+                                <option value="10">Octubre</option>
+                                <option value="11">Noviembre</option>
+                                <option value="12">Diciembre</option>
+                            </select>
+                        </div>
+                    </div>
+
+
+
+
+                    <div class="col-md-5 ">
+                        <label for="anio_order">Año : </label>
+                        <div class="input-group mb-4">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text" id="basic-sector"><i
+                                        class="fa fa-exclamation-triangle"></i></span>
+                            </div>
+                            <select id="anio_order" name="anio_order" class="form-control">
+                                <option value=0 disabled>------Seleccionar------</option>
+                                @foreach ($anios_obtenidos_orden as $estado)
+                                    <option value="{{ $estado->anio }}">{{ $estado->anio }}</option>
+                                @endforeach
+                            </select>
+
+                        </div>
+                    </div>
+
+
+
+                    <div class="col-md-2 ">
+                        <label for="orderStatus">Procesar </label>
+                        <div class="form-group row ">
+
+                            {{-- <input type="hidden" name="_token" id="token_buscar" value="{{ csrf_token() }}"> --}}
+                            <button class="btn btn-info " id="btn-buscar-comisiones-generales" type="button"
+                                title="Buscar Comision General"> <i class="fas fa-search"></i>
+                                Buscar Comision</button>
+                            </form>
+                        </div>
+                    </div>
+
+                </div>
+                <hr>
+                <div class="row">
+                    <div class="col-md-12">
+                        {{-- <button id="download-csv">Download CSV</button> --}}
+                        {{-- <button id="download-json">Download JSON</button> --}}
+
+                        <button id="download-comision-generales-xlsx" type="button" class="btn btn-success float-right"> <i
+                                class="fas fa-excel"></i>Descargar Excel</button>
+                        <button id="download-comision-generales-pdf" class="btn btn-danger float-right"><i
+                                class="fa fa-file-pdf-o" aria-hidden="true"></i>Descargar PDF</button>
+
+                        {{-- <button id="download-html">Download HTML</button> --}}
+                    </div>
+                </div>
+                <hr>
+                <div class="row">
+                    <div class="col-md-12">
+                        <div id="grid-table-comisiones-usuarios"></div>
+                    </div>
+                </div>
+                <hr>
+
+            </div>
+        </div>
+    @endcan
+
+
+    <!-- Modal Buscar Colaboradores -->
     <div class="modal fade" id="modal-buscarColaboradores" data-backdrop="static" data-keyboard="false" tabindex="-1"
         aria-labelledby="staticBackdropLabel" aria-hidden="true">
         <div class="modal-dialog modal-lg modal-dialog-centered">
@@ -202,7 +289,12 @@
 
 @section('js')
     <script type="text/javascript" src="{{ asset('/plugin_tabullator/dist/js/tabulator.min.js') }}"></script>
-    <script type="text/javascript" src="{{ asset('js/adminlte/comisiones/comisionesOrdenes.js') }}"></script>
     <script type="text/javascript" src="https://oss.sheetjs.com/sheetjs/xlsx.full.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.3.5/jspdf.min.js"></script>
+    <script type="text/javascript"
+        src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.0.5/jspdf.plugin.autotable.js"></script>
+    <script type="text/javascript" src="{{ asset('js/adminlte/comisiones/comisionesOrdenes.js?v=01') }}"></script>
+
+
 
 @stop

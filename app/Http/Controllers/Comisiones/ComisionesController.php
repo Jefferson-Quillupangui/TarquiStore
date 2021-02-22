@@ -122,7 +122,21 @@ class ComisionesController extends Controller
         return response()->json(['data' => $collaborators], 200);
     }
 
-    
+    public function comisionesGeneralAdmin(Request $request ){
+        
+        $mes = $request->mes;
+        $anio = $request->anio;
+
+        $comission = Comission::join('collaborators AS b', "comissions.collaborator_id","=","b.id")
+        ->where('comissions.month', '=',$mes)
+        ->where('comissions.year', '=', $anio)
+        ->select('b.name','b.identification','comissions.quantity_orders','comissions.total_comission')
+        ->get();
+
+        return response()->json(['data' => $comission], 200);
+        
+    }
+
     // public function consultaComisiones($mes){
     //     $comission = DB::table('comissions')
     //     ->where('collaborator_id', '=', 1)

@@ -181,7 +181,7 @@ Route::resource('clients', ClientController::class)
 Route::get('list_comission',  [ComisionesController::class, 'index' ])->name('list_comission');
 // Route::get('list_comision_json', [ComisionesController::class, 'verComisiones' ])->name('list_comision_json');
 Route::get('buscar_comision', [ComisionesController::class, 'verComisiones' ])->name('comision.buscar.colaborador');
-
+Route::get('buscar_comisiones_colaboradores', [ComisionesController::class, 'comisionesGeneralAdmin' ])->name('comisiones.colaboradores.mes.anio');
 //colboradores
 Route::get('list_colaboradores_json', [ComisionesController::class, 'verListaColaboradores' ])->name('list_colaboradores_json');
     

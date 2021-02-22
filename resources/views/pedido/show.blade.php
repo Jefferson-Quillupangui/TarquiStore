@@ -42,12 +42,15 @@
 
     @include('partials.session-status')
 
-    <div class="card card-cyan">
+    <div class="card card-cyan collapsed-card">
         <form action="{{ route('list_orders_json') }}" id="form-revision-lista-pedidos" class="d-none"></form>
         <form action="{{ route('lista.orders.detalle') }}" id="form-detalle-lista-pedidos" class="d-none"></form>
         <form action="{{ route('list_orders_auditoria_json') }}" id="form-auditoria-orden" class="d-none"></form>
         <div class="card-header">
-            <h4 class="card-title" style="margin: 0px 0px 0px 0px;"> <i class="fas fa-search"></i> Buscar Pedidos</h4>
+            <h4 class="card-title" style="margin: 0px 0px 0px 0px;"><i class="fas fa-search-plus"></i> Busqueda general</h4>
+          <div class="card-tools">
+            <button type="button" class="btn btn-tool mt-0" data-card-widget="collapse" ><i class="fas fa-plus"></i></button>
+          </div>
         </div>
         <div class="card-body">
             <div class="row">
@@ -69,42 +72,22 @@
                         </div>
                     </div>
                 </div>
-
-                <div class="col-md-5 ">
-                    <label for="orderStatus">Estado de Pedido : </label>
-                    <div class="input-group mb-4">
-                        <div class="input-group-prepend">
-                            <span class="input-group-text" id="basic-sector"><i
-                                    class="fa fa-exclamation-triangle"></i></span>
-                        </div>
-                        <select id="orderStatus" name="orderStatus" class="form-control">
-                            <option value=0 disabled>------Seleccionar------</option>
-                            @foreach ($orderStatus as $estado)
-                                <option value="{{ $estado->codigo }}">{{ $estado->name }}</option>
-                            @endforeach
-                        </select>
-
-                    </div>
-                </div>
-
-
-
-                <div class="col-md-2 ">
-                    <label for="orderStatus">Procesar </label>
-                    <div class="form-group row ">
-                        <form action="{{ route('orden.procesar.buscar') }}" id="form-filtrar-buscar-orden" method="POST">
-                            <input type="hidden" name="_token" id="token_filtar_busqd" value="{{ csrf_token() }}">
-                            <button class="btn btn-info " id="btn-buscar-filtro-orden" type="button"
-                                title="Buscar Pedidos Filtrando"> <i class="fas fa-search"></i>
-                                Buscar Pedido</button>
-                        </form>
-                    </div>
-                </div>
-
+                
             </div>
+        </div>
+      </div>
 
+      <div class="card card-cyan collapsed-card">
+        <div class="card-header">
+            <h4 class="card-title" style="margin: 0px 0px 0px 0px;"> <i class="fas fa-search"></i> Busqueda por fecha</h4>
+          <div class="card-tools">
+            <button type="button" class="btn btn-tool mt-0" data-card-widget="collapse" ><i class="fas fa-plus"></i></button>
+          </div>
+        </div>
+        <div class="card-body">
             <div class="row">
-                <div class='col-sm-5'>
+
+                <div class='col-sm-3'>
                     <label for="identification">Fecha Desde:</label>
                     <div class="input-group mb-3">
                         <div class="input-group">
@@ -119,7 +102,7 @@
                     </div>
                 </div>
 
-                <div class='col-sm-5'>
+                <div class='col-sm-3'>
                     <label for="identification">Fecha Hasta:</label>
                     <div class="input-group mb-3">
                         <div class="input-group">
@@ -134,29 +117,7 @@
                     </div>
                 </div>
 
-            </div>
-
-            {{-- <div class="row">
-
-                <div class="col-md-5">
-                    <label for="name_client">Buscar Pedido:</label>
-                    <div class="input-group mb-3">
-                        <div class="input-group-prepend">
-                            <span class="input-group-text">
-                                <i class="fa fa-clipboard"></i>
-                            </span>
-                        </div>
-                        <input type="text" class="form-control" placeholder="Buscar Pedido" id_pedido=0
-                            id="textNumPedido" disabled />
-                        <div class="input-group-append">
-                            <div class="input-group-text" type="button" id="btn-buscar-list-pedidos"><i
-                                    class="fa fa-search" title="Buscar Todos los pedidos"></i>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="col-md-5 ">
+                <div class="col-md-3 ">
                     <label for="orderStatus">Estado de Pedido : </label>
                     <div class="input-group mb-4">
                         <div class="input-group-prepend">
@@ -172,18 +133,28 @@
 
                     </div>
                 </div>
-            </div> --}}
 
+                <div class="col-md-2 ">
+                    <label for="orderStatus">Procesar </label>
+                    <div class="form-group row ">
+                        <form action="{{ route('orden.procesar.buscar') }}" id="form-filtrar-buscar-orden" method="POST">
+                            <input type="hidden" name="_token" id="token_filtar_busqd" value="{{ csrf_token() }}">
+                            <button class="btn btn-info " id="btn-buscar-filtro-orden" type="button"
+                                title="Buscar Pedidos Filtrando"> <i class="fas fa-search"></i>
+                                Buscar Pedido</button>
+                        </form>
+                    </div>
+                </div>
 
+            </div>
         </div>
-        <!-- /.card-body -->
-    </div>
+      </div>
 
     <div class="card card-cyan">
         {{-- <input type="hidden" name="_token" id="token_orden_busqd" value="{{ csrf_token() }}">
         <form action="{{ route('reporte.orden.datos') }}" id="form-datos-orden" class="d-none"></form> --}}
         <div class="card-header">
-            <h4 class="card-title" style="margin: 6px 0px 0px 0px;"> <i class="fa fa-file"></i> Visualizacion Orden</h4>
+            <h4 class="card-title" style="margin: 6px 0px 0px 0px;"><i class="fa fa-file"></i> Visualizacion Orden</h4>
             {{-- href="{{url('reporteFecha',array('fechaMenor'=>$fechaMenor,'fechaMayor'=>$fechaMayor))}}" --}}
             <a type="button" href="{{ route('reporte.orden.datos', ['id' => 0]) }}" class="btn btn-danger float-right"
                 target="_blank" title="Pdf Orden" id="generar-pdf-orden"><i class="far fa-file-pdf"></i></a>
@@ -442,7 +413,7 @@
     <!-- Modal Buscar Pedidos -->
     <div class="modal fade" id="modal-buscarRevisionPedido" data-backdrop="static" data-keyboard="false" tabindex="-1"
         aria-labelledby="staticBackdropLabel" aria-hidden="true">
-        <div class="modal-dialog modal-lg modal-dialog-centered">
+        <div class="modal-dialog modal-xl modal-dialog-centered">
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title" id="staticBackdropLabel">Lista de Pedidos</h5>

@@ -22,6 +22,7 @@ class CreateClientsTable extends Migration
             $table->string('phone1',20);
             $table->string('phone2',20)->nullable();
             $table->string('email',45)->nullable();
+            $table->string('sex',3);
             $table->char('status',3)->default('A');  
             $table->string('type_identification_cod');
 

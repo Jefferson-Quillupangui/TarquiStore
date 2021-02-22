@@ -18,6 +18,8 @@ class CreateCollaboratorsTable extends Migration
             $table->string('identification',25);
             $table->string('name',45);
             $table->string('phone',20);
+            $table->date('birth_date', $precision = 0);
+            $table->string('sex',3);
             $table->char('status',3)->default('A');  
             $table->unsignedBigInteger('user_id')->unique();
 

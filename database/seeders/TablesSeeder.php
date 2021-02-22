@@ -12,6 +12,7 @@ use Spatie\Permission\Models\Permission;
 use App\Models\Product;
 use App\Models\OrderStatus;
 use App\Models\Collaborator;
+use Illuminate\Support\Carbon;
 
 class TablesSeeder extends Seeder
 {
@@ -202,6 +203,8 @@ class TablesSeeder extends Seeder
             'identification'      => '099999999',
             'name'     => 'Admin',
             'phone'     => '099999999',
+            'birth_date'  => Carbon::parse('1996-08-07'),
+            'sex'  => 'H',
             'status'     => 'A',
             'user_id'     => 1,
         ]);
@@ -210,6 +213,8 @@ class TablesSeeder extends Seeder
             'identification'      => '0111111111',
             'name'     => 'Vendedor',
             'phone'     => '0111111111',
+            'birth_date'  => Carbon::parse('1996-08-07'),
+            'sex'  => 'H',
             'status'     => 'A',
             'user_id'     => 2,
         ]);

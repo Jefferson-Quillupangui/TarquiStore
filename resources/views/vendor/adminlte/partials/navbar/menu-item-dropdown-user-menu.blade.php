@@ -23,7 +23,7 @@
                     class="user-image img-circle elevation-2"
                     alt="{{ Auth::user()->name }}">
              @else
-                 <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ3tYRm6oxtL_4-zSGVjtGyHZ5wfH1FsU1ZPQ&usqp=CAU"
+                 <img src="https://svgshare.com/i/65U.svg"
                  class="user-image img-circle elevation-2"
                  alt="{{ Auth::user()->name }}">
              @endif
@@ -46,7 +46,7 @@
                             class="img-circle elevation-3"
                             alt="{{ Auth::user()->name }}" id="imagep">
                     @else
-                        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ3tYRm6oxtL_4-zSGVjtGyHZ5wfH1FsU1ZPQ&usqp=CAU"
+                        <img src="https://svgshare.com/i/65U.svg"
                         class="img-circle elevation-3"
                         alt="{{ Auth::user()->name }}" id="imagep">
                     @endif

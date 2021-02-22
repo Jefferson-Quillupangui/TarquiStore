@@ -165,6 +165,13 @@ class ProductController extends Controller
                 $constraint->aspectRatio();
             })->save($ruta);
             
+            if($product->image){
+                //Borrar imagen anterior
+                $url = str_replace('storage', 'public',$product->image);
+                
+                storage::delete($url);
+            }
+
             $product->update([
                 'name'          => $request->name,
                 'image'         => '/storage/img/'.$nombre,
@@ -176,12 +183,7 @@ class ProductController extends Controller
                 'category_id'   => $request->category
             ]);
 
-            if($product->image){
-                //Borrar imagen anterior
-                $url = str_replace('storage', 'public',$product->image);
-                
-                storage::delete($url);
-            }
+
         }else{
             $product->update([
                 'name'          => $request->name,

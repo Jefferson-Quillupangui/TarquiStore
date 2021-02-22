@@ -38,8 +38,9 @@
                                 <td>{{$user->email}}</td>
                                 <td>{{$user->getRoleNames()->implode(',')}}</td>
                                 <td>
-                                    <div class="row ml-4">
-                                        <a class="btn btn-secondary" href="{{route('admin.users.edit', $user)}}"><i class="fas fa-edit"></i></a>
+                                    <div class="btn-group mr-3">
+                                        <a class="btn btn-info btn-group-sm" href="{{route('admin.users.show',$user)}}"><i class="far fa-eye"></i></a>
+                                        <a class="btn btn-secondary btn-group-sm" href="{{route('admin.users.edit', $user)}}"><i class="fas fa-edit"></i></a>
                                     </div>
                                 </td>
                             </tr>

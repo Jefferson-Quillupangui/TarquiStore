@@ -40,15 +40,18 @@
     <div class="loaders d-none"></div>
     @include('partials.session-status')
 
-    <div class="card card-cyan">
+    <div class="card card-cyan collapsed-card">
         <form action="{{ route('list_colaboradores_json') }}" id="form-buscar-colaboradores" class="d-none"></form>
         <form action="{{ route('comision.buscar.colaborador') }}" id="form-buscar-comision" class="d-none"></form>
         <div class="card-header">
-            <h4 class="card-title" style="margin: 0px 0px 0px 0px;"> <i class="fas fa-search"></i> Buscar </h4>
+            <h4 class="card-title" style="margin: 0px 0px 0px 0px;"> <i class="fas fa-search"></i> Consulta de comisión</h4>
+          <div class="card-tools">
+            <button type="button" class="btn btn-tool mt-0" data-card-widget="collapse" ><i class="fas fa-plus"></i></button>
+          </div>
         </div>
         <div class="card-body">
             <div class="row">
-
+    
                 @can('Administrar pedidos')
                     <div class="col-md-5">
                         <label for="name_client">Buscar Colaboraderes:</label>
@@ -86,9 +89,9 @@
                         </div>
                     </div>
                 @endcan
-
-
-
+    
+    
+    
                 <div class="col-md-5 ">
                     <label for="anio_order">Año : </label>
                     <div class="input-group mb-4">
@@ -102,16 +105,16 @@
                                 <option value="{{ $estado->anio }}">{{ $estado->anio }}</option>
                             @endforeach
                         </select>
-
+    
                     </div>
                 </div>
-
-
-
+    
+    
+    
                 <div class="col-md-2 ">
                     <label for="orderStatus">Procesar </label>
                     <div class="form-group row ">
-
+    
                         {{-- <input type="hidden" name="_token" id="token_buscar" value="{{ csrf_token() }}"> --}}
                         <button class="btn btn-info " id="btn-buscar-comision" type="button" title="Buscar Comision"> <i
                                 class="fas fa-search"></i>
@@ -119,7 +122,7 @@
                         </form>
                     </div>
                 </div>
-
+    
             </div>
             <hr>
             <div class="row">
@@ -139,14 +142,29 @@
                 </div>
             </div>
             <hr>
+    
+        </div>
+      </div>    
 
+      <div class="card card-cyan collapsed-card">
+        <form action="{{ route('list_colaboradores_json') }}" id="form-buscar-colaboradores" class="d-none"></form>
+        <form action="{{ route('comision.buscar.colaborador') }}" id="form-buscar-comision" class="d-none"></form>
+        <div class="card-header">
+            <h4 class="card-title" style="margin: 0px 0px 0px 0px;"> <i class="fas fa-search"></i> Consulta de comisión general</h4>
+          <div class="card-tools">
+            <button type="button" class="btn btn-tool mt-0" data-card-widget="collapse" ><i class="fas fa-plus"></i></button>
+          </div>
+        </div>
+        <div class="card-body">
+            <div class="row">
+    
+                <!-- Contenido -->
 
         </div>
-        <!-- /.card-body -->
-    </div>
-
-
-    <!-- Modal Buscar Colaboradores -->
+      </div>    
+     
+      
+      <!-- Modal Buscar Colaboradores -->
     <div class="modal fade" id="modal-buscarColaboradores" data-backdrop="static" data-keyboard="false" tabindex="-1"
         aria-labelledby="staticBackdropLabel" aria-hidden="true">
         <div class="modal-dialog modal-lg modal-dialog-centered">

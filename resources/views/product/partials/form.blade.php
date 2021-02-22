@@ -13,35 +13,18 @@
                 </span>
                 @enderror
             </div>
-        </div>
-        <div class="col-md-5">
-            <div class="form-group">
-                <label for="image">Imagen: </label>
-                <div class="form-input">
-                    <input name ="image" id="file" type="file" accept="image/png,image/jpeg"/>
-                    {{-- {!! Form::file('image',null,['class' => 'form-control-file',
-                                    'accept' => 'image/png,image/jpeg', 'id' => 'image']) !!} --}}
-                    @error('image')
-                        <br>
-                        <small class="invalid-feedback">
-                            <strong>{{$message}}</strong>
-                        </small>
-                    @enderror
+            <label for="category">Categorias:</label>
+            <div class="input-group mb-3">
+                <div class="input-group-prepend">
+                    <span class="input-group-text" id="basic-addon1"><i class="far fa-list-alt"></i></span>
                 </div>
-            </div>
-            <div class="card" style="width: 18rem;">  
-                <div class="image-wrapper">
-                    @isset($product->image)
-                        <img id="picture" src="{{$product->image}}" alt="" style="max-width:100%;width:auto;height:auto;">
-                    @else 
-                        <img id="picture" src="https://fesu.edu.co/wp-content/themes/simbolo/assets/images/no-icono.png" alt="" style="max-width:100%;width:auto;height:auto;">    
-                    @endisset
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="row">
-        <div class="col-md-5">
+                    {!! Form::select('category', $category,0,['class' => 'custom-select']) !!}
+                @error('category')
+                <span class="invalid-feedback">
+                    <strong>{{$message}}</strong>
+                </span>
+                @enderror 
+            </div>   
             <label for="price">Precio:</label>
             <div class="input-group mb-3">
                 <div class="input-group-prepend">
@@ -71,9 +54,79 @@
                     <strong>{{$message}}</strong>
                 </span>
                 @enderror 
-            </div>  
+            </div>
+            <label for="discount">Porcentaje descuento:</label>
+            <div class="input-group mb-3">
+                <div class="input-group-prepend">
+                    <span class="input-group-text" id="basic-addon1"><i class="fas fa-percentage"></i></span>
+                </div>
+                {!! Form::text('discount',null,['class' => 'form-control' . ($errors->has('discount') ? ' is-invalid' : ''), 
+                                    'placeholder' => 'Valor de descuento del producto',
+                                    'step'=>'any', 
+                                    'id' => 'in_discount_porcent',
+                                    'onkeypress'=> 'return ((event.charCode >= 48 && event.charCode <= 57 ) || (event.charCode == 46))',
+                                    'max' => '2']) !!}
+                @error('discount')
+                <span class="invalid-feedback">
+                    <strong>{{$message}}</strong>
+                </span>
+                @enderror 
+            </div>
+            <label for="price_discount">Precio descuento:</label>
+            <div class="input-group mb-3">
+                <div class="input-group-prepend">
+                    <span class="input-group-text" id="basic-addon1"><i class="fas fa-dollar-sign"></i></span>
+                </div>
+                {!! Form::text('price_discount',0.00,['class' => 'form-control' . ($errors->has('price_discount') ? ' is-invalid' : ''), 
+                            'placeholder' => 'Precio del producto con descuento',
+                            'step'=>'any','id'=>'in_price_discount',
+                            'onkeypress'=> 'return ((event.charCode >= 48 && event.charCode <= 57 ) || (event.charCode == 46))',
+                            'readonly']) !!}
+                @error('price_discount')
+                <span class="invalid-feedback">
+                    <strong>{{$message}}</strong>
+                </span>
+                @enderror 
+            </div>
+            <label for="quantity">Cantidad:</label>
+            <div class="input-group mb-3">
+                <div class="input-group-prepend">
+                    <span class="input-group-text" id="basic-addon1"><i class="fas fa-sort-numeric-up"></i></span>
+                </div>
+                {!! Form::text('quantity',null,['class' => 'form-control' . ($errors->has('quantity') ? ' is-invalid' : ''), 
+                                'placeholder'   => 'Cantidad disponible',
+                                'onkeypress'    => 'return (event.charCode >= 48 && event.charCode <= 57 )']) !!}
+                @error('quantity')
+                <span class="invalid-feedback">
+                    <strong>{{$message}}</strong>
+                </span>
+                @enderror 
+            </div>       
         </div>
         <div class="col-md-5">
+            <div class="form-group">
+                <label for="image">Imagen: </label>
+                <div class="form-input">
+                    <input name ="image" id="file" type="file" accept="image/png,image/jpeg"/>
+                    {{-- {!! Form::file('image',null,['class' => 'form-control-file',
+                                    'accept' => 'image/png,image/jpeg', 'id' => 'image']) !!} --}}
+                    @error('image')
+                        <br>
+                        <small class="invalid-feedback">
+                            <strong>{{$message}}</strong>
+                        </small>
+                    @enderror
+                </div>
+            </div>
+            <div class="card my-4" style="width: 20rem;">  
+                <div class="image-wrapper">
+                    @isset($product->image)
+                        <img id="picture" src="{{$product->image}}" alt="" style="max-width:100%;width:auto;height:auto;">
+                    @else 
+                        <img id="picture" src="https://fesu.edu.co/wp-content/themes/simbolo/assets/images/no-icono.png" alt="" style="max-width:100%;width:auto;height:auto;">    
+                    @endisset
+                </div>
+            </div>
             <label for="description">Descripción:</label>
             <div class="input-group mb-3 ">
                 <div class="input-group resize:none">
@@ -95,73 +148,13 @@
     </div>
     <div class="row">
         <div class="col-md-5">
-            <label for="discount">Porcentaje descuento:</label>
-            <div class="input-group mb-3">
-                <div class="input-group-prepend">
-                    <span class="input-group-text" id="basic-addon1"><i class="fas fa-percentage"></i></span>
-                </div>
-                {!! Form::text('discount',null,['class' => 'form-control' . ($errors->has('discount') ? ' is-invalid' : ''), 
-                                    'placeholder' => 'Valor de descuento del producto',
-                                    'step'=>'any', 
-                                    'id' => 'in_discount_porcent',
-                                    'onkeypress'=> 'return ((event.charCode >= 48 && event.charCode <= 57 ) || (event.charCode == 46))',
-                                    'max' => '2']) !!}
-                @error('discount')
-                <span class="invalid-feedback">
-                    <strong>{{$message}}</strong>
-                </span>
-                @enderror 
-            </div>   
+ 
         </div>
         <div class="col-md-5">
-            <label for="price_discount">Precio descuento:</label>
-            <div class="input-group mb-3">
-                <div class="input-group-prepend">
-                    <span class="input-group-text" id="basic-addon1"><i class="fas fa-dollar-sign"></i></span>
-                </div>
-                {!! Form::text('price_discount',0.00,['class' => 'form-control' . ($errors->has('price_discount') ? ' is-invalid' : ''), 
-                            'placeholder' => 'Precio del producto con descuento',
-                            'step'=>'any','id'=>'in_price_discount',
-                            'onkeypress'=> 'return ((event.charCode >= 48 && event.charCode <= 57 ) || (event.charCode == 46))',
-                            'readonly']) !!}
-                @error('price_discount')
-                <span class="invalid-feedback">
-                    <strong>{{$message}}</strong>
-                </span>
-                @enderror 
-            </div>   
+
+
+
         </div>
     </div>
-    <div class="row">
-        <div class="col-md-5">
-            <label for="quantity">Cantidad:</label>
-            <div class="input-group mb-3">
-                <div class="input-group-prepend">
-                    <span class="input-group-text" id="basic-addon1"><i class="fas fa-sort-numeric-up"></i></span>
-                </div>
-                {!! Form::text('quantity',null,['class' => 'form-control' . ($errors->has('quantity') ? ' is-invalid' : ''), 
-                                'placeholder'   => 'Cantidad disponible',
-                                'onkeypress'    => 'return (event.charCode >= 48 && event.charCode <= 57 )']) !!}
-                @error('quantity')
-                <span class="invalid-feedback">
-                    <strong>{{$message}}</strong>
-                </span>
-                @enderror 
-            </div>  
-        </div>
-        <div class="col-md-5">
-            <label for="category">Categorias:</label>
-            <div class="input-group mb-3">
-                <div class="input-group-prepend">
-                    <span class="input-group-text" id="basic-addon1"><i class="far fa-list-alt"></i></span>
-                </div>
-                    {!! Form::select('category', $category,0,['class' => 'custom-select']) !!}
-                @error('category')
-                <span class="invalid-feedback">
-                    <strong>{{$message}}</strong>
-                </span>
-                @enderror 
-            </div>   
-        </div>
-    </div>
+    
 </div>

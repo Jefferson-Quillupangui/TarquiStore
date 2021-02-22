@@ -1143,7 +1143,7 @@ $(document).ready(function () {
                                 $('#sectors').val(cell.getRow().getData().sector_cod).change();
                                 $('#city').val(cell.getRow().getData().city_sale_cod).change();
                                 let estado_orden = cell.getRow().getData().order_status_cod ;
-                                if( estado_orden=== "OC" || estado_orden=== "OP" || estado_orden=== "OE" || estado_orden=== "OR"){
+                                if( estado_orden=== "OC" || estado_orden=== "OE" ){
                                   document.getElementById('btn-modal-buscar-producto').disabled=true;
                                   document.getElementById('btn-generarorden').disabled=true;
                                   document.getElementById("grid-detalles-div").disabled = true;

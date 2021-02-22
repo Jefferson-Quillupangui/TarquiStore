@@ -176,8 +176,9 @@ class ListaPedidosController extends Controller
                 'f.name AS nombre_cliente',
                 'g.name AS nombre_usuario',
                 'g.email AS email_cliente')
-            ->where('orders.order_status_cod','=',$order_status_cod ,'and' ,'orders.delivery_date','BETWEEN', $fechaDesde,'and' , $fechaHasta )
+            ->where('orders.order_status_cod','=',$order_status_cod )//,'and' ,'orders.delivery_date','BETWEEN', $fechaDesde,'and' , $fechaHasta )
                 //->orWhereBetween('orders.delivery_date', [$fechaDesde, $fechaHasta]) column_name BETWEEN value1 AND value2;
+                ->WhereBetween('orders.delivery_date',[$fechaDesde, $fechaHasta] )
             ->get();
             return response()->json(['data' => $orders], 200);
         }else{//solo lo q es del usuario(vendedor)

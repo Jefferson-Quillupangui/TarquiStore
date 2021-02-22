@@ -7,10 +7,7 @@
 @stop
 
 @section('content')
-  <!--Section: Block Content-->
-
-
-    <div class="row">
+     {{-- <div class="row">
       <div class="col-md-6 mb-4 mb-md-0">
   
         <div id="mdb-lightbox-ui"></div>
@@ -104,10 +101,73 @@
         <button type="button" class="btn btn-light btn-md mr-1 mb-2"><i
             class="fas fa-long-arrow-alt-left pr-2"></i>Regresar</button>
       </div>
-    </div>
+    </div> --}}
   
+    <div class="container">
+      <div class="row">
+        <div class="col-12 my-3 pt-3 shadow">
+              <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ3tYRm6oxtL_4-zSGVjtGyHZ5wfH1FsU1ZPQ&usqp=CAU" class="float-left rounded-circle mr-2">
+          <h1>{{$user->name}}</h1>
+          <h3>{{$user->email}}</h3>
+          <p class="my-4">
+            <strong>Identificación</strong>: {{$colaborador->identification}}<br>
+            <strong>Teléfono</strong>: {{$colaborador->phone}}<br>
+            <strong>Estado</strong>: @if($colaborador->status=='A') Activo @else Inactivo @endif <br>
+            <strong>Roles</strong>:  <span class="badge badge-info">{{$user->getRoleNames()->implode(',')}}</span><br><br>
+          </p><hr>
+              <p>
+                  <strong>Grupos</strong>:
 
-  <!--Section: Block Content-->
+                      <span class="badge badge-primary">grupos</span>
+
+                      <em>No pertenece a algún grupo</em>
+
+              </p>
+
+              <hr>
+              
+              <h3>Posts</h3>
+
+              <div class="row">
+
+                  <div class="col-6">
+                      <div class="card mb-3">
+                          <div class="row no-gutters">
+                              <div class="col-md-4">
+                                  <img src="posturl" class="card-img">
+                              </div>
+                              <div class="col-md-8">
+                                  <div class="card-body">
+                                      <h5 class="card-title">Nombre Post</h5>
+                                      <h6 class="card-subtitle text-muted">
+                                        nombre categoria
+                                        num comentarios
+                                          {{ Str::plural('comentario', 12) }}
+                                      </h6>
+                                      <p class="card-text small">
+                                          {{-- @foreach($post->tags as $tag) --}}
+                                          <span class="badge badge-light">
+                                              #Nombre
+                                          </span>
+                                          {{-- @endforeach --}}
+                                      </p>
+                                  </div>
+                              </div>
+                          </div>
+                      </div>
+                  </div>
+
+              </div>
+
+              <h3>Videos</h3>
+
+              <div class="row">
+
+              </div>
+        </div>
+      </div>
+  </div>
+
 @stop
 
 @section('css')

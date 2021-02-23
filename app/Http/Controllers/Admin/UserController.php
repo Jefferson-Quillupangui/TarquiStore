@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Collaborator;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Carbon;
 
 use Spatie\Permission\Models\Role;
 
@@ -52,9 +53,12 @@ class UserController extends Controller
      */
     public function show(User $user)
     {
+  
         $colaborador = Collaborator::find($user->id);
 
-        return view('admin.users.show', compact('user','colaborador'));
+        $edad = Carbon::createFromDate($colaborador->birth_date)->age;
+                
+        return view('admin.users.show', compact('user','colaborador','edad'));
     }
 
     /**

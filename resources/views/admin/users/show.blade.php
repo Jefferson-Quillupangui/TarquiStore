@@ -25,7 +25,7 @@
               </div>            
             @else
               <div class="imguser" >
-                <img src="https://svgshare.com/i/65U.svg" class="float-left rounded-circle mr-2">
+                <img src="{{ asset('/img/user.svg') }}" class="float-left rounded-circle mr-2">
               </div>
             @endif
 
@@ -40,6 +40,8 @@
               <strong>Identificación</strong>: {{$colaborador->identification}}<br>
               <strong>Teléfono</strong>: {{$colaborador->phone}}<br>
               <strong>Estado</strong>: @if($colaborador->status=='A') Activo @else Inactivo @endif <br>
+              <strong>Edad</strong>: {{ $edad }}<br>
+              <strong>Sexo</strong>:  @if($colaborador->sex=='H') Hombre @else Mujer @endif <br>
               <strong>Roles</strong>:  <span class="badge badge-info">{{$user->getRoleNames()->implode(', ')}}</span><br><br>
             </p>
             
@@ -64,6 +66,7 @@
       border-radius: 50%;
       padding: 5px;
       width: 250px;
+      height: 250px;
       }
   </style>
 @stop

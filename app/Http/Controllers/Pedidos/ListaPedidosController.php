@@ -247,7 +247,7 @@ class ListaPedidosController extends Controller
                 'a.order_id',
                 'c.name AS nombre_estado',
                'b.name AS nombre_usuario',
-                DB::raw('DATE_FORMAT(a.created_at, "%d-%b-%Y %h:%i:%s") as created_at'))
+                DB::raw('DATE_FORMAT(a.created_at, "%d-%b-%Y %H:%i:%s") as created_at'))
                 ->orderBy('a.id', 'DESC')
         ->get();
         

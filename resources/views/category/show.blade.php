@@ -55,12 +55,17 @@
                         <td>{{ $category->name}}</td>
                         <td>{{ $category->description}}</td>
                         <td >
-                            <div class="row ml-auto">
+                            <div class="row">
                                 <form action="{{route('categories.destroy',$category)}}" method="POST" class="op-eliminar">
-                                    <a class="btn btn-secondary" href="{{route('categories.edit',$category)}}"><i class="fas fa-edit"></i></a>
+                                    
                                     @method('delete')
                                     @csrf
-                                    <button class="btn btn-danger" type="submit"><i class="fas fa-trash"></i></button>
+                                    <div class="btn-group ml-3">
+                                        <a class="btn btn-info btn-group-sm" href="{{route('categories.show',$category)}}"><i class="far fa-eye"></i></i></a>
+                                        <a class="btn btn-secondary btn-group-sm" href="{{route('categories.edit',$category)}}"><i class="fas fa-edit"></i></a>
+                                        <button class="btn btn-danger" type="submit"><i class="fas fa-trash"></i></button>
+                                    </div>
+
                                 </form>
                             </div>
                         </td>

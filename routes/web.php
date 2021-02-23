@@ -144,6 +144,7 @@ Route::get('/dash', function () {
 //Auth::routes(['verify' => true]);
 //Categorias
 Route::resource('categories',CategoryController::class)->names('categories');
+Route::get('detail_product/{product}/{category}',  [CategoryController::class, 'detailProd' ])->name('detailprod');
 //Productos
 Route::resource('products',ProductController::class)->names('products');
 //Pedidos-Registro pedidos

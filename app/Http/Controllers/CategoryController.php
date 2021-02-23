@@ -144,4 +144,10 @@ class CategoryController extends Controller
         
         return redirect()->route('categories.index')->with('status','La categoria se eliminó correctamente.');
     }
+
+    public function detailProd(Product $product, Category $category){
+
+        return view('category.detailprod', compact('product','category'));
+
+    }
 }

@@ -220,6 +220,8 @@ class TablesSeeder extends Seeder
         ]);
     }
 
+    
+
    
 
 }

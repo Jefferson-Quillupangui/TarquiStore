@@ -40,6 +40,7 @@
     <div class="card card-cyan">
 
         <form action="{{ route('reporteComprasCliente') }}" id="form-compras-por-cliente" class="d-none"></form>
+        <form action="{{ route('reporteVentasPorVendedor') }}" id="form-vemtas-por-vendedor" class="d-none"></form>
         <div class="card-header">
             <h4 class="card-title" style="margin: 0px 0px 0px 0px;"><i class="fa fa-file"></i> Visualizacion de Reportes
             </h4>
@@ -117,20 +118,41 @@
                 </div>
             </div>
 
-
-            <div class="row">
-                <div class="col-md-12">
-                    <button id="download-reportes-xlsx" type="button" class="btn btn-success float-right"> <i class="fas fa-excel"></i>Descargar Excel</button>
-                    <button id="download-reportes-pdf" class="btn btn-danger float-right"><i class="fa fa-file-pdf-o" aria-hidden="true"></i>Descargar PDF</button>
+            <div class="d-none" id="div-op-compras-clientes">
+                <div class="row">
+                    <div class="col-md-12">
+                        <button id="download-reportes-xlsx" type="button" class="btn btn-success float-right"> <i
+                                class="fas fa-excel"></i>Descargar Excel</button>
+                        <button id="download-reportes-pdf" class="btn btn-danger float-right"><i class="fa fa-file-pdf-o"
+                                aria-hidden="true"></i>Descargar PDF</button>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <div id="grid-table-compras-cliente"></div>
+                    </div>
                 </div>
             </div>
-            <div class="row">
-                <div class="col-md-12">
-                    <div id="grid-table-compras-cliente"></div>
+
+            <div class="d-none" id="div-op-ventas-por-vendedor">
+                <div class="row">
+                    <div class="col-md-12">
+                        <button id="download-reportes_V_X_V-xlsx" type="button" class="btn btn-success float-right"> <i
+                                class="fas fa-excel"></i>Descargar Excel</button>
+                        <button id="download-reportes_V_X_V-pdf" class="btn btn-danger float-right"><i
+                                class="fa fa-file-pdf-o" aria-hidden="true"></i>Descargar PDF</button>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <div id="grid-table-compras-cliente"></div>
+                    </div>
                 </div>
             </div>
 
         </div>
+
+    </div>
 
     </div>
     {{-- <div class="card">
@@ -169,7 +191,7 @@
 
 @section('js')
 
-    <script type="text/javascript" src="{{ asset('/plugin_tabullator/dist/js/tabulator.min.js') }}"></script>
+    {{-- <script type="text/javascript" src="{{ asset('/plugin_tabullator/dist/js/tabulator.min.js') }}"></script> --}}
     <script type="text/javascript" src="https://oss.sheetjs.com/sheetjs/xlsx.full.min.js"></script>
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.3.5/jspdf.min.js"></script>
     <script type="text/javascript"

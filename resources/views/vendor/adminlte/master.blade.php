@@ -108,7 +108,8 @@
 
     {{-- Custom Scripts --}}
     @yield('adminlte_js')
-
+    {{-- Agregado plugins de tabla --}}
+    <script type="text/javascript" src="{{ asset('/plugin_tabullator/dist/js/tabulator.min.js') }}"></script>
 </body>
 
 </html>

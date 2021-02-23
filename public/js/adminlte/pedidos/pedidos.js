@@ -320,7 +320,7 @@ $(document).ready(function () {
 
             let rpt_func_stock= 0;
             rpt_func_stock = consultarStockProducto(cell.getData().product_id);
-           if(cell.getData().quantity >= rpt_func_stock ){
+           if(cell.getData().quantity <= rpt_func_stock ){
              alert("Actualmente solo hay en stock la cantidad : "+rpt_func_stock);
              const get_data_detalle_nueva = table_detalle_factura.getData();
 

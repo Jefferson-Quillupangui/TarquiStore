@@ -44,10 +44,10 @@
                 <tr>
                     <th>Identificación</th>
                     <th>Nombre</th>
-                    <th>Apellido</th>
+                    {{-- <th>Apellido</th> --}}
                     <th>Contacto</th>
-                    <th>Dirección</th>
-                    <th>Correo</th>
+                    {{-- <th>Dirección</th>
+                    <th>Correo</th> --}}
                     <th>Acciones</th>                                      
                 </tr>
             </thead>
@@ -55,18 +55,22 @@
                 @forelse($clients as $client )
                     <tr>
                         <td>{{ $client->identification}}</td>
-                        <td>{{ $client->name}}</td>
-                        <td>{{ $client->last_name}}</td>
-                        <td>{{ $client->phone1."  ".$client->phone2}}</td>
-                        <td><div class="row ml-auto">{{ $client->address}}</div></td>
-                        <td><div class="row ml-auto">{{ $client->email}}</div></td>
+                        <td>{{ $client->name}} {{ $client->last_name}}</td>
+                        {{-- <td>{{ $client->last_name}}</td> --}}
+                        <td>{{ $client->phone1." / ".$client->phone2}}</td>
+                        {{-- <td><div class="row ml-auto">{{ $client->address}}</div></td>
+                        <td><div class="row ml-auto">{{ $client->email}}</div></td> --}}
                         <td>
                             <div class="row ml-auto">
                             <form action="{{route('clients.destroy',$client)}}" method="POST" class="op-eliminar">
-                                <a class="btn btn-secondary" href="{{route('clients.edit',$client)}}"><i class="fas fa-edit"></i></a>
+                                
                                 @method('delete')
                                 @csrf
-                                <button class="btn btn-danger" type="submit"><i class="fas fa-trash"></i></button>
+                                <div class="btn-group mr-3">
+                                    <a class="btn btn-info btn-group-sm" href="{{route('clients.show',$client)}}"><i class="far fa-eye"></i></a>
+                                    <a class="btn btn-secondary btn-group-sm" href="{{route('clients.edit',$client)}}"><i class="fas fa-edit"></i></a>
+                                    <button class="btn btn-danger" type="submit"><i class="fas fa-trash"></i></button>
+                                </div>
                             </div>
                             </form>
                         </td>

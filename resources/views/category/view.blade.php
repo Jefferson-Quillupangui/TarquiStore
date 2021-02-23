@@ -23,7 +23,7 @@
 @stop
 
 @section('content_header')
-    <h1><i class="fas fa-store"></i> Productos</h1>
+    <h1><i class="fas fa-store"></i> {{$category->name}}</h1>
 @stop
 
 @section('content')
@@ -34,9 +34,17 @@
 <div class="card">
 
     <div class="card-header">
-        <a href="{{ route('products.create')}}" class="btn btn-info">
+
+        <div class="btn-group mr-3">
+
+        <a href="{{ route('products.create')}}" class="btn btn-info btn-group-sm">
             <i class="fas fa-plus-square"></i> Agregar
         </a>
+        <a class="btn btn-secondary btn-group-sm"
+                href="{{ route('categories.index') }}">
+                <i class="fas fa-long-arrow-alt-left pr-2"></i>Regresar</a>
+        </div>
+
     </div>
 
     <div class="card-body">
@@ -98,7 +106,7 @@
 
                 @empty
                     <tr>
-                        <td colspan="4">No hay productos registrados</td>
+                        <td colspan="8">No hay productos registrados en esta categoria</td>
                     </tr>
 
                 @endforelse

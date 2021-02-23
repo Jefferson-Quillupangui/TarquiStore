@@ -143,9 +143,7 @@ Route::get('/dash', function () {
 
 //Auth::routes(['verify' => true]);
 //Categorias
-Route::resource('categories',CategoryController::class)
-    ->except(['show'])
-    ->names('categories');
+Route::resource('categories',CategoryController::class)->names('categories');
 //Productos
 Route::resource('products',ProductController::class)->names('products');
 //Pedidos-Registro pedidos
@@ -174,9 +172,7 @@ Route::resource( 'type_identifications', TypesIdentificationController::class)
     ->except(['show'])
     ->names('type_identification');
 //Clientes
-Route::resource('clients', ClientController::class)
-    ->except(['show'])
-    ->names('clients');
+Route::resource('clients', ClientController::class)->names('clients');
 
 //Comisiones index
 Route::get('list_comission',  [ComisionesController::class, 'index' ])->name('list_comission');

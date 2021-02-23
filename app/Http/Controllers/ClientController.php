@@ -75,6 +75,18 @@ class ClientController extends Controller
                     ->with('status','El cliente se registró correctamente');
     }
 
+     /**
+     * Display the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function show(Client $client)
+    {
+  
+        return view('clientes.show', compact('client'));
+    }
+
     /**
      * Show the form for editing the specified resource.
      *

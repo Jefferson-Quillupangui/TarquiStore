@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Category;
 use GuzzleHttp\Middleware;
-
+use App\Models\Product;
 class CategoryController extends Controller
 {
     /**
@@ -59,6 +59,23 @@ class CategoryController extends Controller
 
         return redirect()->route('categories.index')->with('status','La categoria se creó correctamente');
     }
+
+
+     /**
+     * Display the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function show(Category $category)
+    {
+
+        // $product = Product::with('products')->findOrFail( $category->id );
+        $products = Product::where('category_id', $category->id)->get();
+
+        return view('category.view', compact('products','category'));
+    }
+
 
     /**
      * Show the form for editing the specified resource.

@@ -2,17 +2,20 @@ $(document).ready(function () {
 
     let table_compras_por_cliente;
     let table_ventas_x_vendedor;
+    let table_list_productos_vendidos;
 
     
     $(document).on("change", "#select-tipo-reporte",function(){
         $('#div-op-compras-clientes').addClass('d-none');
         $('#div-op-ventas-por-vendedor').addClass('d-none');
+        $('#div-op-lista-productos-vendidos').addClass('d-none');
         let $comboReporte = $('#select-tipo-reporte').val();
 
 
 
         table_compras_por_cliente.clearData();
         table_ventas_x_vendedor.clearData();
+        table_list_productos_vendidos.clearData();
         // switch($comboReporte){
         //     case 'AA': 
         //         table_compras_por_cliente.clearData();
@@ -57,7 +60,7 @@ $(document).ready(function () {
      /**
      * Tabla VEntas Por Vendedor
      */
-    table_ventas_x_vendedor = new Tabulator("#div-op-ventas-por-vendedor", {
+    table_ventas_x_vendedor = new Tabulator("#grid-table-ventas-por-vendedor", {
        
         height:"380px",
         //layout:"fitColumns",
@@ -78,6 +81,33 @@ $(document).ready(function () {
             }},
            // {title:"Hora", field:"delivery_time",visible:false},
           ],
+        
+    });
+
+     /**
+     * Tabla Listados de productos Vendidos
+     */
+    table_list_productos_vendidos = new Tabulator("#grid-table-lista-productos-vendidos", {
+       
+        height:"380px",
+        //layout:"fitColumns",
+        placeholder:"No hay Datos",
+       
+        columns:[
+            // {formatter:iconAudito, width:40, hozAlign:"center"},
+            {title:"Codigo de Producto",width:200, field:"codigo_producto",hozAlign:"left"},
+            {title:"Nombre del producto", width:510,field:"name_product",hozAlign:"left"},
+            {title:"Cantidad Vendidos",width:155, field:"catidad_vendidos",hozAlign:"center",hozAlign:"center"},
+            {title:"Total Venta",width:155, field:"total_venta_product", formatter:"money", hozAlign:"right",formatterParams:{
+                decimal:".",
+                thousand:".",
+                symbol:"$",
+                symbolAfter:false,
+                precision:2,
+            }},
+           // {title:"Hora", field:"delivery_time",visible:false},
+          ],
+        
     });
 
 
@@ -96,6 +126,10 @@ $(document).ready(function () {
             case 'AB' :
                 VentasPorVendedor("AB", $mes, $anio);
             break;
+            case 'AC' :
+                ListaProductosVendidos("AC", $mes, $anio);
+            break;
+            
         }
        
  
@@ -140,12 +174,13 @@ $(document).ready(function () {
 
     
      /**
-     * Descargar Excel de Comisiones por Usuario
+     * Descargar Excel Compras por Cliente
      */
     //trigger download of data.xlsx file
     document.getElementById("download-reportes-xlsx").addEventListener("click", function(){
         var tabla_datos = table_compras_por_cliente.getData();
-        var nombre = $('#txtNombreColaborador').val();
+        var anio = $('#anio_order').val();
+        var mes =  $('select[id="select-mes"] option:selected').text();
         const fecha = new Date();
 
         if(tabla_datos.length === 0){
@@ -158,7 +193,7 @@ $(document).ready(function () {
             })
            return false;
           }else{
-            table_compras_por_cliente.download("xlsx", "ComprasPorCliente"+fecha+".xlsx", {sheetName:"Compras Por Cliente"});
+            table_compras_por_cliente.download("xlsx", anio+"_"+mes+"_"+"ComprasPorCliente"+fecha+".xlsx", {sheetName:anio+"_"+mes+"_"+"ComprasXCliente"});
           }
     });
 
@@ -168,6 +203,7 @@ $(document).ready(function () {
      */
     $(document).on("click", "#download-reportes-pdf",function(){
        
+        
         const fecha = new Date();
 
         if(table_compras_por_cliente.getData().length === 0){
@@ -203,7 +239,9 @@ $(document).ready(function () {
 
     //-------------------------------------------------------------------------------------------
     
-
+    /**
+     * Funcion para saber las ventas por vendedor
+     */
     function VentasPorVendedor($opcion, $mes, $anio){
         $.ajax({
             type: 'GET',
@@ -238,6 +276,91 @@ $(document).ready(function () {
             }
         });
     }
+
+     /**
+     * Descargar Excel Ventas Por Vendedor
+     */
+    $(document).on("click", "#download-reportes_V_X_V-xlsx",function(){
+        var tabla_datos = table_ventas_x_vendedor.getData();
+        var anio = $('#anio_order').val();
+        var mes =  $('select[id="select-mes"] option:selected').text();
+        const fecha = new Date();
+
+        if(tabla_datos.length === 0){
+            $.toast({
+                heading: 'Error',
+                text: 'No hay datos para generar archivo',
+                showHideTransition: 'fade',
+                icon: 'error',
+                position: 'top-right',
+            })
+           return false;
+          }else{
+            table_ventas_x_vendedor.download("xlsx", anio+"_"+mes+"_"+"Ventas_Por_Vendedor.xlsx", {sheetName:anio+" "+mes+" "+"VentasXVendedor"});
+          }
+    });
+
+    /**
+     * Funcion para ver la lista de productos vendidos
+     */
+    function ListaProductosVendidos($opcion, $mes, $anio){
+        $.ajax({
+            type: 'GET',
+            url: $('#form-productos-vendidos').attr("action"),
+             data: {
+                 opcion: $opcion,//dat_busq === '' ? 'AA' : 'AB',
+                 mes : $mes,
+                 anio : $anio
+             },
+            // dataType: "dataType",
+            beforeSend: function () {
+                $('.loaders').removeClass('d-none');
+            },
+            success: function (response) {
+               
+                $('#div-op-lista-productos-vendidos').removeClass('d-none');
+                if (response === 0) {
+                    table_list_productos_vendidos.clearData();
+                   
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Alerta!',
+                        text: 'No Exite Registro!'
+                        //footer: '<a href>Why do I have this issue?</a>'
+                    });
+                } else {
+                    table_list_productos_vendidos.replaceData(response);
+                }
+    
+            }, complete: function () {
+                $('.loaders').addClass('d-none');
+            }
+        });
+    }
+     /**
+     * Descargar Excel Lista Productos Vendidos
+     */
+    $(document).on("click", "#download-reportes_Lista_Product_Vendidos-xlsx",function(){
+        var tabla_datos = table_list_productos_vendidos.getData();
+        var anio = $('#anio_order').val();
+        var mes =  $('select[id="select-mes"] option:selected').text();
+        const fecha = new Date();
+
+        if(tabla_datos.length === 0){
+            $.toast({
+                heading: 'Error',
+                text: 'No hay datos para generar archivo',
+                showHideTransition: 'fade',
+                icon: 'error',
+                position: 'top-right',
+            })
+           return false;
+          }else{
+            table_list_productos_vendidos.download("xlsx", anio+"_"+mes+"_"+"Lista_Productos_Vendidos.xlsx", {sheetName:anio+" "+mes+" "+"ProductVendidos"});
+          }
+    });
+
+    
 
     
 

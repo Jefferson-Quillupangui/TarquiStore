@@ -190,6 +190,7 @@ Route::get('list_colaboradores_json', [ComisionesController::class, 'verListaCol
 Route::get('reporteComision',  [MisReportesController::class, 'index' ])->name('reporteComision');
 Route::get('reporteComprasCliente',  [MisReportesController::class, 'ComprasPorCliente' ])->name('reporteComprasCliente');
 Route::get('reporteVentasPorVendedor',  [MisReportesController::class, 'VentasPorVendedor' ])->name('reporteVentasPorVendedor');
+Route::get('reporteProductosVendidos',  [MisReportesController::class, 'ListaProductosVendidos' ])->name('reporteProductosVendidos');
 
 
     

@@ -318,9 +318,10 @@ $(document).ready(function () {
           {title:"CANTIDAD", field:"quantity", sorter:"number", validator:["min:1", "max:10000", "numeric"],hozAlign:"center",editor:"input",
           cellEdited :function(cell){
 
+            let cantidad_product = cell.getData().quantity;
             let rpt_func_stock= 0;
             rpt_func_stock = consultarStockProducto(cell.getData().product_id);
-           if(cell.getData().quantity <= rpt_func_stock ){
+           if( rpt_func_stock < parseInt(cantidad_product) ){
              alert("Actualmente solo hay en stock la cantidad : "+rpt_func_stock);
              const get_data_detalle_nueva = table_detalle_factura.getData();
 

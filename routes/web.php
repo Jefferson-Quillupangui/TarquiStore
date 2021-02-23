@@ -9,6 +9,7 @@ use App\Http\Controllers\Pedidos\PedidosController;
 use App\Http\Controllers\Pedidos\ListaPedidosController;
 use App\Http\Controllers\Reportes\ReportesController;
 use App\Http\Controllers\Reportes\ReportController;
+use App\Http\Controllers\Reportes\MisReportesController;
 use App\Http\Controllers\Comisiones\ComisionesController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\SectorsController;
@@ -186,9 +187,9 @@ Route::get('buscar_comisiones_colaboradores', [ComisionesController::class, 'com
 Route::get('list_colaboradores_json', [ComisionesController::class, 'verListaColaboradores' ])->name('list_colaboradores_json');
     
 //Reportes index
-Route::get('reporteComision', function(){
-    return view('reportes.index ');
-})->name('reporteComision');
+Route::get('reporteComision',  [MisReportesController::class, 'index' ])->name('reporteComision');
+Route::get('reporteComprasCliente',  [MisReportesController::class, 'ComprasPorCliente' ])->name('reporteComprasCliente');
+
     
 
 //Listar pedidos

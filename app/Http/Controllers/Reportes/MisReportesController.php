@@ -72,5 +72,26 @@ class MisReportesController extends Controller
         return response()->json($data, 200);
        
     }
+
+    public function VentasDiariasxMes(Request $request){
+        
+        $opcion = $request->opcion;
+        $mes = $request->mes;
+        $anio = $request->anio;
+        $estado_orden = "OE";//$request->estado;
+
+
+        $data = DB::select('call sp_con_reportes(?,?,?,?,?)',  array($opcion, $mes, $anio, $estado_orden, ""));
+
+        if (empty($data)) {
+            $data = 0;
+        } else {
+            $data = $data;
+        }
+        //return response()->json(['data' => $data], 200);
+        return response()->json($data, 200);
+       
+    }
+    
     
 }

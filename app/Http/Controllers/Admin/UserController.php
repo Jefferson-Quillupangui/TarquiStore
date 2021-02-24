@@ -101,4 +101,29 @@ class UserController extends Controller
     {
         //
     }
+
+    public function userStatus(User $user){
+
+        if($user->status == 'A'){
+
+            $user->update([
+                'status' => 'I', //Inactivar usuario
+            ]); 
+
+            return redirect()->route('admin.users.index')
+        ->with('status','El usuario '.$user->name.' ha sido desactivado ');
+    
+        }else{
+
+            $user->update([
+                'status' => 'A', //Activar usuario
+            ]); 
+
+            return redirect()->route('admin.users.index')
+        ->with('status','El usuario '.$user->name.' ha sido activado');
+
+        }
+
+    }
+
 }

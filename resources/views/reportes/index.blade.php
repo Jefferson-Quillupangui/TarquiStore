@@ -44,6 +44,7 @@
         <form action="{{ route('reporteProductosVendidos') }}" id="form-productos-vendidos" class="d-none"></form>
         <form action="{{ route('reporteVentasDiaras') }}" id="form-ventas-diaria-mes" class="d-none"></form>
         <form action="{{ route('reporteVentasPorCategorias') }}" id="form-ventas-por-categoria" class="d-none"></form>
+        <form action="{{ route('reportePedidosEntregados') }}" id="form-pedidos-entregados" class="d-none"></form>
         <div class="card-header">
             <h4 class="card-title" style="margin: 0px 0px 0px 0px;"><i class="fa fa-file"></i> Visualizacion de Reportes
             </h4>
@@ -202,6 +203,23 @@
                 <div class="row">
                     <div class="col-md-12">
                         <div id="grid-table-ventas-por-categoria"></div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="d-none" id="div-op-pedidos-entregados">
+                <div class="row">
+                    <div class="col-md-12">
+
+                        <button id="download-reportes_Pedidos_Entregados-xlsx" type="button"
+                            class="btn btn-success float-right"> <i class="fas fa-excel"></i>Descargar Excel</button>
+                        <button id="download-reportes_Pedidos_Entregados-pdf" class="btn btn-danger float-right"><i
+                                class="fa fa-file-pdf-o" aria-hidden="true"></i>Descargar PDF</button>
+                    </div>
+                </div> <br>
+                <div class="row">
+                    <div class="col-md-12">
+                        <div id="grid-table-pedidos-entregados"></div>
                     </div>
                 </div>
             </div>

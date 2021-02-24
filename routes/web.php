@@ -190,6 +190,7 @@ Route::get('reporteVentasPorVendedor',  [MisReportesController::class, 'VentasPo
 Route::get('reporteProductosVendidos',  [MisReportesController::class, 'ListaProductosVendidos' ])->name('reporteProductosVendidos');
 Route::get('reporteVentasDiaras',  [MisReportesController::class, 'VentasDiariasxMes' ])->name('reporteVentasDiaras');
 Route::get('reporteVentasPorCategorias',  [MisReportesController::class, 'VentasPorCategoria' ])->name('reporteVentasPorCategorias');
+Route::get('reportePedidosEntregados',  [MisReportesController::class, 'PedidosEntregados' ])->name('reportePedidosEntregados');
     
 
 //Listar pedidos

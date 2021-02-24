@@ -42,6 +42,7 @@
         <form action="{{ route('reporteComprasCliente') }}" id="form-compras-por-cliente" class="d-none"></form>
         <form action="{{ route('reporteVentasPorVendedor') }}" id="form-vemtas-por-vendedor" class="d-none"></form>
         <form action="{{ route('reporteProductosVendidos') }}" id="form-productos-vendidos" class="d-none"></form>
+        <form action="{{ route('reporteVentasDiaras') }}" id="form-ventas-diaria-mes" class="d-none"></form>
         <div class="card-header">
             <h4 class="card-title" style="margin: 0px 0px 0px 0px;"><i class="fa fa-file"></i> Visualizacion de Reportes
             </h4>
@@ -165,6 +166,23 @@
                 <div class="row">
                     <div class="col-md-12">
                         <div id="grid-table-lista-productos-vendidos"></div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="d-none" id="div-op-ventas-diarias-x-mes">
+                <div class="row">
+                    <div class="col-md-12">
+
+                        <button id="download-reportes_Ventas_Diaras_X_Mes-xlsx" type="button"
+                            class="btn btn-success float-right"> <i class="fas fa-excel"></i>Descargar Excel</button>
+                        <button id="download-reportes_Ventas_Diaras_X_Mes-pdf" class="btn btn-danger float-right"><i
+                                class="fa fa-file-pdf-o" aria-hidden="true"></i>Descargar PDF</button>
+                    </div>
+                </div> <br>
+                <div class="row">
+                    <div class="col-md-12">
+                        <div id="grid-table-ventas-diarias-por-mes"></div>
                     </div>
                 </div>
             </div>

@@ -7,6 +7,10 @@ CREATE PROCEDURE `sp_con_reportes`(
         IN p_in_estado varchar(10),
         IN dato_busqueda VARCHAR(255))
 BEGIN
+ DECLARE var_mes varchar(10) ;
+DECLARE var_anio  varchar(10);
+DECLARE var_dia  varchar(10);
+DECLARE var_fecha  varchar(50);
 case p_in_opcion
 	##1-REPORTE: compras por clientes (ordenes entregadas por cliente)
 	 when 'AA' THEN  
@@ -25,12 +29,12 @@ case p_in_opcion
 				GROUP BY  c.name, b.identification,b.name,b.last_name;
         ##Ventas Por Vendedor
         WHEN  'AB' THEN  
-			SELECT `b`.`name`,
-            `b`.`identification`, 
-            `comissions`.`quantity_orders`, 
-            `comissions`.`total_comission` 
-            FROM `comissions` inner join `collaborators` as `b` on `comissions`.`collaborator_id` = `b`.`id`
-            WHERE `comissions`.`month` =  p_in_mes and `comissions`.`year` = p_in_anio;
+			SELECT b.name,
+            b.identification, 
+            comissions.quantity_orders, 
+            comissions.total_comission 
+            FROM comissions inner join collaborators as b on comissions.collaborator_id = b.id
+            WHERE comissions.month =  p_in_mes and comissions.year = p_in_anio;
 		
         ##lISTADOS DE PRODUCTOS VENDIDOS
         WHEN 'AC' THEN
@@ -48,9 +52,18 @@ case p_in_opcion
 				and  MONTH(b.delivery_date) = p_in_mes ##'02'
 		GROUP BY 
 		d.name,a.product_id, a.name_product;
+        
+          ##REPORTE VENTAS DIARIAS (ordenes entregas por dia)
+        WHEN  'AD' THEN  
+       
+			set var_mes = p_in_mes;
+			set var_anio = p_in_anio;##'2020';
+			set var_dia = '01';
+
+			set var_fecha = (select concat(var_anio,"-",var_mes,"-",var_dia)) ;
+            ##select var_fecha;
+			call dias_mes_dinamico('2021-02-01');
 		
         
 	END CASE;
 END
-//
-DELIMITER ;

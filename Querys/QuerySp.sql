@@ -62,8 +62,60 @@ case p_in_opcion
 
 			set var_fecha = (select concat(var_anio,"-",var_mes,"-",var_dia)) ;
             ##select var_fecha;
-			call dias_mes_dinamico('2021-02-01');
+			call dias_mes_dinamico(var_fecha);
 		
+        ##5-VENTAS POR CATEGORIA ()
+        WHEN 'AE' THEN
+			
+            SELECT 
+			 LPAD(d.id, 6, '0') as codigo_categoria,
+			 d.name as nombre_categoria,
+			 COUNT(d.id) as cantidad_productos,
+			 SUM(a.total_line) as monto_total
+			FROM order_product as	a INNER join orders as b on a.order_id = b.id
+															inner join products c on a.product_id = c.id
+															inner join categories as d on c.category_id	= d.id
+			WHERE YEAR(b.delivery_date) =  p_in_anio ##'2021' 
+					and  MONTH(b.delivery_date) = p_in_mes##'02'
+					and order_status_cod = p_in_estado ##'OE'
+			GROUP BY d.id,d.name ;
+		
+        ##PEDIDOS ENTREGADOS
+        WHEN 'AF' THEN
+        
+        SELECT 
+			 LPAD(a.id, 6, '0') as id,
+			a.delivery_date,
+			a.delivery_time,
+			a.delivery_address,
+			a.total_order,
+			a.total_comission,
+			a.observation,
+			#a.status_comission,
+			b.name As nombre_estado,
+			#a.sector_cod,
+			d.name AS sector,
+			a.city_sale_cod,
+			c.name AS nombre_ciudad,
+			#a.client_id,
+			e.identification,
+			CONCAT(e.name,' ',e.last_name) AS nombre_cliente,
+			CONCAT(e.phone1,' ',e.phone2) AS telefono,
+			e.email,
+			#a.collaborator_id,
+			f.name AS nombre_colaborador,
+			f.identification AS identification_colaborador,
+			a.order_status_cod
+			FROM orders a INNER JOIN order_statuses b ON a.order_status_cod = b.codigo
+										INNER JOIN city_sales c ON a.city_sale_cod = c.codigo
+										INNER JOIN sectors d ON a.sector_cod = d.codigo
+										INNER JOIN clients e ON a.client_id = e.id
+										INNER JOIN collaborators f ON a.collaborator_id = f.id
+										WHERE  
+												YEAR(a.delivery_date) =  p_in_anio 
+                                            AND  MONTH(a.delivery_date) = p_in_mes##'02'
+                                            AND a.order_status_cod = p_in_estado; ##'OE'
+                                        
         
 	END CASE;
 END

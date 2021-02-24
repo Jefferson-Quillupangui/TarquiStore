@@ -4,6 +4,8 @@ $(document).ready(function () {
     let table_ventas_x_vendedor;
     let table_list_productos_vendidos;
     let table_ventas_diaras_por_mes;
+    let table_ventas_por_categorias;
+    let table_pedidos_entregados;
 
     
     $(document).on("change", "#select-tipo-reporte",function(){
@@ -11,6 +13,8 @@ $(document).ready(function () {
         $('#div-op-ventas-por-vendedor').addClass('d-none');
         $('#div-op-lista-productos-vendidos').addClass('d-none');
         $('#div-op-ventas-diarias-x-mes').addClass('d-none');
+        $('#div-op-ventas-por-categoria').addClass('d-none');
+        $('#div-op-pedidos-entregados').addClass('d-none');
         let $comboReporte = $('#select-tipo-reporte').val();
 
 
@@ -19,6 +23,8 @@ $(document).ready(function () {
         table_ventas_x_vendedor.clearData();
         table_list_productos_vendidos.clearData();
         table_ventas_diaras_por_mes.clearData();
+        table_ventas_por_categorias.clearData();
+        table_pedidos_entregados.clearData();
         // switch($comboReporte){
         //     case 'AA': 
         //         table_compras_por_cliente.clearData();
@@ -115,6 +121,33 @@ $(document).ready(function () {
 
 
       /**
+     * Tabla Venta Por Categoria
+     */
+    table_ventas_por_categorias = new Tabulator("#grid-table-ventas-por-categoria", {
+       
+        height:"400px",
+        //layout:"fitColumns",
+        placeholder:"No hay Datos",
+       
+        columns:[
+            //id,dia_mes,cantidad_ordenes,total_ordenes
+            // {formatter:iconAudito, width:40, hozAlign:"center"},
+            {title:"Codigo Categoria",width:200, field:"codigo_categoria",hozAlign:"left"},
+            {title:"Nombre Categoria", width:510,field:"nombre_categoria",hozAlign:"left"},
+            {title:"Cantidad Productos",width:155, field:"cantidad_productos",hozAlign:"center",hozAlign:"center"},
+            {title:"Monto Total",width:155, field:"monto_total", formatter:"money", hozAlign:"right",formatterParams:{
+                decimal:".",
+                thousand:".",
+                symbol:"$",
+                symbolAfter:false,
+                precision:2,
+            }},
+           // {title:"Hora", field:"delivery_time",visible:false},
+          ],
+        
+    });
+
+     /**
      * Tabla Ventas Diaras Por Mes
      */
     table_ventas_diaras_por_mes = new Tabulator("#grid-table-ventas-diarias-por-mes", {
@@ -142,6 +175,42 @@ $(document).ready(function () {
     });
 
     /**
+     * Tabla para vizualizar los Pedidos Entregados
+     */
+    table_pedidos_entregados = new Tabulator("#grid-table-pedidos-entregados", {
+       
+        height:"580px",
+        //layout:"fitColumns",
+        placeholder:"No hay Datos",
+       
+        columns:[
+            //id,dia_mes,cantidad_ordenes,total_ordenes
+            // {formatter:iconAudito, width:40, hozAlign:"center"},
+            {title:"Num Pedido",width:100, field:"id",hozAlign:"left"},
+            {title:"Fecha",width:80, field:"delivery_date",hozAlign:"left"},
+            {title:"Hora",width:80, field:"delivery_time",hozAlign:"left"},
+            {title:"Nombre Cliente", width:220,field:"nombre_cliente",hozAlign:"left"},
+            {title:"Identificacion", width:125,field:"identification",hozAlign:"left"},
+            {title:"Correo", width:190,field:"email",hozAlign:"left"},
+            {title:"Telefonos", width:150,field:"telefono",hozAlign:"left"},
+            {title:"Sector", width:150,field:"sector",hozAlign:"left"},
+            {title:"Ciudad", width:150,field:"nombre_ciudad",hozAlign:"left"},
+            {title:"Direccion", width:220,field:"delivery_address",hozAlign:"left"},
+            {title:"Total Ordenes",width:135, field:"total_order", formatter:"money", hozAlign:"right",formatterParams:{
+                decimal:".",
+                thousand:".",
+                symbol:"$",
+                symbolAfter:false,
+                precision:2,
+            }},
+            {title:"Vendedor",width:155, field:"nombre_colaborador",hozAlign:"center",hozAlign:"left"},
+            {title:"Identificacion", width:135,field:"identification_colaborador",hozAlign:"left"},
+           // {title:"Hora", field:"delivery_time",visible:false},
+          ],
+        
+    });
+
+    /**
      * Metodo para buscar los reportes
      */
     $(document).on("click", "#btn-buscar-filtro-reportes",function(){
@@ -162,6 +231,13 @@ $(document).ready(function () {
             case 'AD' :
                 VentasDiarasPorMes("AD", $mes, $anio);
             break;
+            case 'AE' :
+                VentasPorCategoria("AE", $mes, $anio);
+            break;
+            case 'AF' :
+                PedidosEntregados("AF", $mes, $anio);
+            break;
+            
             
         }
        
@@ -453,7 +529,127 @@ $(document).ready(function () {
           }
     });
     
+    /**
+     * Funcion para Ver Ventas Diarias Por Mes
+     */
+    function VentasPorCategoria($opcion, $mes, $anio){
+        $.ajax({
+            type: 'GET',
+            url: $('#form-ventas-por-categoria').attr("action"),
+             data: {
+                 opcion: $opcion,//dat_busq === '' ? 'AA' : 'AB',
+                 mes : $mes,
+                 anio : $anio
+             },
+            // dataType: "dataType",
+            beforeSend: function () {
+                $('.loaders').removeClass('d-none');
+            },
+            success: function (response) {
+               
+                $('#div-op-ventas-por-categoria').removeClass('d-none');
+                if (response === 0) {
+                    table_ventas_por_categorias.clearData();
+                   
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Alerta!',
+                        text: 'No Exite Registro!'
+                        //footer: '<a href>Why do I have this issue?</a>'
+                    });
+                } else {
+                    table_ventas_por_categorias.replaceData(response);
+                }
+    
+            }, complete: function () {
+                $('.loaders').addClass('d-none');
+            }
+        });
+    }
 
+     /**
+     * Descargar Excel Ventas Por Categoria
+     */
+    $(document).on("click", "#download-reportes_Ventas_X_Categorias-xlsx",function(){
+        var tabla_datos = table_ventas_por_categorias.getData();
+        var anio = $('#anio_order').val();
+        var mes =  $('select[id="select-mes"] option:selected').text();
+        const fecha = new Date();
+
+        if(tabla_datos.length === 0){
+            $.toast({
+                heading: 'Error',
+                text: 'No hay datos para generar archivo',
+                showHideTransition: 'fade',
+                icon: 'error',
+                position: 'top-right',
+            })
+           return false;
+          }else{
+            table_ventas_por_categorias.download("xlsx", anio+"_"+mes+"_"+"Ventas_Por_Categoria.xlsx", {sheetName:anio+" "+mes+" "+"Ventas X Categoria"});
+          }
+    });
+
+    /**
+     * Funcion para ver los pedidos Entregados
+     */
+    function PedidosEntregados($opcion, $mes, $anio){
+        $.ajax({
+            type: 'GET',
+            url: $('#form-pedidos-entregados').attr("action"),
+             data: {
+                 opcion: $opcion,//dat_busq === '' ? 'AA' : 'AB',
+                 mes : $mes,
+                 anio : $anio
+             },
+            // dataType: "dataType",
+            beforeSend: function () {
+                $('.loaders').removeClass('d-none');
+            },
+            success: function (response) {
+               
+                $('#div-op-pedidos-entregados').removeClass('d-none');
+                if (response === 0) {
+                    table_pedidos_entregados.clearData();
+                   
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Alerta!',
+                        text: 'No Exite Registro!'
+                        //footer: '<a href>Why do I have this issue?</a>'
+                    });
+                } else {
+                    table_pedidos_entregados.replaceData(response);
+                }
+    
+            }, complete: function () {
+                $('.loaders').addClass('d-none');
+            }
+        });
+    }
+
+    /**
+     * Descargar Excel Pedidos entregados
+     */
+    $(document).on("click", "#download-reportes_Pedidos_Entregados-xlsx",function(){
+        var tabla_datos = table_pedidos_entregados.getData();
+        var anio = $('#anio_order').val();
+        var mes =  $('select[id="select-mes"] option:selected').text();
+        const fecha = new Date();
+
+        if(tabla_datos.length === 0){
+            $.toast({
+                heading: 'Error',
+                text: 'No hay datos para generar archivo',
+                showHideTransition: 'fade',
+                icon: 'error',
+                position: 'top-right',
+            })
+           return false;
+          }else{
+            table_pedidos_entregados.download("xlsx", anio+"_"+mes+"_"+"Pedidos_Entregados.xlsx", {sheetName:anio+" "+mes+" "+"Pedidos Entregados"});
+          }
+    });
     
 
 });

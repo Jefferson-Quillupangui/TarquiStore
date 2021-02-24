@@ -39,7 +39,7 @@
             <p class="my-4">
               <strong>Identificación</strong>: {{$colaborador->identification}}<br>
               <strong>Teléfono</strong>: {{$colaborador->phone}}<br>
-              <strong>Estado</strong>: @if($colaborador->status=='A') Activo @else Inactivo @endif <br>
+              <strong>Estado</strong>: @if($user->status=='A') Activo @else Inactivo @endif <br>
               <strong>Edad</strong>: {{ $edad }}<br>
               <strong>Sexo</strong>:  @if($colaborador->sex=='H') Hombre @else Mujer @endif <br>
               <strong>Roles</strong>:  <span class="badge badge-info">{{$user->getRoleNames()->implode(', ')}}</span><br><br>

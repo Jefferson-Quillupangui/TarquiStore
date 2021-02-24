@@ -22,6 +22,20 @@
                 <x-jet-input id="name" class="block mt-1 w-full" type="text" name="name" :value="old('name')" required autofocus autocomplete="name" />
             </div>
 
+            <div class="flex flex-row ... mt-4">
+            <div>
+                <x-jet-label for="birth_date" value="{{ __('Fecha de nacimiento') }}" />
+                <x-jet-input id="birth_date" class="block mt-1 w-full" type="date" name="birth_date" :value="old('birth_date')" required autofocus />
+            </div>
+            <div>
+                <x-jet-label for="sex" class="ml-3 mx-16" value="{{ __('Sexo') }}" />
+                <select name="sex" id="sex" class="border-gray-300 ml-3 mx-16 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 rounded-md shadow-sm block mt-1 w-full" required>
+                    <option value="H">Hombre</option>
+                    <option value="M">Mujer</option>
+                </select>   
+            </div>
+            </div>
+
             <div class="mt-4">
                 <x-jet-label for="phone" value="{{ __('Teléfono') }}" />
                 <x-jet-input id="phone" class="block mt-1 w-full" type="number" name="phone" :value="old('phone')" required autofocus autocomplete="phone" />

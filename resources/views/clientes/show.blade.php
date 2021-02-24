@@ -35,6 +35,7 @@
             <h3>{{ $client->email }}</h3>
   
             <p class="my-4">
+              <strong>Nombre</strong>: {{ $client->name}} {{ $client->last_name}}<br>
               <strong>Identificación</strong>: {{ $client->identification }}<br>
               <strong>Teléfono</strong>:  {{ $client->phone1 }} @if($client->phone2) / {{ $client->phone2 }} @endif <br>
               <strong>Dirección</strong>: {{ $client->address }}<br>

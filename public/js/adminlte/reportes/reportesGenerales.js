@@ -4,6 +4,7 @@ $(document).ready(function () {
     let table_ventas_x_vendedor;
     let table_list_productos_vendidos;
     let table_ventas_diaras_por_mes;
+    let table_ventas_por_categorias;
 
     
     $(document).on("change", "#select-tipo-reporte",function(){
@@ -11,6 +12,7 @@ $(document).ready(function () {
         $('#div-op-ventas-por-vendedor').addClass('d-none');
         $('#div-op-lista-productos-vendidos').addClass('d-none');
         $('#div-op-ventas-diarias-x-mes').addClass('d-none');
+        $('#div-op-ventas-por-categoria').addClass('d-none');
         let $comboReporte = $('#select-tipo-reporte').val();
 
 
@@ -19,6 +21,7 @@ $(document).ready(function () {
         table_ventas_x_vendedor.clearData();
         table_list_productos_vendidos.clearData();
         table_ventas_diaras_por_mes.clearData();
+        table_ventas_por_categorias.clearData();
         // switch($comboReporte){
         //     case 'AA': 
         //         table_compras_por_cliente.clearData();
@@ -115,6 +118,33 @@ $(document).ready(function () {
 
 
       /**
+     * Tabla Venta Por Categoria
+     */
+    table_ventas_por_categorias = new Tabulator("#grid-table-ventas-por-categoria", {
+       
+        height:"400px",
+        //layout:"fitColumns",
+        placeholder:"No hay Datos",
+       
+        columns:[
+            //id,dia_mes,cantidad_ordenes,total_ordenes
+            // {formatter:iconAudito, width:40, hozAlign:"center"},
+            {title:"Codigo Categoria",width:200, field:"codigo_categoria",hozAlign:"left"},
+            {title:"Nombre Categoria", width:510,field:"nombre_categoria",hozAlign:"left"},
+            {title:"Cantidad Productos",width:155, field:"cantidad_productos",hozAlign:"center",hozAlign:"center"},
+            {title:"Monto Total",width:155, field:"monto_total", formatter:"money", hozAlign:"right",formatterParams:{
+                decimal:".",
+                thousand:".",
+                symbol:"$",
+                symbolAfter:false,
+                precision:2,
+            }},
+           // {title:"Hora", field:"delivery_time",visible:false},
+          ],
+        
+    });
+
+     /**
      * Tabla Ventas Diaras Por Mes
      */
     table_ventas_diaras_por_mes = new Tabulator("#grid-table-ventas-diarias-por-mes", {
@@ -161,6 +191,9 @@ $(document).ready(function () {
             break;
             case 'AD' :
                 VentasDiarasPorMes("AD", $mes, $anio);
+            break;
+            case 'AE' :
+                VentasPorCategoria("AE", $mes, $anio);
             break;
             
         }
@@ -453,7 +486,66 @@ $(document).ready(function () {
           }
     });
     
+ /**
+     * Funcion para Ver Ventas Diarias Por Mes
+     */
+    function VentasPorCategoria($opcion, $mes, $anio){
+        $.ajax({
+            type: 'GET',
+            url: $('#form-ventas-por-categoria').attr("action"),
+             data: {
+                 opcion: $opcion,//dat_busq === '' ? 'AA' : 'AB',
+                 mes : $mes,
+                 anio : $anio
+             },
+            // dataType: "dataType",
+            beforeSend: function () {
+                $('.loaders').removeClass('d-none');
+            },
+            success: function (response) {
+               
+                $('#div-op-ventas-por-categoria').removeClass('d-none');
+                if (response === 0) {
+                    table_ventas_por_categorias.clearData();
+                   
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Alerta!',
+                        text: 'No Exite Registro!'
+                        //footer: '<a href>Why do I have this issue?</a>'
+                    });
+                } else {
+                    table_ventas_por_categorias.replaceData(response);
+                }
+    
+            }, complete: function () {
+                $('.loaders').addClass('d-none');
+            }
+        });
+    }
 
+     /**
+     * Descargar Excel Ventas Por Categoria
+     */
+    $(document).on("click", "#download-reportes_Ventas_X_Categorias-xlsx",function(){
+        var tabla_datos = table_ventas_por_categorias.getData();
+        var anio = $('#anio_order').val();
+        var mes =  $('select[id="select-mes"] option:selected').text();
+        const fecha = new Date();
+
+        if(tabla_datos.length === 0){
+            $.toast({
+                heading: 'Error',
+                text: 'No hay datos para generar archivo',
+                showHideTransition: 'fade',
+                icon: 'error',
+                position: 'top-right',
+            })
+           return false;
+          }else{
+            table_ventas_por_categorias.download("xlsx", anio+"_"+mes+"_"+"Ventas_Por_Categoria.xlsx", {sheetName:anio+" "+mes+" "+"Ventas X Categoria"});
+          }
+    });
     
 
 });

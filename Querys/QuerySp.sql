@@ -62,7 +62,23 @@ case p_in_opcion
 
 			set var_fecha = (select concat(var_anio,"-",var_mes,"-",var_dia)) ;
             ##select var_fecha;
-			call dias_mes_dinamico('2021-02-01');
+			call dias_mes_dinamico(var_fecha);
+		
+        ##5-VENTAS POR CATEGORIA ()
+        WHEN 'AE' THEN
+			
+            SELECT 
+			 LPAD(d.id, 6, '0') as codigo_categoria,
+			 d.name as nombre_categoria,
+			 COUNT(d.id) as cantidad_productos,
+			 SUM(a.total_line) as monto_total
+			FROM order_product as	a INNER join orders as b on a.order_id = b.id
+															inner join products c on a.product_id = c.id
+															inner join categories as d on c.category_id	= d.id
+			WHERE YEAR(b.delivery_date) =  p_in_anio ##'2021' 
+					and  MONTH(b.delivery_date) = p_in_mes##'02'
+					and order_status_cod = p_in_estado ##'OE'
+			GROUP BY d.id,d.name ;
 		
         
 	END CASE;

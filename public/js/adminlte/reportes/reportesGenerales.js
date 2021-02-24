@@ -3,12 +3,14 @@ $(document).ready(function () {
     let table_compras_por_cliente;
     let table_ventas_x_vendedor;
     let table_list_productos_vendidos;
+    let table_ventas_diaras_por_mes;
 
     
     $(document).on("change", "#select-tipo-reporte",function(){
         $('#div-op-compras-clientes').addClass('d-none');
         $('#div-op-ventas-por-vendedor').addClass('d-none');
         $('#div-op-lista-productos-vendidos').addClass('d-none');
+        $('#div-op-ventas-diarias-x-mes').addClass('d-none');
         let $comboReporte = $('#select-tipo-reporte').val();
 
 
@@ -16,6 +18,7 @@ $(document).ready(function () {
         table_compras_por_cliente.clearData();
         table_ventas_x_vendedor.clearData();
         table_list_productos_vendidos.clearData();
+        table_ventas_diaras_por_mes.clearData();
         // switch($comboReporte){
         //     case 'AA': 
         //         table_compras_por_cliente.clearData();
@@ -111,6 +114,33 @@ $(document).ready(function () {
     });
 
 
+      /**
+     * Tabla Ventas Diaras Por Mes
+     */
+    table_ventas_diaras_por_mes = new Tabulator("#grid-table-ventas-diarias-por-mes", {
+       
+        height:"580px",
+        //layout:"fitColumns",
+        placeholder:"No hay Datos",
+       
+        columns:[
+            //id,dia_mes,cantidad_ordenes,total_ordenes
+            // {formatter:iconAudito, width:40, hozAlign:"center"},
+            {title:"#",width:50, field:"id",hozAlign:"left"},
+            {title:"Dia", width:510,field:"dia_mes",hozAlign:"left"},
+            {title:"Cantidad Ordenes",width:155, field:"cantidad_ordenes",hozAlign:"center",hozAlign:"center"},
+            {title:"Total Ordenes",width:155, field:"total_ordenes", formatter:"money", hozAlign:"right",formatterParams:{
+                decimal:".",
+                thousand:".",
+                symbol:"$",
+                symbolAfter:false,
+                precision:2,
+            }},
+           // {title:"Hora", field:"delivery_time",visible:false},
+          ],
+        
+    });
+
     /**
      * Metodo para buscar los reportes
      */
@@ -128,6 +158,9 @@ $(document).ready(function () {
             break;
             case 'AC' :
                 ListaProductosVendidos("AC", $mes, $anio);
+            break;
+            case 'AD' :
+                VentasDiarasPorMes("AD", $mes, $anio);
             break;
             
         }
@@ -360,6 +393,65 @@ $(document).ready(function () {
           }
     });
 
+     /**
+     * Funcion para Ver Ventas Diarias Por Mes
+     */
+    function VentasDiarasPorMes($opcion, $mes, $anio){
+        $.ajax({
+            type: 'GET',
+            url: $('#form-ventas-diaria-mes').attr("action"),
+             data: {
+                 opcion: $opcion,//dat_busq === '' ? 'AA' : 'AB',
+                 mes : $mes,
+                 anio : $anio
+             },
+            // dataType: "dataType",
+            beforeSend: function () {
+                $('.loaders').removeClass('d-none');
+            },
+            success: function (response) {
+               
+                $('#div-op-ventas-diarias-x-mes').removeClass('d-none');
+                if (response === 0) {
+                    table_ventas_diaras_por_mes.clearData();
+                   
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Alerta!',
+                        text: 'No Exite Registro!'
+                        //footer: '<a href>Why do I have this issue?</a>'
+                    });
+                } else {
+                    table_ventas_diaras_por_mes.replaceData(response);
+                }
+    
+            }, complete: function () {
+                $('.loaders').addClass('d-none');
+            }
+        });
+    }
+ /**
+     * Descargar Excel Ventas Diarias
+     */
+    $(document).on("click", "#download-reportes_Ventas_Diaras_X_Mes-xlsx",function(){
+        var tabla_datos = table_ventas_diaras_por_mes.getData();
+        var anio = $('#anio_order').val();
+        var mes =  $('select[id="select-mes"] option:selected').text();
+        const fecha = new Date();
+
+        if(tabla_datos.length === 0){
+            $.toast({
+                heading: 'Error',
+                text: 'No hay datos para generar archivo',
+                showHideTransition: 'fade',
+                icon: 'error',
+                position: 'top-right',
+            })
+           return false;
+          }else{
+            table_ventas_diaras_por_mes.download("xlsx", anio+"_"+mes+"_"+"Ventas_DiariasPorMes.xlsx", {sheetName:anio+" "+mes+" "+"Ventas Diaras"});
+          }
+    });
     
 
     

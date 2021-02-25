@@ -75,7 +75,7 @@
             text: "El usuario quedará sin acceso al sistema!",
             icon: 'warning',
             showCancelButton: true,
-            confirmButtonColor: '#3085d6',
+            confirmButtonColor: '#17A2B8',
             cancelButtonColor: '#d33',
             confirmButtonText: 'Confirmar',
             cancelButtonText:   'Cancelar'
@@ -93,7 +93,7 @@
             text: "El usuario tendrá acceso al sistema!",
             icon: 'warning',
             showCancelButton: true,
-            confirmButtonColor: '#3085d6',
+            confirmButtonColor: '#17A2B8',
             cancelButtonColor: '#d33',
             confirmButtonText: 'Confirmar',
             cancelButtonText:   'Cancelar'

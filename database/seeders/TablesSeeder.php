@@ -230,22 +230,22 @@ class TablesSeeder extends Seeder
     {
         Sector::create([
             'codigo'      => 'N',
-            'name'     => 'NORTE'
+            'name'     => 'Norte'
         ]);
 
         Sector::create([
             'codigo'      => 'S',
-            'name'     => 'SUR'
+            'name'     => 'Sur'
         ]);
 
         Sector::create([
             'codigo'      => 'E',
-            'name'     => 'ESTE'
+            'name'     => 'Este'
         ]);
 
         Sector::create([
             'codigo'      => 'OE',
-            'name'     => 'OESTE'
+            'name'     => 'Oeste'
         ]);
 
     }

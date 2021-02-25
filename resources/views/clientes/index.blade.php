@@ -52,7 +52,7 @@
                 </tr>
             </thead>
             <tbody>
-                @forelse($clients as $client )
+                @foreach($clients as $client )
                     <tr>
                         <td>{{ $client->identification}}</td>
                         <td>{{ $client->name}} {{ $client->last_name}}</td>
@@ -77,13 +77,7 @@
                         {{-- <td>{{ $client->created_at->diffForHumans()}}</td> --}}
                     </tr>
 
-                @empty
-                    
-                    <tr>
-                        <td colspan="4">No hay clientes registrados</td>
-                    </tr>
-
-                @endforelse
+                @endforeach
 
             </tbody>
         </table>
@@ -116,7 +110,7 @@
                                 <option value = '100'>100</option>
                                 <option value = '-1'>Todos</option>
                             </select>`+ " registros por pagina",
-            "zeroRecords": "No se encontró nada",
+            "zeroRecords": "No hay clientes registrados",
             "info": "Mostrando página _PAGE_ de _PAGES_",
             "infoEmpty": "No hay registros disponibles",
             "infoFiltered": "(filtrado de _MAX_ registros totales)",

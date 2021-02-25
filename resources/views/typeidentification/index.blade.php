@@ -43,7 +43,7 @@
                     </tr>
                 </thead>
                 <tbody>
-                    @forelse($type_identifications as $type_identification )
+                    @foreach($type_identifications as $type_identification )
                         <tr>
                             <td>{{ $type_identification->codigo }}</td>
                             <td>{{ $type_identification->name }}</td>
@@ -59,12 +59,7 @@
                             </td>
                         </tr>
 
-                    @empty
-                        <tr>
-                            <td colspan="4">No hay ninguna sector registrado</td>
-                        </tr>
-
-                    @endforelse
+                    @endforeach
 
                 </tbody>
             </table>
@@ -91,7 +86,7 @@
                                 <option value = '100'>100</option>
                                 <option value = '-1'>Todos</option>
                             </select>`+ " registros por pagina",
-            "zeroRecords": "No se encontró nada",
+            "zeroRecords": "No hay tipos de identificación registrados",
             "info": "Mostrando página _PAGE_ de _PAGES_",
             "infoEmpty": "No hay registros disponibles",
             "infoFiltered": "(filtrado de _MAX_ registros totales)",

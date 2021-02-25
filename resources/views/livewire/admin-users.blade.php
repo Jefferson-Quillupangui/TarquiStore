@@ -39,7 +39,7 @@
                                         <div class="btn-group">
                                             <a class="btn btn-info btn-group-sm" href="{{route('admin.users.show',$user)}}"><i class="far fa-eye"></i></a>
                                             <a class="btn btn-secondary btn-group-sm" href="{{route('admin.users.edit', $user)}}"><i class="fas fa-edit"></i></a>
-                                            <button class="btn btn-danger" type="submit">Desactivar</button>
+                                            <button class="btn btn-danger" type="submit"><i class="far fa-times-circle"></i> Desactivar</button>
                                         </div>
                                     </form>
                                     @else
@@ -48,7 +48,7 @@
                                         <div class="btn-group">
                                             <a class="btn btn-info btn-group-sm" href="{{route('admin.users.show',$user)}}"><i class="far fa-eye"></i></a>
                                             <a class="btn btn-secondary btn-group-sm" href="{{route('admin.users.edit', $user)}}"><i class="fas fa-edit"></i></a>
-                                            <button class="btn btn-primary btn-group-sm pr-4" type="submit">Activar&nbsp;&nbsp;</button>
+                                            <button class="btn btn-primary btn-group-sm pr-4" type="submit"><i class="far fa-check-circle"></i> Activar&nbsp;&nbsp;</button>
                                         </div>
                                     </form>
                                     @endif

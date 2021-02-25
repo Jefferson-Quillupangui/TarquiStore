@@ -48,7 +48,7 @@
                     </tr>
                 </thead>
                 <tbody>
-                    @forelse($roles as $role )
+                    @foreach($roles as $role )
                         <tr>
                             <td>{{ $role->id}}</td>
                             <td>{{ $role->name}}</td>
@@ -63,13 +63,7 @@
                                 </div>
                             </td>
                         </tr>
-
-                    @empty
-                        <tr>
-                            <td colspan="4">No hay ningun rol registrado</td>
-                        </tr>
-
-                    @endforelse
+                    @endforeach
 
                 </tbody>
             </table>
@@ -100,7 +94,7 @@
                                 <option value = '100'>100</option>
                                 <option value = '-1'>Todos</option>
                             </select>`+ " registros por pagina",
-            "zeroRecords": "No se encontró nada",
+            "zeroRecords": "No hay roles registrados",
             "info": "Mostrando página _PAGE_ de _PAGES_",
             "infoEmpty": "No hay registros disponibles",
             "infoFiltered": "(filtrado de _MAX_ registros totales)",

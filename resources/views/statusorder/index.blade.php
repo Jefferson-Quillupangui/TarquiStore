@@ -44,7 +44,7 @@
                 </tr>
             </thead>
             <tbody>
-                @forelse($statuses_sorder as $status_order )
+                @foreach($statuses_sorder as $status_order )
                     <tr>
                         <td>{{ $status_order->codigo}}</td>
                         {{-- <td>{{ $status_order->name}}</td> --}}
@@ -72,12 +72,7 @@
                         </td>
                     </tr>
 
-                @empty
-                    <tr>
-                        <td colspan="4">No hay ninguna sector registrado</td>
-                    </tr>
-
-                @endforelse
+                @endforeach
 
             </tbody>
         </table>

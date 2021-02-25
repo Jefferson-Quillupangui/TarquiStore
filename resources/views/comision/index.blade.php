@@ -3,7 +3,7 @@
 @section('title', 'Comisiones')
 
 @section('content_header')
-    <h1><i class="fas fa-user-cog"></i>Comisiones</h1>
+    <h1><i class="fas fa-hand-holding-usd"></i> Comisiones</h1>
 @stop
 
 @section('css')

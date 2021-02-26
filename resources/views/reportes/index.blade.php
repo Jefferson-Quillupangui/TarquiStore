@@ -45,6 +45,10 @@
         <form action="{{ route('reporteVentasDiaras') }}" id="form-ventas-diaria-mes" class="d-none"></form>
         <form action="{{ route('reporteVentasPorCategorias') }}" id="form-ventas-por-categoria" class="d-none"></form>
         <form action="{{ route('reportePedidosEntregados') }}" id="form-pedidos-entregados" class="d-none"></form>
+
+
+        {{-- <form action="{{ route('reportePdf') }}" id="form-reportes-pdf" class="d-none"></form> --}}
+
         <div class="card-header">
             <h4 class="card-title" style="margin: 0px 0px 0px 0px;"><i class="fa fa-file"></i> Visualizacion de Reportes
             </h4>
@@ -196,8 +200,19 @@
 
                         <button id="download-reportes_Ventas_X_Categorias-xlsx" type="button"
                             class="btn btn-success float-right"> <i class="fas fa-excel"></i>Descargar Excel</button>
-                        <button id="download-reportes_Ventas_X_Categorias-pdf" class="btn btn-danger float-right"><i
-                                class="fa fa-file-pdf-o" aria-hidden="true"></i>Descargar PDF</button>
+
+                            <button type="submit" id="download-reportes_Ventas_X_Categorias-pdf"
+                            class="btn btn-danger float-right"><i class="fa fa-file-pdf-o" aria-hidden="true"
+                                id="form-reportes-pdf"></i>Descargar PDF</button>
+                        {{-- <form type="POST" action="{{ route('reportesPdf') }}" id="form-rept-pdf">
+                            @csrf
+                            <input type="text" id="txt_mes" name="txt_mes" readonly="readonly" disabled>
+                            <input type="text" id="txt_anio" name="txt_anio" readonly="readonly" disabled>
+                            <button type="submit" id="download-reportes_Ventas_X_Categorias-pdf"
+                                class="btn btn-danger float-right"><i class="fa fa-file-pdf-o" aria-hidden="true"
+                                    id="form-reportes-pdf"></i>Descargar PDF</button>
+                        </form> --}}
+
                     </div>
                 </div> <br>
                 <div class="row">

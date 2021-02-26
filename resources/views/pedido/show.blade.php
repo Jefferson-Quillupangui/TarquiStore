@@ -48,9 +48,10 @@
         <form action="{{ route('list_orders_auditoria_json') }}" id="form-auditoria-orden" class="d-none"></form>
         <div class="card-header">
             <h4 class="card-title" style="margin: 0px 0px 0px 0px;"><i class="fas fa-search-plus"></i> Busqueda general</h4>
-          <div class="card-tools">
-            <button type="button" class="btn btn-tool mt-0" data-card-widget="collapse" ><i class="fas fa-plus"></i></button>
-          </div>
+            <div class="card-tools">
+                <button type="button" class="btn btn-tool mt-0" data-card-widget="collapse"><i
+                        class="fas fa-plus"></i></button>
+            </div>
         </div>
         <div class="card-body">
             <div class="row">
@@ -72,17 +73,18 @@
                         </div>
                     </div>
                 </div>
-                
+
             </div>
         </div>
-      </div>
+    </div>
 
-      <div class="card card-cyan collapsed-card">
+    <div class="card card-cyan collapsed-card">
         <div class="card-header">
             <h4 class="card-title" style="margin: 0px 0px 0px 0px;"> <i class="fas fa-search"></i> Busqueda por fecha</h4>
-          <div class="card-tools">
-            <button type="button" class="btn btn-tool mt-0" data-card-widget="collapse" ><i class="fas fa-plus"></i></button>
-          </div>
+            <div class="card-tools">
+                <button type="button" class="btn btn-tool mt-0" data-card-widget="collapse"><i
+                        class="fas fa-plus"></i></button>
+            </div>
         </div>
         <div class="card-body">
             <div class="row">
@@ -148,27 +150,34 @@
 
             </div>
         </div>
-      </div>
+    </div>
 
     <div class="card card-cyan">
         {{-- <input type="hidden" name="_token" id="token_orden_busqd" value="{{ csrf_token() }}">
         <form action="{{ route('reporte.orden.datos') }}" id="form-datos-orden" class="d-none"></form> --}}
         <div class="card-header">
             <h4 class="card-title" style="margin: 6px 0px 0px 0px;"><i class="fa fa-file"></i> Visualizacion Orden</h4>
+
+
+
+
+            {{-- <a type="button" href="{{ route('reporte.orden.datos', ['id' => 0]) }}" class="btn btn-danger float-right"
+                target="_blank" title="Pdf Orden" id="generar-pdf-orden"><i class="far fa-file-pdf"></i></a> --}}
+
+
             {{-- href="{{url('reporteFecha',array('fechaMenor'=>$fechaMenor,'fechaMayor'=>$fechaMayor))}}" --}}
-            <a type="button" href="{{ route('reporte.orden.datos', ['id' => 0]) }}" class="btn btn-danger float-right"
-                target="_blank" title="Pdf Orden" id="generar-pdf-orden"><i class="far fa-file-pdf"></i></a>
             {{-- <button type="button" id="generar-pdf-orden" class="btn btn-default float-right" title="Pdf Orden"><i class="far fa-file-pdf"></i></button> --}}
 
         </div>
 
         <div class="card-body">
-            <div class="row">
+
+            {{-- <div class="row">
 
                 <div class="input-group mb-3">
                     ID :<input type="text" id="txt_id_cab_orden" name="txt_id_cab_orden" value=0 disabled>
                 </div>
-            </div>
+            </div> --}}
 
             <div class="row">
                 <div class="col-md-6">
@@ -185,6 +194,16 @@
                     </div>
                 </div>
                 <div class="col-md-6">
+                    <form action="{{ route('reporte_post.orden.datos') }}" method="POST">
+                        @csrf
+                        <input class="d-none" type="text" id="txt_id_cab_orden" name="txt_id_cab_orden" value=0>
+
+                        <button disabled class="btn btn-danger float-right" id="generar-pdf-orden" type="submit"
+                            title="Generar Pdf">
+                            <i class="fas fa-file-code-o"></i>Generar Pdf
+                        </button>
+
+                    </form>
                     {{-- <label for="identification">Identificación:</label>
                     <div class="input-group mb-3">
                         <div class="input-group-prepend">

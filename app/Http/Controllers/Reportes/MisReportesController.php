@@ -6,6 +6,9 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
+use Barryvdh\DomPDF\Facade as PDF;
+
+
 class MisReportesController extends Controller
 {
     public function index(){
@@ -133,6 +136,24 @@ class MisReportesController extends Controller
        
     }
     
+
+    public function ReportesPdf(Request $request){
+        
+        $opcion = "AE";
+        $mes = "02";
+        $anio = "2021";
+        $estado_orden = "OE";//$request->estado;
+
+
+        $data = DB::select('call sp_con_reportes(?,?,?,?,?)',  array($opcion, $mes, $anio, $estado_orden, ""));
+
+      
+           $pdf = PDF::loadView('pdfReport.ventasPorCategoria', compact( 'data' ));
+           return $pdf->stream('ReportesPorVentas.pdf');
+
+
+     
+    }
 
     
     

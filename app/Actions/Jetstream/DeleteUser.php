@@ -35,10 +35,17 @@ class DeleteUser implements DeletesUsers
     public function delete($user)
     {
         DB::transaction(function () use ($user) {
-            $this->deleteTeams($user);
-            $user->deleteProfilePhoto();
+            // $this->deleteTeams($user);
+            // $user->deleteProfilePhoto();
+
+            DB::table('users') //Inactivar usuario
+            ->where('id', '=', $user->id)
+            ->update(['status' => 'I']);
+
             $user->tokens->each->delete();
-            $user->delete();
+            
+            // $user->delete();
+ 
         });
     }
 

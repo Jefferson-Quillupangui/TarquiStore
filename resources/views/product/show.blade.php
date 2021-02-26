@@ -59,7 +59,7 @@
                 </tr>
             </thead>
             <tbody>
-                @forelse($products as $product )
+                @foreach($products as $product )
                     <tr>
                         {{-- <th>&nbsp;</th> --}}
                         <td class="text-center border-0"><div class="row mx-1">000{{ $product->id}}</div></td>
@@ -96,12 +96,7 @@
                         <td><div class="row ml-auto">{{ $product->description}}</div></td> --}}
                     </tr>
 
-                @empty
-                    <tr>
-                        <td colspan="4">No hay productos registrados</td>
-                    </tr>
-
-                @endforelse
+                @endforeach
 
             </tbody>
         </table>
@@ -132,7 +127,7 @@
                                 <option value = '100'>100</option>
                                 <option value = '-1'>Todos</option>
                             </select>`+ " registros por pagina",
-            "zeroRecords": "No se encontró nada",
+            "zeroRecords": "No hay productos registrados",
             "info": "Mostrando página _PAGE_ de _PAGES_",
             "infoEmpty": "No hay registros disponibles",
             "infoFiltered": "(filtrado de _MAX_ registros totales)",

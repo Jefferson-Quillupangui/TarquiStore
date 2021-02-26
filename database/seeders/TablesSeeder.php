@@ -9,10 +9,13 @@ use App\Models\User;
 use App\Models\Category;
 use App\Models\TypeIdentification;
 use Spatie\Permission\Models\Permission;
+use Spatie\Permission\Models\Role;
 use App\Models\Product;
 use App\Models\OrderStatus;
 use App\Models\Collaborator;
 use Illuminate\Support\Carbon;
+use App\Models\CitySale;
+use App\Models\Sector;
 
 class TablesSeeder extends Seeder
 {
@@ -32,8 +35,14 @@ class TablesSeeder extends Seeder
         $permission = new TablesSeeder;
         $permission->permissionTable();
 
-        $products = new TablesSeeder();
-        $products->productTable();
+        $city = new TablesSeeder;
+        $city->citySale();
+
+        $sector = new TablesSeeder;
+        $sector->sectors();
+
+        // $products = new TablesSeeder();
+        // $products->productTable();
      
         $typeIdentification = new TablesSeeder();
         $typeIdentification->typeIdentificationTable();
@@ -41,10 +50,16 @@ class TablesSeeder extends Seeder
         $orderStatus = new TablesSeeder();
         $orderStatus->orderstatusTable();
 
-    
         $collaborator = new TablesSeeder();
         $collaborator->collaboratorTable();
         
+        //User Admin
+        $user = User::find(1); //Italo Morales
+        $user->assignRole('Administrador');
+
+        //User Vendedor
+        $user2 = User::find(2); //Italo Morales
+        $user2->assignRole('Vendedor');
         
     }
 
@@ -74,13 +89,13 @@ class TablesSeeder extends Seeder
         ]);
 
         Category::create([
-            'name' => 'Salón',
-            'description' => 'Variedad en productos para el salón'
+            'name' => 'Gadgets',
+            'description' => 'Variedad en productos prácticos y novedosos'
         ]);
 
         Category::create([
-            'name' => 'Patio',
-            'description' => 'Productos de jardin entre otros'
+            'name' => 'Baño',
+            'description' => 'Productos para el baño entre otros'
         ]);
 
         Category::create([
@@ -128,7 +143,7 @@ class TablesSeeder extends Seeder
         ]);
 
         Permission::create([
-            'name' => 'Eliminar pedidos' 
+            'name' => 'Cancelar pedidos' 
         ]);
 
         Permission::create([
@@ -142,21 +157,48 @@ class TablesSeeder extends Seeder
         Permission::create([
             'name' => 'Ver reportes' 
         ]);
-    }
 
-    public function productTable(){
+        //Admin
+        $admin = Role::create(['name' => 'Administrador']);
 
-        Product::create([
-            'name'      => 'Platera cromada de 2 niveles',
-            'image'     => 'img/prueba.jpg',
-            'price'     => 20,
-            'description' => 'Platera de dos niveles de material cromado',
-            'comission' => 2.99,
-            'quantity'  => 10,
-            'discount'  => 0,
-            'category_id' => 1
+        $admin->givePermissionTo([
+            'Mantenimiento',
+            'Administrar categorias',
+            'Administrar productos',
+            'Administrar pedidos',
+            'Administrar usuarios',
+            'Administrar usuarios',
+            'Administrar roles',
+            'Ver reportes',
         ]);
+
+        //Admin
+        $vendedor = Role::create(['name' => 'Vendedor']);
+
+        $vendedor->givePermissionTo([
+            'Listar categorias',
+            'Listar productos',
+            'Ingresar pedidos',
+            'Editar pedidos',
+            'Listar pedidos',
+            'Cancelar pedidos'
+        ]);
+
     }
+
+    // public function productTable(){
+
+    //     Product::create([
+    //         'name'      => 'Platera cromada de 2 niveles',
+    //         'image'     => 'img/prueba.jpg',
+    //         'price'     => 20,
+    //         'description' => 'Platera de dos niveles de material cromado',
+    //         'comission' => 2.99,
+    //         'quantity'  => 10,
+    //         'discount'  => 0,
+    //         'category_id' => 1
+    //     ]);
+    // }
 
 
     public function typeIdentificationTable()
@@ -166,6 +208,46 @@ class TablesSeeder extends Seeder
             'name'     => 'CEDULA'
            // 'status' => 'A'
         ]);
+
+        TypeIdentification::create([
+            'codigo'      => '06',
+            'name'     => 'RUC'
+           // 'status' => 'A'
+        ]);
+    }
+
+    public function citySale()
+    {
+        CitySale::create([
+            'codigo'      => 'GYE',
+            'name'     => 'Guayaquil'
+           // 'status' => 'A'
+        ]);
+
+    }
+
+    public function sectors()
+    {
+        Sector::create([
+            'codigo'      => 'N',
+            'name'     => 'Norte'
+        ]);
+
+        Sector::create([
+            'codigo'      => 'S',
+            'name'     => 'Sur'
+        ]);
+
+        Sector::create([
+            'codigo'      => 'E',
+            'name'     => 'Este'
+        ]);
+
+        Sector::create([
+            'codigo'      => 'OE',
+            'name'     => 'Oeste'
+        ]);
+
     }
 
 
@@ -173,7 +255,7 @@ class TablesSeeder extends Seeder
         OrderStatus::create([
             'codigo'      => 'OP',
             'name'     => 'Pendiente',
-            'description'     => 'La orden ha sido ingresada'
+            'description'     => 'El pedido ha sido registrado'
         ]);
 
         OrderStatus::create([
@@ -191,7 +273,7 @@ class TablesSeeder extends Seeder
         OrderStatus::create([
             'codigo'      => 'OR',
             'name'     => 'Reagendado',
-            'description'     => 'El pedido ha cambiado la fecha de entrega'
+            'description'     => 'El pedido ha sido reagendado'
         ]);
     }
    

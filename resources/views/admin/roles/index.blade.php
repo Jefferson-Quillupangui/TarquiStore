@@ -48,28 +48,26 @@
                     </tr>
                 </thead>
                 <tbody>
-                    @forelse($roles as $role )
+                    @foreach($roles as $role )
                         <tr>
                             <td>{{ $role->id}}</td>
                             <td>{{ $role->name}}</td>
                             <td>
                                 <div class="row mr-1" style="justify-content: flex-end">
                                     <form action="{{route('admin.roles.destroy',$role)}}" method="POST" class="op-eliminar">
-                                        <a class="btn btn-secondary" href="{{route('admin.roles.edit',$role)}}"><i class="fas fa-edit"></i></a>
+                                        
                                         @method('delete')
                                         @csrf
-                                        <button class="btn btn-danger" type="submit"><i class="fas fa-trash"></i></button>
+                                        <div class="btn-group mr-1">
+                                            <a class="btn btn-secondary" href="{{route('admin.roles.edit',$role)}}"><i class="fas fa-edit"></i></a>
+                                            <button class="btn btn-danger" type="submit"><i class="fas fa-trash"></i></button>
+                                        </div>
+                                        
                                     </form>
                                 </div>
                             </td>
                         </tr>
-
-                    @empty
-                        <tr>
-                            <td colspan="4">No hay ningun rol registrado</td>
-                        </tr>
-
-                    @endforelse
+                    @endforeach
 
                 </tbody>
             </table>
@@ -100,7 +98,7 @@
                                 <option value = '100'>100</option>
                                 <option value = '-1'>Todos</option>
                             </select>`+ " registros por pagina",
-            "zeroRecords": "No se encontró nada",
+            "zeroRecords": "No hay roles registrados",
             "info": "Mostrando página _PAGE_ de _PAGES_",
             "infoEmpty": "No hay registros disponibles",
             "infoFiltered": "(filtrado de _MAX_ registros totales)",

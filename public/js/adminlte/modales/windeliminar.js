@@ -6,7 +6,7 @@ $('.op-eliminar').submit(function(e){
         text: "Esta acción no se puede revertir!",
         icon: 'warning',
         showCancelButton: true,
-        confirmButtonColor: '#3085d6',
+        confirmButtonColor: '#17A2B8',
         cancelButtonColor: '#d33',
         confirmButtonText: 'Confirmar',
         cancelButtonText:   'Cancelar'

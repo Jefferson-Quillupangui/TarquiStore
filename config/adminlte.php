@@ -236,7 +236,7 @@ return [
         ],
         [
             'text' => 'Dashboard',
-            'url'  => '#',
+            'route'  => 'dashboard',
             'icon' => 'fas fa-tachometer-alt',
         ],
         [
@@ -426,11 +426,11 @@ return [
             ],
         ],
         'Chartjs' => [
-            'active' => false,
+            'active' => true,
             'files' => [
                 [
                     'type' => 'js',
-                    'asset' => false,
+                    'asset' => true,
                     'location' => '//cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.0/Chart.bundle.min.js',
                 ],
             ],

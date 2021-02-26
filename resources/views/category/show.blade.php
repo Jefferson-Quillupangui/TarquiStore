@@ -49,7 +49,7 @@
                 </tr>
             </thead>
             <tbody>
-                @forelse($categories as $category )
+                @foreach($categories as $category )
                     <tr>
                         <td>{{ $category->id}}</td>
                         <td>{{ $category->name}}</td>
@@ -70,11 +70,8 @@
                             </div>
                         </td>
                     </tr>
-                @empty
-                    <tr>
-                        <td colspan="4">No hay ninguna categoria registrada</td>
-                    </tr>
-                @endforelse
+
+                @endforeach
             </tbody>
         </table>
     </div>
@@ -104,7 +101,7 @@
                                 <option value = '100'>100</option>
                                 <option value = '-1'>Todos</option>
                             </select>`+ " registros por pagina",
-            "zeroRecords": "No se encontró nada",
+            "zeroRecords": "No hay categorias registradas",
             "info": "Mostrando página _PAGE_ de _PAGES_",
             "infoEmpty": "No hay registros disponibles",
             "infoFiltered": "(filtrado de _MAX_ registros totales)",

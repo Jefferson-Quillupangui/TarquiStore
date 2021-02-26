@@ -16,6 +16,7 @@ use App\Http\Controllers\SectorsController;
 use App\Http\Controllers\StatusOrderController;
 use App\Http\Controllers\TypesIdentificationController;
 use App\Http\Controllers\ClientController;
+use App\Http\Controllers\DashboardController;
 
 use PHPJasper\PHPJasper; 
 
@@ -137,9 +138,7 @@ Route::get('/reporteParametros', function () {
 Route::get('/', [App\Http\Controllers\HomeController::class, 'index'])->name('home');//->middleware('verified');
 //->middleware('verified');
 
-Route::get('/dash', function () {
-    return view('dash.index');
-})->name('dashboard');
+Route::get('dashboard', [DashboardController::class, 'index'])->name('dashboard');
 
 //Auth::routes(['verify' => true]);
 //Categorias

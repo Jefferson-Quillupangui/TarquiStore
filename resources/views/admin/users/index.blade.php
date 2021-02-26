@@ -66,4 +66,42 @@
             }   
         });
     </script>
+    <script type="text/javascript">
+        $('.op-desactivar').submit(function(e){
+        e.preventDefault();
+
+        Swal.fire({
+            title: '¿Está seguro de desactivar el usuario?',
+            text: "El usuario quedará sin acceso al sistema!",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#17A2B8',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Confirmar',
+            cancelButtonText:   'Cancelar'
+            }).then((result) => {
+                if (result.value) {
+                        this.submit();
+                }
+        })
+    })
+    $('.op-activar').submit(function(e){
+        e.preventDefault();
+
+        Swal.fire({
+            title: '¿Está seguro de activar el usuario?',
+            text: "El usuario tendrá acceso al sistema!",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#17A2B8',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Confirmar',
+            cancelButtonText:   'Cancelar'
+            }).then((result) => {
+                if (result.value) {
+                        this.submit();
+                }
+        })
+    })
+    </script>
 @stop 

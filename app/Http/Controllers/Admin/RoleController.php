@@ -116,7 +116,7 @@ class RoleController extends Controller
         //Elimina permisos de un rol y vuelve a ingresar los que hayan seleccionado
         $role->permissions()->sync($request->permissions);
 
-        return redirect()->route('admin.roles.edit',$role)->with('status','El rol se actualizó correctamente.');
+        return redirect()->route('admin.roles.index')->with('status','El rol se actualizó correctamente.');
     }
 
     /**

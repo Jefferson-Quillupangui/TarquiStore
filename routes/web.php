@@ -16,7 +16,7 @@ use App\Http\Controllers\SectorsController;
 use App\Http\Controllers\StatusOrderController;
 use App\Http\Controllers\TypesIdentificationController;
 use App\Http\Controllers\ClientController;
-use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\Dashboard\DashboardController;
 
 use PHPJasper\PHPJasper; 
 

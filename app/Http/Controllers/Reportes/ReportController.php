@@ -18,8 +18,11 @@ class ReportController extends Controller
     }
 
 
-    public function OrdenPDF($id){
+    public function OrdenPDF(Request $request){
+        //$id){
 
+            $id = $request->txt_id_cab_orden;
+           
         $orders = Order::join("sectors AS b","orders.sector_cod","=","b.codigo")
         ->join("city_sales AS c","orders.city_sale_cod","=","c.codigo")
         ->join("order_statuses AS d","orders.order_status_cod","=","d.codigo")
@@ -78,7 +81,7 @@ class ReportController extends Controller
   
        // return response()->json(['data' => $orders]);
         $pdf = PDF::loadView('pdfReport.orden', compact('orders','detalle_orders'));
-         return $pdf->stream('orden.pdf');///download descargar directo   ///stream   previsulizar antes de desdarcagar
+         return $pdf->download('000'.$id.'_orden.pdf');///download descargar directo   ///stream   previsulizar antes de desdarcagar
        
     }
 

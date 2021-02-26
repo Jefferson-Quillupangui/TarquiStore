@@ -40,77 +40,78 @@
 
 @section('content_header')
 
-<div class="card card-cyan collapsed-card">
-    <div class="card-header">
-        <h4 class="card-title" style="margin: 0px 0px 0px 0px;"> <i class="fas fa-search"></i> Buscar Pedidos</h4>
-      <div class="card-tools">
-        <button type="button" class="btn btn-tool mt-0" data-card-widget="collapse" ><i class="fas fa-plus"></i></button>
-      </div>
-    </div>
-    <div class="card-body">
-        <div class="row">
+    <div class="card card-cyan collapsed-card">
+        <div class="card-header">
+            <h4 class="card-title" style="margin: 0px 0px 0px 0px;"> <i class="fas fa-search"></i> Buscar Pedidos</h4>
+            <div class="card-tools">
+                <button type="button" class="btn btn-tool mt-0" data-card-widget="collapse"><i
+                        class="fas fa-plus"></i></button>
+            </div>
+        </div>
+        <div class="card-body">
+            <div class="row">
 
-            <div class="col-md-5">
-                <label for="name_client">Buscar Pedido:</label>
-                <div class="input-group mb-3">
-                    <div class="input-group-prepend">
-                        <span class="input-group-text">
-                            <i class="fa fa-clipboard"></i>
-                        </span>
-                    </div>
-                    <input type="search" class="form-control" placeholder="Buscar Pedido" aria-label="Search"
-                        aria-describedby="search-addon" id_orden=0 id="textbuscarPedido" disabled />
-                    <div class="input-group-append">
-                        <div class="input-group-text" type="button" id="btn-buscar-pedido"><i class="fa fa-search"></i>
+                <div class="col-md-5">
+                    <label for="name_client">Buscar Pedido:</label>
+                    <div class="input-group mb-3">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text">
+                                <i class="fa fa-clipboard"></i>
+                            </span>
+                        </div>
+                        <input type="search" class="form-control" placeholder="Buscar Pedido" aria-label="Search"
+                            aria-describedby="search-addon" id_orden=0 id="textbuscarPedido" disabled />
+                        <div class="input-group-append">
+                            <div class="input-group-text" type="button" id="btn-buscar-pedido"><i class="fa fa-search"></i>
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
 
-            <div class="col-md-5 ">
-                <label for="orderStatus">Estado de Pedido : </label>
-                <div class="input-group mb-4">
-                    <div class="input-group-prepend">
-                        <span class="input-group-text" id="basic-sector"><i
-                                class="fa fa-exclamation-triangle"></i></span>
-                    </div>
-                    @can('Administrar pedidos')
-                        <select id="orderStatus" name="orderStatus" class="form-control" disabled>
-                            <option value=0 disabled>------Seleccionar------</option>
-                            @foreach ($orderStatus as $estado)
-                                <option value="{{ $estado->codigo }}">{{ $estado->name }}</option>
-                                {{-- <option selected="true" value="{{$sector->codigo}}"> {{$sector->name}} </option> --}}
-                            @endforeach
-                        </select>
-                    @else
-                        <select id="orderStatus" name="orderStatus" class="form-control" disabled>
-                            <option value=0 disabled>------Seleccionar------</option>
-                            @foreach ($orderStatus as $estado)
-                                @if ($estado->codigo != 'OE')
+                <div class="col-md-5 ">
+                    <label for="orderStatus">Estado de Pedido : </label>
+                    <div class="input-group mb-4">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text" id="basic-sector"><i
+                                    class="fa fa-exclamation-triangle"></i></span>
+                        </div>
+                        @can('Administrar pedidos')
+                            <select id="orderStatus" name="orderStatus" class="form-control" disabled>
+                                <option value=0 disabled>------Seleccionar------</option>
+                                @foreach ($orderStatus as $estado)
                                     <option value="{{ $estado->codigo }}">{{ $estado->name }}</option>
-                                @endif
+                                    {{-- <option selected="true" value="{{$sector->codigo}}"> {{$sector->name}} </option> --}}
+                                @endforeach
+                            </select>
+                        @else
+                            <select id="orderStatus" name="orderStatus" class="form-control" disabled>
+                                <option value=0 disabled>------Seleccionar------</option>
+                                @foreach ($orderStatus as $estado)
+                                    @if ($estado->codigo != 'OE')
+                                        <option value="{{ $estado->codigo }}">{{ $estado->name }}</option>
+                                    @endif
 
-                                {{-- <option value="{{$sector->codigo}}"> {{$sector->name}} </option> --}}
-                            @endforeach
-                        </select>
+                                    {{-- <option value="{{$sector->codigo}}"> {{$sector->name}} </option> --}}
+                                @endforeach
+                            </select>
 
-                    @endcan
+                        @endcan
+                    </div>
                 </div>
-            </div>
 
-            <div class="col-md-2 ">
-                <label for="orderStatus">Procesar </label>
-                <div class="form-group row ">
-                    <form action="{{ route('orden.procesar') }}" id="form-procesar-orden" method="POST">
-                        <input type="hidden" name="_token" id="token_procesar" value="{{ csrf_token() }}">
-                        <button class="btn btn-info " id="btn-procesar-orden" type="button"> <i class="fas fa-save"></i>
-                            Procesar Orden</button>
-                    </form>
+                <div class="col-md-2 ">
+                    <label for="orderStatus">Procesar </label>
+                    <div class="form-group row ">
+                        <form action="{{ route('orden.procesar') }}" id="form-procesar-orden" method="POST">
+                            <input type="hidden" name="_token" id="token_procesar" value="{{ csrf_token() }}">
+                            <button class="btn btn-info " id="btn-procesar-orden" type="button"> <i class="fas fa-save"></i>
+                                Procesar Orden</button>
+                        </form>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
-  </div>
 
     {{-- <div class="row mb-4">
         <div class="col-md-6">
@@ -145,7 +146,7 @@
             <form action="{{ route('stock.product') }}" id="form-stock-productos"></form>
             <div class="form-group">
 
-                <div class="row">
+                <div class="row d-none">
 
                     <div class="input-group mb-3">
                         ID :<input type="text" id="txt_id_cab_orden" name="txt_id_cab_orden" value=0 disabled>
@@ -184,9 +185,7 @@
                             <div class="input-group-prepend">
                                 <span class="input-group-text" id="basic-addon1"><i class="fa fa-id-card"></i></span>
                             </div>
-                            {!! Form::text('identification', null, ['class' => 'form-control' .
-                            ($errors->has('identification') ? ' is-invalid' : ''), 'placeholder' => 'Identificación', 'id'
-                            => 'textidentification', 'disabled']) !!}
+                            {!! Form::text('identification', null, ['class' => 'form-control' . ($errors->has('identification') ? ' is-invalid' : ''), 'placeholder' => 'Identificación', 'id' => 'textidentification', 'disabled']) !!}
                         </div>
                     </div>
                 </div>
@@ -205,28 +204,28 @@
                                 </div>
 
                                 {!! Form::text('phone1', null, [
-                                'class' =>
-                                'form-control' .
-                                ($errors->has('phone1')
-                                ? '
+    'class' =>
+        'form-control' .
+        ($errors->has('phone1')
+            ? '
                                 is-invalid'
-                                : ''),
-                                'placeholder' => 'Telefono 1',
-                                'id' => 'textphone1',
-                                'disabled',
-                                ]) !!}
+            : ''),
+    'placeholder' => 'Telefono 1',
+    'id' => 'textphone1',
+    'disabled',
+]) !!}
 
                                 {!! Form::text('phone2', null, [
-                                'class' =>
-                                'form-control' .
-                                ($errors->has('phone2')
-                                ? '
+    'class' =>
+        'form-control' .
+        ($errors->has('phone2')
+            ? '
                                 is-invalid'
-                                : ''),
-                                'placeholder' => 'Telefono 2',
-                                'id' => 'textphone2',
-                                'disabled',
-                                ]) !!}
+            : ''),
+    'placeholder' => 'Telefono 2',
+    'id' => 'textphone2',
+    'disabled',
+]) !!}
 
 
                             </div>
@@ -253,16 +252,16 @@
                                         aria-hidden="true"></i></span>
                             </div>
                             {!! Form::text('email', null, [
-                            'class' =>
-                            'form-control' .
-                            ($errors->has('email')
-                            ? '
+    'class' =>
+        'form-control' .
+        ($errors->has('email')
+            ? '
                             is-invalid'
-                            : ''),
-                            'placeholder' => 'Email',
-                            'id' => 'textEmail',
-                            'disabled',
-                            ]) !!}
+            : ''),
+    'placeholder' => 'Email',
+    'id' => 'textEmail',
+    'disabled',
+]) !!}
                         </div>
                     </div>
                 </div>
@@ -362,12 +361,12 @@
                                     <span class="input-group-text"><i class="fa fa-map-marker"></i></span>
                                 </div>
                                 {!! Form::textarea('address_delivery', null, [
-                                'class' => 'form-control' . ($errors->has('address_delivery') ? ' is-invalid' : ''),
-                                'placeholder' => 'Ingrese direccion ',
-                                'rows' => '2',
-                                'id' => 'textaddressdelivery',
-                                'spellcheck' => 'false',
-                                ]) !!}
+    'class' => 'form-control' . ($errors->has('address_delivery') ? ' is-invalid' : ''),
+    'placeholder' => 'Ingrese direccion ',
+    'rows' => '2',
+    'id' => 'textaddressdelivery',
+    'spellcheck' => 'false',
+]) !!}
                             </div>
                             @error('address_delivery')
                                 <span class="invalid-feedback">
@@ -385,12 +384,12 @@
                                     <span class="input-group-text"><i class="fa fa-sticky-note"></i></span>
                                 </div>
                                 {!! Form::textarea('textObservacion', null, [
-                                'class' => 'form-control' . ($errors->has('textObservacion') ? ' is-invalid' : ''),
-                                'placeholder' => 'Ingrese observacion',
-                                'rows' => '2',
-                                'id' => 'textObservacion',
-                                'spellcheck' => 'false',
-                                ]) !!}
+    'class' => 'form-control' . ($errors->has('textObservacion') ? ' is-invalid' : ''),
+    'placeholder' => 'Ingrese observacion',
+    'rows' => '2',
+    'id' => 'textObservacion',
+    'spellcheck' => 'false',
+]) !!}
                             </div>
                             @error('textObservacion')
                                 <span class="invalid-feedback">
@@ -586,8 +585,9 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title" id="staticBackdropLabel">Lista de clientes</h5>
-                    {{-- <button type="button" class="btn-close" data-bs-dismiss="modal"
-                        aria-label="Close"></button> --}}
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">×</span>
+                    </button>
                 </div>
                 <div class="modal-body">
                     <div class="row">
@@ -610,8 +610,9 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title" id="staticBackdropLabel">Lista de Productos</h5>
-                    {{-- <button type="button" class="btn-close" data-bs-dismiss="modal"
-                     aria-label="Close"></button> --}}
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">×</span>
+                    </button>
                 </div>
                 <div class="modal-body">
                     <div class="row">
@@ -632,8 +633,9 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title" id="staticBackdropLabel">Lista de Pedidos</h5>
-                    {{-- <button type="button" class="btn-close" data-bs-dismiss="modal"
-                  aria-label="Close"></button> --}}
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">×</span>
+                    </button>
                 </div>
                 <div class="modal-body">
                     <div class="row">
@@ -650,7 +652,7 @@
 @stop
 
 @section('js')
-    <script type="text/javascript" src="{{ asset('/plugin_tabullator/dist/js/tabulator.min.js') }}"></script>
-    <script type="text/javascript" src="{{ asset('js/adminlte/pedidos/pedidos.js?vs=10') }}"></script>
+    {{-- <script type="text/javascript" src="{{ asset('/plugin_tabullator/dist/js/tabulator.min.js') }}"></script> --}}
+    <script type="text/javascript" src="{{ asset('js/adminlte/pedidos/pedidos.js?vs=11') }}"></script>
 
 @stop

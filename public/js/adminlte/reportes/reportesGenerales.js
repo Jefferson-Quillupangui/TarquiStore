@@ -410,6 +410,42 @@ $(document).ready(function () {
     });
 
     /**
+     * DEscargar PDF Ventas Por Vendedor
+     */
+    $(document).on("click", "#download-reportes_V_X_V-pdf",function(){
+       
+        var anio = $('#anio_order').val();
+        var mes =  $('select[id="select-mes"] option:selected').text();
+        const fecha = new Date();
+
+        if(table_ventas_x_vendedor.getData().length === 0){
+            $.toast({
+                heading: 'Error',
+                text: 'No hay datos para generar archivo',
+                showHideTransition: 'fade',
+                icon: 'error',
+                position: 'top-right',
+            })
+           return false;
+          } else{
+              
+            //downloadToTab
+            table_ventas_x_vendedor.download("pdf", mes+"_"+anio+"_VentasPorVendedor.pdf", {
+                orientation:"portrait ", //set page orientation to portrait
+                title:"Ventas Por Vendedor  - Mes :  "+mes+"  - Año : "+anio,
+                autoTable:{
+                    margin: {top: 50},
+                },
+                documentProcessing:function(doc){
+                    //carry out an action on the doc object
+                }
+            
+            });
+          }
+       
+    });
+
+    /**
      * Funcion para ver la lista de productos vendidos
      */
     function ListaProductosVendidos($opcion, $mes, $anio){
@@ -467,6 +503,42 @@ $(document).ready(function () {
           }else{
             table_list_productos_vendidos.download("xlsx", anio+"_"+mes+"_"+"Lista_Productos_Vendidos.xlsx", {sheetName:anio+" "+mes+" "+"ProductVendidos"});
           }
+    });
+
+    /**
+     * DEscargar PDF Lista Productos Vendidos
+     */
+    $(document).on("click", "#download-reportes_Lista_Product_Vendidos-pdf",function(){
+       
+        var anio = $('#anio_order').val();
+        var mes =  $('select[id="select-mes"] option:selected').text();
+        const fecha = new Date();
+
+        if(table_list_productos_vendidos.getData().length === 0){
+            $.toast({
+                heading: 'Error',
+                text: 'No hay datos para generar archivo',
+                showHideTransition: 'fade',
+                icon: 'error',
+                position: 'top-right',
+            })
+           return false;
+          } else{
+              
+            //downloadToTab
+            table_list_productos_vendidos.download("pdf", mes+"_"+anio+"_ListaProductosVendidos.pdf", {
+                orientation:"portrait ", //set page orientation to portrait
+                title:"Lista de Productos Vendidos  - Mes :  "+mes+"  - Año : "+anio,
+                autoTable:{
+                    margin: {top: 50},
+                },
+                documentProcessing:function(doc){
+                    //carry out an action on the doc object
+                }
+            
+            });
+          }
+       
     });
 
      /**
@@ -528,9 +600,45 @@ $(document).ready(function () {
             table_ventas_diaras_por_mes.download("xlsx", anio+"_"+mes+"_"+"Ventas_DiariasPorMes.xlsx", {sheetName:anio+" "+mes+" "+"Ventas Diaras"});
           }
     });
+
+    /**
+     * DEscargar PDF Pedidos Entregados
+     */
+    $(document).on("click", "#download-reportes_Ventas_Diaras_X_Mes-pdf",function(){
+       
+        var anio = $('#anio_order').val();
+        var mes =  $('select[id="select-mes"] option:selected').text();
+        const fecha = new Date();
+
+        if(table_ventas_diaras_por_mes.getData().length === 0){
+            $.toast({
+                heading: 'Error',
+                text: 'No hay datos para generar archivo',
+                showHideTransition: 'fade',
+                icon: 'error',
+                position: 'top-right',
+            })
+           return false;
+          } else{
+              
+            //downloadToTab
+            table_ventas_diaras_por_mes.download("pdf", mes+"_"+anio+"_VentasDiarias.pdf", {
+                orientation:"portrait ", //set page orientation to portrait
+                title:"Ventas Diarias  - Mes :  "+mes+"  - Año : "+anio,
+                autoTable:{
+                    margin: {top: 50},
+                },
+                documentProcessing:function(doc){
+                    //carry out an action on the doc object
+                }
+            
+            });
+          }
+       
+    });
     
     /**
-     * Funcion para Ver Ventas Diarias Por Mes
+     * Funcion para Ver Ventas Diarias Categoria
      */
     function VentasPorCategoria($opcion, $mes, $anio){
         $.ajax({
@@ -558,7 +666,11 @@ $(document).ready(function () {
                         //footer: '<a href>Why do I have this issue?</a>'
                     });
                 } else {
-                    table_ventas_por_categorias.replaceData(response);
+                    // $("#myTextarea").val(JSON.stringify(response));
+                    $("#txt_mes").val($mes);
+                    $("#txt_anio").val($anio);
+                   
+                    table_ventas_por_categorias.replaceData(response);  
                 }
     
             }, complete: function () {
@@ -588,6 +700,42 @@ $(document).ready(function () {
           }else{
             table_ventas_por_categorias.download("xlsx", anio+"_"+mes+"_"+"Ventas_Por_Categoria.xlsx", {sheetName:anio+" "+mes+" "+"Ventas X Categoria"});
           }
+    });
+
+    /**
+     * DEscargar PDF Ventas Por Categoria
+     */
+    $(document).on("click", "#download-reportes_Ventas_X_Categorias-pdf",function(){
+       
+        var anio = $('#anio_order').val();
+        var mes =  $('select[id="select-mes"] option:selected').text();
+        const fecha = new Date();
+
+        if(table_ventas_por_categorias.getData().length === 0){
+            $.toast({
+                heading: 'Error',
+                text: 'No hay datos para generar archivo',
+                showHideTransition: 'fade',
+                icon: 'error',
+                position: 'top-right',
+            })
+           return false;
+          } else{
+              
+            //downloadToTab
+            table_ventas_por_categorias.download("pdf", mes+"_"+anio+"_VentaPorCategoria.pdf", {
+                orientation:"portrait", //set page orientation to portrait
+                title:"Ventas Por Categoria  - Mes :  "+mes+"  - Año : "+anio,
+                autoTable:{
+                    margin: {top: 50},
+                },
+                documentProcessing:function(doc){
+                    //carry out an action on the doc object
+                }
+            
+            });
+          }
+       
     });
 
     /**
@@ -651,5 +799,40 @@ $(document).ready(function () {
           }
     });
     
+    /**
+     * Descargar PDF Pedidos Entregados
+     */
+    $(document).on("click", "#download-reportes_Pedidos_Entregados-pdf",function(){
+       
+        var anio = $('#anio_order').val();
+        var mes =  $('select[id="select-mes"] option:selected').text();
+        const fecha = new Date();
+
+        if(table_pedidos_entregados.getData().length === 0){
+            $.toast({
+                heading: 'Error',
+                text: 'No hay datos para generar archivo',
+                showHideTransition: 'fade',
+                icon: 'error',
+                position: 'top-right',
+            })
+           return false;
+          } else{
+              
+            //downloadToTab
+            table_pedidos_entregados.download("pdf", mes+"_"+anio+"_PedidosEntregados.pdf", {
+                orientation:"landscape", //set page orientation to portrait
+                title:"Pedidos Entregados  - Mes :  "+mes+"  - Año : "+anio,
+                autoTable:{
+                    margin: {top: 50},
+                },
+                documentProcessing:function(doc){
+                    //carry out an action on the doc object
+                }
+            
+            });
+          }
+       
+    });
 
 });

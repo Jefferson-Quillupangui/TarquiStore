@@ -375,7 +375,8 @@ $(document).ready(function () {
     //trigger download of data.xlsx file
     document.getElementById("download-comision-generales-xlsx").addEventListener("click", function(){
         var tb_comisiones_generales = table_comisiones_generales.getData();
-        var mes = $('#select-mes').val();
+        //var mes = $('#select-mes').val();
+        var mes =  $('select[id="select-mes"] option:selected').text();
         const fecha = new Date();
 
         if(mes == ""){
@@ -408,7 +409,8 @@ $(document).ready(function () {
      * DEscargar PDF comisiones por usuario 
      */
     $(document).on("click", "#download-comision-generales-pdf",function(){
-        var mes = $('#select-mes').val();
+        var anio = $('#anio_order').val();
+        var mes =  $('select[id="select-mes"] option:selected').text();
         const fecha = new Date();
 
         if(mes == ""){
@@ -433,9 +435,10 @@ $(document).ready(function () {
            return false;
           } else{
               //console.log(table_comisiones_colaboradores.getData());
-              table_comisiones_generales.download("pdf", mes+"_"+fecha+".pdf", {
+            
+              table_comisiones_generales.download("pdf", mes+"_"+anio+"_ComisionesGenerales.pdf", {
                 orientation:"portrait", //set page orientation to portrait
-                title:"Comisiones - Generales : "+mes, //add title to report
+                title:"Comisiones - Generales  - Mes :  "+mes+"  - Año : "+anio, //add title to report
             });
           }
        

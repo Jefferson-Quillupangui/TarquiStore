@@ -190,6 +190,10 @@ Route::get('reporteProductosVendidos',  [MisReportesController::class, 'ListaPro
 Route::get('reporteVentasDiaras',  [MisReportesController::class, 'VentasDiariasxMes' ])->name('reporteVentasDiaras');
 Route::get('reporteVentasPorCategorias',  [MisReportesController::class, 'VentasPorCategoria' ])->name('reporteVentasPorCategorias');
 Route::get('reportePedidosEntregados',  [MisReportesController::class, 'PedidosEntregados' ])->name('reportePedidosEntregados');
+
+Route::POST('reportesPdf',  [MisReportesController::class, 'ReportesPdf' ])->name('reportesPdf');
+
+
     
 
 //Listar pedidos
@@ -201,7 +205,13 @@ Route::get('list_auditoria_json',  [ListaPedidosController::class, 'listaAuditor
 
 //PDF Reportes
 Route::get('reporte_orden', [ReportController::class, 'PDF' ])->name('reporte.orden');
-Route::get('reporte_orden_datos/{id}', [ReportController::class, 'OrdenPDF' ])->name('reporte.orden.datos');
+Route::post('reporte_orden_datos_post', [ReportController::class, 'OrdenPDF' ])->name('reporte_post.orden.datos');
+//Route::get('reporte_orden_datos/{id}', [ReportController::class, 'OrdenPDF' ])->name('reporte.orden.datos');
+
+
+
+
+
 //Route::post('reporte_orden_datos', [ReportController::class, 'ordenDatosPDF' ])->name('reporte.orden.datos');
 
 //Route::get('reporte_orden_datos', [ReportController::class, 'ordenDatosPDF' ])->name('reporte.orden.datos');

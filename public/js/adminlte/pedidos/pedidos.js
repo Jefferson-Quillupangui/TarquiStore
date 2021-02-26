@@ -226,7 +226,8 @@ $(document).ready(function () {
             height:"311px",
             layout:"fitColumns",
             ajaxURL:  $('#form-listarclientes').attr("action"),
-            ajaxProgressiveLoad:"scroll",
+            ajaxProgressiveLoad:"load",
+            //ajaxProgressiveLoad:"scroll",
             paginationSize:20,
             placeholder:"No hay datos que mostrar",
             columns:[
@@ -245,14 +246,14 @@ $(document).ready(function () {
                                 $("#modal-buscarpersona").modal("hide");
                             }},
                 {title:"ID", field:"id", sorter:"string", width:0, headerFilter:"input",visible:false},
-                {title:"Identificación", field:"identification", sorter:"string", width:130, headerFilter:"input"},
-                {title:"Nombre", field:"name", sorter:"string", width:200, headerFilter:"input"},
-                {title:"Apellidos", field:"last_name", sorter:"string", width:200, headerFilter:"input"},
-                {title:"Dirección", field:"address", sorter:"string", width:200, headerFilter:"input" },
-                {title:"Telefono1", field:"phone1", sorter:"string", width:200, headerFilter:"input"},
-                {title:"Telefono2", field:"phone2", sorter:"string", width:200, headerFilter:"input"},
-                {title:"Email", field:"email", sorter:"string", width:200, headerFilter:"input"},
-                {title:"Tipo de documento", field:"name_document", sorter:"string", width:200, headerFilter:"input"},
+                {title:"Identificación", field:"identification", sorter:"string", width:130, headerFilter:"input", headerFilterPlaceholder:"Identificación"},
+                {title:"Nombre", field:"name", sorter:"string", width:200, headerFilter:"input",  headerFilterPlaceholder:"Buscar Nombre"},
+                {title:"Apellidos", field:"last_name", sorter:"string", width:200, headerFilter:"input",  headerFilterPlaceholder:"Buscar Apellidos"},
+                {title:"Dirección", field:"address", sorter:"string", width:200, headerFilter:"input" ,  headerFilterPlaceholder:"Buscar Dirección"},
+                {title:"Telefono1", field:"phone1", sorter:"string", width:200, headerFilter:"input",  headerFilterPlaceholder:"Buscar Telefono1"},
+                {title:"Telefono2", field:"phone2", sorter:"string", width:200, headerFilter:"input",  headerFilterPlaceholder:"Buscar Telefono2"},
+                {title:"Email", field:"email", sorter:"string", width:200, headerFilter:"input",  headerFilterPlaceholder:"Buscar Email"},
+                {title:"Tipo de documento", field:"name_document", sorter:"string", width:200, headerFilter:"input",  headerFilterPlaceholder:"Buscar Tipo de documento"},
               
               
             ],
@@ -311,18 +312,21 @@ $(document).ready(function () {
                   }
               }
           },
-          {title:"ID DET", field:"id_detalle_product", sorter:"number", width:80},
+          {title:"ID DET", field:"id_detalle_product", sorter:"number", width:0,visible:false},
           {title:"ID_PROCT", field:"product_id", sorter:"number", width:80},
           // {title:"id_product", field:"id_product", sorter:"string"},
           {title:"NOMBRE PRODUCTO", field:"name_product", sorter:"string"},
           {title:"CANTIDAD", field:"quantity", sorter:"number", validator:["min:1", "max:10000", "numeric"],hozAlign:"center",editor:"input",
           cellEdited :function(cell){
 
+            console.log(cell.getData());
             let cantidad_product = cell.getData().quantity;
             let rpt_func_stock= 0;
             rpt_func_stock = consultarStockProducto(cell.getData().product_id);
            if( rpt_func_stock < parseInt(cantidad_product) ){
              alert("Actualmente solo hay en stock la cantidad : "+rpt_func_stock);
+             document.getElementById('btn-modal-buscar-producto').disabled=true;
+             document.getElementById('btn-generarorden').disabled=true;
              const get_data_detalle_nueva = table_detalle_factura.getData();
 
           //    for (var i in get_data_detalle_nueva) {
@@ -347,12 +351,25 @@ $(document).ready(function () {
                 let id_cell = cell.getData().product_id;
                 let v_cantidad =  cell.getData().quantity;
                 parseInt(v_cantidad);
+                let v_descuento =  cell.getData().price_discount;
+                parseFloat(v_descuento);
                 let v_precio_unitario =  cell.getData().price;
                 parseFloat(v_precio_unitario);
     
                 let v_comission = cell.getData().comission;
     
+                let v_total_descuento = parseInt(v_cantidad)*parseFloat(v_descuento) ;
                 var v_final_total = parseInt(v_cantidad)*parseFloat(v_precio_unitario) ;
+
+                if(parseFloat(v_descuento) > 0){
+                    let v_total_Menos_descuento =  parseFloat(v_final_total) - parseFloat(v_total_descuento);
+                    v_final_total = parseFloat(v_final_total) - parseFloat(v_total_Menos_descuento);
+                }else{
+                  v_final_total = v_final_total;
+                }
+                
+                
+                
                 var v_total_comission = parseInt(v_cantidad)*parseFloat(v_comission) ;
                 //parseFloat(v_precio_unitario) = parseInt(v_cantidad)*parseFloat(v_precio_unitario);
     
@@ -387,13 +404,13 @@ $(document).ready(function () {
                 
                 total_prod += parseFloat(get_data_detalle[i].total_line);
                 total_comis += parseFloat(get_data_detalle[i].total_comission);
-    
-                
-                  
+      
               }
     
               $("#txtTotalOrden").val(total_prod.toFixed(2));
               $("#txt_totalComision").val(total_comis.toFixed(2));
+              document.getElementById('btn-modal-buscar-producto').disabled=false;
+              document.getElementById('btn-generarorden').disabled=false;
            }
             // .then(function(datosDevueltos){// Aquí el código para hacer algo con datosDevueltos
             //   rpt_func_stock = datosDevueltos;
@@ -627,8 +644,8 @@ $(document).ready(function () {
                                  let bandera = true;
  
                                   const get_data_detalle = table_detalle_factura.getData();
-                                  if( get_data_detalle.length != 0){
- 
+                                  //if( get_data_detalle.length != 0 || array_detalle_factura_eliminados.length > 0 ){
+                                  if( get_data_detalle.length != 0  ){
                                      for (var i in get_data_detalle) {
                                        /* caso de que ubira sido elimindao*/
                                        if( (array_detalle_factura_eliminados.length) > 0  && ( get_data_detalle[i].product_id !== id_prod ) ){
@@ -661,7 +678,7 @@ $(document).ready(function () {
 
                                                 //delete array_detalle_factura_eliminados[x];
                                                 array_detalle_factura_eliminados.splice(array_detalle_factura_eliminados[x], 1);
-                                                console.log(array_detalle_factura_eliminados[x]);
+                                                //console.log(array_detalle_factura_eliminados[x]);
                                                 const uno = table_detalle_factura.getData();
                   
                                                 var total = 0;
@@ -671,8 +688,8 @@ $(document).ready(function () {
                                                   total += parseFloat(uno[i].total_line)
                                                 }
                             
-                                                $("#txtTotalOrden").val(total);
-                                                $("#txt_totalComision").val(total_comi);
+                                                $("#txtTotalOrden").val(total.toFixed(2));
+                                                $("#txt_totalComision").val(total_comi.toFixed(2));
                             
 
                                                 $("#modal-buscarProducto").modal("hide");
@@ -683,7 +700,7 @@ $(document).ready(function () {
                                           }
                                           
                                        }//caso normal
-                                       else if(get_data_detalle[i].product_id === id_prod ){
+                                       if(get_data_detalle[i].product_id === id_prod ){
                                             $.toast({
                                               heading: 'Warning',
                                                text: 'El producto ya se encuentra en la lista. Seleccione otro Producto',
@@ -695,8 +712,7 @@ $(document).ready(function () {
                                          return false;
                                         }
                                      }
- 
-                                     if(bandera != false){
+                                      if(bandera != false){
                                        table_detalle_factura.updateOrAddData([
                                            {
                                              id_detalle_product :0,
@@ -713,7 +729,78 @@ $(document).ready(function () {
                                        ]);
                                      }
  
-                                  }else{
+                                  } 
+                                  else if(array_detalle_factura_eliminados.length > 0){
+                                    /**Agregado en el caso q se borren
+                                    *  todos los elemento y queden en memoria
+                                    */
+                                      for (var x in array_detalle_factura_eliminados){
+                                        if(array_detalle_factura_eliminados[x].product_id === id_prod ){
+                                            $.toast({
+                                              heading: 'Information',
+                                              text: 'El producto seleccionado se agregara con la cantidad que antes tenia',
+                                              showHideTransition: 'fade',
+                                              icon: 'info',
+                                              position: 'top-right'
+                                          })
+                                          //console.log(array_detalle_factura_eliminados[x]);
+
+                                            table_detalle_factura.updateOrAddData([
+                                              {
+                                                id_detalle_product :array_detalle_factura_eliminados[x].id_detalle_product,
+                                                product_id : array_detalle_factura_eliminados[x].product_id,
+                                                name_product : array_detalle_factura_eliminados[x].name_product,
+                                                quantity : array_detalle_factura_eliminados[x].quantity,
+                                                price :  array_detalle_factura_eliminados[x].price,
+                                                discount_porcentage : array_detalle_factura_eliminados[x].discount_porcentage,
+                                                price_discount : array_detalle_factura_eliminados[x].price_discount,
+                                                comission : array_detalle_factura_eliminados[x].comission,
+                                                total_comission : array_detalle_factura_eliminados[x].total_comission,
+                                                total_line : array_detalle_factura_eliminados[x].total_line
+                                              }
+                                            ]);
+
+                                            //delete array_detalle_factura_eliminados[x];
+                                            array_detalle_factura_eliminados.splice(array_detalle_factura_eliminados[x], 1);
+                                            //console.log(array_detalle_factura_eliminados[x]);
+                                            const uno = table_detalle_factura.getData();
+              
+                                            var total = 0;
+                                            var total_comi = 0;
+                                            for (var i in uno) {
+                                              total_comi += parseFloat(uno[i].total_comission);
+                                              total += parseFloat(uno[i].total_line)
+                                            }
+                        
+                                            $("#txtTotalOrden").val(total.toFixed(2));
+                                            $("#txt_totalComision").val(total_comi.toFixed(2));
+                        
+
+                                            $("#modal-buscarProducto").modal("hide");
+                                          bandera = false;
+                                          return false;
+
+                                        }
+                                      }
+                                      if(bandera != false){
+                                        table_detalle_factura.updateOrAddData([
+                                            {
+                                              id_detalle_product :0,
+                                              product_id : obj.id,
+                                              name_product : obj.name,
+                                              quantity : 0,//obj.quantity,
+                                              price :  obj.price,
+                                              discount_porcentage : obj.discount,
+                                              price_discount : obj.price_discount,
+                                              comission : obj.comission,
+                                              total_comission : obj.comission,
+                                              total_line : 0
+                                            }
+                                        ]);
+                                      }
+                                   }
+                                  else{
+                                    console.log("else");
                                      table_detalle_factura.updateOrAddData([
                                        {
                                          id_detalle_product :0,
@@ -747,13 +834,41 @@ $(document).ready(function () {
                                 // $("#textbuscarcliente").attr("codigocliente", cell.getRow().getData().id);
                             
                             }},
-      {title:"Id", field:"id"},
-      {title:"Nombre Producto", field:"name", width:200,headerFilter:"input"},
-      {title:"Precio", field:"price", sorter:"number"},
-      {title:"Comision", field:"comission"},
+      {title:"Codigo", field:"id"},
+      {title:"Nombre Producto", field:"name", width:190,headerFilter:"input", headerFilterPlaceholder:"Buscar Producto"},
+      {title:"Precio", field:"price", sorter:"number", formatter:"money", formatterParams:{
+        decimal:".",
+        thousand:".",
+        symbol:"$",
+        symbolAfter:false,
+        precision:2,
+        }
+      },
+      {title:"Comision", field:"comission", formatter:"money", formatterParams:{
+        decimal:".",
+        thousand:".",
+        symbol:"$",
+        symbolAfter:false,
+        precision:2,
+        }
+      },
       {title:"Cantidad", field:"quantity"},
-      {title:"% DESCT", field:"discount"},
-      {title:"PVP DESCT", field:"price_discount"},
+      {title:"% DESCT", field:"discount",  formatter:"money", formatterParams:{
+            decimal:".",
+            thousand:".",
+            symbol:"%",
+            symbolAfter:"p",
+            precision:false,
+        }
+      },
+      {title:"PVP DESCT", field:"price_discount", formatter:"money", formatterParams:{
+        decimal:".",
+        thousand:".",
+        symbol:"$",
+        symbolAfter:false,
+        precision:2,
+        }
+      },
       //{title:"Date Of Birth", field:"dob", hozAlign:"center"},
       ],
   

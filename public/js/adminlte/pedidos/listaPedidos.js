@@ -193,6 +193,7 @@ $(document).ready(function () {
                                      $("#txtTotalComision").val("$ "+cell.getRow().getData().total_comission);
                                       const id_order_cab = cell.getRow().getData().id;
                                       cargarDetalleOrden(id_order_cab);
+                                      document.getElementById('generar-pdf-orden').disabled=false;
                                      $("#modal-buscarRevisionPedido").modal("hide");
                                     
     

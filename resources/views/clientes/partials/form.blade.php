@@ -23,6 +23,15 @@
                     <span class="input-group-text" id="basic-addon1"><i class="far fa-list-alt"></i></span>
                 </div>
                     {!! Form::select('type_identification', $type_identification,0,['class' => 'custom-select']) !!}
+
+                {{-- <select class="form-control" name="type_identification">
+                    <option value="">Ninguna</option>
+                    @foreach ($type_identification as $typeid)
+                        <option value="{{$typeid->codigo}}">{{$typeid->name}}</option>
+                        <option value="{{$typeid->codigo}}">{{$typeid->name}}</option>
+                    @endforeach
+                </select> --}}
+
                 @error('type_identification')
                 <span class="invalid-feedback">
                     <strong>{{$message}}</strong>

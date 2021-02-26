@@ -55,10 +55,14 @@
                             <td>
                                 <div class="row mr-1" style="justify-content: flex-end">
                                     <form action="{{route('admin.roles.destroy',$role)}}" method="POST" class="op-eliminar">
-                                        <a class="btn btn-secondary" href="{{route('admin.roles.edit',$role)}}"><i class="fas fa-edit"></i></a>
+                                        
                                         @method('delete')
                                         @csrf
-                                        <button class="btn btn-danger" type="submit"><i class="fas fa-trash"></i></button>
+                                        <div class="btn-group mr-1">
+                                            <a class="btn btn-secondary" href="{{route('admin.roles.edit',$role)}}"><i class="fas fa-edit"></i></a>
+                                            <button class="btn btn-danger" type="submit"><i class="fas fa-trash"></i></button>
+                                        </div>
+                                        
                                     </form>
                                 </div>
                             </td>

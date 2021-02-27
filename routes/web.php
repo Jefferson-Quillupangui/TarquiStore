@@ -138,9 +138,15 @@ Route::get('/reporteParametros', function () {
 Route::get('/', [App\Http\Controllers\HomeController::class, 'index'])->name('home');//->middleware('verified');
 //->middleware('verified');
 
+//Dashboard General
 Route::get('dashboard', [DashboardController::class, 'index'])->name('dashboard');
 Route::post('top_product', [DashboardController::class, 'topProduct'])->name('top.product');
 Route::post('cliente_genero', [DashboardController::class, 'clientesGenero'])->name('cliente_genero');
+
+//Dashboard User
+Route::get('MiDashboard', [DashboardController::class, 'indexUser'])->name('dashboard.user');
+Route::post('top_product_user', [DashboardController::class, 'topProductUser'])->name('top.user.product');
+Route::post('top_categories_user', [DashboardController::class, 'topCategorytUser'])->name('top.user.category');
 
 //Auth::routes(['verify' => true]);
 //Categorias

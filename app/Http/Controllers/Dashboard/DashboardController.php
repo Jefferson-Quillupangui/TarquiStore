@@ -44,7 +44,7 @@ class DashboardController extends Controller
         $month = $startDate->format('m');
         $year = $startDate->format('Y');
 
-        $product = DB::select('call sp_con_graficos(?,?,?,?)',  array("AA", "", $year , $month));
+        $product = DB::select('call sp_con_graficos(?,?,?,?)',  array("AA", 0 , $year , $month));
 
         if (empty($product)) {
             $product = 0;
@@ -65,7 +65,7 @@ class DashboardController extends Controller
         $month = $startDate->format('m');
         $year = $startDate->format('Y');
 
-        $clientes = DB::select('call sp_con_graficos(?,?,?,?)',  array("AB", "", $year , $month));
+        $clientes = DB::select('call sp_con_graficos(?,?,?,?)',  array("AB", 0, $year , $month));
 
         if (empty($clientes)) {
             $clientes = 0;
@@ -73,7 +73,7 @@ class DashboardController extends Controller
             $clientes = $clientes;
         }
 
-        
+        //return response()->json($clientes, 200);
         return response(json_encode($clientes),200)->header('content-type','text/plaint');
     }
 
@@ -108,6 +108,42 @@ class DashboardController extends Controller
         ->where('order_status_cod','=', 'OC' ,'and' ,'delivery_date','BETWEEN', $primerDiaMes,'and' , $ultimoDiaMes)
         ->first();
 
-        return view('dash.dashboard',compact('order_p','order_r','order_e','order_c'));
+        return view('dash.mydashboard',compact('order_p','order_r','order_e','order_c'));
+    }
+
+    public function topProductUser(){
+
+        $startDate = Carbon::now();
+        $month = $startDate->format('m');
+        $year = $startDate->format('Y');
+        $idUser = auth()->id();
+
+        $product = DB::select('call sp_con_graficos(?,?,?,?)',  array("AC", $idUser , $year , $month));
+
+        if (empty($product)) {
+            $product = 0;
+        } else {
+            $product = $product;
+        }
+
+        return response(json_encode($product),200)->header('content-type','text/plaint');
+    }
+
+    public function topCategorytUser(){
+
+        $startDate = Carbon::now();
+        $month = $startDate->format('m');
+        $year = $startDate->format('Y');
+        $idUser = auth()->id();
+        
+        $category = DB::select('call sp_con_graficos(?,?,?,?)',  array("AD", $idUser , $year , $month));
+
+        if (empty($category)) {
+            $category = 0;
+        } else {
+            $category = $category;
+        }
+
+        return response(json_encode($category),200)->header('content-type','text/plaint');
     }
 }

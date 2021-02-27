@@ -241,7 +241,7 @@ return [
         ],
         [
             'text' => 'My Dashboard',
-            'url'  => '#',
+            'route'  => 'dashboard.user',
             'icon' => 'fas fa-tachometer-alt',
         ],
         [

@@ -7,7 +7,7 @@
 @stop
 
 @section('content_header')
-  <h1 class="m-0 text-dark">Dashboard</h1>
+  <h1 class="m-0 text-dark">Mi Dashboard</h1>
 @stop
 
 @section('content')
@@ -127,8 +127,8 @@
             <div class="card-header ui-sortable-handle" style="cursor: move;">
 
               <h3 class="card-title">
-                <i class="far fa-user-circle"></i>
-                Clientes
+                <i class="fas fa-tags"></i>
+                Categorias más vendidas
               </h3>
 {{-- 
               <div class="card-tools">
@@ -194,7 +194,7 @@
 
   //Petición de productos
   $.ajax({
-  url:  'top_product',//"{{route('top.product')}}", // 'top_product',
+  url:  'top_product_user',//"{{route('top.product')}}", // 'top_product',
   method: 'POST',
   data:{
     _token: $('input[name="_token"]').val()
@@ -276,7 +276,7 @@
 
   //Petición de productos
   $.ajax({
-  url: '/cliente_genero',
+  url: '/top_categories_user',
   method: 'POST',
   data:{
     _token: $('input[name="_token"]').val()
@@ -284,11 +284,11 @@
   }).done(function(res){
 
     var arreglo = JSON.parse(res);
-
+    
     for(var x=0;x<arreglo.length;x++){
 
-      genero.push(arreglo[x].genero);
-      cantidad.push(arreglo[x].cantidad);
+      genero.push(arreglo[x].name);
+      cantidad.push(arreglo[x].cantidad_vendidos);
     }
     generarGrafica2(); //Generar grafica con datos del arreglo
     //alert(res);

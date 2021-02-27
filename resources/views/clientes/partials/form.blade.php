@@ -95,27 +95,8 @@
                     <strong>{{$message}}</strong>
                 </span>
                 @enderror 
-            </div>  
-        </div>
-        <div class="col-md-5">
-            <label for="address">Dirección:</label>
-            <div class="input-group mb-3 ">
-                <div class="input-group resize:none">
-                    <div class="input-group-prepend">
-                      <span class="input-group-text"><i class="fas fa-keyboard"></i></span>
-                    </div>
-                    {!! Form::textarea('address',null,['class' => 'form-control' . ($errors->has('address') ? ' is-invalid' : ''), 'placeholder' => 'Ingrese dirección del cliente', 'rows' => '4']) !!}
-                    @error('address')
-                    <span class="invalid-feedback">
-                        <strong>{{$message}}</strong>
-                    </span>
-                    @enderror                 
-                </div>
-            </div>  
-        </div>
-    </div>
-    <div class="row">
-        <div class="col-md-5">
+            </div>
+
             <label for="email">Correo electrónico:</label>
             <div class="input-group mb-3">
                 <div class="input-group-prepend">
@@ -128,7 +109,45 @@
                 </span>
                 @enderror 
             </div>   
+
         </div>
+        <div class="col-md-5">
+            <label for="sex">Sexo</label>
+            <div class="input-group mb-3">
+                <div class="input-group-prepend">
+                    <span class="input-group-text" id="basic-addon1"><i class="far fa-list-alt"></i></span>
+                </div>
+                {{-- <select class="form-control" name="sex" value="{{$client->sex}}">
+                        <option value="H">Hombre</option>
+                        <option value="M">Mujer</option>
+                </select> --}}
+                {!! Form::select('sex', ['H' => 'Hombre', 'M' => 'Mujer'], null, ['class' => 'form-control']) !!}
+
+                @error('sex')
+                <span class="invalid-feedback">
+                    <strong>{{$message}}</strong>
+                </span>
+                @enderror 
+            </div>
+            <label for="address">Dirección:</label>
+            <div class="input-group mb-3 ">
+                <div class="input-group resize:none">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text"><i class="fas fa-keyboard"></i></span>
+                    </div>
+                    {!! Form::textarea('address',null,['class' => 'form-control' . ($errors->has('address') ? ' is-invalid' : ''), 'placeholder' => 'Ingrese dirección del cliente', 'rows' => '4']) !!}
+                    @error('address')
+                    <span class="invalid-feedback">
+                        <strong>{{$message}}</strong>
+                    </span>
+                    @enderror                 
+                </div>
+            </div>    
+        </div>
+
+    </div>
+    <div class="row">
+
     </div>
 </div>
 

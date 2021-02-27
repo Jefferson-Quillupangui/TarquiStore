@@ -68,6 +68,7 @@ class ClientController extends Controller
             'phone1'            => $request->phone1,
             'phone2'            => $request->phone2,
             'email'             => $request->email,
+            'sex'               => $request->sex,
             'type_identification_cod' => $request->type_identification,
         ]);
 
@@ -108,6 +109,7 @@ class ClientController extends Controller
      */
     public function update(Request $request,Client $client)
     {
+        
         //Validación de datos
         $request->validate([
             'identification'            => 'unique:clients,identification,'.$client->id,
@@ -136,6 +138,7 @@ class ClientController extends Controller
             'phone1'            => $request->phone1,
             'phone2'            => $request->phone2,
             'email'             => $request->email,
+            'sex'               => $request->sex,
             'type_identification_cod' => $request->type_identification,
         ]);
 

@@ -293,7 +293,7 @@ $(document).ready(function () {
 
                   if( cell.getData().id_detalle_product != 0){
                     array_detalle_factura_eliminados.push(cell.getData());
-                   // console.log(array_detalle_factura_eliminados);
+                    console.log(array_detalle_factura_eliminados);
                   }
                   
                   cell.getRow().delete();
@@ -646,12 +646,13 @@ $(document).ready(function () {
                                   const get_data_detalle = table_detalle_factura.getData();
                                   //if( get_data_detalle.length != 0 || array_detalle_factura_eliminados.length > 0 ){
                                   if( get_data_detalle.length != 0  ){
+
                                      for (var i in get_data_detalle) {
                                        /* caso de que ubira sido elimindao*/
                                        if( (array_detalle_factura_eliminados.length) > 0  && ( get_data_detalle[i].product_id !== id_prod ) ){
                                         console.log("for de otro array de memoria");
                                           for (var x in array_detalle_factura_eliminados){
-                                            if(array_detalle_factura_eliminados[x].product_id === id_prod ){
+                                            if( array_detalle_factura_eliminados[x].product_id === id_prod || parseInt(array_detalle_factura_eliminados[x].product_id) === id_prod ){
                                                 $.toast({
                                                   heading: 'Information',
                                                   text: 'El producto seleccionado se agregara con la cantidad que antes tenia',
@@ -677,7 +678,8 @@ $(document).ready(function () {
                                                 ]);
 
                                                 //delete array_detalle_factura_eliminados[x];
-                                                array_detalle_factura_eliminados.splice(array_detalle_factura_eliminados[x], 1);
+                                                //array_detalle_factura_eliminados.splice(array_detalle_factura_eliminados[x], 1);
+                                                array_detalle_factura_eliminados.splice(x,1);
                                                 //console.log(array_detalle_factura_eliminados[x]);
                                                 const uno = table_detalle_factura.getData();
                   
@@ -700,7 +702,7 @@ $(document).ready(function () {
                                           }
                                           
                                        }//caso normal
-                                       if(get_data_detalle[i].product_id === id_prod ){
+                                       if( get_data_detalle[i].product_id === id_prod || parseInt(get_data_detalle[i].product_id) === id_prod ){
                                             $.toast({
                                               heading: 'Warning',
                                                text: 'El producto ya se encuentra en la lista. Seleccione otro Producto',
@@ -735,7 +737,7 @@ $(document).ready(function () {
                                     *  todos los elemento y queden en memoria
                                     */
                                       for (var x in array_detalle_factura_eliminados){
-                                        if(array_detalle_factura_eliminados[x].product_id === id_prod ){
+                                        if( array_detalle_factura_eliminados[x].product_id === id_prod || parseInt(array_detalle_factura_eliminados[x].product_id) === id_prod ){
                                             $.toast({
                                               heading: 'Information',
                                               text: 'El producto seleccionado se agregara con la cantidad que antes tenia',
@@ -745,6 +747,7 @@ $(document).ready(function () {
                                           })
                                           //console.log(array_detalle_factura_eliminados[x]);
 
+                                         
                                             table_detalle_factura.updateOrAddData([
                                               {
                                                 id_detalle_product :array_detalle_factura_eliminados[x].id_detalle_product,
@@ -760,9 +763,10 @@ $(document).ready(function () {
                                               }
                                             ]);
 
-                                            //delete array_detalle_factura_eliminados[x];
-                                            array_detalle_factura_eliminados.splice(array_detalle_factura_eliminados[x], 1);
-                                            //console.log(array_detalle_factura_eliminados[x]);
+                                            
+                                            array_detalle_factura_eliminados.splice(x,1);
+                                            
+                                            //console.log(array_detalle_factura_eliminados);
                                             const uno = table_detalle_factura.getData();
               
                                             var total = 0;
@@ -834,7 +838,7 @@ $(document).ready(function () {
                                 // $("#textbuscarcliente").attr("codigocliente", cell.getRow().getData().id);
                             
                             }},
-      {title:"Codigo", field:"id"},
+      {title:"Codigo", field:"id",headerFilter:"input", headerFilterPlaceholder:"Codigo"},
       {title:"Nombre Producto", field:"name", width:190,headerFilter:"input", headerFilterPlaceholder:"Buscar Producto"},
       {title:"Precio", field:"price", sorter:"number", formatter:"money", formatterParams:{
         decimal:".",

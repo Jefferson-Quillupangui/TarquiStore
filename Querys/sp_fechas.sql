@@ -34,7 +34,7 @@ SET fecha_incremento = fecha_Inicial;
 #SET var_cantidad_pedidos = (SELECT DISTINCT(a.delivery_date) FROM orders as a WHERE  order_status_cod='OE' AND a.delivery_date = '2021-02-01' GROUP BY a.delivery_date);
 
 #Create a temporaty table to store every day of a month
-CREATE TEMPORARY TABLE examen.tmp_dias_mes(
+CREATE TEMPORARY TABLE tmp_dias_mes(
 id INT,
 dia_mes DATE,
 cantidad_ordenes int,
@@ -55,15 +55,15 @@ ELSE
     
 END IF;
 
-INSERT INTO examen.tmp_dias_mes (id,dia_mes,cantidad_ordenes,total_ordenes) values(var_inicio, fecha_incremento, var_cantidad_ordenes, var_total_orden);
+INSERT INTO tmp_dias_mes (id,dia_mes,cantidad_ordenes,total_ordenes) values(var_inicio, fecha_incremento, var_cantidad_ordenes, var_total_orden);
 SET fecha_incremento = DATE_ADD(fecha_incremento, INTERVAL 1 DAY);
 SET var_inicio = var_inicio + 1;
 END WHILE;
 
 #Show the temporary table
-SELECT * FROM examen.tmp_dias_mes;
+SELECT * FROM tmp_dias_mes;
 
 #Drop the temporary table
 
-DROP TABLE examen.tmp_dias_mes;
+DROP TABLE tmp_dias_mes;
 END

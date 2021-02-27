@@ -139,6 +139,8 @@ Route::get('/', [App\Http\Controllers\HomeController::class, 'index'])->name('ho
 //->middleware('verified');
 
 Route::get('dashboard', [DashboardController::class, 'index'])->name('dashboard');
+Route::post('top_product', [DashboardController::class, 'topProduct'])->name('top.product');
+Route::post('cliente_genero', [DashboardController::class, 'clientesGenero'])->name('cliente_genero');
 
 //Auth::routes(['verify' => true]);
 //Categorias

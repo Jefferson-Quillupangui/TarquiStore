@@ -240,6 +240,11 @@ return [
             'icon' => 'fas fa-tachometer-alt',
         ],
         [
+            'text' => 'My Dashboard',
+            'url'  => '#',
+            'icon' => 'fas fa-tachometer-alt',
+        ],
+        [
             'text'    => 'Usuarios',
             'icon'    => 'fas fa-users',
             'submenu' =>  [

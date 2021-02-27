@@ -764,6 +764,12 @@ $(document).ready(function () {
                                             ]);
 
                                             
+                                            // La segunda opción pasa por hacer una llamada a la función splice() 
+                                            // pasándole dos parámetros: el primero será el índice a partir del cual 
+                                            // queremos borrar elementos y, el segundo, el número de elementos que 
+                                            // queremos borrar a partir de la posición dada:
+
+                                            //   array.splice(1,1);
                                             array_detalle_factura_eliminados.splice(x,1);
                                             
                                             //console.log(array_detalle_factura_eliminados);

@@ -53,6 +53,11 @@ class RouteServiceProvider extends ServiceProvider
             ->namespace($this->namespace)
             ->group(base_path('routes/admin.php'));
 
+           
+            Route::middleware('web')->
+            namespace($this->namespace)
+            ->group(base_path('routes/apiValidacion.php'));
+
         });
     }
 

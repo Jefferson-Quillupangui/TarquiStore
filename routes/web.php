@@ -11,6 +11,7 @@ use App\Http\Controllers\Reportes\ReportesController;
 use App\Http\Controllers\Reportes\ReportController;
 use App\Http\Controllers\Reportes\MisReportesController;
 use App\Http\Controllers\Comisiones\ComisionesController;
+use App\Http\Controllers\Validacion\DocumentoController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\SectorsController;
 use App\Http\Controllers\StatusOrderController;
@@ -20,7 +21,7 @@ use App\Http\Controllers\Dashboard\DashboardController;
 
 use PHPJasper\PHPJasper; 
 
-
+use App\Actions\Fortify\CreateNewUser;
 
 
 Route::get('/compilarReporte', function () {
@@ -181,6 +182,8 @@ Route::resource( 'type_identifications', TypesIdentificationController::class)
     ->names('type_identification');
 //Clientes
 Route::resource('clients', ClientController::class)->names('clients');
+//Route::get('validar/Identificacion',  [ClientController::class, 'validarIdentificacion' ])->name('validar.identificacion');
+
 
 //Comisiones index
 Route::get('list_comission',  [ComisionesController::class, 'index' ])->name('list_comission');
@@ -215,6 +218,11 @@ Route::get('list_auditoria_json',  [ListaPedidosController::class, 'listaAuditor
 Route::get('reporte_orden', [ReportController::class, 'PDF' ])->name('reporte.orden');
 Route::post('reporte_orden_datos_post', [ReportController::class, 'OrdenPDF' ])->name('reporte_post.orden.datos');
 //Route::get('reporte_orden_datos/{id}', [ReportController::class, 'OrdenPDF' ])->name('reporte.orden.datos');
+
+//validacion para el tipo de documento
+//Route::get('validar/Identificacion',  [DocumentoController::class, 'validarIdentificacion' ])->name('validar.identificacion');
+//Route::get('validar/Identificacion',  [CreateNewUser::class, 'validarIdentificacion' ])->name('validar.identificacion');
+
 
 
 

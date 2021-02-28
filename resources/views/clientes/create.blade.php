@@ -12,13 +12,16 @@
 @stop
 
 @section('content')
+<form action="{{ route('validar.identificacion') }}" id="form-validar-identificacion" class="d-none"></form>
+
+
     <div class="card">
         <div class="card-body">
             {!! Form::open(['route' => 'clients.store', 'id' => 'formulario']) !!}
                 
                 @include('clientes.partials.form')  
 
-                {!! Form::submit('Guardar', ['class' => 'btn btn-info mt-2']) !!}   
+                {!! Form::submit('Guardar', ['class' => 'btn btn-info mt-2', 'id'=>'btn-guardar']) !!}   
                 
                 <a class="btn btn-link "
                     href="{{ route('clients.index') }}">
@@ -32,4 +35,5 @@
 
 @section('js')
         <script type="text/javascript" src="{{ asset("js/adminlte/validacion/identificacion.js") }}"></script>
+        <script type="text/javascript" src="{{ asset("js/adminlte/validacion/verificacionDocumento.js") }}"></script>
 @stop

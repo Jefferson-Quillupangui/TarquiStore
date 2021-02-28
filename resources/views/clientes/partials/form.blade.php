@@ -22,7 +22,7 @@
                 <div class="input-group-prepend">
                     <span class="input-group-text" id="basic-addon1"><i class="far fa-list-alt"></i></span>
                 </div>
-                    {!! Form::select('type_identification', $type_identification,0,['class' => 'custom-select']) !!}
+                    {!! Form::select('type_identification', $type_identification,0,['class' => 'custom-select','id' => 'input-tipo-identificacion']) !!}
 
                 {{-- <select class="form-control" name="type_identification">
                     <option value="">Ninguna</option>

@@ -9,6 +9,10 @@ use App\Models\TypeIdentification;
 use Tavo\ValidadorEc;
 
 
+
+///use Illuminate\Support\Facades\Input;
+
+
 class ClientController extends Controller
 {
     
@@ -30,6 +34,7 @@ class ClientController extends Controller
      */
     public function create()
     {
+
         $type_identification = TypeIdentification::orderBy('codigo', 'asc')->pluck('name','codigo');
         $client = new Client;
 
@@ -43,40 +48,66 @@ class ClientController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
-    {   
-        //Validación de campos
-        $request->validate([
-            'identification'            => 'unique:clients,identification',
-            'name'                      => 'required',
-            'last_name'                 => 'required',
-            'address'                   => 'required',
-            'phone1'                    => 'required',
-            'type_identification'       => 'required',
-        ], 
-        [
-            'identification.unique'         => 'La identificación ya existe en el sistema',
-            'name.required'                 => 'Ingrese el nombre del cliente',
-            'last_name.required'            => 'Ingrese el apellido del cliente',
-            'address.required'              => 'Ingrese la dirección del cliente',
-            'phone1'                        => 'Ingrese un teléfono de contacto',
-            'type_identification.required'  => 'Ingrese un tipo de identificación',
-        ]);
+    {  
+         
+      /// dd($request->all());
+        // Validación de campos
+        // $request->validate([
+        //     'identification'            => 'unique:clients,identification',
+        //     'name'                      => 'required',
+        //     'last_name'                 => 'required',
+        //     'address'                   => 'required',
+        //     'phone1'                    => 'required',
+        //     'type_identification'       => 'required',
+        // ], 
+        // [
+        //     'identification.unique'         => 'La identificación ya existe en el sistema',
+        //     'name.required'                 => 'Ingrese el nombre del cliente',
+        //     'last_name.required'            => 'Ingrese el apellido del cliente',
+        //     'address.required'              => 'Ingrese la dirección del cliente',
+        //     'phone1'                        => 'Ingrese un teléfono de contacto',
+        //     'type_identification.required'  => 'Ingrese un tipo de identificación',
+        // ]);
+         
+     
+        
+         $cod_identificacion = $request->identification;
+            //dd($request->all());
+      
+        if($cod_identificacion == NULL){
+           
+            $client = Client::create([
+                'identification'    => "",// $request->identification,
+                'name'              => $request->name,
+                'last_name'         => $request->last_name,
+                'address'           => $request->address,
+                'phone1'            => $request->phone1,
+                'phone2'            => $request->phone2,
+                'email'             => $request->email,
+                'sex'               => $request->sex,
+                'type_identification_cod' => "05",
+             ]);
 
-        //Crear categoria
-        $client = Client::create([
-            'identification'    => $request->identification,
-            'name'              => $request->name,
-            'last_name'         => $request->last_name,
-            'address'           => $request->address,
-            'phone1'            => $request->phone1,
-            'phone2'            => $request->phone2,
-            'email'             => $request->email,
-            'sex'               => $request->sex,
-            'type_identification_cod' => $request->type_identification,
-        ]);
-
-        return redirect()->route('clients.index')
+             return redirect()->route('clients.index')
                     ->with('status','El cliente se registró correctamente');
+        }else{
+              // //Crear categoria
+            $client = Client::create([
+                'identification'    => empty($cod_identificacion) ? "" : $request->identification,// $request->identification,
+                'name'              => $request->name,
+                'last_name'         => $request->last_name,
+                'address'           => $request->address,
+                'phone1'            => $request->phone1,
+                'phone2'            => $request->phone2,
+                'email'             => $request->email,
+                'sex'               => $request->sex,
+                'type_identification_cod' => empty($cod_identificacion) ? "05" : $request->type_identification,
+             ]);
+
+             return redirect()->route('clients.index')
+                    ->with('status','El cliente se registró correctamente');
+        }
+     
     }
 
      /**
@@ -114,39 +145,74 @@ class ClientController extends Controller
     {
         
         //Validación de datos
-        $request->validate([
-            'identification'            => 'unique:clients,identification,'.$client->id,
-            'name'                      => 'required',
-            'last_name'                 => 'required',
-            'address'                   => 'required',
-            'phone1'                    => 'required',
-            'type_identification'       => 'required',
-        ], 
-        [
-            'identification.unique'         => 'La identificación ya existe en el sistema',
-            'name.required'                 => 'Ingrese el nombre del cliente',
-            'last_name.required'            => 'Ingrese el apellido del cliente',
-            'address.required'              => 'Ingrese la dirección del cliente',
-            'phone1'                        => 'Ingrese un teléfono de contacto',
-            'type_identification.required'  => 'Ingrese un tipo de identificación',
-        ]);
+        // $request->validate([
+        //     'identification'            => 'unique:clients,identification,'.$client->id,
+        //     'name'                      => 'required',
+        //     'last_name'                 => 'required',
+        //     'address'                   => 'required',
+        //     'phone1'                    => 'required',
+        //     'type_identification'       => 'required',
+        // ], 
+        // [
+        //     'identification.unique'         => 'La identificación ya existe en el sistema',
+        //     'name.required'                 => 'Ingrese el nombre del cliente',
+        //     'last_name.required'            => 'Ingrese el apellido del cliente',
+        //     'address.required'              => 'Ingrese la dirección del cliente',
+        //     'phone1'                        => 'Ingrese un teléfono de contacto',
+        //     'type_identification.required'  => 'Ingrese un tipo de identificación',
+        // ]);
 
+
+        $cod_identificacion = $request->identification;
+
+        if($cod_identificacion == NULL){
+            $client->update([
+                'identification'    => "",// $request->identification,
+                'name'              => $request->name,
+                'last_name'         => $request->last_name,
+                'address'           => $request->address,
+                'phone1'            => $request->phone1,
+                'phone2'            => $request->phone2,
+                'email'             => $request->email,
+                'sex'               => $request->sex,
+                'type_identification_cod' => "05",
+             ]);
+
+             return redirect()->route('clients.index',$client)
+             ->with('status','El cliente se actualizó correctamente.');
+        }else{
+            //Actualizar datos en la tabla
+            $client->update([
+                'identification'    => $request->identification,
+                'name'              => $request->name,
+                'last_name'         => $request->last_name,
+                'address'           => $request->address,
+                'phone1'            => $request->phone1,
+                'phone2'            => $request->phone2,
+                'email'             => $request->email,
+                'sex'               => $request->sex,
+                'type_identification_cod' => $request->type_identification,
+            ]);
+
+            return redirect()->route('clients.index',$client)
+                    ->with('status','El cliente se actualizó correctamente.');
+        }
 
         //Actualizar datos en la tabla
-        $client->update([
-            'identification'    => $request->identification,
-            'name'              => $request->name,
-            'last_name'         => $request->last_name,
-            'address'           => $request->address,
-            'phone1'            => $request->phone1,
-            'phone2'            => $request->phone2,
-            'email'             => $request->email,
-            'sex'               => $request->sex,
-            'type_identification_cod' => $request->type_identification,
-        ]);
+        // $client->update([
+        //     'identification'    => $request->identification,
+        //     'name'              => $request->name,
+        //     'last_name'         => $request->last_name,
+        //     'address'           => $request->address,
+        //     'phone1'            => $request->phone1,
+        //     'phone2'            => $request->phone2,
+        //     'email'             => $request->email,
+        //     'sex'               => $request->sex,
+        //     'type_identification_cod' => $request->type_identification,
+        // ]);
 
-        return redirect()->route('clients.index',$client)
-                ->with('status','El cliente se actualizó correctamente.');
+        // return redirect()->route('clients.index',$client)
+        //         ->with('status','El cliente se actualizó correctamente.');
     }
 
     /**

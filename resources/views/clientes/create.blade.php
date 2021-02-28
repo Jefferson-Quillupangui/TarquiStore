@@ -21,7 +21,7 @@
                 
                 @include('clientes.partials.form')  
 
-                {!! Form::submit('Guardar', ['class' => 'btn btn-info mt-2', 'id'=>'btn-guardar']) !!}   
+                {!! Form::submit('Guardar', ['class' => 'btn btn-info mt-2', 'id'=>'btn-guardar', 'guardar' => 1]) !!}   
                 
                 <a class="btn btn-link "
                     href="{{ route('clients.index') }}">

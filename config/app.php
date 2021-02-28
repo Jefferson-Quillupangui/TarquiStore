@@ -182,6 +182,7 @@ return [
 
         // ...
         Intervention\Image\ImageServiceProvider::class,
+     //   Illuminate\Support\Facades\Input::class,
 
 
        
@@ -241,7 +242,8 @@ return [
         // ...
         'Image' => Intervention\Image\Facades\Image::class,
         'PDF' => Barryvdh\DomPDF\Facade::class,
-
+        'Input' => Illuminate\Support\Facades\Input::class,
+        
     ],
 
 ];

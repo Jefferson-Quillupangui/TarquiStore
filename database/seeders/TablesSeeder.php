@@ -158,6 +158,14 @@ class TablesSeeder extends Seeder
             'name' => 'Ver reportes' 
         ]);
 
+        Permission::create([
+            'name' => 'Dashboard General' 
+        ]);
+
+        Permission::create([
+            'name' => 'Dashboard user' 
+        ]);
+
         //Admin
         $admin = Role::create(['name' => 'Administrador']);
 
@@ -170,6 +178,7 @@ class TablesSeeder extends Seeder
             'Administrar usuarios',
             'Administrar roles',
             'Ver reportes',
+            'Dashboard General',
         ]);
 
         //Admin
@@ -181,7 +190,8 @@ class TablesSeeder extends Seeder
             'Ingresar pedidos',
             'Editar pedidos',
             'Listar pedidos',
-            'Cancelar pedidos'
+            'Cancelar pedidos',
+            'Dashboard user'
         ]);
 
     }

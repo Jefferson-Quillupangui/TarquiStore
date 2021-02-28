@@ -139,12 +139,12 @@ Route::get('/', [App\Http\Controllers\HomeController::class, 'index'])->name('ho
 //->middleware('verified');
 
 //Dashboard General
-Route::get('dashboard', [DashboardController::class, 'index'])->name('dashboard');
+Route::get('dashboard', [DashboardController::class, 'index'])->middleware('can:Dashboard General')->name('dashboard');
 Route::post('top_product', [DashboardController::class, 'topProduct'])->name('top.product');
 Route::post('cliente_genero', [DashboardController::class, 'clientesGenero'])->name('cliente_genero');
 
 //Dashboard User
-Route::get('MiDashboard', [DashboardController::class, 'indexUser'])->name('dashboard.user');
+Route::get('MiDashboard', [DashboardController::class, 'indexUser'])->middleware('can:Dashboard user')->name('dashboard.user');
 Route::post('top_product_user', [DashboardController::class, 'topProductUser'])->name('top.user.product');
 Route::post('top_categories_user', [DashboardController::class, 'topCategorytUser'])->name('top.user.category');
 
@@ -163,22 +163,25 @@ Route::get('detalle_orders', [PedidosController::class, 'detalleOrders_json' ])-
 Route::get('stock_product', [PedidosController::class, 'stock_product_json' ])->name('stock.product');
 Route::post('generate_order', [PedidosController::class, 'createOrden' ])->name('orden.create');
 Route::post('procesar_order', [PedidosController::class, 'ProcesarOrden' ])->name('orden.procesar');
+
+//RUTAS MANTENIMIENTO
 //Ciudades
 Route::resource('cities', CityController::class)
-    ->except(['show'])
+    ->except(['show'])->middleware('can:Mantenimiento')
     ->names('ciudades');
 //Sectores
 Route::resource('sectors', SectorsController::class)
-    ->except(['show'])
+    ->except(['show'])->middleware('can:Mantenimiento')
     ->names('sectors');
 //Estados de orden
 Route::resource( 'status_order', StatusOrderController::class)
-    ->except(['show'])
+    ->except(['show'])->middleware('can:Mantenimiento')
     ->names('status_order');
 //Tipos de identificación
 Route::resource( 'type_identifications', TypesIdentificationController::class)
-    ->except(['show'])
+    ->except(['show'])->middleware('can:Mantenimiento')
     ->names('type_identification');
+
 //Clientes
 Route::resource('clients', ClientController::class)->names('clients');
 
@@ -191,7 +194,7 @@ Route::get('buscar_comisiones_colaboradores', [ComisionesController::class, 'com
 Route::get('list_colaboradores_json', [ComisionesController::class, 'verListaColaboradores' ])->name('list_colaboradores_json');
     
 //Reportes index
-Route::get('reporteComision',  [MisReportesController::class, 'index' ])->name('reporteComision');
+Route::get('reporteComision',  [MisReportesController::class, 'index' ])->middleware('can:Ver reportes')->name('reporteComision');
 Route::get('reporteComprasCliente',  [MisReportesController::class, 'ComprasPorCliente' ])->name('reporteComprasCliente');
 Route::get('reporteVentasPorVendedor',  [MisReportesController::class, 'VentasPorVendedor' ])->name('reporteVentasPorVendedor');
 Route::get('reporteProductosVendidos',  [MisReportesController::class, 'ListaProductosVendidos' ])->name('reporteProductosVendidos');

@@ -238,24 +238,29 @@ return [
             'text' => 'Dashboard',
             'route'  => 'dashboard',
             'icon' => 'fas fa-tachometer-alt',
+            'can'  => 'Dashboard General',
         ],
         [
-            'text' => 'My Dashboard',
+            'text' => 'Mi Dashboard',
             'route'  => 'dashboard.user',
             'icon' => 'fas fa-tachometer-alt',
+            'can'  => 'Dashboard user',
         ],
         [
             'text'    => 'Usuarios',
             'icon'    => 'fas fa-users',
+            'can'    => 'Administrar usuarios',
             'submenu' =>  [
                 [
                     'text'  => 'Lista de roles',
                     'route' => 'admin.roles.index',
+                    'can'   =>  'Administrar roles',
                     'active' => ['admin/roles*']
                 ],
                 [
-                    'text'  => 'Usuarios',
-                    'route' => 'admin.users.index',
+                    'text'   => 'Usuarios',
+                    'route'  => 'admin.users.index',
+                    'can'    => 'Administrar usuarios',
                     'active' => ['admin/users*']
                 ],
             ],
@@ -263,6 +268,7 @@ return [
         [
             'text'    => 'Mantenimiento',
             'icon'    => 'fas fa-laptop',
+            'can'     => 'Mantenimiento',
             'submenu' =>  [
                 [
                     'text'  => 'Ciudades',
@@ -333,6 +339,7 @@ return [
         [
             'text'    => 'Reportes',
             'icon'    => 'fas fa-columns',
+            'can'    => 'Ver reportes',
             'submenu' =>  [
                 [
                     'text'  => 'Mis reportes',

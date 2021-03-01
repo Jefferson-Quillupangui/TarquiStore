@@ -77,7 +77,9 @@ class ProductController extends Controller
         //Subida de imagen mediante intervention image pck
         $nombre = Str::random(10).$request->file('image')->getClientOriginalName();
 
-        $ruta = '/home/tarquist/public_html/storage/img'.$nombre;
+        $ruta = storage_path().'\app\public\img/'.$nombre;
+        dd($ruta );
+        //$ruta = '/home/tarquist/public_html/storage/img'.$nombre;
         // storage_path().'\app\public\img/'.$nombre;
         //'/home3/tanmay/public_html/mydomain.com/storage/app'.
         ///$ruta = '/public_html/img/'.$nombre;

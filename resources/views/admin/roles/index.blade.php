@@ -59,8 +59,11 @@
                                         @method('delete')
                                         @csrf
                                         <div class="btn-group mr-1">
-                                            <a class="btn btn-secondary" href="{{route('admin.roles.edit',$role)}}"><i class="fas fa-edit"></i></a>
-                                            <button class="btn btn-danger" type="submit"><i class="fas fa-trash"></i></button>
+                                            {{-- @if($role->name=='Vendedor'||$role->name=='Administrador')
+                                            @else --}}
+                                                <a class="btn btn-secondary" href="{{route('admin.roles.edit',$role)}}"><i class="fas fa-edit"></i></a>
+                                                <button class="btn btn-danger" type="submit"><i class="fas fa-trash"></i></button>
+                                            {{-- @endif --}}
                                         </div>
                                         
                                     </form>

@@ -7,7 +7,6 @@
 @stop
 
 @section('css')
-    <link rel="stylesheet" href="/css/admin_custom.css">
     <style  type="text/css">textarea{ resize : none;}</style>
 @stop
 

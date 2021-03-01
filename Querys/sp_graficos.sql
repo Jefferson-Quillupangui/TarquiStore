@@ -38,6 +38,7 @@ case p_in_opcion
 			where a.order_status_cod = 'OE'
 				and YEAR(a.delivery_date) =  p_in_anio ##'2021' 
 				and  MONTH(a.delivery_date) = p_in_mes##'02'
+				and b.sex <> 'N'
 			group by b.sex; 
             
 		##Top productos mas vendidos por usuario

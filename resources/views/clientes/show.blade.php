@@ -22,8 +22,10 @@
               <div class="imguser" >
                 @if($client->sex=='H') 
                     <img src="{{ asset('/img/man.png') }}" class="float-left rounded-circle mr-2">
-                @else
+                @elseif($client->sex=='M') 
                     <img src="{{ asset('/img/woman.png') }}" class="float-left rounded-circle mr-2">
+                @else 
+                    <img src="https://w7.pngwing.com/pngs/784/809/png-transparent-building-small-business-company-office-corporation-office-icon-insharepics-miscellaneous-blue-text.png" class="float-left rounded-circle mr-2">
                 @endif 
               </div>
 
@@ -39,7 +41,9 @@
               <strong>Identificación</strong>: {{ $client->identification }}<br>
               <strong>Teléfono</strong>:  {{ $client->phone1 }} @if($client->phone2) / {{ $client->phone2 }} @endif <br>
               <strong>Dirección</strong>: {{ $client->address }}<br>
+              @if($client->sex <> 'N')
               <strong>Sexo</strong>:  @if($client->sex=='H') <span class="badge badge-info">Hombre</span> @else <span class="badge badge-danger">Mujer</span> @endif <br>
+              @endif
             </p>
             
           </div>

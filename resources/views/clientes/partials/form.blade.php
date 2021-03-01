@@ -1,7 +1,7 @@
 <div class="form-group">
     <div class="row">
         <div class="col-md-5">
-            <label for="identification">Identificación:</label>
+            <label for="identification">Identificación</label>
             <div class="input-group mb-3">
                 <div class="input-group-prepend">
                     <span class="input-group-text" id="basic-addon1"><i class="fas fa-keyboard"></i></span>
@@ -15,7 +15,7 @@
             </div>
         </div>
         <div class="col-md-5">
-            <label for="type_identification">Tipo de identificación:</label>
+            <label for="type_identification">Tipo de identificación</label>
             <div class="input-group mb-3">
                 <div class="input-group-prepend">
                     <span class="input-group-text" id="basic-addon1"><i class="far fa-list-alt"></i></span>
@@ -49,12 +49,12 @@
     </div>
     <div class="row">
         <div class="col-md-5">
-            <label for="name">Nombre:</label>
+            <label for="name">Nombre(*)</label>
             <div class="input-group mb-3">
                 <div class="input-group-prepend">
                     <span class="input-group-text" id="basic-addon1"><i class="fas fa-keyboard"></i></span>
                 </div>
-                {!! Form::text('name', null, ['class' => 'form-control' . ($errors->has('name') ? ' is-invalid' : ''), 'placeholder' => 'Nombre del cliente']) !!}
+                {!! Form::text('name', null, ['class' => 'form-control' . ($errors->has('name') ? ' is-invalid' : ''), 'placeholder' => 'Nombre del cliente', 'required']) !!}
                 @error('name')
                     <span class="invalid-feedback">
                         <strong>{{ $message }}</strong>
@@ -63,12 +63,12 @@
             </div>
         </div>
         <div class="col-md-5">
-            <label for="last_name">Apellido:</label>
+            <label for="last_name">Apellido(*)</label>
             <div class="input-group mb-3">
                 <div class="input-group-prepend">
                     <span class="input-group-text" id="basic-addon1"><i class="fas fa-keyboard"></i></span>
                 </div>
-                {!! Form::text('last_name', null, ['class' => 'form-control' . ($errors->has('last_name') ? ' is-invalid' : ''), 'placeholder' => 'Apellido del cliente']) !!}
+                {!! Form::text('last_name', null, ['class' => 'form-control' . ($errors->has('last_name') ? ' is-invalid' : ''), 'placeholder' => 'Apellido del cliente', 'required']) !!}
                 @error('last_name')
                     <span class="invalid-feedback">
                         <strong>{{ $message }}</strong>
@@ -79,12 +79,12 @@
     </div>
     <div class="row">
         <div class="col-md-5">
-            <label for="phone1">Teléfono1:</label>
+            <label for="phone1">Teléfono1(*)</label>
             <div class="input-group mb-3">
                 <div class="input-group-prepend">
                     <span class="input-group-text" id="basic-addon1"><i class="fas fa-phone-square"></i></span>
                 </div>
-                {!! Form::number('phone1', null, ['class' => 'form-control' . ($errors->has('phone1') ? ' is-invalid' : ''), 'placeholder' => 'Teléfono del cliente']) !!}
+                {!! Form::number('phone1', null, ['class' => 'form-control' . ($errors->has('phone1') ? ' is-invalid' : ''), 'placeholder' => 'Teléfono del cliente', 'required']) !!}
                 @error('phone1')
                     <span class="invalid-feedback">
                         <strong>{{ $message }}</strong>
@@ -119,7 +119,7 @@
 
         </div>
         <div class="col-md-5">
-            <label for="sex">Sexo</label>
+            <label for="sex">Sexo(*)</label>
             <div class="input-group mb-3">
                 <div class="input-group-prepend">
                     <span class="input-group-text" id="basic-addon1"><i class="far fa-list-alt"></i></span>
@@ -128,7 +128,7 @@
                         <option value="H">Hombre</option>
                         <option value="M">Mujer</option>
                 </select> --}}
-                {!! Form::select('sex', ['H' => 'Hombre', 'M' => 'Mujer'], null, ['class' => 'form-control']) !!}
+                {!! Form::select('sex', ['H' => 'Hombre', 'M' => 'Mujer', 'N' => 'NO APLICA'], null, ['class' => 'form-control']) !!}
 
                 @error('sex')
                     <span class="invalid-feedback">
@@ -136,13 +136,13 @@
                     </span>
                 @enderror
             </div>
-            <label for="address">Dirección:</label>
+            <label for="address">Dirección(*)</label>
             <div class="input-group mb-3 ">
                 <div class="input-group resize:none">
                     <div class="input-group-prepend">
                         <span class="input-group-text"><i class="fas fa-keyboard"></i></span>
                     </div>
-                    {!! Form::textarea('address', null, ['class' => 'form-control' . ($errors->has('address') ? ' is-invalid' : ''), 'placeholder' => 'Ingrese dirección del cliente', 'rows' => '4']) !!}
+                    {!! Form::textarea('address', null, ['class' => 'form-control' . ($errors->has('address') ? ' is-invalid' : ''), 'placeholder' => 'Ingrese dirección del cliente', 'rows' => '4', 'required']) !!}
                     @error('address')
                         <span class="invalid-feedback">
                             <strong>{{ $message }}</strong>

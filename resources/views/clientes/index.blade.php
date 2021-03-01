@@ -54,7 +54,7 @@
             <tbody>
                 @foreach($clients as $client )
                     <tr>
-                        <td>{{ $client->identification}}</td>
+                        <td>@if($client->identification){{ $client->identification}} @else N/A @endif</td>
                         <td>{{ $client->name}} {{ $client->last_name}}</td>
                         {{-- <td>{{ $client->last_name}}</td> --}}
                         <td>{{ $client->phone1." / ".$client->phone2}}</td>

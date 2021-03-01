@@ -68,16 +68,33 @@ class ClientController extends Controller
         //     'phone1'                        => 'Ingrese un teléfono de contacto',
         //     'type_identification.required'  => 'Ingrese un tipo de identificación',
         // ]);
-         
-     
-        
+
          $cod_identificacion = $request->identification;
             //dd($request->all());
       
         if($cod_identificacion == NULL){
+            //dd($request);
+            $request->validate([
+                //'identification'            => 'unique:clients,identification',
+                'name'                      => 'required',
+                'last_name'                 => 'required',
+                'address'                   => 'required',
+                'phone1'                    => 'required',
+                //'type_identification'       => 'required',
+            ], 
+            [
+                //'identification.unique'         => 'La identificación ya existe en el sistema',
+                'name.required'                 => 'Ingrese el nombre del cliente',
+                'last_name.required'            => 'Ingrese el apellido del cliente',
+                'address.required'              => 'Ingrese la dirección del cliente',
+                'phone1'                        => 'Ingrese un teléfono de contacto',
+                //'type_identification.required'  => 'Ingrese un tipo de identificación',
+            ]);
+
+            //dd($request);
            
             $client = Client::create([
-                'identification'    => "",// $request->identification,
+                'identification'    => $request->identification,// $request->identification,
                 'name'              => $request->name,
                 'last_name'         => $request->last_name,
                 'address'           => $request->address,
@@ -91,7 +108,25 @@ class ClientController extends Controller
              return redirect()->route('clients.index')
                     ->with('status','El cliente se registró correctamente');
         }else{
-              // //Crear categoria
+
+            $request->validate([
+                'identification'            => 'unique:clients,identification',
+                'name'                      => 'required',
+                'last_name'                 => 'required',
+                'address'                   => 'required',
+                'phone1'                    => 'required',
+                'type_identification'       => 'required',
+            ], 
+            [
+                'identification.unique'         => 'El cliente ya existe en el sistema',
+                'name.required'                 => 'Ingrese el nombre del cliente',
+                'last_name.required'            => 'Ingrese el apellido del cliente',
+                'address.required'              => 'Ingrese la dirección del cliente',
+                'phone1'                        => 'Ingrese un teléfono de contacto',
+                'type_identification.required'  => 'Ingrese un tipo de identificación',
+            ]);
+
+            //Crear categoria
             $client = Client::create([
                 'identification'    => empty($cod_identificacion) ? "" : $request->identification,// $request->identification,
                 'name'              => $request->name,
@@ -142,8 +177,7 @@ class ClientController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request,Client $client)
-    {
-        
+    {     
         //Validación de datos
         // $request->validate([
         //     'identification'            => 'unique:clients,identification,'.$client->id,
@@ -162,12 +196,25 @@ class ClientController extends Controller
         //     'type_identification.required'  => 'Ingrese un tipo de identificación',
         // ]);
 
-
         $cod_identificacion = $request->identification;
 
         if($cod_identificacion == NULL){
+
+            $request->validate([
+                'name'                      => 'required',
+                'last_name'                 => 'required',
+                'address'                   => 'required',
+                'phone1'                    => 'required',
+            ], 
+            [
+                'name.required'                 => 'Ingrese el nombre del cliente',
+                'last_name.required'            => 'Ingrese el apellido del cliente',
+                'address.required'              => 'Ingrese la dirección del cliente',
+                'phone1'                        => 'Ingrese un teléfono de contacto'
+            ]);
+
             $client->update([
-                'identification'    => "",// $request->identification,
+                'identification'    => $request->identification,//"",// 
                 'name'              => $request->name,
                 'last_name'         => $request->last_name,
                 'address'           => $request->address,
@@ -178,9 +225,27 @@ class ClientController extends Controller
                 'type_identification_cod' => "05",
              ]);
 
-             return redirect()->route('clients.index',$client)
-             ->with('status','El cliente se actualizó correctamente.');
         }else{
+
+
+            $request->validate([
+                'identification'            => 'unique:clients,identification,'.$client->id,
+                'name'                      => 'required',
+                'last_name'                 => 'required',
+                'address'                   => 'required',
+                'phone1'                    => 'required',
+                'type_identification'       => 'required',
+            ], 
+            [
+                'identification.unique'         => 'El cliente ya existe en el sistema',
+                'name.required'                 => 'Ingrese el nombre del cliente',
+                'last_name.required'            => 'Ingrese el apellido del cliente',
+                'address.required'              => 'Ingrese la dirección del cliente',
+                'phone1'                        => 'Ingrese un teléfono de contacto',
+                'type_identification.required'  => 'Ingrese un tipo de identificación',
+            ]);
+    
+
             //Actualizar datos en la tabla
             $client->update([
                 'identification'    => $request->identification,
@@ -194,10 +259,11 @@ class ClientController extends Controller
                 'type_identification_cod' => $request->type_identification,
             ]);
 
-            return redirect()->route('clients.index',$client)
-                    ->with('status','El cliente se actualizó correctamente.');
+
         }
 
+        return redirect()->route('clients.index',$client)
+        ->with('status','El cliente se actualizó correctamente.');
         //Actualizar datos en la tabla
         // $client->update([
         //     'identification'    => $request->identification,
@@ -223,7 +289,17 @@ class ClientController extends Controller
      */
     public function destroy(Client $client)
     {
-        $client->delete();
+
+        try {
+            //Eliminar registro
+            $client->delete();
+
+        } catch (\Illuminate\Database\QueryException $e) {
+
+            $errorc = 'No se puede eliminar el cliente porque tiene pedidos asociados en el sistema';
+            return redirect()->route('clients.index')
+            ->with('errorc', $errorc);
+        }
 
         return redirect()->route('clients.index')
             ->with('status','El cliente se eliminó correctamente.');

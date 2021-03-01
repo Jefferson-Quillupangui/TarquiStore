@@ -67,7 +67,8 @@ case p_in_opcion
 			INNER join orders as b on a.order_id = b.id
 				inner join products c on a.product_id = c.id
 				inner join categories as d on c.category_id	= d.id
-			WHERE YEAR(b.delivery_date) =  p_in_anio ##'2021' 
+			WHERE b.order_status_cod = 'OE'
+					and YEAR(b.delivery_date) =  p_in_anio ##'2021' 
 					and MONTH(b.delivery_date) = p_in_mes ##'02'
 					and b.collaborator_id = p_in_iduser ##1
 			GROUP BY d.name;

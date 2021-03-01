@@ -1,7 +1,7 @@
 <div class="form-group">
     <div class="row">
         <div class="col-md-5">
-            <label for="name">Nombre:</label>
+            <label for="name">Nombre(*)</label>
             <div class="input-group mb-3">
                 <div class="input-group-prepend">
                     <span class="input-group-text" id="basic-addon1"><i class="far fa-keyboard"></i></span>
@@ -13,7 +13,7 @@
                 </span>
                 @enderror
             </div>
-            <label for="category">Categorias:</label>
+            <label for="category">Categorias(*)</label>
             <div class="input-group mb-3">
                 <div class="input-group-prepend">
                     <span class="input-group-text" id="basic-addon1"><i class="far fa-list-alt"></i></span>
@@ -25,7 +25,7 @@
                 </span>
                 @enderror 
             </div>   
-            <label for="price">Precio:</label>
+            <label for="price">Precio(*)</label>
             <div class="input-group mb-3">
                 <div class="input-group-prepend">
                     <span class="input-group-text" id="basic-addon1"><i class="fas fa-dollar-sign"></i></span>
@@ -40,7 +40,7 @@
                 </span>
                 @enderror 
             </div>  
-            <label for="comission">Comisión:</label>
+            <label for="comission">Comisión(*)</label>
             <div class="input-group mb-3">
                 <div class="input-group-prepend">
                     <span class="input-group-text" id="basic-addon1"><i class="fas fa-dollar-sign"></i></span>
@@ -55,7 +55,7 @@
                 </span>
                 @enderror 
             </div>
-            <label for="discount">Porcentaje descuento:</label>
+            <label for="discount">Porcentaje descuento(*)</label>
             <div class="input-group mb-3">
                 <div class="input-group-prepend">
                     <span class="input-group-text" id="basic-addon1"><i class="fas fa-percentage"></i></span>
@@ -72,7 +72,7 @@
                 </span>
                 @enderror 
             </div>
-            <label for="price_discount">Precio descuento:</label>
+            <label for="price_discount">Precio descuento</label>
             <div class="input-group mb-3">
                 <div class="input-group-prepend">
                     <span class="input-group-text" id="basic-addon1"><i class="fas fa-dollar-sign"></i></span>
@@ -88,7 +88,7 @@
                 </span>
                 @enderror 
             </div>
-            <label for="quantity">Cantidad:</label>
+            <label for="quantity">Cantidad(*)</label>
             <div class="input-group mb-3">
                 <div class="input-group-prepend">
                     <span class="input-group-text" id="basic-addon1"><i class="fas fa-sort-numeric-up"></i></span>
@@ -105,7 +105,7 @@
         </div>
         <div class="col-md-5">
             <div class="form-group">
-                <label for="image">Imagen: </label>
+                <label for="image">Imagen(*)</label>
                 <div class="form-input">
                     <input name ="image" id="file" type="file" accept="image/png,image/jpeg"/>
                     {{-- {!! Form::file('image',null,['class' => 'form-control-file',
@@ -127,7 +127,7 @@
                     @endisset
                 </div>
             </div>
-            <label for="description">Descripción:</label>
+            <label for="description">Descripción(*)</label>
             <div class="input-group mb-3 ">
                 <div class="input-group resize:none">
                     <div class="input-group-prepend">

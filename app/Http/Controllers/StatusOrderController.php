@@ -113,7 +113,18 @@ class StatusOrderController extends Controller
      */
     public function destroy(OrderStatus $status_order)
     {
-        $status_order->delete();
+       
+
+        try {
+            //Eliminar registro
+            $status_order->delete();
+
+        } catch (\Illuminate\Database\QueryException $e) {
+
+            $errorc = 'No se puede eliminar código de pedido porque se encuentra en uso';
+            return redirect()->route('sectors.index')
+            ->with('errorc', $errorc);
+        }
         
         return redirect()->route('status_order.index')
                 ->with('status','El estado de orden se eliminó correctamente.');

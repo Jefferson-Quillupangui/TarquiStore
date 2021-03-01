@@ -128,9 +128,21 @@ class TypesIdentificationController extends Controller
         
         //$type_identification->delete();
 
-        TypeIdentification::where("codigo", $type_identification->codigo)->update([
-            'status'          => 'I'
-        ]);
+        // TypeIdentification::where("codigo", $type_identification->codigo)->update([
+        //     'status'          => 'I'
+        // ]);
+
+        
+        try {
+            //Eliminar registro
+            $type_identification->delete();
+
+        } catch (\Illuminate\Database\QueryException $e) {
+
+            $errorc = 'No se puede eliminar el tipo de identificación porque se encuentra en uso';
+            return redirect()->route('type_identification.index')
+            ->with('errorc', $errorc);
+        }
         
         return redirect()->route('type_identification.index')
                 ->with('status','El tipo de orden se eliminó correctamente.');

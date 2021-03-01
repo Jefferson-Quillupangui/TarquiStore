@@ -113,10 +113,20 @@ class CityController extends Controller
         //$city->delete();
 
         //Borrado lógico
-        Citysale::where("codigo", $city->codigo)->update([
-            'status'          => 'I'
-        ]);
+        // Citysale::where("codigo", $city->codigo)->update([
+        //     'status'          => 'I'
+        // ]);
         
+        try {
+            //Eliminar registro
+            $city->delete();
+
+        } catch (\Illuminate\Database\QueryException $e) {
+
+            $errorc = 'No se puede eliminar la ciudad porque se encuentra en uso';
+            return redirect()->route('ciudades.index')
+            ->with('errorc', $errorc);
+        }
         
         return redirect()->route('ciudades.index')->with('status','La ciudad se eliminó correctamente.');
     }

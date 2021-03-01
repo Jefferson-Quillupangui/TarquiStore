@@ -111,9 +111,21 @@ class SectorsController extends Controller
         //$sector->delete();
 
         //Borrado lógico
-        Sector::where("codigo", $sector->codigo)->update([
-            'status' => 'I'
-        ]);
+        // Sector::where("codigo", $sector->codigo)->update([
+        //     'status' => 'I'
+        // ]);
+
+                
+        try {
+            //Eliminar registro
+            $sector->delete();
+
+        } catch (\Illuminate\Database\QueryException $e) {
+
+            $errorc = 'No se puede eliminar el sector porque se encuentra en uso';
+            return redirect()->route('sectors.index')
+            ->with('errorc', $errorc);
+        }
               
         return redirect()->route('sectors.index')->with('status','El sector se eliminó correctamente.');
     }

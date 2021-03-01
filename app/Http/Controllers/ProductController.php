@@ -103,6 +103,7 @@ class ProductController extends Controller
             'comission'     => $request->comission,
             'quantity'      => $request->quantity,
             'discount'      => $request->discount,
+            'discount'      => $request->price_discount,
             'category_id'   => $request->category
         ]);
 
@@ -191,6 +192,7 @@ class ProductController extends Controller
                 'comission'     => $request->comission,
                 'quantity'      => $request->quantity,
                 'discount'      => $request->discount,
+                'discount'      => $request->price_discount,
                 'category_id'   => $request->category
             ]);
 
@@ -203,6 +205,7 @@ class ProductController extends Controller
                 'comission'     => $request->comission,
                 'quantity'      => $request->quantity,
                 'discount'      => $request->discount,
+                'discount'      => $request->price_discount,
                 'category_id'   => $request->category
             ]);  
         }
@@ -254,10 +257,21 @@ class ProductController extends Controller
     {   
         //Ruta public de la imagen
         $url = str_replace('storage', 'public',$product->image);
-        //Borrar imagen
-        storage::delete($url);
-        //Borra registro del producto
-        $product->delete();
+
+
+        try {
+            //Eliminar registro
+            $product->delete();
+
+        } catch (\Illuminate\Database\QueryException $e) {
+
+            //Borrar imagen
+            storage::delete($url);
+
+            $errorc = 'El producto porque se encuentra registrado en pedidos... Si desea dar de baja el producto vacie el stock!';
+            return redirect()->route('products.index')
+            ->with('errorc', $errorc);
+        }
 
         return redirect()->route('products.index')->with('status','El producto se eliminó correctamente.');
     }

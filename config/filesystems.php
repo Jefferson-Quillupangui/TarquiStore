@@ -33,6 +33,7 @@ return [
         'local' => [
             'driver' => 'local',
             'root' => storage_path('app'),
+            //'/home3/tanmay/public_html/mydomain.com/storage/app'.
         ],
 
         'public' => [

@@ -33,11 +33,13 @@
 
 <div class="card">
 
-    <div class="card-header">
-        <a href="{{ route('products.create')}}" class="btn btn-info">
-            <i class="fas fa-plus-square"></i> Agregar
-        </a>
-    </div>
+    @can('Administrar productos')
+        <div class="card-header">
+            <a href="{{ route('products.create')}}" class="btn btn-info">
+                <i class="fas fa-plus-square"></i> Agregar
+            </a>
+        </div>
+    @endcan
 
     <div class="card-body">
      <table class="table table-striped" id="productos">

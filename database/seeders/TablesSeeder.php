@@ -253,13 +253,8 @@ class TablesSeeder extends Seeder
         ]);
 
         Sector::create([
-            'codigo'      => 'E',
-            'name'     => 'Este'
-        ]);
-
-        Sector::create([
-            'codigo'      => 'OE',
-            'name'     => 'Oeste'
+            'codigo'      => 'C',
+            'name'     => 'Centro'
         ]);
 
     }

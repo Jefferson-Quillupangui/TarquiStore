@@ -6,7 +6,7 @@
                 <div class="input-group-prepend">
                     <span class="input-group-text" id="basic-addon1"><i class="fas fa-keyboard"></i></span>
                 </div>
-                {!! Form::text('identification', null, ['class' => 'form-control' . ($errors->has('identification') ? ' is-invalid' : ''), 'placeholder' => 'Identificación', 'id' => 'input-identificacion', 'verificacion'=>0]) !!}
+                {!! Form::number('identification', null, ['class' => 'form-control' . ($errors->has('identification') ? ' is-invalid' : ''), 'placeholder' => 'Identificación', 'id' => 'input-identificacion', 'verificacion'=>0]) !!}
                 @error('identification')
                     <span class="invalid-feedback">
                         <strong>{{ $message }}</strong>

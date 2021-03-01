@@ -1,3 +1,18 @@
+@if ($errors->any())
+    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+        @foreach ($errors->all() as $message)
+            @if($message=='Ingrese la imagen del producto'||$message=='Debe ingresar una imagen del producto')
+                <strong>Error!</strong> {{ $message }}
+                <button type="button"
+                        class="close"
+                        data-dismiss="alert"
+                        arial-label="close">
+                    <span aria-hidden="true">&times; </span>
+                </button>
+            @endif
+        @endforeach
+    </div>
+@endif
 <div class="form-group">
     <div class="row">
         <div class="col-md-5">
@@ -6,7 +21,7 @@
                 <div class="input-group-prepend">
                     <span class="input-group-text" id="basic-addon1"><i class="far fa-keyboard"></i></span>
                 </div>
-                {!! Form::text('name',null,['class' => 'form-control' . ($errors->has('name') ? ' is-invalid' : ''), 'placeholder' => 'Nombre del producto']) !!}
+                {!! Form::text('name',null,['class' => 'form-control' . ($errors->has('name') ? ' is-invalid' : ''), 'placeholder' => 'Nombre del producto', 'required' => true]) !!}
                 @error('name')
                 <span class="invalid-feedback">
                     <strong>{{$message}}</strong>
@@ -18,7 +33,7 @@
                 <div class="input-group-prepend">
                     <span class="input-group-text" id="basic-addon1"><i class="far fa-list-alt"></i></span>
                 </div>
-                    {!! Form::select('category', $category,0,['class' => 'custom-select']) !!}
+                    {!! Form::select('category', $category,0,['class' => 'custom-select', 'required' => true]) !!}
                 @error('category')
                 <span class="invalid-feedback">
                     <strong>{{$message}}</strong>
@@ -33,7 +48,8 @@
                 {!! Form::text('price',null,['class' => 'form-control' . ($errors->has('price') ? ' is-invalid' : ''), 'placeholder' => 'Precio de venta del producto',
                                                 'step'=>'any',
                                                 'id'=>'in_price',
-                                                'onkeypress'=> 'return ((event.charCode >= 48 && event.charCode <= 57 ) || (event.charCode == 46))']) !!}
+                                                'onkeypress'=> 'return ((event.charCode >= 48 && event.charCode <= 57 ) || (event.charCode == 46))',
+                                                'required' => true]) !!}
                 @error('price')
                 <span class="invalid-feedback">
                     <strong>{{$message}}</strong>
@@ -48,7 +64,8 @@
                 {!! Form::text('comission',null,['class' => 'form-control' . ($errors->has('comission') ? ' is-invalid' : ''), 'placeholder' => 'Valor de comisión del producto',
                                         'step'=>'any', 
                                         'id' => 'in_comission',
-                                        'onkeypress'=> 'return ((event.charCode >= 48 && event.charCode <= 57 ) || (event.charCode == 46))']) !!}
+                                        'onkeypress'=> 'return ((event.charCode >= 48 && event.charCode <= 57 ) || (event.charCode == 46))',
+                                        'required' => true]) !!}
                 @error('comission')
                 <span class="invalid-feedback">
                     <strong>{{$message}}</strong>
@@ -65,7 +82,8 @@
                                     'step'=>'any', 
                                     'id' => 'in_discount_porcent',
                                     'onkeypress'=> 'return ((event.charCode >= 48 && event.charCode <= 57 ) || (event.charCode == 46))',
-                                    'max' => '2']) !!}
+                                    'max' => '2',
+                                    'required' => true]) !!}
                 @error('discount')
                 <span class="invalid-feedback">
                     <strong>{{$message}}</strong>
@@ -95,7 +113,8 @@
                 </div>
                 {!! Form::text('quantity',null,['class' => 'form-control' . ($errors->has('quantity') ? ' is-invalid' : ''), 
                                 'placeholder'   => 'Cantidad disponible',
-                                'onkeypress'    => 'return (event.charCode >= 48 && event.charCode <= 57 )']) !!}
+                                'onkeypress'    => 'return (event.charCode >= 48 && event.charCode <= 57 )',
+                                'required' => true]) !!}
                 @error('quantity')
                 <span class="invalid-feedback">
                     <strong>{{$message}}</strong>
@@ -136,7 +155,8 @@
                     {!! Form::textarea('description',null,['class' => 'form-control' . ($errors->has('description') ? ' is-invalid' : ''), 
                                             'placeholder' => 'Ingrese descripción del producto', 
                                             'rows'  => '4',
-                                            'id'    =>  'descript']) !!}
+                                            'id'    =>  'descript',
+                                            'required' => true]) !!}
                     @error('description')
                     <span class="invalid-feedback">
                         <strong>{{$message}}</strong>

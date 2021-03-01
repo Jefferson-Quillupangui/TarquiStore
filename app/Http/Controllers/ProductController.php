@@ -103,7 +103,7 @@ class ProductController extends Controller
             'comission'     => $request->comission,
             'quantity'      => $request->quantity,
             'discount'      => $request->discount,
-            'discount'      => $request->price_discount,
+            'price_discount'  => $request->price_discount,
             'category_id'   => $request->category
         ]);
 
@@ -192,7 +192,7 @@ class ProductController extends Controller
                 'comission'     => $request->comission,
                 'quantity'      => $request->quantity,
                 'discount'      => $request->discount,
-                'discount'      => $request->price_discount,
+                'price_discount' => $request->price_discount,
                 'category_id'   => $request->category
             ]);
 
@@ -205,7 +205,7 @@ class ProductController extends Controller
                 'comission'     => $request->comission,
                 'quantity'      => $request->quantity,
                 'discount'      => $request->discount,
-                'discount'      => $request->price_discount,
+                'price_discount' => $request->price_discount,
                 'category_id'   => $request->category
             ]);  
         }

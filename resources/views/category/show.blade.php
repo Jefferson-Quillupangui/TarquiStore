@@ -32,11 +32,13 @@
 
 <div class="card">
 
+    @can('Administrar categorias')
     <div class="card-header">
         <a href="{{ route('categories.create')}}" class="btn btn-info">
             <i class="fas fa-plus-square"></i> Crear categoria
         </a>
     </div>
+    @endcan
 
     <div class="card-body">
         <table class="table table-striped" id="categorias">
@@ -65,7 +67,7 @@
                                         @can('Administrar categorias')
                                             <a class="btn btn-secondary btn-group-sm" href="{{route('categories.edit',$category)}}"><i class="fas fa-edit"></i></a>
                                             <button class="btn btn-danger" type="submit"><i class="fas fa-trash"></i></button>
-                                            @endcan
+                                        @endcan
                                     </div>
 
                                 </form>

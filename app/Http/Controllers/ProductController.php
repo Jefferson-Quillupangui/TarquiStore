@@ -77,7 +77,7 @@ class ProductController extends Controller
         //Subida de imagen mediante intervention image pck
         $nombre = Str::random(10).$request->file('image')->getClientOriginalName();
 
-        $ruta = storage_path().'\app\public\img/'.$nombre;
+        $ruta = '\app\public\img/'.$nombre;
 
         Image::make($request->file('image'))
                 ->resize(1200, null, function ($constraint) {

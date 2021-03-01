@@ -78,7 +78,7 @@ class ProductController extends Controller
         $nombre = Str::random(10).$request->file('image')->getClientOriginalName();
 
         $ruta = storage_path().'\app\public\img/'.$nombre;
-        dd($ruta );
+       // dd($ruta );
         //$ruta = '/home/tarquist/public_html/storage/img'.$nombre;
         // storage_path().'\app\public\img/'.$nombre;
         //'/home3/tanmay/public_html/mydomain.com/storage/app'.

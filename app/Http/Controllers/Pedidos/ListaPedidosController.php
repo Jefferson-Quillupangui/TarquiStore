@@ -63,7 +63,8 @@ class ListaPedidosController extends Controller
                 'f.identification',
                 'f.name AS nombre_cliente',
                 'g.name AS nombre_usuario',
-                'g.email AS email_cliente')
+                'g.email AS email_usuario',
+                'f.email AS email_cliente')
                 ->get();
                 return response()->json(['data' => $orders], 200);
         }else{//solo lo q es del usuario

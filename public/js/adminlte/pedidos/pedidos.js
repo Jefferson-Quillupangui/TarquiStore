@@ -1287,24 +1287,36 @@ $(document).ready(function () {
                                 cargarDetallePedido(id_order_cab);
 
                             }},
+        {title:"Id CLiente", field:"client_id",visible:false},//
+        {title:"Id Colaborador", field:"collaborator_id",visible:false},//
+        {title:"Cod orden Estado", field:"order_status_cod",visible:false},//
+        {title:"status_comission", field:"status_comission",visible:false},///
+        {title:"Cod Sector", field:"sector_cod",visible:false},//
         {title:"N# Pedido", field:"id",hozAlign:"center",headerFilter:"input",headerFilterPlaceholder:"N# Pedido"},
         {title:"Nombre Clientes", field:"nombre_cliente",headerFilter:"input",headerFilterPlaceholder:"Cliente"},
         {title:"Identicacion", field:"identification",hozAlign:"center",headerFilter:"input",headerFilterPlaceholder:"Identificacion"},
         {title:"Fecha Orden", field:"delivery_date" },
         {title:"Hora", field:"delivery_time"},
         {title:"Direccion", field:"delivery_address"},//
-        {title:"Total Orden", field:"total_order"},//
-        {title:"Total Comision", field:"total_comission"},//
+        {title:"Total Orden", field:"total_order",formatter:"money", hozAlign:"right",formatterParams:{
+          decimal:".",
+          thousand:".",
+          symbol:"$",
+          symbolAfter:false,
+          precision:2,
+        }},//
+        {title:"Total Comision", field:"total_comission",formatter:"money", hozAlign:"right",formatterParams:{
+          decimal:".",
+          thousand:".",
+          symbol:"$",
+          symbolAfter:false,
+          precision:2,
+        }},//
         {title:"Observacion", field:"observation"},//
-        {title:"status_comission", field:"status_comission"},///
-        {title:"Cod Sector", field:"sector_cod"},//
         {title:"Cod Ciudad", field:"city_sale_cod"},//
-        {title:"Id CLiente", field:"client_id"},//
-        {title:"Id Colaborador", field:"collaborator_id"},//
-        {title:"Cod orden Estado", field:"order_status_cod"},//
         {title:"Nombre del Sector", field:"nombre_sector"},
         {title:"Nombre de Ciudad", field:"nombre_ciudad"},
-        {title:"Nombre Estado Orden", field:"nombre_estado_ord"},
+        {title:"Nombre Estado Orden", field:"nombre_estado_ord",headerFilter:"input",headerFilterPlaceholder:"Estado"},
         {title:"Nombre Colaborador", field:"nombre_colaborador"},
         // {//create column group
         //   title: "ID",

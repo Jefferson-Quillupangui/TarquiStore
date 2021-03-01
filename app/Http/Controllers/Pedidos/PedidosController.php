@@ -121,7 +121,8 @@ class PedidosController extends Controller
             'f.identification',
             'f.name AS nombre_cliente',
             'g.name AS nombre_usuario',
-            'g.email AS email_cliente'
+            'g.email AS email_usuario',
+            'f.email AS email_cliente'
                  )
             //->where('orders.order_status_cod','=','OP' )
             //// ->where('orders.order_status_cod','=','OR') ADMIN VE TODOS LOS ESTADOS, DIFERENTE DE 1 SOLO VE OR, OP, OC

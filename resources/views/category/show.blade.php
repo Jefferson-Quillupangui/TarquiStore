@@ -62,8 +62,10 @@
                                     @csrf
                                     <div class="btn-group ml-3">
                                         <a class="btn btn-info btn-group-sm" href="{{route('categories.show',$category)}}"><i class="far fa-eye"></i></i></a>
-                                        <a class="btn btn-secondary btn-group-sm" href="{{route('categories.edit',$category)}}"><i class="fas fa-edit"></i></a>
-                                        <button class="btn btn-danger" type="submit"><i class="fas fa-trash"></i></button>
+                                        @can('Administrar categorias')
+                                            <a class="btn btn-secondary btn-group-sm" href="{{route('categories.edit',$category)}}"><i class="fas fa-edit"></i></a>
+                                            <button class="btn btn-danger" type="submit"><i class="fas fa-trash"></i></button>
+                                            @endcan
                                     </div>
 
                                 </form>

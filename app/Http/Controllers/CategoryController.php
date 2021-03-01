@@ -8,6 +8,13 @@ use GuzzleHttp\Middleware;
 use App\Models\Product;
 class CategoryController extends Controller
 {
+
+    public function __construct(){
+
+        $this->middleware('can:Administrar categorias')->only('create','edit');
+
+    }
+
     /**
      * Display a listing of the resource.
      *

@@ -289,71 +289,111 @@ return [
             ],
         ],
          
-        ['header' => 'GESTIÓN'],
+        ['header' => 'GESTIÓN', 'can' => ['Listar categorias',
+                                            'Listar productos',
+                                            'Gestion Clientes',
+                                            'Gestion Pedidos',
+                                            'Ver reportes'
+
+                                        ]
+        ],
 
         [
-            'text'    => 'Productos',
-            'icon'    => 'fas fa-fw fa-store-alt',
-            'submenu' =>  [
-                [   
-                    'text'  => 'Categorias',
-                    'route' => 'categories.index',
-                    'icon'  => 'fas fa-tag',
-                ],
-                [   
-                    'text'  => 'Productos',
-                    'route' => 'products.index',
-                    'icon'  => 'fas fa-store',
-                ],
-            ],
+            'text' => 'Categorias',
+            'route'  => 'categories.index',
+            'icon' => 'fas fa-tags',
+            'can'  => 'Listar categorias',
         ],
         [
-            'text'    => 'Clientes',
-            'icon'    => 'fas fa-user-tag',
-            'submenu' =>  [
-                [   
-                    'text'  => 'Lista de clientes',
-                    'route' => 'clients.index',
-                    'icon'  => 'fas fa-address-book',
-                ],
-            ],
-        ],        
+            'text'   => 'Productos',
+            'route'  => 'products.index',
+            'icon'  => 'fas fa-store',
+            'can'  =>  'Listar productos', 
+        ],
+
+        // [
+        //     'text'    => 'Productos',
+        //     'icon'    => 'fas fa-fw fa-store-alt',
+        //     'submenu' =>  [
+        //         [   
+        //             'text'  => 'Categorias',
+        //             'route' => 'categories.index',
+        //             'icon'  => 'fas fa-tag',
+        //         ],
+        //         [   
+        //             'text'  => 'Productos',
+        //             'route' => 'products.index',
+        //             'icon'  => 'fas fa-store',
+        //         ],
+        //     ],
+        // ],
+
+        [
+            'text' => 'Clientes',
+            'route'  => 'clients.index',
+            'icon' => 'fas fa-user-tag',
+            'can'  => 'Gestion Clientes',
+        ],
+
+        // [
+        //     'text'    => 'Clientes',
+        //     'icon'    => 'fas fa-user-tag',
+        //     'submenu' =>  [
+        //         [   
+        //             'text'  => 'Lista de clientes',
+        //             'route' => 'clients.index',
+        //             'icon'  => 'fas fa-address-book',
+        //         ],
+        //     ],
+        // ],        
  
         [
             'text'    => 'Pedidos',
             'icon'    => 'fas fa-shopping-cart',
+            'can'    => ['Gestion Pedidos'],
             'submenu' =>  [
                 [
-                    'text'  => 'Registro de Pedido',
+                    'text'  => 'Gestión Pedido',
                     'route' => 'orders',
                     'icon'  => 'fas fa-id-card-alt',
+                    'can'  => 'Gestion Pedidos',
                 ],
                 [
                     'text'      => 'Revisión de pedidos',
                     'route'     => 'list_orders',
                     'icon'      => 'fas fa-shopping-basket',
+                    'can'      => 'Gestion Pedidos',
                 ],
             ],
         ],
 
         [
-            'text'    => 'Reportes',
-            'icon'    => 'fas fa-columns',
-            'can'    => 'Ver reportes',
-            'submenu' =>  [
-                [
-                    'text'  => 'Mis reportes',
-                    'route'  => 'reporteComision',
-                    'icon'  => 'fas fa-vote-yea',
-                ],
-            ],
+            'text' => 'Reportes',
+            'route'  => 'reporteComision',
+            'icon' => 'fas fa-columns',
+            'can'  => 'Ver reportes',
         ],
 
-        ['header' => 'COMISIONES'],
+        // [
+        //     'text'    => 'Reportes',
+        //     'icon'    => 'fas fa-columns',
+        //     'can'    => 'Ver reportes',
+        //     'submenu' =>  [
+        //         [
+        //             'text'  => 'Mis reportes',
+        //             'route'  => 'reporteComision',
+        //             'icon'  => 'fas fa-vote-yea',
+        //         ],
+        //     ],
+        // ],
+
+        ['header' => 'COMISIONES', 'can' => ['Comisiones']],
+        
         [
             'text' => 'Mis Comisiones',
             'route'  => 'list_comission',
             'icon' => 'fas fa-hand-holding-usd',
+            'can' => 'Comisiones',
         ],
 
         ['header' => 'account_settings'],

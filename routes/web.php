@@ -151,12 +151,12 @@ Route::post('top_categories_user', [DashboardController::class, 'topCategorytUse
 
 //Auth::routes(['verify' => true]);
 //Categorias
-Route::resource('categories',CategoryController::class)->names('categories');
+Route::resource('categories',CategoryController::class)->middleware('can:Listar categorias')->names('categories');
 Route::get('detail_product/{product}/{category}',  [CategoryController::class, 'detailProd' ])->name('detailprod');
 //Productos
-Route::resource('products',ProductController::class)->names('products');
+Route::resource('products',ProductController::class)->middleware('can:Listar productos')->names('products');
 //Pedidos-Registro pedidos
-Route::get('create_orders',  [PedidosController::class, 'index' ])->name('orders');
+Route::get('create_orders',  [PedidosController::class, 'index' ])->middleware('can:Gestion Pedidos')->name('orders');
 Route::get('list_clients', [PedidosController::class, 'listaClientes_json' ])->name('clientes.lista');
 Route::get('list_products', [PedidosController::class, 'listaProductos_json' ])->name('productos.lista');
 Route::get('lista_orders', [PedidosController::class, 'listaOrders_json' ])->name('orders.lista');
@@ -184,12 +184,12 @@ Route::resource( 'type_identifications', TypesIdentificationController::class)
     ->names('type_identification');
 
 //Clientes
-Route::resource('clients', ClientController::class)->names('clients');
+Route::resource('clients', ClientController::class)->middleware('can:Gestion Clientes')->names('clients');
 //Route::get('validar/Identificacion',  [ClientController::class, 'validarIdentificacion' ])->name('validar.identificacion');
 
 
 //Comisiones index
-Route::get('list_comission',  [ComisionesController::class, 'index' ])->name('list_comission');
+Route::get('list_comission',  [ComisionesController::class, 'index' ])->middleware('can:Comisiones')->name('list_comission');
 // Route::get('list_comision_json', [ComisionesController::class, 'verComisiones' ])->name('list_comision_json');
 Route::get('buscar_comision', [ComisionesController::class, 'verComisiones' ])->name('comision.buscar.colaborador');
 Route::get('buscar_comisiones_colaboradores', [ComisionesController::class, 'comisionesGeneralAdmin' ])->name('comisiones.colaboradores.mes.anio');
@@ -211,7 +211,7 @@ Route::POST('reportesPdf',  [MisReportesController::class, 'ReportesPdf' ])->nam
     
 
 //Listar pedidos
-Route::get('list_orders',  [ListaPedidosController::class, 'index' ])->name('list_orders');
+Route::get('list_orders',  [ListaPedidosController::class, 'index' ])->middleware('can:Gestion Pedidos')->name('list_orders');
 Route::get('list_orders_json',  [ListaPedidosController::class, 'listaRevisionOrders_json' ])->name('list_orders_json');
 Route::post('buscar_order', [ListaPedidosController::class, 'buscarFiltrandoOrdenes' ])->name('orden.procesar.buscar');
 Route::get('list_detalle_orders', [ListaPedidosController::class, 'ListaDetalleOrders_json' ])->name('lista.orders.detalle');

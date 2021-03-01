@@ -69,14 +69,14 @@ class TablesSeeder extends Seeder
             'name' => 'Admin',
             'email' =>  'admin@gmail.com',
             'email_verified_at' => now(),
-            'password' => Hash::make('12345678')
+            'password' => Hash::make('Admin1234')
         ]);
 
         User::create([
             'name' => 'Vendedor',
             'email' =>  'vendedor@gmail.com',
             'email_verified_at' => now(),
-            'password' => Hash::make('12345678')
+            'password' => Hash::make('Vendedor1234')
         ]);
 
     }
@@ -131,19 +131,11 @@ class TablesSeeder extends Seeder
         ]);
         
         Permission::create([
-            'name' => 'Ingresar pedidos' 
+            'name' => 'Gestion Pedidos' 
         ]);
 
         Permission::create([
-            'name' => 'Editar pedidos' 
-        ]);
-
-        Permission::create([
-            'name' => 'Listar pedidos' 
-        ]);
-
-        Permission::create([
-            'name' => 'Cancelar pedidos' 
+            'name' => 'Gestion Clientes' 
         ]);
 
         Permission::create([
@@ -152,6 +144,14 @@ class TablesSeeder extends Seeder
 
         Permission::create([
             'name' => 'Administrar roles' 
+        ]);
+
+        Permission::create([
+            'name' => 'Comisiones' 
+        ]);
+
+        Permission::create([
+            'name' => 'Comisiones General' 
         ]);
 
         Permission::create([
@@ -172,13 +172,18 @@ class TablesSeeder extends Seeder
         $admin->givePermissionTo([
             'Mantenimiento',
             'Administrar categorias',
-            'Administrar productos',
-            'Administrar pedidos',
-            'Administrar usuarios',
-            'Administrar usuarios',
-            'Administrar roles',
-            'Ver reportes',
-            'Dashboard General',
+            'Listar categorias',
+            'Administrar productos', 
+            'Listar productos',
+            'Administrar pedidos', 
+            'Gestion Pedidos', 
+            'Gestion Clientes', 
+            'Administrar usuarios', 
+            'Administrar roles', 
+            'Comisiones', 
+            'Comisiones General',
+            'Ver reportes', 
+            'Dashboard General'  
         ]);
 
         //Admin
@@ -187,10 +192,9 @@ class TablesSeeder extends Seeder
         $vendedor->givePermissionTo([
             'Listar categorias',
             'Listar productos',
-            'Ingresar pedidos',
-            'Editar pedidos',
-            'Listar pedidos',
-            'Cancelar pedidos',
+            'Gestion Pedidos',
+            'Gestion Clientes',
+            'Comisiones',  
             'Dashboard user'
         ]);
 

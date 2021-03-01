@@ -53,7 +53,7 @@
         <div class="card-body">
             <div class="row">
 
-                @can('Administrar pedidos')
+                @can('Comisiones General')
                     <div class="col-md-5">
                         <label for="name_client">Buscar Colaboraderes:</label>
                         <div class="input-group mb-3">
@@ -151,7 +151,7 @@
     </div>
 
 
-    @can('Administrar pedidos')
+    @can('Comisiones General')
         <div class="card card-cyan collapsed-card">
             {{-- <form action="{{ route('list_colaboradores_json') }}" id="form-buscar-colaboradores" class="d-none"></form> --}}
             <form action="{{ route('comisiones.colaboradores.mes.anio') }}" id="form-buscar-comisiones-generales"

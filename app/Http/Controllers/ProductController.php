@@ -12,6 +12,12 @@ use Illuminate\Support\Str;
 
 class ProductController extends Controller
 {
+
+    public function __construct(){
+
+        $this->middleware('can:Administrar productos')->only('create','edit');
+    }
+
     /**
      * Display a listing of the resource.
      *

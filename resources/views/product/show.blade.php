@@ -84,10 +84,12 @@
 
                                     <div class="btn-group mr-3">
                                         <a class="btn btn-info btn-group-sm" href="{{route('products.show',$product)}}"><i class="far fa-eye"></i></a>
-                                        <a class="btn btn-secondary btn-group-sm" href="{{route('products.edit',$product)}}"><i class="fas fa-edit"></i></a>{{--              
-                                        <button type="button" class="btn btn-primary"><i class="far fa-eye"></i></button>
-                                        <button type="button" class="btn btn-danger"><i class="far fa-eye"></i></button> --}}
-                                        <button class="btn btn-danger" type="submit"><i class="fas fa-trash"></i></button>
+                                        @can('Administrar productos')
+                                            <a class="btn btn-secondary btn-group-sm" href="{{route('products.edit',$product)}}"><i class="fas fa-edit"></i></a>{{--              
+                                            <button type="button" class="btn btn-primary"><i class="far fa-eye"></i></button>
+                                            <button type="button" class="btn btn-danger"><i class="far fa-eye"></i></button> --}}
+                                            <button class="btn btn-danger" type="submit"><i class="fas fa-trash"></i></button>
+                                        @endcan
                                     </div>
                                 </form>
                             </div>

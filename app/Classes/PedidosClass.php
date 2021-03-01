@@ -2,12 +2,14 @@
 
 namespace App\Classes;
 
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use App\Models\Order;
 
 
 class PedidosClass 
 {
+    
     /**
      * Egreso de inventario (Salida) Resta inventario 
      */
@@ -113,6 +115,8 @@ class PedidosClass
         $total_comision_actual="";
         $id_colab = "";
 
+        $id_user_session = Auth::user()->id; 
+        
         DB::beginTransaction();
 
         try {
@@ -154,7 +158,7 @@ class PedidosClass
                 DB::commit();
 
                 self::Cambiar_Estado_Orden($id_cab_pedido, $order_status_cod);
-                self::Registar_Transaciones_Ordenes($id_cab_pedido, $p_in_collaborator_id, $order_status_cod);
+                self::Registar_Transaciones_Ordenes($id_cab_pedido, $id_user_session /*$p_in_collaborator_id*/, $order_status_cod);
                 $out_id_order = $id_cab_pedido;
                 $out_cod = 7; 
                 $out_msj = 'Pedido '.$id_cab_pedido.'. Guardado como '.$mensaje_orden;
@@ -170,7 +174,7 @@ class PedidosClass
                         $totalComision = ($total_comision_actual + $p_in_total_comission);
                         $cantidadOrdenes = ($num_ordenes + 1);
                         $respuesta = self::ActualizarComision($id_comis,$id_colab,$totalComision,$cantidadOrdenes , $id_cab_pedido, $p_in_status, "Entregado");
-                        self::Registar_Transaciones_Ordenes($id_cab_pedido, $p_in_collaborator_id, $order_status_cod);
+                        self::Registar_Transaciones_Ordenes($id_cab_pedido, $id_user_session/*$p_in_collaborator_id*/, $order_status_cod);
                         return $respuesta;
                     
                     break;
@@ -183,7 +187,7 @@ class PedidosClass
                         $totalComision = ($comision_mayor - $comision_menor);//($total_comision_actual - $p_in_total_comission);
                         $cantidadOrdenes = ($num_ordenes - 1);
                         $respuesta = self::ActualizarComision($id_comis,$id_colab,$totalComision,$cantidadOrdenes , $id_cab_pedido, $p_in_status, $mensaje_orden);
-                        self::Registar_Transaciones_Ordenes($id_cab_pedido, $p_in_collaborator_id, $order_status_cod);
+                        self::Registar_Transaciones_Ordenes($id_cab_pedido, $id_user_session/*$p_in_collaborator_id*/, $order_status_cod);
                         self::Borrar_Comsion_Cerro($p_in_collaborator_id, $fecha_orden);
                         
                         return $respuesta;

@@ -570,6 +570,7 @@ class PedidosController extends Controller
 
     public function ProcesarOrden(Request $request){
 
+        $id_user_session = Auth::user()->id; 
         $c_pedidos = new PedidosClass();
          $id_cab_pedido = $request->id_pedido;//pk auto
 
@@ -607,7 +608,7 @@ class PedidosController extends Controller
                         //si la orden esta CANCELADA y va cambiar para PENDIENTE
                         //1- CAMBIO DE CANCELADO -> PENDIENTE (SE CAMBIA EL ESTADO)
                         $c_pedidos->Cambiar_Estado_Orden($id_cab_pedido, $in_order_status_cod);
-                        $c_pedidos->Registar_Transaciones_Ordenes($id_cab_pedido, $in_collaborator_id, $in_order_status_cod);
+                        $c_pedidos->Registar_Transaciones_Ordenes($id_cab_pedido, $id_user_session /* $in_collaborator_id*/, $in_order_status_cod);
                         //2- se realiza un EGRESO DE INVENTARIO (resta inventario - los productos de la orden)
                         $this->PedidoEstadoInventario($json_tb_detalle_prodct,"egr");
                         //mesaje de proceso
@@ -633,7 +634,7 @@ class PedidosController extends Controller
                     }else{
                          //CAMBIO DE PENDIENTE -> REAGENDADO(SOLO SE CAMBIA EL ESTADO)
                         $c_pedidos->Cambiar_Estado_Orden($id_cab_pedido, $in_order_status_cod);
-                        $c_pedidos->Registar_Transaciones_Ordenes($id_cab_pedido, $in_collaborator_id, $in_order_status_cod);
+                        $c_pedidos->Registar_Transaciones_Ordenes($id_cab_pedido, $id_user_session /*$in_collaborator_id*/, $in_order_status_cod);
                         $out_id_order = $id_cab_pedido;
                         $out_cod = 7; 
                         $out_msj = 'Pedido '.$id_cab_pedido.'. Movido de Entregado para Pendiente.';
@@ -658,7 +659,7 @@ class PedidosController extends Controller
                         //si la orden esta CANCELADA y va cambiar para PENDIENTE
                         //1- CAMBIO DE CANCELADO -> PENDIENTE (SE CAMBIA EL ESTADO)
                         $c_pedidos->Cambiar_Estado_Orden($id_cab_pedido, $in_order_status_cod);
-                        $c_pedidos->Registar_Transaciones_Ordenes($id_cab_pedido, $in_collaborator_id, $in_order_status_cod);
+                        $c_pedidos->Registar_Transaciones_Ordenes($id_cab_pedido, $id_user_session /*$in_collaborator_id*/, $in_order_status_cod);
                         //2- se realiza un EGRESO DE INVENTARIO (RESTA inventario - los productos de la orden)
                         $this->PedidoEstadoInventario($json_tb_detalle_prodct,"egr");
                         //mesaje de proceso
@@ -673,7 +674,7 @@ class PedidosController extends Controller
                     
                         //CAMBIO DE PENDIENTE -> REAGENDADO(SOLO SE CAMBIA EL ESTADO)
                         $c_pedidos->Cambiar_Estado_Orden($id_cab_pedido, $in_order_status_cod);
-                        $c_pedidos->Registar_Transaciones_Ordenes($id_cab_pedido, $in_collaborator_id, $in_order_status_cod);
+                        $c_pedidos->Registar_Transaciones_Ordenes($id_cab_pedido, $id_user_session /*$in_collaborator_id*/, $in_order_status_cod);
                         $out_id_order = $id_cab_pedido;
                         $out_cod = 7; 
                         $out_msj = 'Pedido '.$id_cab_pedido.'. Movido a Reagendado';
@@ -716,7 +717,7 @@ class PedidosController extends Controller
                         //si la orden esta CANCELADA y va cambiar para PENDIENTE
                         //1- CAMBIO DE CANCELADO -> PENDIENTE (SE CAMBIA EL ESTADO)
                         $c_pedidos->Cambiar_Estado_Orden($id_cab_pedido, $in_order_status_cod);
-                        $c_pedidos->Registar_Transaciones_Ordenes($id_cab_pedido, $in_collaborator_id, $in_order_status_cod);
+                        $c_pedidos->Registar_Transaciones_Ordenes($id_cab_pedido, $id_user_session /*$in_collaborator_id*/, $in_order_status_cod);
                         //2- se realiza un INGRESO DE INVENTARIO (suma inventario - los productos de la orden)
                         $this->PedidoEstadoInventario($json_tb_detalle_prodct,"igr");
                         //mesaje de proceso

@@ -8,6 +8,11 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="csrf-token" content="{{ csrf_token() }}">
+    <meta name="google-site-verification" content="l3Q1nahdd5gO2VSIonTlz8AxBy7Q5g9ovBQOOqFwBW8" />
+
+    <meta name="description"
+        content="Tarqui Store, nos encanta tenerte en nuestro equipo de trabajo. Viviremos grandes momentos y juntos lograremos mucho éxito, Tus cualidades y habilidades agregarán muchos puntos positivos a nuestra empresa y juntos aprenderemos mucho.">
+
 
     {{-- Custom Meta Tags --}}
     @yield('meta_tags')

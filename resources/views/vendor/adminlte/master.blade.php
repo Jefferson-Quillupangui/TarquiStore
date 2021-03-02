@@ -47,7 +47,8 @@
             <livewire:styles />
         @endif
     @endif
-
+    {{-- plugins de alerts --}}
+    <link type="text/css" href="{{ asset('jquery_confirm/jquery-confirm.min.css') }}" rel="stylesheet" />
     {{-- Custom Stylesheets (post AdminLTE) --}}
     @yield('adminlte_css')
 
@@ -108,6 +109,8 @@
 
     {{-- Custom Scripts --}}
     @yield('adminlte_js')
+    {{-- plugins de alerts --}}
+    <script type="text/javascript" src="{{ asset('jquery_confirm/jquery-confirm.min.js') }}"></script>
     {{-- Agregado plugins de tabla --}}
     <script type="text/javascript" src="{{ asset('/plugin_tabullator/dist/js/tabulator.min.js') }}"></script>
 </body>

@@ -274,6 +274,7 @@ $(document).ready(function () {
    * Tabla detalle para ingreso fde pedidos
    */
 
+  // const $product_delete=false;
   table_detalle_factura = new Tabulator("#grid-table-detalle-pedido", {
       
       //layout:"fitColumns",
@@ -289,27 +290,68 @@ $(document).ready(function () {
       columns:[
         
           {formatter:printIconDelete, width:40, hozAlign:"center", cellClick:function(e, cell){
-              if(confirm('Desea borrar producto')){
+            
+              $.confirm({
+                icon: 'fa fa-exclamation-triangle',
+                title: 'Desea borrar producto?',
+                content: cell.getData().name_product,
+                type: 'orange',
+                buttons: {   
+                    ok: {
+                        text: "Aceptar",
+                        btnClass: 'btn-warning',
+                        keys: ['enter'],
+                        action: function(){
+                          if( cell.getData().id_detalle_product != 0){
+                            array_detalle_factura_eliminados.push(cell.getData());
+                            console.log(array_detalle_factura_eliminados);
+                          }
+                          
+                          cell.getRow().delete();
+                          const uno = table_detalle_factura.getData();
+                          
+                            var total = 0;
+                            var total_comi = 0;
+                            for (var i in uno) {
+                              total_comi += parseFloat(uno[i].total_comission);
+                              total += parseFloat(uno[i].total_line)
+                            }
+        
+                          $("#txtTotalOrden").val(total.toFixed(2));
+                          $("#txt_totalComision").val(total_comi.toFixed(2));
+                        }
+                    },
+                    cancel:{
+                      text: "Cancelar",
+                      btnClass: 'btn-red',
+                      function(){
+                      
+                        //    console.log('the user clicked cancel');
+                      }
+                    } 
+                }
+            });
+              // if( confirm('Desea borrar producto')){
 
-                  if( cell.getData().id_detalle_product != 0){
-                    array_detalle_factura_eliminados.push(cell.getData());
-                    console.log(array_detalle_factura_eliminados);
-                  }
+              //     if( cell.getData().id_detalle_product != 0){
+              //       array_detalle_factura_eliminados.push(cell.getData());
+              //       console.log(array_detalle_factura_eliminados);
+              //     }
                   
-                  cell.getRow().delete();
-                  const uno = table_detalle_factura.getData();
+              //     cell.getRow().delete();
+              //     const uno = table_detalle_factura.getData();
                   
-                    var total = 0;
-                    var total_comi = 0;
-                    for (var i in uno) {
-                      total_comi += parseFloat(uno[i].total_comission);
-                      total += parseFloat(uno[i].total_line)
-                    }
+              //       var total = 0;
+              //       var total_comi = 0;
+              //       for (var i in uno) {
+              //         total_comi += parseFloat(uno[i].total_comission);
+              //         total += parseFloat(uno[i].total_line)
+              //       }
 
-                  $("#txtTotalOrden").val(total.toFixed(2));
-                  $("#txt_totalComision").val(total_comi.toFixed(2));
+              //     $("#txtTotalOrden").val(total.toFixed(2));
+              //     $("#txt_totalComision").val(total_comi.toFixed(2));
 
-                  }
+              //     }
               }
           },
           {title:"ID DET", field:"id_detalle_product", sorter:"number", width:0,visible:false},
@@ -324,7 +366,27 @@ $(document).ready(function () {
             let rpt_func_stock= 0;
             rpt_func_stock = consultarStockProducto(cell.getData().product_id);
            if( rpt_func_stock < parseInt(cantidad_product) ){
-             alert("Actualmente solo hay en stock la cantidad : "+rpt_func_stock);
+             //
+              $.confirm({
+                icon: 'fa fa-exclamation-triangle',
+                title: 'Advertencia',
+                content: 'Actualmente solo hay en stock la cantidad :'+rpt_func_stock,
+                type: 'red',
+                buttons: {   
+                    ok: {
+                        text: "Aceptar",
+                        btnClass: 'btn-red',
+                        keys: ['enter'],
+                        // action: function(){
+                        //     console.log('the user clicked confirm');
+                        // }
+                    },
+                    // cancel: function(){
+                    //         console.log('the user clicked cancel');
+                    // }
+                }
+            });
+             //alert("Actualmente solo hay en stock la cantidad : "+rpt_func_stock);
              document.getElementById('btn-modal-buscar-producto').disabled=true;
              document.getElementById('btn-generarorden').disabled=true;
              const get_data_detalle_nueva = table_detalle_factura.getData();

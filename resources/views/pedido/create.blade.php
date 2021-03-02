@@ -11,6 +11,8 @@
     <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 
+
+
     {{-- <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
     <script type="text/javascript" src="{{ asset('/datepicker/bootstrap-datepicker.js') }}"></script>
     <link rel="stylesheet" type="text/css" href="{{ asset('/datepicker/bootstrap-datepicker.css') }}">
@@ -653,6 +655,16 @@
 
 @section('js')
     {{-- <script type="text/javascript" src="{{ asset('/plugin_tabullator/dist/js/tabulator.min.js') }}"></script> --}}
+    {{-- <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.2/jquery-confirm.min.css"> --}}
+    {{-- <script src="//cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.2/jquery-confirm.min.js"></script> --}}
+
+   
+
+
+
+   
+
+
     <script type="text/javascript" src="{{ asset('js/adminlte/pedidos/pedidos.js?vs=12') }}"></script>
 
 @stop

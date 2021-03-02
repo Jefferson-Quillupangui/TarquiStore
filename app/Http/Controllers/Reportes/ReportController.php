@@ -22,42 +22,78 @@ class ReportController extends Controller
         //$id){
 
             $id = $request->txt_id_cab_orden;
-           
-        $orders = Order::join("sectors AS b","orders.sector_cod","=","b.codigo")
-        ->join("city_sales AS c","orders.city_sale_cod","=","c.codigo")
-        ->join("order_statuses AS d","orders.order_status_cod","=","d.codigo")
-        ->join("collaborators AS e","orders.collaborator_id","=","e.id")
-        ->join("clients AS f","orders.client_id","=","f.id")
-        ->join("users AS g","orders.collaborator_id","=","g.id")
-        ->select(
-            'orders.id',
-            'orders.delivery_date',
-            'orders.delivery_time',
-            'orders.delivery_address',
-            'orders.total_order',
-            'orders.total_comission',
-            'orders.observation',
-            'orders.status_comission',
-            'orders.sector_cod',
-            'orders.city_sale_cod',
-            'orders.client_id',
-            'orders.collaborator_id',
-            'orders.order_status_cod',
-            'b.name AS nombre_sector',
-            'c.name AS nombre_ciudad',
-            'd.name AS nombre_estado_ord',
-            'e.identification',
-            'e.name AS nombre_colaborador',
-            'f.phone1' ,
-            'f.phone2',
-            'f.email',
-            'f.identification',
-            'f.name AS nombre_cliente',
-            'g.name AS nombre_usuario',
-            'g.email AS email_cliente'
-                 )
-          ->where('orders.id','=',$id )
-        ->first();
+         
+        $orders = DB::select( DB::raw("SELECT
+            orders.id, 
+            orders.delivery_date, 
+            orders.delivery_time, 
+            orders.delivery_address, 
+            orders.total_order, 
+            orders.total_comission, 
+            orders.observation, 
+            orders.status_comission, 
+            orders.sector_cod, 
+            orders.city_sale_cod, 
+            orders.client_id, 
+            orders.collaborator_id, 
+            orders.order_status_cod, 
+            b.name as nombre_sector, 
+            c.name as nombre_ciudad, 
+            d.name as nombre_estado_ord, 
+            e.identification, 
+            e.name as nombre_colaborador, 
+            f.phone1, 
+            f.phone2, 
+            f.email, 
+            IFNULL(f.identification,'N/A') AS identification,
+            f.name as nombre_cliente, 
+            g.name as nombre_usuario, 
+            g.email as email_cliente 
+            FROM orders inner join sectors as b on orders.sector_cod = b.codigo 
+                inner join city_sales as c on orders.city_sale_cod = c.codigo 
+                inner join order_statuses as d on orders.order_status_cod = d.codigo 
+                inner join collaborators as e on orders.collaborator_id = e.id 
+                inner join clients as f on orders.client_id = f.id 
+                inner join users as g on orders.collaborator_id = g.id 
+            WHERE orders.id = $id LIMIT 1
+        "))[0];
+         
+         
+        // $orders = Order::join("sectors AS b","orders.sector_cod","=","b.codigo")
+        // ->join("city_sales AS c","orders.city_sale_cod","=","c.codigo")
+        // ->join("order_statuses AS d","orders.order_status_cod","=","d.codigo")
+        // ->join("collaborators AS e","orders.collaborator_id","=","e.id")
+        // ->join("clients AS f","orders.client_id","=","f.id")
+        // ->join("users AS g","orders.collaborator_id","=","g.id")
+        // ->select(
+        //     'orders.id',
+        //     'orders.delivery_date',
+        //     'orders.delivery_time',
+        //     'orders.delivery_address',
+        //     'orders.total_order',
+        //     'orders.total_comission',
+        //     'orders.observation',
+        //     'orders.status_comission',
+        //     'orders.sector_cod',
+        //     'orders.city_sale_cod',
+        //     'orders.client_id',
+        //     'orders.collaborator_id',
+        //     'orders.order_status_cod',
+        //     'b.name AS nombre_sector',
+        //     'c.name AS nombre_ciudad',
+        //     'd.name AS nombre_estado_ord',
+        //     'e.identification',
+        //     'e.name AS nombre_colaborador',
+        //     'f.phone1' ,
+        //     'f.phone2',
+        //     'f.email',
+        //     'f.identification',
+        //     'f.name AS nombre_cliente',
+        //     'g.name AS nombre_usuario',
+        //     'g.email AS email_cliente'
+        //          )
+        //   ->where('orders.id','=',$id )
+        // ->first();
 
 
         $detalle_orders = DB::table('order_product')

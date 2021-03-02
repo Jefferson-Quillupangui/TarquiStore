@@ -319,7 +319,7 @@ $(document).ready(function () {
           {title:"CANTIDAD", field:"quantity", sorter:"number", validator:["min:1", "max:10000", "numeric"],hozAlign:"center",editor:"input",
           cellEdited :function(cell){
 
-            console.log(cell.getData());
+           // console.log(cell.getData());
             let cantidad_product = cell.getData().quantity;
             let rpt_func_stock= 0;
             rpt_func_stock = consultarStockProducto(cell.getData().product_id);

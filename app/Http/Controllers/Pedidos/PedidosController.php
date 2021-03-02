@@ -43,14 +43,31 @@ class PedidosController extends Controller
     
     public function listaClientes_json(){
 
-        $cliente = Client::join("type_identifications AS b","clients.type_identification_cod","=","b.codigo")
-        ->select('clients.id', 'clients.identification', 'clients.name', 
-                'clients.last_name', 'clients.address', 'clients.phone1', 'clients.phone2',
-                 'clients.email', 'clients.status', 'clients.type_identification_cod',
-                 'b.codigo', 'b.name AS name_document'
-                 )
-        ->where('clients.status','=','A')
-        ->get();
+        $cliente = DB::select( DB::raw("SELECT 
+            clients.id, 
+            IFNULL(clients.identification,'N/A') AS identification,
+            clients.name, 
+            clients.last_name, 
+            clients.address,
+            clients.phone1, 
+            clients.phone2, 
+            clients.email, 
+            clients.status, 
+            clients.type_identification_cod, 
+            b.codigo, 
+            b.name as name_document 
+            FROM clients inner join type_identifications as b on clients.type_identification_cod = b.codigo
+            WHERE clients.status = 'A'
+        "));
+
+        // $cliente = Client::join("type_identifications AS b","clients.type_identification_cod","=","b.codigo")
+        // ->select('clients.id', 'clients.identification', 'clients.name', 
+        //         'clients.last_name', 'clients.address', 'clients.phone1', 'clients.phone2',
+        //          'clients.email', 'clients.status', 'clients.type_identification_cod',
+        //          'b.codigo', 'b.name AS name_document'
+        //          )
+        // ->where('clients.status','=','A')
+        // ->get();
    
 
         return response()->json(['data' => $cliente], 200);
@@ -89,92 +106,161 @@ class PedidosController extends Controller
         $name = Auth::user()->name;
 
         if( $id == 1 || $name == "Admin"){//todos
-             
-        $orders = Order::join("sectors AS b","orders.sector_cod","=","b.codigo")
-        ->join("city_sales AS c","orders.city_sale_cod","=","c.codigo")
-        ->join("order_statuses AS d","orders.order_status_cod","=","d.codigo")
-        ->join("collaborators AS e","orders.collaborator_id","=","e.id")
-        ->join("clients AS f","orders.client_id","=","f.id")
-        ->join("users AS g","orders.collaborator_id","=","g.id")
-        ->select(
-            'orders.id',
-            'orders.delivery_date',
-            'orders.delivery_time',
-            'orders.delivery_address',
-            'orders.total_order',
-            'orders.total_comission',
-            'orders.observation',
-            'orders.status_comission',
-            'orders.sector_cod',
-            'orders.city_sale_cod',
-            'orders.client_id',
-            'orders.collaborator_id',
-            'orders.order_status_cod',
-            'b.name AS nombre_sector',
-            'c.name AS nombre_ciudad',
-            'd.name AS nombre_estado_ord',
-            'e.identification',
-            'e.name AS nombre_colaborador',
-            'f.phone1' ,
-            'f.phone2',
-            'f.email',
-            'f.identification',
-            'f.name AS nombre_cliente',
-            'g.name AS nombre_usuario',
-            'g.email AS email_usuario',
-            'f.email AS email_cliente'
-                 )
-            //->where('orders.order_status_cod','=','OP' )
-            //// ->where('orders.order_status_cod','=','OR') ADMIN VE TODOS LOS ESTADOS, DIFERENTE DE 1 SOLO VE OR, OP, OC
-            //// ->orWhere('orders.order_status_cod','=','OP')
-            //->where('orders.order_status_cod',['OR'] )
-            //->where('products.quantity','>',0  )
-            ->get();
-            return response()->json(['data' => $orders], 200);
+            $orders = DB::select( DB::raw(" SELECT 
+            orders.id, 
+            orders.delivery_date, 
+            orders.delivery_time, 
+            orders.delivery_address, 
+            orders.total_order, 
+            orders.total_comission, 
+            orders.observation, 
+            orders.status_comission, 
+            orders.sector_cod, 
+            orders.city_sale_cod, 
+            orders.client_id, 
+            orders.collaborator_id, 
+            orders.order_status_cod, 
+            b.name as nombre_sector, 
+            c.name as nombre_ciudad, 
+            d.name as nombre_estado_ord, 
+            e.identification, 
+            e.name as nombre_colaborador, 
+            f.phone1, 
+            f.phone2, 
+            f.email, 
+            IFNULL(f.identification,'N/A') AS identification,
+            f.name as nombre_cliente, 
+            g.name as nombre_usuario, 
+            g.email as email_cliente 
+            FROM orders inner join sectors as b on orders.sector_cod = b.codigo 
+                    inner join city_sales as c on orders.city_sale_cod = c.codigo 
+                    inner join order_statuses as d on orders.order_status_cod = d.codigo 
+                    inner join collaborators as e on orders.collaborator_id = e.id 
+                    inner join clients as f on orders.client_id = f.id 
+                    inner join users as g on orders.collaborator_id = g.id 
+         "));
+    
+        return response()->json(['data' => $orders], 200);
+        // $orders = Order::join("sectors AS b","orders.sector_cod","=","b.codigo")
+        // ->join("city_sales AS c","orders.city_sale_cod","=","c.codigo")
+        // ->join("order_statuses AS d","orders.order_status_cod","=","d.codigo")
+        // ->join("collaborators AS e","orders.collaborator_id","=","e.id")
+        // ->join("clients AS f","orders.client_id","=","f.id")
+        // ->join("users AS g","orders.collaborator_id","=","g.id")
+        // ->select(
+        //     'orders.id',
+        //     'orders.delivery_date',
+        //     'orders.delivery_time',
+        //     'orders.delivery_address',
+        //     'orders.total_order',
+        //     'orders.total_comission',
+        //     'orders.observation',
+        //     'orders.status_comission',
+        //     'orders.sector_cod',
+        //     'orders.city_sale_cod',
+        //     'orders.client_id',
+        //     'orders.collaborator_id',
+        //     'orders.order_status_cod',
+        //     'b.name AS nombre_sector',
+        //     'c.name AS nombre_ciudad',
+        //     'd.name AS nombre_estado_ord',
+        //     'e.identification',
+        //     'e.name AS nombre_colaborador',
+        //     'f.phone1' ,
+        //     'f.phone2',
+        //     'f.email',
+        //     'f.identification',
+        //     'f.name AS nombre_cliente',
+        //     'g.name AS nombre_usuario',
+        //     'g.email AS email_usuario',
+        //     'f.email AS email_cliente'
+        //          )
+        //     // //->where('orders.order_status_cod','=','OP' )
+        //     // //// ->where('orders.order_status_cod','=','OR') ADMIN VE TODOS LOS ESTADOS, DIFERENTE DE 1 SOLO VE OR, OP, OC
+        //     // //// ->orWhere('orders.order_status_cod','=','OP')
+        //     // //->where('orders.order_status_cod',['OR'] )
+        //     // //->where('products.quantity','>',0  )
+        //     ->get();
+        //     return response()->json(['data' => $orders], 200);
         }else{//solo ve sus ordenes
-             
-        $orders = Order::join("sectors AS b","orders.sector_cod","=","b.codigo")
-        ->join("city_sales AS c","orders.city_sale_cod","=","c.codigo")
-        ->join("order_statuses AS d","orders.order_status_cod","=","d.codigo")
-        ->join("collaborators AS e","orders.collaborator_id","=","e.id")
-        ->join("clients AS f","orders.client_id","=","f.id")
-        ->join("users AS g","orders.collaborator_id","=","g.id")
-        ->select(
-            'orders.id',
-            'orders.delivery_date',
-            'orders.delivery_time',
-            'orders.delivery_address',
-            'orders.total_order',
-            'orders.total_comission',
-            'orders.observation',
-            'orders.status_comission',
-            'orders.sector_cod',
-            'orders.city_sale_cod',
-            'orders.client_id',
-            'orders.collaborator_id',
-            'orders.order_status_cod',
-            'b.name AS nombre_sector',
-            'c.name AS nombre_ciudad',
-            'd.name AS nombre_estado_ord',
-            'e.identification',
-            'e.name AS nombre_colaborador',
-            'f.phone1' ,
-            'f.phone2',
-            'f.email',
-            'f.identification',
-            'f.name AS nombre_cliente',
-            'g.name AS nombre_usuario',
-            'g.email AS email_cliente'
-                 )
-            ->where('orders.collaborator_id','!=',1 )
-            ->where('orders.order_status_cod','!=','OE' )
-            //->where('orders.order_status_cod','=','OP' )
-            //// ->where('orders.order_status_cod','=','OR') ADMIN VE TODOS LOS ESTADOS, DIFERENTE DE 1 SOLO VE OR, OP, OC
-            //// ->orWhere('orders.order_status_cod','=','OP')
-            //->where('orders.order_status_cod',['OR'] )
-            //->where('products.quantity','>',0  )
-            ->get();
-            return response()->json(['data' => $orders], 200);
+            $orders = DB::select( DB::raw(" SELECT 
+            orders.id, 
+            orders.delivery_date, 
+            orders.delivery_time, 
+            orders.delivery_address, 
+            orders.total_order, 
+            orders.total_comission, 
+            orders.observation, 
+            orders.status_comission, 
+            orders.sector_cod, 
+            orders.city_sale_cod, 
+            orders.client_id, 
+            orders.collaborator_id, 
+            orders.order_status_cod, 
+            b.name as nombre_sector, 
+            c.name as nombre_ciudad, 
+            d.name as nombre_estado_ord, 
+            e.identification, 
+            e.name as nombre_colaborador, 
+            f.phone1, 
+            f.phone2, 
+            f.email, 
+            IFNULL(f.identification,'N/A') AS identification,
+            f.name as nombre_cliente, 
+            g.name as nombre_usuario, 
+            g.email as email_cliente 
+            FROM orders inner join sectors as b on orders.sector_cod = b.codigo 
+                    inner join city_sales as c on orders.city_sale_cod = c.codigo 
+                    inner join order_statuses as d on orders.order_status_cod = d.codigo 
+                    inner join collaborators as e on orders.collaborator_id = e.id 
+                    inner join clients as f on orders.client_id = f.id 
+                    inner join users as g on orders.collaborator_id = g.id 
+            WHERE orders.collaborator_id != '1' and orders.order_status_cod != 'OE'
+         "));
+    
+        return response()->json(['data' => $orders], 200);
+        // $orders = Order::join("sectors AS b","orders.sector_cod","=","b.codigo")
+        // ->join("city_sales AS c","orders.city_sale_cod","=","c.codigo")
+        // ->join("order_statuses AS d","orders.order_status_cod","=","d.codigo")
+        // ->join("collaborators AS e","orders.collaborator_id","=","e.id")
+        // ->join("clients AS f","orders.client_id","=","f.id")
+        // ->join("users AS g","orders.collaborator_id","=","g.id")
+        // ->select(
+        //     'orders.id',
+        //     'orders.delivery_date',
+        //     'orders.delivery_time',
+        //     'orders.delivery_address',
+        //     'orders.total_order',
+        //     'orders.total_comission',
+        //     'orders.observation',
+        //     'orders.status_comission',
+        //     'orders.sector_cod',
+        //     'orders.city_sale_cod',
+        //     'orders.client_id',
+        //     'orders.collaborator_id',
+        //     'orders.order_status_cod',
+        //     'b.name AS nombre_sector',
+        //     'c.name AS nombre_ciudad',
+        //     'd.name AS nombre_estado_ord',
+        //     'e.identification',
+        //     'e.name AS nombre_colaborador',
+        //     'f.phone1' ,
+        //     'f.phone2',
+        //     'f.email',
+        //     'f.identification',
+        //     'f.name AS nombre_cliente',
+        //     'g.name AS nombre_usuario',
+        //     'g.email AS email_cliente'
+        //          )
+        //     ->where('orders.collaborator_id','!=',1 )
+        //     ->where('orders.order_status_cod','!=','OE' )
+        //     //->where('orders.order_status_cod','=','OP' )
+        //     //// ->where('orders.order_status_cod','=','OR') ADMIN VE TODOS LOS ESTADOS, DIFERENTE DE 1 SOLO VE OR, OP, OC
+        //     //// ->orWhere('orders.order_status_cod','=','OP')
+        //     //->where('orders.order_status_cod',['OR'] )
+        //     //->where('products.quantity','>',0  )
+        //     ->get();
+        //     return response()->json(['data' => $orders], 200);
         }
         
        

@@ -181,6 +181,18 @@
 
             <div class="row">
                 <div class="col-md-6">
+                    <label for="name_client">Numero Orden:</label>
+                    <div class="input-group mb-3">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text">
+                                <i class="fa fa-circle"></i>
+                            </span>
+                        </div>
+                        <input type="text" class="form-control" placeholder="Numero Orden" id="txt_ver_numero_orden" disabled />
+
+                    </div>
+                </div>
+                <div class="col-md-5">
                     <label for="name_client">Estado Orden:</label>
                     <div class="input-group mb-3">
                         <div class="input-group-prepend">
@@ -193,16 +205,17 @@
 
                     </div>
                 </div>
-                <div class="col-md-6">
+                <div class="col-md-1">
                     <form action="{{ route('reporte_post.orden.datos') }}" method="POST">
                         @csrf
                         <input class="d-none" type="text" id="txt_id_cab_orden" name="txt_id_cab_orden" value=0>
-
-                        <button disabled class="btn btn-danger float-right" id="generar-pdf-orden" type="submit"
-                            title="Generar Pdf">
-                            <i class="fas fa-file-code-o"></i>Generar Pdf
-                        </button>
-
+                        <label for="name_client">Generar</label>
+                        <div class="input-group mb-4">
+                            <button disabled class="btn btn-danger float-right" id="generar-pdf-orden" type="submit"
+                                title="Generar Pdf">
+                                <i class="fa fa-file-pdf"></i> Pdf
+                            </button>
+                        </div>
                     </form>
                     {{-- <label for="identification">Identificación:</label>
                     <div class="input-group mb-3">
@@ -457,7 +470,8 @@
 
 @section('js')
     <script type="text/javascript" src="{{ asset('/plugin_tabullator/dist/js/tabulator.min.js') }}"></script>
-    <script type="text/javascript" src="{{ asset('js/adminlte/pedidos/listaPedidos.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('js/adminlte/pedidos/listaPedidos.js?v=01') }}"></script>
+    <script type="text/javascript" src="{{ asset('js/adminlte/pedidos/listaPedidos.js?v=01') }}"></script>
     <script type="text/javascript" src="{{ asset('js/adminlte/reportes/reportesPdf.js') }}"></script>
 
 @stop

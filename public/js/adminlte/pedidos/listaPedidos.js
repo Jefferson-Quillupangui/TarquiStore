@@ -4,7 +4,7 @@ $(document).ready(function () {
     let table_list_detalle_factura;
     let table_auditoria_orden;
 
-   
+    const fill = (number, len) => "0".repeat(len - number.toString().length) + number.toString();
 
     var date = new Date();
     var ultimoDia = new Date(date.getFullYear(), date.getMonth() + 1, 0);
@@ -48,9 +48,7 @@ $(document).ready(function () {
             // },
             // dataType: "dataType",
             beforeSend: function () {
-                $('.loaders').removeClass('d-none');
-                // $('#load-grb').removeClass('d-none');
-                // $('#btn-grb-empresa-form').addClass('d-none');
+              $('.loaders').removeClass('d-none');
             },
             success: function (response) {
               //console.log(response);
@@ -65,6 +63,7 @@ $(document).ready(function () {
                 // } else {
     
                table_lista_ordenes.replaceData(response.data);
+               //$('.loaders').removeClass('d-none');
                 //     tab_producto = new FancyGrid.get('tb-producto-modal');
                 //     tab_producto.setData(response);
                 //     tab_producto.update();
@@ -85,6 +84,7 @@ $(document).ready(function () {
      * Busquedad Personalizada
      */
     $(document).on("click", "#btn-buscar-filtro-orden",function(){
+        //table_lista_ordenes.clearData();
         cargarListaPedidosRevisionParametros();
         $("#modal-buscarRevisionPedido").modal("show");
     });
@@ -170,7 +170,11 @@ $(document).ready(function () {
                                  
                                     // $("#textbuscarPedido").attr("id_orden",cell.getRow().getData().id);
                                     // $('#textbuscarPedido').val(cell.getRow().getData().id);
+                                    //ceros a la izquierda
+                                   
+
                                      $('#txtEstadoOrden').val(cell.getRow().getData().nombre_estado_ord);
+                                     $('#txt_ver_numero_orden').val( fill(cell.getRow().getData().id, 6) );
                                      $('#txt_id_cab_orden').val(cell.getRow().getData().id);
                                      $("#txtCliente").val(cell.getRow().getData().nombre_cliente);
                                      $("#txtCliente").attr("codigocliente",cell.getRow().getData().client_id);

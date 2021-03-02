@@ -2,6 +2,10 @@
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
     <head>
         <meta charset="utf-8">
+        <meta name="google-site-verification" content="l3Q1nahdd5gO2VSIonTlz8AxBy7Q5g9ovBQOOqFwBW8" />
+
+        <meta name="description" content="Tarqui Store, nos encanta tenerte en nuestro equipo de trabajo.">
+    
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="csrf-token" content="{{ csrf_token() }}">
 

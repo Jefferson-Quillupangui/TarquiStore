@@ -50,48 +50,26 @@ class ClientController extends Controller
     public function store(Request $request)
     {  
          
-      /// dd($request->all());
-        // Validación de campos
-        // $request->validate([
-        //     'identification'            => 'unique:clients,identification',
-        //     'name'                      => 'required',
-        //     'last_name'                 => 'required',
-        //     'address'                   => 'required',
-        //     'phone1'                    => 'required',
-        //     'type_identification'       => 'required',
-        // ], 
-        // [
-        //     'identification.unique'         => 'La identificación ya existe en el sistema',
-        //     'name.required'                 => 'Ingrese el nombre del cliente',
-        //     'last_name.required'            => 'Ingrese el apellido del cliente',
-        //     'address.required'              => 'Ingrese la dirección del cliente',
-        //     'phone1'                        => 'Ingrese un teléfono de contacto',
-        //     'type_identification.required'  => 'Ingrese un tipo de identificación',
-        // ]);
+         $cod_identificacion = $request->identification;//campo inpit (numero de cedula)
 
-         $cod_identificacion = $request->identification;
-            //dd($request->all());
-      
+
+         $type_identification = $request->type_identification_cod;//codigo del documento
+
+       
         if($cod_identificacion == NULL){
-            //dd($request);
+
+
             $request->validate([
-                //'identification'            => 'unique:clients,identification',
                 'name'                      => 'required',
-                'last_name'                 => 'required',
                 'address'                   => 'required',
                 'phone1'                    => 'required',
-                //'type_identification'       => 'required',
             ], 
             [
-                //'identification.unique'         => 'La identificación ya existe en el sistema',
                 'name.required'                 => 'Ingrese el nombre del cliente',
-                'last_name.required'            => 'Ingrese el apellido del cliente',
                 'address.required'              => 'Ingrese la dirección del cliente',
                 'phone1'                        => 'Ingrese un teléfono de contacto',
-                //'type_identification.required'  => 'Ingrese un tipo de identificación',
             ]);
 
-            //dd($request);
            
             $client = Client::create([
                 'identification'    => $request->identification,// $request->identification,
@@ -112,21 +90,18 @@ class ClientController extends Controller
             $request->validate([
                 'identification'            => 'unique:clients,identification',
                 'name'                      => 'required',
-                'last_name'                 => 'required',
                 'address'                   => 'required',
                 'phone1'                    => 'required',
-                'type_identification'       => 'required',
             ], 
             [
                 'identification.unique'         => 'El cliente ya existe en el sistema',
                 'name.required'                 => 'Ingrese el nombre del cliente',
-                'last_name.required'            => 'Ingrese el apellido del cliente',
                 'address.required'              => 'Ingrese la dirección del cliente',
                 'phone1'                        => 'Ingrese un teléfono de contacto',
-                'type_identification.required'  => 'Ingrese un tipo de identificación',
             ]);
 
-            //Crear categoria
+
+            
             $client = Client::create([
                 'identification'    => empty($cod_identificacion) ? "" : $request->identification,// $request->identification,
                 'name'              => $request->name,
@@ -136,7 +111,7 @@ class ClientController extends Controller
                 'phone2'            => $request->phone2,
                 'email'             => $request->email,
                 'sex'               => $request->sex,
-                'type_identification_cod' => empty($cod_identificacion) ? "05" : $request->type_identification,
+                'type_identification_cod' => empty($cod_identificacion) ? "05" :  $type_identification,
              ]);
 
              return redirect()->route('clients.index')
@@ -165,7 +140,17 @@ class ClientController extends Controller
      */
     public function edit(Client $client)
     {
+
+      
         $type_identification = TypeIdentification::orderBy('codigo', 'asc')->pluck('name','codigo');
+        
+        // $profession = TypeIdentification::get();
+        // $profession->users()->where('is_admin', true)->get();
+
+        // $user = DB::table('Type_identifications')->where('codigo', 'John')->first();
+
+        // $type_identification = 
+
         return view('clientes.edit', compact('client','type_identification'));
     }
 
@@ -202,13 +187,11 @@ class ClientController extends Controller
 
             $request->validate([
                 'name'                      => 'required',
-                'last_name'                 => 'required',
                 'address'                   => 'required',
                 'phone1'                    => 'required',
             ], 
             [
                 'name.required'                 => 'Ingrese el nombre del cliente',
-                'last_name.required'            => 'Ingrese el apellido del cliente',
                 'address.required'              => 'Ingrese la dirección del cliente',
                 'phone1'                        => 'Ingrese un teléfono de contacto'
             ]);
@@ -231,18 +214,14 @@ class ClientController extends Controller
             $request->validate([
                 'identification'            => 'unique:clients,identification,'.$client->id,
                 'name'                      => 'required',
-                'last_name'                 => 'required',
                 'address'                   => 'required',
-                'phone1'                    => 'required',
-                'type_identification'       => 'required',
+                'phone1'                    => 'required'
             ], 
             [
                 'identification.unique'         => 'El cliente ya existe en el sistema',
                 'name.required'                 => 'Ingrese el nombre del cliente',
-                'last_name.required'            => 'Ingrese el apellido del cliente',
                 'address.required'              => 'Ingrese la dirección del cliente',
                 'phone1'                        => 'Ingrese un teléfono de contacto',
-                'type_identification.required'  => 'Ingrese un tipo de identificación',
             ]);
     
 
@@ -256,7 +235,7 @@ class ClientController extends Controller
                 'phone2'            => $request->phone2,
                 'email'             => $request->email,
                 'sex'               => $request->sex,
-                'type_identification_cod' => $request->type_identification,
+                'type_identification_cod' => $request->type_identification_cod,
             ]);
 
 

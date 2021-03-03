@@ -1,4 +1,10 @@
+
+
 <div class="form-group">
+
+    {{-- <p id="selct_cod_identificacion">{{$client->type_identification_cod}}</p> --}}
+    <input type="hidden" id="selct_cod_identificacion" value="{{isset($client->type_identification_cod)}}" readonly>
+
     <div class="row">
         <div class="col-md-5">
             <label for="identification">Identificación</label>
@@ -20,9 +26,10 @@
                 <div class="input-group-prepend">
                     <span class="input-group-text" id="basic-addon1"><i class="far fa-list-alt"></i></span>
                 </div>
-                {!! Form::select('type_identification', $type_identification, 0, ['class' => 'custom-select', 'id' => 'input-tipo-identificacion']) !!}
 
-                {{-- <select class="form-control" name="type_identification">
+                {!! Form::select('type_identification_cod', $type_identification, 0, ['class' => 'custom-select', 'id' => 'input-tipo-identificacion']) !!}
+            {{-- 
+                <select class="form-control" value="{{ isset($client->type_identification_cod) }}" name="type_identification" id="input-tipo-identificacion">
                     <option value="">Ninguna</option>
                     @foreach ($type_identification as $typeid)
                         <option value="{{$typeid->codigo}}">{{$typeid->name}}</option>
@@ -63,12 +70,12 @@
             </div>
         </div>
         <div class="col-md-5">
-            <label for="last_name">Apellido(*)</label>
+            <label for="last_name">Apellido</label>
             <div class="input-group mb-3">
                 <div class="input-group-prepend">
                     <span class="input-group-text" id="basic-addon1"><i class="fas fa-keyboard"></i></span>
                 </div>
-                {!! Form::text('last_name', null, ['class' => 'form-control' . ($errors->has('last_name') ? ' is-invalid' : ''), 'placeholder' => 'Apellido del cliente', 'required']) !!}
+                {!! Form::text('last_name', null, ['class' => 'form-control' . ($errors->has('last_name') ? ' is-invalid' : ''), 'placeholder' => 'Apellido del cliente']) !!}
                 @error('last_name')
                     <span class="invalid-feedback">
                         <strong>{{ $message }}</strong>

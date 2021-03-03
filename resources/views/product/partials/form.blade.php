@@ -14,6 +14,11 @@
     </div>
 @endif
 <div class="form-group">
+
+    @isset($product->category_id)
+        <input type="hidden" id="select_id_category" value="{{$product->category_id}}" readonly>
+    @endisset
+    
     <div class="row">
         <div class="col-md-5">
             <label for="name">Nombre(*)</label>
@@ -33,7 +38,7 @@
                 <div class="input-group-prepend">
                     <span class="input-group-text" id="basic-addon1"><i class="far fa-list-alt"></i></span>
                 </div>
-                    {!! Form::select('category', $category,0,['class' => 'custom-select', 'required' => true]) !!}
+                    {!! Form::select('category', $category,0,['class' => 'custom-select', 'required' => true, 'id' => 'select_id_cat']) !!}
                 @error('category')
                 <span class="invalid-feedback">
                     <strong>{{$message}}</strong>

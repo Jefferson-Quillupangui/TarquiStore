@@ -32,7 +32,7 @@ $(document).ready(function () {
             //alert("checked-Aplica");
             //caso de que si ingrese cedula
             $('#input-identificacion').prop('readonly', false);
-            $('#input-tipo-identificacion').prop('readonly', false);
+            $('#input-tipo-identificacion').prop('disabled', false);
             $('#btn-guardar').prop('disabled', true);
             aceptarValidacionCedula();
 

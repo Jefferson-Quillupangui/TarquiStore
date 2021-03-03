@@ -33,8 +33,10 @@
 
 @section('js')
     <script>
-        console.log('Hi!');
+            var selct_cod_identificacion = $("#selct_cod_identificacion").val()
+            $('#input-tipo-identificacion').val(selct_cod_identificacion).change();
 
     </script>
-    <script type="text/javascript" src="{{ asset('js/adminlte/validacion/verificacionDocumento.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('js/adminlte/validacion/verificacionDocumento.js?v=01') }}"></script>
+
 @stop

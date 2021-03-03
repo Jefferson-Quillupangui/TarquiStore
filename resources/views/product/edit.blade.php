@@ -36,6 +36,9 @@
     <script type="text/javascript">
         $(document).ready(function () {
             
+            var select_id_category = $("#select_id_category").val()
+            $('#select_id_cat').val(select_id_category).change();
+
             $(document).on("keyup", "#in_discount_porcent",function(){
             //var desct_pvp = $('#in_price_discount').val();//Precio descuento:
             
@@ -78,5 +81,7 @@
         })
 
         });
+
+      
     </script>
 @stop

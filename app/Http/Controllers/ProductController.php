@@ -83,7 +83,7 @@ class ProductController extends Controller
         //Subida de imagen mediante intervention image pck
         $nombre = Str::random(10).$request->file('image')->getClientOriginalName();
 
-        // $ruta = storage_path().'\app\public\img/'.$nombre;
+        // $ruta = storage_path().'\app\public\img/'.$nombre; window
         $ruta = storage_path().'/app/public/img/'.$nombre;
         
        // dd($ruta );
@@ -99,7 +99,7 @@ class ProductController extends Controller
 
         $product = Product::create([
             'name'          => $request->name,
-            'image'         => $ruta,
+            'image'         => '/storage/img/'.$nombre,
             'price'         => $request->price,
             'description'   => $request->description,
             'comission'     => $request->comission,

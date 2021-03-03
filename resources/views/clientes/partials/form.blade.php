@@ -3,7 +3,9 @@
 <div class="form-group">
 
     {{-- <p id="selct_cod_identificacion">{{$client->type_identification_cod}}</p> --}}
-    <input type="hidden" id="selct_cod_identificacion" value="{{isset($client->type_identification_cod)}}" readonly>
+    @isset($client->type_identification_cod)
+        <input type="hidden" id="selct_cod_identificacion" value="{{$client->type_identification_cod}}" readonly>
+    @endisset
 
     <div class="row">
         <div class="col-md-5">

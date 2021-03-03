@@ -264,11 +264,10 @@ class ProductController extends Controller
         try {
             //Eliminar registro
             $product->delete();
-
-        } catch (\Illuminate\Database\QueryException $e) {
-
             //Borrar imagen
             storage::delete($url);
+
+        } catch (\Illuminate\Database\QueryException $e) {
 
             $errorc = 'El producto porque se encuentra registrado en pedidos... Si desea dar de baja el producto vacie el stock!';
             return redirect()->route('products.index')

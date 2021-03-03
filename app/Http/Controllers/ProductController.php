@@ -170,7 +170,7 @@ class ProductController extends Controller
             
             $nombre = Str::random(10).$request->file('image')->getClientOriginalName();
 
-            $ruta = storage_path().'\app\public\img/'.$nombre;
+            $ruta = storage_path().'/app/public/img/'.$nombre;
     
             //$image = '/storage/img/'.$nombre;
     

@@ -15,6 +15,15 @@
 @endif
 <div class="form-group">
 
+    @isset($product->price_discount)
+        <input type="hidden" id="select_price_discount" value="{{$product->price_discount}}" readonly>
+    @endisset
+
+    @isset($product->price_discount)
+        <input type="hidden" id="select_porcent_desc" value="{{$product->discount}}" readonly>
+    @endisset
+
+    
     @isset($product->category_id)
         <input type="hidden" id="select_id_category" value="{{$product->category_id}}" readonly>
     @endisset

@@ -34,6 +34,13 @@
 
 @section('js')
     <script type="text/javascript">
+
+        var select_price = $("#select_price_discount").val()
+        $('#in_price_discount').val(select_price).change();
+
+        var select_porcent = $("#select_porcent_desc").val()
+        $('#in_discount_porcent').val(select_porcent).change();
+
         $(document).ready(function () {
             
             var select_id_category = $("#select_id_category").val()

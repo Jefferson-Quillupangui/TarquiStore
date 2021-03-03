@@ -24,6 +24,7 @@
               <figure class="view overlay rounded z-depth-1 main-img">
                 <a href="{{ asset($product->image) }}"
                   data-size="710x823">
+                  
                   <img src="{{ asset($product->image) }}"
                     class="img-fluid z-depth-1">
                 </a>

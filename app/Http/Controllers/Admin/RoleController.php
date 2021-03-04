@@ -106,12 +106,23 @@ class RoleController extends Controller
      */
     public function update(Request $request, Role $role)
     {
+        // $request->validate([
+        //     'name' => 'required',
+        //     'permissions' => 'required'
+        // ], 
+        // [
+        //     'name.required' => 'Escriba el nombre del rol',
+        //     'permissions.required' => 'Ingrese los permisos para asignar al rol'
+        // ]);
+
         $request->validate([
             'name' => 'required',
+            'name' => 'required|unique:roles,name',
             'permissions' => 'required'
         ], 
         [
             'name.required' => 'Escriba el nombre del rol',
+            'name.unique' => 'El nombre del rol ya existe',
             'permissions.required' => 'Ingrese los permisos para asignar al rol'
         ]);
 

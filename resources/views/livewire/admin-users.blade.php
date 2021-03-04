@@ -33,25 +33,27 @@
                                 <td>{{$user->getRoleNames()->implode(', ')}}</td>
                                 <td class="text-center border-0">
 
-                                    @if($user->status=='A')
-                                    <form action="{{route('admin.user.status', $user)}}" method="GET" class="op-desactivar">
-                                        @csrf
-                                        <div class="btn-group">
-                                            <a class="btn btn-info btn-group-sm" href="{{route('admin.users.show',$user)}}"><i class="far fa-eye"></i></a>
-                                            <a class="btn btn-secondary btn-group-sm" href="{{route('admin.users.edit', $user)}}"><i class="fas fa-edit"></i></a>
-                                            <button class="btn btn-danger" type="submit"><i class="far fa-times-circle"></i> Desactivar</button>
-                                        </div>
-                                    </form>
-                                    @else
-                                    <form action="{{route('admin.user.status', $user)}}" method="GET" class="op-activar">
-                                        @csrf
-                                        <div class="btn-group">
-                                            <a class="btn btn-info btn-group-sm" href="{{route('admin.users.show',$user)}}"><i class="far fa-eye"></i></a>
-                                            <a class="btn btn-secondary btn-group-sm" href="{{route('admin.users.edit', $user)}}"><i class="fas fa-edit"></i></a>
-                                            <button class="btn btn-primary btn-group-sm pr-4" type="submit"><i class="far fa-check-circle"></i> Activar&nbsp;&nbsp;</button>
-                                        </div>
-                                    </form>
-                                    @endif
+                                    @if($user->id <> 1)
+                                        @if($user->status=='A')
+                                        <form action="{{route('admin.user.status', $user)}}" method="GET" class="op-desactivar">
+                                            @csrf
+                                            <div class="btn-group">
+                                                <a class="btn btn-info btn-group-sm" href="{{route('admin.users.show',$user)}}"><i class="far fa-eye"></i></a>
+                                                <a class="btn btn-secondary btn-group-sm" href="{{route('admin.users.edit', $user)}}"><i class="fas fa-edit"></i></a>
+                                                <button class="btn btn-danger" type="submit"><i class="far fa-times-circle"></i> Desactivar</button>
+                                            </div>
+                                        </form>
+                                        @else
+                                        <form action="{{route('admin.user.status', $user)}}" method="GET" class="op-activar">
+                                            @csrf
+                                            <div class="btn-group">
+                                                <a class="btn btn-info btn-group-sm" href="{{route('admin.users.show',$user)}}"><i class="far fa-eye"></i></a>
+                                                <a class="btn btn-secondary btn-group-sm" href="{{route('admin.users.edit', $user)}}"><i class="fas fa-edit"></i></a>
+                                                <button class="btn btn-primary btn-group-sm pr-4" type="submit"><i class="far fa-check-circle"></i> Activar&nbsp;&nbsp;</button>
+                                            </div>
+                                        </form>
+                                        @endif
+                                    @endif       
 
                                     {{-- <form action="{{route('admin.user.status', $user)}}" method="GET" class="op-desactivar" data-id="$user['name']">
                                         @csrf

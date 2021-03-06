@@ -824,7 +824,9 @@ $(document).ready(function () {
                 orientation:"landscape", //set page orientation to portrait
                 title:"Pedidos Entregados  - Mes :  "+mes+"  - Año : "+anio,
                 autoTable:{
-                    margin: {top: 50},
+                    margin: {horizontal:5,top: 50},
+                    styles: {overflow: 'linebreak'},
+                    //margin: {top: 50},
                 },
                 documentProcessing:function(doc){
                     //carry out an action on the doc object

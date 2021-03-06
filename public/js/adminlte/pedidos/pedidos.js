@@ -6,6 +6,25 @@ $(document).ready(function () {
   var table_lista_ordenes;
   var array_detalle_factura_eliminados = [];
 
+  var date = new Date();
+  var ultimoDia = new Date(date.getFullYear(), date.getMonth() + 1, 0);
+  var primerDia = new Date(date.getFullYear(), date.getMonth(), 1);
+
+  var datePrimer =
+  primerDia.getFullYear() + "-" +
+  ("00" + (primerDia.getMonth() + 1)).slice(-2) + "-" +
+  ("00" + primerDia.getDate()).slice(-2);
+
+  var dateUltimo =
+  ultimoDia.getFullYear() + "-" +
+  ("00" + (ultimoDia.getMonth() + 1)).slice(-2) + "-" +
+  ("00" + ultimoDia.getDate()).slice(-2);
+
+
+  document.getElementById('fechaDesde').value=datePrimer;
+  document.getElementById('fechaHasta').value=dateUltimo;
+
+  
 
   $('#orderStatus').val('OP').change();
     //$('#orderStatus').prop('disabled', false);
@@ -253,7 +272,7 @@ $(document).ready(function () {
                 {title:"Telefono1", field:"phone1", sorter:"string", width:200, headerFilter:"input",  headerFilterPlaceholder:"Buscar Telefono1"},
                 {title:"Telefono2", field:"phone2", sorter:"string", width:200, headerFilter:"input",  headerFilterPlaceholder:"Buscar Telefono2"},
                 {title:"Email", field:"email", sorter:"string", width:200, headerFilter:"input",  headerFilterPlaceholder:"Buscar Email"},
-                {title:"Tipo de documento", field:"name_document", sorter:"string", width:200, headerFilter:"input",  headerFilterPlaceholder:"Buscar Tipo de documento"},
+                {title:"Tipo de documento", field:"name_document", sorter:"string", width:200, headerFilter:"select", headerFilterParams:{values:true}, headerFilterPlaceholder:"Buscar documento"},//headerFilter:"input",  headerFilterPlaceholder:"Buscar Tipo de documento"},
               
               
             ],
@@ -1375,11 +1394,11 @@ $(document).ready(function () {
           precision:2,
         }},//
         {title:"Observacion", field:"observation"},//
-        {title:"Cod Ciudad", field:"city_sale_cod"},//
-        {title:"Nombre del Sector", field:"nombre_sector"},
-        {title:"Nombre de Ciudad", field:"nombre_ciudad"},
-        {title:"Nombre Estado Orden", field:"nombre_estado_ord",headerFilter:"input",headerFilterPlaceholder:"Estado"},
-        {title:"Nombre Colaborador", field:"nombre_colaborador"},
+        // {title:"Cod Ciudad", field:"city_sale_cod"},//
+        {title:"Nombre del Sector", field:"nombre_sector", headerFilter:"select", headerFilterParams:{values:true}, headerFilterPlaceholder:"Buscar Sector"}, //},
+        {title:"Nombre de Ciudad", field:"nombre_ciudad", headerFilter:"select", headerFilterParams:{values:true}, headerFilterPlaceholder:"Buscar Ciudad"},  //},
+        {title:"Nombre Estado Orden", field:"nombre_estado_ord", headerFilter:"select", headerFilterParams:{values:true}, headerFilterPlaceholder:"Buscar Estado"},  //headerFilter:"input",headerFilterPlaceholder:"Estado"},
+        {title:"Nombre Colaborador", field:"nombre_colaborador", headerFilter:"input",headerFilterPlaceholder:"Colaborador"},  //},
         // {//create column group
         //   title: "ID",
         //   columns: [
@@ -1507,4 +1526,38 @@ $(document).ready(function () {
 
   });
   
+  //Seccion busqueda por fecha
+  $(document).on("click", "#btn-buscar-filtro-fecha-pedido",function(){
+
+      cargarListaPedidosFecha();
+      $("#modal-buscarPedido").modal("show");
+  });
+
+  function cargarListaPedidosFecha(){
+    $.ajax({
+        type: 'POST',
+        url: $('#form-filtrar-buscar-orden_fecha').attr("action"),
+        data: {
+            _token: $('#token_filtar_bus_fecha').val(),
+            fechaDesde: $('#fechaDesde').val(),
+            fechaHasta: $('#fechaActual').val(),
+        },
+
+        beforeSend: function () {
+            $('.loaders').removeClass('d-none');
+        },
+        success: function (response) {
+
+        table_lista_ordenes.replaceData(response.data);
+
+        }, complete: function () {
+            $('.loaders').addClass('d-none');
+
+        }
+    });
+
+  }
+
+
+
 });

@@ -29,12 +29,19 @@ case p_in_opcion
 				GROUP BY  c.name, b.identification,b.name,b.last_name;
         ##Ventas Por Vendedor
         WHEN  'AB' THEN  
-			SELECT b.name,
-            b.identification, 
-            comissions.quantity_orders, 
-            comissions.total_comission 
-            FROM comissions inner join collaborators as b on comissions.collaborator_id = b.id
-            WHERE comissions.month =  p_in_mes and comissions.year = p_in_anio;
+			select c.identification,
+					c.name,
+					##MONTH(delivery_date) as mes,
+					##YEAR(delivery_date) as anio,
+					count(a.total_order) as cantidad,
+					sum(a.total_order) as total
+			from orders a inner join collaborators c 
+				on c.id = a.collaborator_id
+			where a.order_status_cod = p_in_estado ##'OE'
+				and MONTH(delivery_date) = p_in_mes ##'03' 
+				and YEAR(delivery_date) = p_in_anio ##'2021'
+			group by c.identification, c.name
+			order by cantidad desc;
 		
         ##lISTADOS DE PRODUCTOS VENDIDOS
         WHEN 'AC' THEN

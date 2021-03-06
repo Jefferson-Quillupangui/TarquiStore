@@ -228,11 +228,11 @@ $(document).ready(function () {
               precision:2,
             }},//
             {title:"Observacion", field:"observation"},//
-            {title:"Cod Ciudad", field:"city_sale_cod"},//
-            {title:"Nombre del Sector", field:"nombre_sector"},
-            {title:"Nombre de Ciudad", field:"nombre_ciudad"},
-            {title:"Nombre Estado Orden", field:"nombre_estado_ord"},
-            {title:"Nombre Colaborador", field:"nombre_colaborador"},
+            //{title:"Cod Ciudad", field:"city_sale_cod"},//
+            {title:"Nombre del Sector", field:"nombre_sector", headerFilter:"select", headerFilterParams:{values:true}, headerFilterPlaceholder:"Buscar Sector"}, //},
+            {title:"Nombre de Ciudad", field:"nombre_ciudad", headerFilter:"select", headerFilterParams:{values:true}, headerFilterPlaceholder:"Buscar Ciudad"}, //},
+            {title:"Nombre Estado Orden", field:"nombre_estado_ord", headerFilter:"select", headerFilterParams:{values:true}, headerFilterPlaceholder:"Buscar Estado"}, //},
+            {title:"Nombre Colaborador", field:"nombre_colaborador", headerFilter:"input",headerFilterPlaceholder:"Colaborador"}, //},
             // {//create column group
             //   title: "ID",
             //   columns: [

@@ -6,12 +6,11 @@ use App\Http\Controllers\Controller;
 use App\Models\OrderStatus;
 use App\Models\Order;
 use App\Models\OrderTransaction;
-
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
-
-
+use App\Models\User;
+use App\Classes\GeneralesClass;
 class ListaPedidosController extends Controller
 {
     
@@ -26,13 +25,15 @@ class ListaPedidosController extends Controller
    
 
     public function listaRevisionOrders_json(){
+        $metodosGeneralesClass = new GeneralesClass();
          
+         $id = Auth::user()->id;
+        //     $name = Auth::user()->name
+       
+        $administrarPedido = $metodosGeneralesClass->verificarPermisoAdministrador();
 
-        $id = Auth::user()->id;
-        $name = Auth::user()->name;
-        
-        if( $id == 1 || $name == "Admin"){//todos
-
+      
+        if($administrarPedido==1){//todos
             $orders = DB::select( DB::raw("SELECT 
                 orders.id, 
                 orders.delivery_date, 
@@ -215,8 +216,13 @@ class ListaPedidosController extends Controller
         $order_status_cod = $request->estadoOrden;
         $fechaDesde = $request->fechaDesde;
         $fechaHasta = $request->fechaHasta;
+
+        $metodosGeneralesClass = new GeneralesClass();
         
-        if( $id == 1 || $name == "Admin"){//todos
+        $administrarPedido = $metodosGeneralesClass->verificarPermisoAdministrador();
+
+      
+        if($administrarPedido==1){//todos
             
             $orders = DB::select( DB::raw("SELECT  
                 orders.id, 
@@ -425,6 +431,105 @@ class ListaPedidosController extends Controller
                 return response()->json(['data' => $OrderTransaction], 200);
        
        
+    }
+
+    public function buscarFiltrandoOrderFecha( Request $request){
+         
+        $id = Auth::user()->id;
+        $name = Auth::user()->name;
+
+        $fechaDesde = $request->fechaDesde;
+        $fechaHasta = $request->fechaHasta;
+
+        $metodosGeneralesClass = new GeneralesClass();
+        
+        $administrarPedido = $metodosGeneralesClass->verificarPermisoAdministrador();
+
+      
+        if($administrarPedido==1){//todos
+            
+            $orders = DB::select( DB::raw("SELECT  
+                orders.id, 
+                orders.delivery_date, 
+                orders.delivery_time, 
+                orders.delivery_address, 
+                orders.total_order, 
+                orders.total_comission, 
+                orders.observation, 
+                orders.status_comission, 
+                orders.sector_cod, 
+                orders.city_sale_cod, 
+                orders.client_id, 
+                orders.collaborator_id, 
+                orders.order_status_cod, 
+                b.name as nombre_sector, 
+                c.name as nombre_ciudad, 
+                d.name as nombre_estado_ord, 
+                e.identification, 
+                e.name as nombre_colaborador, 
+                f.phone1, 
+                f.phone2, 
+                f.email, 
+                IFNULL(f.identification,'N/A') AS identification,
+                f.name as nombre_cliente, 
+                g.name as nombre_usuario, 
+                g.email as email_cliente 
+                FROM orders inner join sectors as b on orders.sector_cod = b.codigo 
+                        inner join city_sales as c on orders.city_sale_cod = c.codigo 
+                        inner join order_statuses as d on orders.order_status_cod = d.codigo 
+                        inner join collaborators as e on orders.collaborator_id = e.id 
+                        inner join clients as f on orders.client_id = f.id 
+                        inner join users as g on orders.collaborator_id = g.id 
+                        AND orders.delivery_date BETWEEN '$fechaDesde'AND'$fechaHasta'
+                       
+            "));
+
+            return response()->json(['data' => $orders], 200);
+            
+        }else{//solo lo q es del usuario(vendedor)
+
+             $orders = DB::select( DB::raw("SELECT  
+                orders.id, 
+                orders.delivery_date, 
+                orders.delivery_time, 
+                orders.delivery_address, 
+                orders.total_order, 
+                orders.total_comission, 
+                orders.observation, 
+                orders.status_comission, 
+                orders.sector_cod, 
+                orders.city_sale_cod, 
+                orders.client_id, 
+                orders.collaborator_id, 
+                orders.order_status_cod, 
+                b.name as nombre_sector, 
+                c.name as nombre_ciudad, 
+                d.name as nombre_estado_ord, 
+                e.identification, 
+                e.name as nombre_colaborador, 
+                f.phone1, 
+                f.phone2, 
+                f.email, 
+                IFNULL(f.identification,'N/A') AS identification,
+                f.name as nombre_cliente, 
+                g.name as nombre_usuario, 
+                g.email as email_cliente 
+                FROM orders inner join sectors as b on orders.sector_cod = b.codigo 
+                        inner join city_sales as c on orders.city_sale_cod = c.codigo 
+                        inner join order_statuses as d on orders.order_status_cod = d.codigo 
+                        inner join collaborators as e on orders.collaborator_id = e.id 
+                        inner join clients as f on orders.client_id = f.id 
+                        inner join users as g on orders.collaborator_id = g.id 
+                        AND  orders.collaborator_id = '$id'
+                        AND orders.delivery_date BETWEEN '$fechaDesde'AND'$fechaHasta'
+                       
+            "));
+
+            return response()->json(['data' => $orders], 200);
+
+        
+        }   
+        
     }
   
 

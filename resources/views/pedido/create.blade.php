@@ -54,7 +54,7 @@
             <div class="row">
 
                 <div class="col-md-5">
-                    <label for="name_client">Buscar Pedido:</label>
+                    <label for="name_client">Búsqueda General:</label>
                     <div class="input-group mb-3">
                         <div class="input-group-prepend">
                             <span class="input-group-text">
@@ -111,6 +111,50 @@
                         </form>
                     </div>
                 </div>
+            </div>
+            <div class="row">
+
+                <div class="col-sm-3">
+                    <label for="identification">Fecha Desde:</label>
+                    <div class="input-group mb-3">
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text">
+                                    <i class="fa fa-circle"></i>
+                                </span>
+                            </div>
+
+                            <input type="date" class="form-control" id="fechaDesde" value="">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-sm-3">
+                    <label for="identification">Fecha Hasta:</label>
+                    <div class="input-group mb-3">
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text">
+                                    <i class="fa fa-circle"></i>
+                                </span>
+                            </div>
+
+                            <input type="date" class="form-control" id="fechaHasta" value="">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-2 ">
+                    <label for="orderStatus">Buscar </label>
+                    <div class="form-group row ">
+                        <form action="{{ route('orden.fecha.buscar') }}" id="form-filtrar-buscar-orden_fecha" method="POST">
+                            <input type="hidden" name="_token" id="token_filtar_bus_fecha" value="{{ csrf_token() }}">
+                            <button class="btn btn-info " id="btn-buscar-filtro-fecha-pedido" type="button" title="Buscar Pedidos Filtrando"> <i class="fas fa-search"></i>
+                                Buscar Pedido</button>
+                        </form>
+                    </div>
+                </div>
+
             </div>
         </div>
     </div>
@@ -665,6 +709,6 @@
    
 
 
-    <script type="text/javascript" src="{{ asset('js/adminlte/pedidos/pedidos.js?vs=12') }}"></script>
+    <script type="text/javascript" src="{{ asset('js/adminlte/pedidos/pedidos.js?vs=13') }}"></script>
 
 @stop

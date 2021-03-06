@@ -24,6 +24,7 @@ use Spatie\Permission\Models\Role;
 use Illuminate\Support\Facades\Auth;
 
 use App\Classes\PedidosClass;
+use App\Classes\GeneralesClass;
 
 class PedidosController extends Controller
 {
@@ -105,7 +106,13 @@ class PedidosController extends Controller
         $id = Auth::user()->id;
         $name = Auth::user()->name;
 
-        if( $id == 1 || $name == "Admin"){//todos
+        $metodosGeneralesClass = new GeneralesClass();
+        
+        $administrarPedido = $metodosGeneralesClass->verificarPermisoAdministrador();
+
+      
+        if($administrarPedido==1){//todos
+
             $orders = DB::select( DB::raw(" SELECT 
             orders.id, 
             orders.delivery_date, 

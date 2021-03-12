@@ -261,7 +261,7 @@ return [
                     'text'   => 'Usuarios',
                     'route'  => 'admin.users.index',
                     'can'    => 'Administrar usuarios',
-                    'active' => ['admin/users*']
+                    'active' => ['admin/users*', 'admin/change_password*']
                 ],
             ],
         ],

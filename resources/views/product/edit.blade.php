@@ -41,6 +41,28 @@
         var select_porcent = $("#select_porcent_desc").val()
         $('#in_discount_porcent').val(select_porcent).change();
 
+        
+        function check(e,value){
+            //Validar numero y punto
+                var unicode=e.charCode? e.charCode : e.keyCode;
+                if (value.indexOf(".") != -1)if( unicode == 46 )return false;
+                if (unicode!=8)if((unicode<48||unicode>57)&&unicode!=46)return false;
+            }
+            function checkLength(){
+            var fieldVal = document.getElementById('in_discount_porcent').value;
+            //Menos de 3 digitos
+            if(fieldVal < 99){
+                return true;
+            }
+            else
+            {
+            var str = document.getElementById('in_discount_porcent').value;
+            str = str.substring(0, str.length - 1);
+            document.getElementById('in_discount_porcent').value = str;
+            }
+        }
+
+
         $(document).ready(function () {
             
             var select_id_category = $("#select_id_category").val()

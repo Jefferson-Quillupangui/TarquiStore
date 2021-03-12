@@ -95,7 +95,8 @@
                                     'placeholder' => 'Valor de descuento del producto',
                                     'step'=>'any', 
                                     'id' => 'in_discount_porcent',
-                                    'onkeypress'=> 'return ((event.charCode >= 48 && event.charCode <= 57 ) || (event.charCode == 46))',
+                                    'onkeypress'=> 'return check(event,value)',
+                                    'onInput' => 'checkLength()',
                                     'max' => '2',
                                     'required' => true]) !!}
                 @error('discount')

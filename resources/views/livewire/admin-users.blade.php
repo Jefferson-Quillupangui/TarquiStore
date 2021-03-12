@@ -5,6 +5,12 @@
             <input class="form-control w-100" placeholder="Buscar usuario por nombre o por correo">
         </div> --}}
 
+        <div class="card-header">
+            <a href="{{route('admin.users.create')}}" class="btn btn-info">
+                <i class="fas fa-plus-square"></i> Crear Usuario
+            </a>
+        </div>
+
 
         @if($users->count())
 

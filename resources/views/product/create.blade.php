@@ -33,8 +33,29 @@
 
     {{-- <script src="https://cdn.ckeditor.com/ckeditor5/25.0.0/classic/ckeditor.js"></script> --}}
     <script type="text/javascript">
+
+        function check(e,value){
+            //Validar numero y punto
+                var unicode=e.charCode? e.charCode : e.keyCode;
+                if (value.indexOf(".") != -1)if( unicode == 46 )return false;
+                if (unicode!=8)if((unicode<48||unicode>57)&&unicode!=46)return false;
+            }
+            function checkLength(){
+            var fieldVal = document.getElementById('in_discount_porcent').value;
+            //Menos de 3 digitos
+            if(fieldVal < 99){
+                return true;
+            }
+            else
+            {
+            var str = document.getElementById('in_discount_porcent').value;
+            str = str.substring(0, str.length - 1);
+            document.getElementById('in_discount_porcent').value = str;
+            }
+        }
+
         $(document).ready(function () {
-            
+
             $(document).on("keyup", "#in_discount_porcent",function(){
             //var desct_pvp = $('#in_price_discount').val();//Precio descuento:
             
@@ -52,27 +73,6 @@
 
             });
     });
-
-        // ClassicEditor
-        // .create( document.querySelector( '#descript' ) )
-        // .catch( error => {
-        //     console.error( error );
-        // } );
-
-        // //Cambiar imagen
-        
-        // document.getElementById("image").addEventListener('change', cambiarImagen);
-
-        // function cambiarImagen(event){
-        //     var file = event.target.files[0];
-
-        //     var reader = new FileReader();
-        //     reader.onload = (event) => {
-        //         document.getElementById("picture").setAttribute('src', event.target.result); 
-        //     };
-
-        //     reader.readAsDataURL(file);
-        // }
 
         $(document).ready(function(){
 
@@ -98,24 +98,6 @@
                 })
 
             });
-        // document.getElementById("file").onchange = function(e) {
-        // // Creamos el objeto de la clase FileReader
-        // let reader = new FileReader();
-
-        // // Leemos el archivo subido y se lo pasamos a nuestro fileReader
-        // reader.readAsDataURL(e.target.files[0]);
-
-        // // Le decimos que cuando este listo ejecute el código interno
-        // reader.onload = function(){
-        //     let preview = document.getElementById('preview'),
-        //             image = document.createElement('img');
-
-        //     image.src = reader.result;
-
-        //     preview.innerHTML = '';
-        //     preview.append(image);
-        // };
-        // }
 
     </script>
 @stop

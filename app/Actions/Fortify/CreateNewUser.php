@@ -39,7 +39,8 @@ class CreateNewUser implements CreatesNewUsers
             'identification.required'   => 'El número de cédula es necesario..',
             'phone.required'            => 'El número de teléfono es necesario',
             'sex.required'              => 'El campo sexo es neceario',
-            'birth_day.required'        => 'La fecha de nacimiento es necesaria'
+            'birth_day.required'        => 'La fecha de nacimiento es necesaria',
+            'email.unique'              => 'El correo ya esta en uso',
 
         ]
         )->validate();

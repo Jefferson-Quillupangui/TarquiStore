@@ -50,7 +50,7 @@
         {{-- <form action="{{ route('reportePdf') }}" id="form-reportes-pdf" class="d-none"></form> --}}
 
         <div class="card-header">
-            <h4 class="card-title" style="margin: 0px 0px 0px 0px;"><i class="fa fa-file"></i> Visualizacion de Reportes
+            <h4 class="card-title" style="margin: 0px 0px 0px 0px;"><i class="fa fa-file"></i> Visualización de Reportes
             </h4>
         </div>
 
@@ -66,7 +66,7 @@
                             <option value="AB">Ventas por vendedor</option>
                             <option value="AC">Listados de Productos Vendidos</option>
                             <option value="AD">Ventas Diarias</option>
-                            <option value="AE">Ventas Por Categoria</option>
+                            <option value="AE">Ventas Por Categoría</option>
                             <option value="AF">Pedidos Entregados</option>
                         </select>
                     </div>

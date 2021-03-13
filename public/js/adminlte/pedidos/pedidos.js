@@ -269,8 +269,8 @@ $(document).ready(function () {
                 {title:"Nombre", field:"name", sorter:"string", width:200, headerFilter:"input",  headerFilterPlaceholder:"Buscar Nombre"},
                 {title:"Apellidos", field:"last_name", sorter:"string", width:200, headerFilter:"input",  headerFilterPlaceholder:"Buscar Apellidos"},
                 {title:"Dirección", field:"address", sorter:"string", width:200, headerFilter:"input" ,  headerFilterPlaceholder:"Buscar Dirección"},
-                {title:"Telefono1", field:"phone1", sorter:"string", width:200, headerFilter:"input",  headerFilterPlaceholder:"Buscar Telefono1"},
-                {title:"Telefono2", field:"phone2", sorter:"string", width:200, headerFilter:"input",  headerFilterPlaceholder:"Buscar Telefono2"},
+                {title:"Teléfono1", field:"phone1", sorter:"string", width:200, headerFilter:"input",  headerFilterPlaceholder:"Buscar Telefono1"},
+                {title:"Teléfono2", field:"phone2", sorter:"string", width:200, headerFilter:"input",  headerFilterPlaceholder:"Buscar Telefono2"},
                 {title:"Email", field:"email", sorter:"string", width:200, headerFilter:"input",  headerFilterPlaceholder:"Buscar Email"},
                 {title:"Tipo de documento", field:"name_document", sorter:"string", width:200, headerFilter:"select", headerFilterParams:{values:true}, headerFilterPlaceholder:"Buscar documento"},//headerFilter:"input",  headerFilterPlaceholder:"Buscar Tipo de documento"},
               
@@ -640,7 +640,7 @@ $(document).ready(function () {
                 precision:2,
             }
           },
-          {title:"COMISION", field:"comission",  formatter:"money", hozAlign:"right", width:100, formatterParams:{
+          {title:"COMISIÓN", field:"comission",  formatter:"money", hozAlign:"right", width:100, formatterParams:{
                 decimal:".",
                 thousand:".",
                 symbol:"$",
@@ -648,7 +648,7 @@ $(document).ready(function () {
                 precision:2,
             }
           },
-          {title:"TOTAL COMISION", field:"total_comission",  formatter:"money", hozAlign:"right", width:100, formatterParams:{
+          {title:"TOTAL COMISIÓN", field:"total_comission",  formatter:"money", hozAlign:"right", width:100, formatterParams:{
             decimal:".",
             thousand:".",
             symbol:"$",
@@ -925,7 +925,7 @@ $(document).ready(function () {
                                 // $("#textbuscarcliente").attr("codigocliente", cell.getRow().getData().id);
                             
                             }},
-      {title:"Codigo", field:"id",headerFilter:"input", headerFilterPlaceholder:"Codigo"},
+      {title:"Código", field:"id",headerFilter:"input", headerFilterPlaceholder:"Codigo"},
       {title:"Nombre Producto", field:"name", width:190,headerFilter:"input", headerFilterPlaceholder:"Buscar Producto"},
       {title:"Precio", field:"price", sorter:"number", formatter:"money", formatterParams:{
         decimal:".",
@@ -935,7 +935,7 @@ $(document).ready(function () {
         precision:2,
         }
       },
-      {title:"Comision", field:"comission", formatter:"money", formatterParams:{
+      {title:"Comisión", field:"comission", formatter:"money", formatterParams:{
         decimal:".",
         thousand:".",
         symbol:"$",
@@ -1375,10 +1375,10 @@ $(document).ready(function () {
         {title:"Cod Sector", field:"sector_cod",visible:false},//
         {title:"N# Pedido", field:"id",hozAlign:"center",headerFilter:"input",headerFilterPlaceholder:"N# Pedido"},
         {title:"Nombre Clientes", field:"nombre_cliente",headerFilter:"input",headerFilterPlaceholder:"Cliente"},
-        {title:"Identicacion", field:"identification",hozAlign:"center",headerFilter:"input",headerFilterPlaceholder:"Identificacion"},
-        {title:"Fecha Orden", field:"delivery_date" },
+        {title:"Identicación", field:"identification",hozAlign:"center",headerFilter:"input",headerFilterPlaceholder:"Identificacion"},
+        {title:"Fecha Entrega", field:"delivery_date" },
         {title:"Hora", field:"delivery_time"},
-        {title:"Direccion", field:"delivery_address"},//
+        {title:"Dirección", field:"delivery_address"},//
         {title:"Total Orden", field:"total_order",formatter:"money", hozAlign:"right",formatterParams:{
           decimal:".",
           thousand:".",
@@ -1386,14 +1386,14 @@ $(document).ready(function () {
           symbolAfter:false,
           precision:2,
         }},//
-        {title:"Total Comision", field:"total_comission",formatter:"money", hozAlign:"right",formatterParams:{
+        {title:"Total Comisión", field:"total_comission",formatter:"money", hozAlign:"right",formatterParams:{
           decimal:".",
           thousand:".",
           symbol:"$",
           symbolAfter:false,
           precision:2,
         }},//
-        {title:"Observacion", field:"observation"},//
+        {title:"Observación", field:"observation"},//
         // {title:"Cod Ciudad", field:"city_sale_cod"},//
         {title:"Nombre del Sector", field:"nombre_sector", headerFilter:"select", headerFilterParams:{values:true}, headerFilterPlaceholder:"Buscar Sector"}, //},
         {title:"Nombre de Ciudad", field:"nombre_ciudad", headerFilter:"select", headerFilterParams:{values:true}, headerFilterPlaceholder:"Buscar Ciudad"},  //},

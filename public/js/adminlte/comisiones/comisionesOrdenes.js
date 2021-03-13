@@ -45,7 +45,7 @@ $(document).ready(function () {
             {title:"Fecha Inicio", field:"month_start_date",hozAlign:"center"},
             {title:"Fecha Fin", field:"month_end_date",hozAlign:"center"},
             {title:"Cantidad Ordenes", field:"quantity_orders",hozAlign:"center",hozAlign:"center"},
-            {title:"Total Comision", field:"total_comission", formatter:"money", hozAlign:"right",formatterParams:{
+            {title:"Total Comisión", field:"total_comission", formatter:"money", hozAlign:"right",formatterParams:{
                 decimal:".",
                 thousand:".",
                 symbol:"$",
@@ -93,10 +93,10 @@ $(document).ready(function () {
 
             }},
             {title:"ID Cola", visible:false,field:"user_id",hozAlign:"center"},
-            {title:"Identificaion", field:"identification",hozAlign:"center",headerFilter:"input",headerFilterPlaceholder:"Identificaion"},
+            {title:"Identificación", field:"identification",hozAlign:"center",headerFilter:"input",headerFilterPlaceholder:"Identificaion"},
             {title:"Nombre Usuario",width:200, field:"name",headerFilter:"input",headerFilterPlaceholder:"Nombre Usuario"},
             {title:"Email", field:"email",width:200,hozAlign:"center" ,headerFilter:"input",headerFilterPlaceholder:"Email"},
-            {title:"Telefono", width:200,field:"phone",headerFilter:"input",headerFilterPlaceholder:"Telefono"},
+            {title:"Teléfono", width:200,field:"phone",headerFilter:"input",headerFilterPlaceholder:"Telefono"},
            // {title:"Hora", field:"delivery_time",visible:false},
           ],
     });
@@ -297,9 +297,9 @@ $(document).ready(function () {
             // {formatter:iconAudito, width:40, hozAlign:"center"},
            
             {title:"Nombre", field:"name",hozAlign:"left"},
-            {title:"Identificacion", field:"identification",hozAlign:"center"},
+            {title:"Identificación", field:"identification",hozAlign:"center"},
             {title:"Cantidad Ordenes", field:"quantity_orders",hozAlign:"center",hozAlign:"center"},
-            {title:"Total Comision", field:"total_comission", formatter:"money", hozAlign:"right",formatterParams:{
+            {title:"Total Comisión", field:"total_comission", formatter:"money", hozAlign:"right",formatterParams:{
                 decimal:".",
                 thousand:".",
                 symbol:"$",

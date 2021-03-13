@@ -240,7 +240,7 @@
                 <div class="row">
 
                     <div class="col-md-6">
-                        <label for="phone1">Telefonos:</label>
+                        <label for="phone1">Teléfonos:</label>
                         <div class="input-group mb-6">
                             <div class="input-group">
                                 <div class="input-group-prepend">
@@ -256,7 +256,7 @@
             ? '
                                 is-invalid'
             : ''),
-    'placeholder' => 'Telefono 1',
+    'placeholder' => 'Teléfono 1',
     'id' => 'textphone1',
     'disabled',
 ]) !!}
@@ -268,7 +268,7 @@
             ? '
                                 is-invalid'
             : ''),
-    'placeholder' => 'Telefono 2',
+    'placeholder' => 'Teléfono 2',
     'id' => 'textphone2',
     'disabled',
 ]) !!}
@@ -315,7 +315,7 @@
 
                 <div class="row">
                     <div class='col-sm-6'>
-                        <label for="identification">Fecha/Hora:</label>
+                        <label for="identification">Fecha/Hora Entrega:</label>
                         <div class="input-group mb-3">
                             <div class="input-group">
                                 <div class="input-group-prepend">
@@ -408,7 +408,7 @@
                                 </div>
                                 {!! Form::textarea('address_delivery', null, [
     'class' => 'form-control' . ($errors->has('address_delivery') ? ' is-invalid' : ''),
-    'placeholder' => 'Ingrese direccion ',
+    'placeholder' => 'Ingrese dirección ',
     'rows' => '2',
     'id' => 'textaddressdelivery',
     'spellcheck' => 'false',
@@ -423,7 +423,7 @@
                     </div>
 
                     <div class="col-md-6">
-                        <label for="textObservacion">Observacion:</label>
+                        <label for="textObservacion">Observación:</label>
                         <div class="input-group mb-3 ">
                             <div class="input-group resize:none">
                                 <div class="input-group-prepend">
@@ -431,7 +431,7 @@
                                 </div>
                                 {!! Form::textarea('textObservacion', null, [
     'class' => 'form-control' . ($errors->has('textObservacion') ? ' is-invalid' : ''),
-    'placeholder' => 'Ingrese observacion',
+    'placeholder' => 'Ingrese observación',
     'rows' => '2',
     'id' => 'textObservacion',
     'spellcheck' => 'false',
@@ -488,7 +488,7 @@
                             </div>
                         </div>
                         <div class="form-group row ">
-                            <label for="txt_totalComision" class="col-sm-4 control-label ">Total Comision:</label>
+                            <label for="txt_totalComision" class="col-sm-4 control-label ">Total Comisión:</label>
                             <div class="col-sm-8">
                                 <input type="text" value="0.00" class="form-control txt_totalComision text-right"
                                     id="txt_totalComision" name="txt_totalComision" placeholder="" disabled="disabled">

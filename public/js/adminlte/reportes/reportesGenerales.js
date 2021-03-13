@@ -52,7 +52,7 @@ $(document).ready(function () {
         columns:[
             // {formatter:iconAudito, width:40, hozAlign:"center"},
             // {title:"Estado", width:200,field:"name_estado",hozAlign:"center"},
-            {title:"Identificacion" , width:200, field:"identification",hozAlign:"left"},
+            {title:"Identificación" , width:200, field:"identification",hozAlign:"left"},
             {title:"Nombre Cliente", width:510, field:"name_complet",hozAlign:"left"},
             {title:"Cantidad de Ordenes",width:155, field:"cantidad_ordenes",hozAlign:"center"},
             {title:"Total de Ordenes",width:155, field:"total_orden", formatter:"money", hozAlign:"right",formatterParams:{
@@ -78,7 +78,7 @@ $(document).ready(function () {
         columns:[
            
             // {formatter:iconAudito, width:40, hozAlign:"center"},
-            {title:"Identificacion",width:200, field:"identification",hozAlign:"left"},
+            {title:"Identificación",width:200, field:"identification",hozAlign:"left"},
             {title:"Nombre", width:510,field:"name",hozAlign:"left"},
             {title:"Cantidad",width:155, field:"cantidad",hozAlign:"center",hozAlign:"center"},
             {title:"Total",width:155, field:"total", formatter:"money", hozAlign:"right",formatterParams:{
@@ -104,7 +104,7 @@ $(document).ready(function () {
        
         columns:[
             // {formatter:iconAudito, width:40, hozAlign:"center"},
-            {title:"Codigo de Producto",width:200, field:"codigo_producto",hozAlign:"left"},
+            {title:"Código de Producto",width:200, field:"codigo_producto",hozAlign:"left"},
             {title:"Nombre del producto", width:510,field:"name_product",hozAlign:"left"},
             {title:"Cantidad Vendidos",width:155, field:"catidad_vendidos",hozAlign:"center",hozAlign:"center"},
             {title:"Total Venta",width:155, field:"total_venta_product", formatter:"money", hozAlign:"right",formatterParams:{
@@ -132,8 +132,8 @@ $(document).ready(function () {
         columns:[
             //id,dia_mes,cantidad_ordenes,total_ordenes
             // {formatter:iconAudito, width:40, hozAlign:"center"},
-            {title:"Codigo Categoria",width:200, field:"codigo_categoria",hozAlign:"left"},
-            {title:"Nombre Categoria", width:510,field:"nombre_categoria",hozAlign:"left"},
+            {title:"Código Categoría",width:200, field:"codigo_categoria",hozAlign:"left"},
+            {title:"Nombre Categoría", width:510,field:"nombre_categoria",hozAlign:"left"},
             {title:"Cantidad Productos",width:155, field:"cantidad_productos",hozAlign:"center",hozAlign:"center"},
             {title:"Monto Total",width:155, field:"monto_total", formatter:"money", hozAlign:"right",formatterParams:{
                 decimal:".",
@@ -186,13 +186,13 @@ $(document).ready(function () {
         columns:[
             //id,dia_mes,cantidad_ordenes,total_ordenes
             // {formatter:iconAudito, width:40, hozAlign:"center"},
-            {title:"Num Pedido",width:100, field:"id",hozAlign:"left"},
+            {title:"# Pedido",width:100, field:"id",hozAlign:"left"},
             {title:"Fecha",width:80, field:"delivery_date",hozAlign:"left"},
             // {title:"Hora",width:80, field:"delivery_time",hozAlign:"left"},
             {title:"Nombre Cliente", width:220,field:"nombre_cliente",hozAlign:"left"},
-            {title:"Identificacion", width:125,field:"identification",hozAlign:"left"},
+            {title:"Identificación", width:125,field:"identification",hozAlign:"left"},
             {title:"Correo", width:190,field:"email",hozAlign:"left"},
-            {title:"Telefonos", width:150,field:"telefono",hozAlign:"left"},
+            {title:"Teléfonos", width:150,field:"telefono",hozAlign:"left"},
             // {title:"Sector", width:150,field:"sector",hozAlign:"left"},
             {title:"Ciudad", width:150,field:"nombre_ciudad",hozAlign:"left"},
             // {title:"Direccion", width:220,field:"delivery_address",hozAlign:"left"},

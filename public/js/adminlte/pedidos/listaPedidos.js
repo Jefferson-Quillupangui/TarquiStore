@@ -209,10 +209,10 @@ $(document).ready(function () {
             {title:"Cod Sector", field:"sector_cod",visible:false},//
             {title:"N# Pedido", field:"id",hozAlign:"center",headerFilter:"input",headerFilterPlaceholder:"N# Pedido"},
             {title:"Nombre Clientes", field:"nombre_cliente",headerFilter:"input",headerFilterPlaceholder:"Cliente"},
-            {title:"Identicacion", field:"identification",hozAlign:"center",headerFilter:"input",headerFilterPlaceholder:"Identificacion"},
-            {title:"Fecha Orden", field:"delivery_date" },
+            {title:"Identicación", field:"identification",hozAlign:"center",headerFilter:"input",headerFilterPlaceholder:"Identificacion"},
+            {title:"Fecha Entrega", field:"delivery_date" },
             {title:"Hora", field:"delivery_time"},
-            {title:"Direccion", field:"delivery_address"},//
+            {title:"Dirección", field:"delivery_address"},//
             {title:"Total Orden", field:"total_order",formatter:"money", hozAlign:"right",formatterParams:{
               decimal:".",
               thousand:".",
@@ -220,14 +220,14 @@ $(document).ready(function () {
               symbolAfter:false,
               precision:2,
             }},//
-            {title:"Total Comision", field:"total_comission",formatter:"money", hozAlign:"right",formatterParams:{
+            {title:"Total Comisión", field:"total_comission",formatter:"money", hozAlign:"right",formatterParams:{
               decimal:".",
               thousand:".",
               symbol:"$",
               symbolAfter:false,
               precision:2,
             }},//
-            {title:"Observacion", field:"observation"},//
+            {title:"Observación", field:"observation"},//
             //{title:"Cod Ciudad", field:"city_sale_cod"},//
             {title:"Nombre del Sector", field:"nombre_sector", headerFilter:"select", headerFilterParams:{values:true}, headerFilterPlaceholder:"Buscar Sector"}, //},
             {title:"Nombre de Ciudad", field:"nombre_ciudad", headerFilter:"select", headerFilterParams:{values:true}, headerFilterPlaceholder:"Buscar Ciudad"}, //},
@@ -324,7 +324,7 @@ $(document).ready(function () {
       
       
         {title:"ID DET", field:"id_detalle_product", sorter:"number",visible:false},
-        {title:"CODIGO", field:"product_id", sorter:"number", width:100,  hozAlign:"center"},
+        {title:"CÓDIGO", field:"product_id", sorter:"number", width:100,  hozAlign:"center"},
         // {title:"id_product", field:"id_product", sorter:"string"},
         {title:"NOMBRE PRODUCTO", field:"name_product", sorter:"string"},
         {title:"CANTIDAD", field:"quantity", sorter:"number",hozAlign:"center"},
@@ -352,7 +352,7 @@ $(document).ready(function () {
               precision:2,
           }
         },
-        {title:"COMISION", field:"comission",  formatter:"money", hozAlign:"right", width:100, formatterParams:{
+        {title:"COMISIÓN", field:"comission",  formatter:"money", hozAlign:"right", width:100, formatterParams:{
               decimal:".",
               thousand:".",
               symbol:"$",
@@ -360,7 +360,7 @@ $(document).ready(function () {
               precision:2,
           }
         },
-        {title:"TOTAL COMISION", field:"total_comission",  formatter:"money", hozAlign:"right", width:100, formatterParams:{
+        {title:"TOTAL COMISIÓN", field:"total_comission",  formatter:"money", hozAlign:"right", width:100, formatterParams:{
           decimal:".",
           thousand:".",
           symbol:"$",

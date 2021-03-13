@@ -48,7 +48,7 @@
                     {{-- <th>&nbsp;</th> --}}
                     <th>Cod</th>
                     <th>Nombre</th>
-                    <th>Categoria</th>
+                    <th>Categoría</th>
                     {{-- <th>Imagen</th> --}}
                     <th>Precio</th>
                     <th>Comisión</th>

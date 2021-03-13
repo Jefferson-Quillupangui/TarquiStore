@@ -47,7 +47,7 @@
         <form action="{{ route('lista.orders.detalle') }}" id="form-detalle-lista-pedidos" class="d-none"></form>
         <form action="{{ route('list_orders_auditoria_json') }}" id="form-auditoria-orden" class="d-none"></form>
         <div class="card-header">
-            <h4 class="card-title" style="margin: 0px 0px 0px 0px;"><i class="fas fa-search-plus"></i> Busqueda general</h4>
+            <h4 class="card-title" style="margin: 0px 0px 0px 0px;"><i class="fas fa-search-plus"></i> Búsqueda general</h4>
             <div class="card-tools">
                 <button type="button" class="btn btn-tool mt-0" data-card-widget="collapse"><i
                         class="fas fa-plus"></i></button>
@@ -80,7 +80,7 @@
 
     <div class="card card-cyan collapsed-card">
         <div class="card-header">
-            <h4 class="card-title" style="margin: 0px 0px 0px 0px;"> <i class="fas fa-search"></i> Busqueda por fecha</h4>
+            <h4 class="card-title" style="margin: 0px 0px 0px 0px;"> <i class="fas fa-search"></i> Búsqueda por fecha</h4>
             <div class="card-tools">
                 <button type="button" class="btn btn-tool mt-0" data-card-widget="collapse"><i
                         class="fas fa-plus"></i></button>
@@ -156,7 +156,7 @@
         {{-- <input type="hidden" name="_token" id="token_orden_busqd" value="{{ csrf_token() }}">
         <form action="{{ route('reporte.orden.datos') }}" id="form-datos-orden" class="d-none"></form> --}}
         <div class="card-header">
-            <h4 class="card-title" style="margin: 6px 0px 0px 0px;"><i class="fa fa-file"></i> Visualizacion Orden</h4>
+            <h4 class="card-title" style="margin: 6px 0px 0px 0px;"><i class="fa fa-file"></i> Visualización Orden</h4>
 
 
 
@@ -181,14 +181,14 @@
 
             <div class="row">
                 <div class="col-md-6">
-                    <label for="name_client">Numero Orden:</label>
+                    <label for="name_client">Número Orden:</label>
                     <div class="input-group mb-3">
                         <div class="input-group-prepend">
                             <span class="input-group-text">
                                 <i class="fa fa-circle"></i>
                             </span>
                         </div>
-                        <input type="text" class="form-control" placeholder="Numero Orden" id="txt_ver_numero_orden" disabled />
+                        <input type="text" class="form-control" placeholder="Número Orden" id="txt_ver_numero_orden" disabled />
 
                     </div>
                 </div>
@@ -258,7 +258,7 @@
             <div class="row">
 
                 <div class="col-md-6">
-                    <label for="phone1">Telefonos:</label>
+                    <label for="phone1">Teléfonos:</label>
                     <div class="input-group mb-6">
                         <div class="input-group">
                             <div class="input-group-prepend">
@@ -267,10 +267,10 @@
                                 </span>
                             </div>
 
-                            <input class="form-control" placeholder="Telefono 1" id="txtPhone1" disabled="" name="phone1"
+                            <input class="form-control" placeholder="Teléfono 1" id="txtPhone1" disabled="" name="phone1"
                                 type="text">
 
-                            <input class="form-control" placeholder="Telefono 2" id="txtPhone2" disabled="" name="phone2"
+                            <input class="form-control" placeholder="Teléfono 2" id="txtPhone2" disabled="" name="phone2"
                                 type="text">
 
 
@@ -292,7 +292,7 @@
 
             <div class="row">
                 <div class='col-sm-6'>
-                    <label for="identification">Fecha/Hora:</label>
+                    <label for="identification">Fecha/Hora Entrega:</label>
                     <div class="input-group mb-3">
                         <div class="input-group">
                             <div class="input-group-prepend">
@@ -360,20 +360,20 @@
                             <div class="input-group-prepend">
                                 <span class="input-group-text"><i class="fa fa-map-marker"></i></span>
                             </div>
-                            <textarea class="form-control" placeholder="Ingrese direccion " disabled="" rows="2"
+                            <textarea class="form-control" placeholder="Ingrese dirección " disabled="" rows="2"
                                 id="txtDireccion" spellcheck="false" name="address_delivery" cols="50"></textarea>
                         </div>
                     </div>
                 </div>
 
                 <div class="col-md-6">
-                    <label for="textObservacion">Observacion:</label>
+                    <label for="textObservacion">Observación:</label>
                     <div class="input-group mb-3 ">
                         <div class="input-group resize:none">
                             <div class="input-group-prepend">
                                 <span class="input-group-text"><i class="fa fa-sticky-note"></i></span>
                             </div>
-                            <textarea class="form-control" placeholder="Ingrese observacion" disabled="" rows="2"
+                            <textarea class="form-control" placeholder="Ingrese observación" disabled="" rows="2"
                                 id="txtObservacion" spellcheck="false" name="textObservacion" cols="50"></textarea>
                         </div>
                     </div>
@@ -395,13 +395,13 @@
                 </div>
 
                 <div class="col-md-6">
-                    <label for="city">Total Comision:</label>
+                    <label for="city">Total Comisión:</label>
                     <div class="input-group mb-3">
                         <div class="input-group-prepend">
                             <span class="input-group-text" id="basic-addon1"><i class="far fa-list-alt"
                                     aria-hidden="true"></i></span>
                         </div>
-                        <input class="form-control" placeholder="Total Comision" id="txtTotalComision" disabled=""
+                        <input class="form-control" placeholder="Total Comisión" id="txtTotalComision" disabled=""
                             name="email" type="text">
                     </div>
                 </div>

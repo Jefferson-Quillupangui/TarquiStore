@@ -67,7 +67,7 @@ class TablesSeeder extends Seeder
 
         User::create([
             'name' => 'Admin',
-            'email' =>  'admin@gmail.com',
+            'email' =>  'tarquistore@gmail.com',
             'email_verified_at' => now(),
             'password' => Hash::make('Admin1234')
         ]);
@@ -219,7 +219,7 @@ class TablesSeeder extends Seeder
     {
         TypeIdentification::create([
             'codigo'      => '05',
-            'name'     => 'CEDULA'
+            'name'     => 'CÉDULA'
            // 'status' => 'A'
         ]);
 
@@ -291,9 +291,9 @@ class TablesSeeder extends Seeder
     public function collaboratorTable()
     {
         Collaborator::create([
-            'identification'      => '099999999',
+            'identification'      => '0999999999',
             'name'     => 'Admin',
-            'phone'     => '099999999',
+            'phone'     => '0999999999',
             'birth_date'  => Carbon::parse('1996-08-07'),
             'sex'  => 'H',
             'status'     => 'A',

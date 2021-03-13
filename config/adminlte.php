@@ -299,7 +299,7 @@ return [
         ],
 
         [
-            'text' => 'Categorias',
+            'text' => 'Categorías',
             'route'  => 'categories.index',
             'icon' => 'fas fa-tags',
             'can'  => 'Listar categorias',

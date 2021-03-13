@@ -55,7 +55,7 @@
 
                 @can('Comisiones General')
                     <div class="col-md-5">
-                        <label for="name_client">Buscar Colaboraderes:</label>
+                        <label for="name_client">Buscar Colaboradores:</label>
                         <div class="input-group mb-3">
                             <div class="input-group-prepend">
                                 <span class="input-group-text">
@@ -119,7 +119,7 @@
                         {{-- <input type="hidden" name="_token" id="token_buscar" value="{{ csrf_token() }}"> --}}
                         <button class="btn btn-info " id="btn-buscar-comision" type="button" title="Buscar Comision"> <i
                                 class="fas fa-search"></i>
-                            Buscar Comision</button>
+                            Buscar Comisión</button>
                         </form>
                     </div>
                 </div>
@@ -218,7 +218,7 @@
                             {{-- <input type="hidden" name="_token" id="token_buscar" value="{{ csrf_token() }}"> --}}
                             <button class="btn btn-info " id="btn-buscar-comisiones-generales" type="button"
                                 title="Buscar Comision General"> <i class="fas fa-search"></i>
-                                Buscar Comision</button>
+                                Buscar Comisión</button>
                             </form>
                         </div>
                     </div>

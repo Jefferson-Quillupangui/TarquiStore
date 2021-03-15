@@ -31,6 +31,7 @@ $(document).ready(function () {
         if (this.checked) {
             //alert("checked-Aplica");
             //caso de que si ingrese cedula
+            $('#input-identificacion').attr("verificacion", 0);
             $('#input-identificacion').prop('readonly', false);
             $('#input-tipo-identificacion').prop('disabled', false);
             $('#btn-guardar').prop('disabled', true);
@@ -142,27 +143,27 @@ $(document).ready(function () {
     /**
      * PROCESO PARA ACTUALIZAR
      */
-    if( $('#btn-guardar').attr('editar') === "0")
-    { 
-        window.onload =  editar();
+    // if( $('#btn-guardar').attr('editar') === "0")
+    // { 
+    //     window.onload =  editar();
 
 
-        function editar(){
-           let $identificacion =  $('#input-identificacion').val();
-           let $tipoIdentificacion =  $('#input-tipo-identificacion').val();
-           var $verificar = $('#input-identificacion').attr("verificacion");
+    //     function editar(){
+    //        let $identificacion =  $('#input-identificacion').val();
+    //        let $tipoIdentificacion =  $('#input-tipo-identificacion').val();
+    //        var $verificar = $('#input-identificacion').attr("verificacion");
 
-           if($identificacion === ""){
-            $('#input-identificacion').prop('readonly', true);
-            $('#input-tipo-identificacion').prop('disabled', true);
-            $(".check-no-aplica-identificacion").removeAttr("checked");
-            //$('#input-tipo-identificacion').prop('checked', false);
-           }else{
-            validarDocumento( $identificacion, $tipoIdentificacion, $verificar  );
-           }
+    //        if($identificacion === ""){
+    //         $('#input-identificacion').prop('readonly', true);
+    //         $('#input-tipo-identificacion').prop('disabled', true);
+    //         $(".check-no-aplica-identificacion").removeAttr("checked");
+    //         //$('#input-tipo-identificacion').prop('checked', false);
+    //        }else{
+    //         validarDocumento( $identificacion, $tipoIdentificacion, $verificar  );
+    //        }
             
-        }
-    }
+    //     }
+    // }
    
     
     

@@ -12,7 +12,10 @@
             <div class="input-group-prepend">
                 <span class="input-group-text" id="basic-addon1"><i class="far fa-keyboard"></i></span>
             </div>
-            {!! Form::text('name',null,['class' => 'form-control'. ($errors->has('name') ? ' is-invalid' : ''), 'placeholder' => 'Ingrese el nombre de la categoria']) !!}                 
+            {!! Form::text('name',null,['class' => 'form-control'. ($errors->has('name') ? ' is-invalid' : ''), 
+                                'placeholder' => 'Ingrese el nombre de la categoria',
+                                'maxlength' => '45',
+                                'oninput' => 'if(this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);']) !!}                 
             
             @error('name')
             <span class="invalid-feedback">
@@ -35,7 +38,10 @@
                 <span class="input-group-text" id="basic-addon1"><i class="far fa-keyboard"></i></span>
             </div>
             
-            {!! Form::text('description',null,['class' => 'form-control'. ($errors->has('description') ? ' is-invalid' : ''), 'placeholder' => 'Ingrese la descripción de la categoria']) !!}                 
+            {!! Form::text('description',null,['class' => 'form-control'. ($errors->has('description') ? ' is-invalid' : ''), 
+                                'placeholder' => 'Ingrese la descripción de la categoria',
+                                'maxlength' => '255',
+                                'oninput' => 'if(this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);']) !!}                 
             @error('description')
             <span class="invalid-feedback">
                 <strong>{{$message}}</strong>

@@ -112,7 +112,8 @@ case p_in_opcion
 			#a.collaborator_id,
 			f.name AS nombre_colaborador,
 			f.identification AS identification_colaborador,
-			a.order_status_cod
+			a.order_status_cod,
+			a.created_at
 			FROM orders a INNER JOIN order_statuses b ON a.order_status_cod = b.codigo
 										INNER JOIN city_sales c ON a.city_sale_cod = c.codigo
 										INNER JOIN sectors d ON a.sector_cod = d.codigo

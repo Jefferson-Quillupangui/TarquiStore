@@ -186,15 +186,16 @@ $(document).ready(function () {
         columns:[
             //id,dia_mes,cantidad_ordenes,total_ordenes
             // {formatter:iconAudito, width:40, hozAlign:"center"},
-            {title:"# Pedido",width:100, field:"id",hozAlign:"left"},
-            {title:"Fecha",width:80, field:"delivery_date",hozAlign:"left"},
+            {title:"#Pedido",width:100, field:"id",hozAlign:"left"},
+            {title:"Registro",width:80, field:"created_at",hozAlign:"left"},
             // {title:"Hora",width:80, field:"delivery_time",hozAlign:"left"},
             {title:"Nombre Cliente", width:220,field:"nombre_cliente",hozAlign:"left"},
             {title:"Identificación", width:125,field:"identification",hozAlign:"left"},
             {title:"Correo", width:190,field:"email",hozAlign:"left"},
             {title:"Teléfonos", width:150,field:"telefono",hozAlign:"left"},
             // {title:"Sector", width:150,field:"sector",hozAlign:"left"},
-            {title:"Ciudad", width:150,field:"nombre_ciudad",hozAlign:"left"},
+            {title:"Entrega", width:150,field:"delivery_date",hozAlign:"left"},
+            {title:"Ciudad", width:150,field:"city_sale_cod",hozAlign:"left"},
             // {title:"Direccion", width:220,field:"delivery_address",hozAlign:"left"},
             {title:"Total Orden",width:135, field:"total_order", formatter:"money", hozAlign:"right",formatterParams:{
                 decimal:".",
@@ -824,8 +825,15 @@ $(document).ready(function () {
                 orientation:"landscape", //set page orientation to portrait
                 title:"Pedidos Entregados  - Mes :  "+mes+"  - Año : "+anio,
                 autoTable:{
-                    margin: {horizontal:5,top: 50},
-                    styles: {overflow: 'linebreak'},
+                    columnStyles: { 0: { columnWidth: 60 },
+                                    1: { columnWidth: 60 },
+                                    3: { columnWidth: 80 },
+                                    5: { columnWidth: 80 },
+                                    6: { columnWidth: 70 },
+                                    7: { columnWidth: 60 } },
+                    margin: {top: 60},
+                    // margin: {horizontal:5,top: 50},
+                    // styles: {overflow: 'linebreak'},
                     //margin: {top: 50},
                 },
                 documentProcessing:function(doc){

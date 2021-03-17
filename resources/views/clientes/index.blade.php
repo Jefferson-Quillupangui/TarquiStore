@@ -71,8 +71,8 @@
                                     <a class="btn btn-secondary btn-group-sm" href="{{route('clients.edit',$client)}}"><i class="fas fa-edit"></i></a>
                                     <button class="btn btn-danger" type="submit"><i class="fas fa-trash"></i></button>
                                 </div>
-                            </div>
                             </form>
+                            </div>
                         </td>
                         {{-- <td>{{ $client->created_at->diffForHumans()}}</td> --}}
                     </tr>
@@ -96,6 +96,7 @@
     <script type="text/javascript" src="{{ asset("datatables/js/dataTables.bootstrap4.min.js") }}"></script>
     <script type="text/javascript" src="{{ asset("datatables/js/dataTables.responsive.min.js") }}"></script>
     <script type="text/javascript" src="{{ asset("datatables/js/responsive.bootstrap4.min.js") }}"></script>
+    <script type="text/javascript" src="{{ asset("js/adminlte/modales/windeliminar.js") }}"></script>
     <script>
         $('#clientes').DataTable({
         responsive: true,
@@ -122,5 +123,5 @@
             }   
         });
     </script>
-    <script type="text/javascript" src="{{ asset("js/adminlte/modales/windeliminar.js") }}"></script>
+
 @stop

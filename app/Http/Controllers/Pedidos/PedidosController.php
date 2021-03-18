@@ -764,7 +764,16 @@ class PedidosController extends Controller
                        return $msj = $this->msj_estado_orden($out_id_order, $out_cod, $out_msj);
                         
                         
-                    }else{
+                    }elseif($estadoOrden == 'OE'){
+                        //ENTREGADO - REAGENDADO
+
+                        $out_id_order = $id_cab_pedido;
+                        $out_cod = 8; 
+                        $out_msj = 'Pedido '.$id_cab_pedido.'. Debe mover a Cancelado o Pendiente.';
+                        return ($this->msj_estado_orden($out_id_order, $out_cod, $out_msj));
+
+                    }                     
+                    else{
                     
                         //CAMBIO DE PENDIENTE -> REAGENDADO(SOLO SE CAMBIA EL ESTADO)
                         $c_pedidos->Cambiar_Estado_Orden($id_cab_pedido, $in_order_status_cod);

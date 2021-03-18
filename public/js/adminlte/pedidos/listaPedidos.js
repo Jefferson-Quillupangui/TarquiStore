@@ -208,6 +208,7 @@ $(document).ready(function () {
             {title:"status_comission", field:"status_comission",visible:false},///
             {title:"Cod Sector", field:"sector_cod",visible:false},//
             {title:"N# Pedido", field:"id",hozAlign:"center",headerFilter:"input",headerFilterPlaceholder:"N# Pedido"},
+            {title:"Nombre Estado Orden", field:"nombre_estado_ord", headerFilter:"select", headerFilterParams:{values:true}, headerFilterPlaceholder:"Buscar Estado"}, //},
             {title:"Nombre Clientes", field:"nombre_cliente",headerFilter:"input",headerFilterPlaceholder:"Cliente"},
             {title:"Identicación", field:"identification",hozAlign:"center",headerFilter:"input",headerFilterPlaceholder:"Identificacion"},
             {title:"Fecha Entrega", field:"delivery_date" },
@@ -231,7 +232,6 @@ $(document).ready(function () {
             //{title:"Cod Ciudad", field:"city_sale_cod"},//
             {title:"Nombre del Sector", field:"nombre_sector", headerFilter:"select", headerFilterParams:{values:true}, headerFilterPlaceholder:"Buscar Sector"}, //},
             {title:"Nombre de Ciudad", field:"nombre_ciudad", headerFilter:"select", headerFilterParams:{values:true}, headerFilterPlaceholder:"Buscar Ciudad"}, //},
-            {title:"Nombre Estado Orden", field:"nombre_estado_ord", headerFilter:"select", headerFilterParams:{values:true}, headerFilterPlaceholder:"Buscar Estado"}, //},
             {title:"Nombre Colaborador", field:"nombre_colaborador", headerFilter:"input",headerFilterPlaceholder:"Colaborador"}, //},
             // {//create column group
             //   title: "ID",

@@ -144,7 +144,9 @@ class PedidosController extends Controller
                     inner join order_statuses as d on orders.order_status_cod = d.codigo 
                     inner join collaborators as e on orders.collaborator_id = e.id 
                     inner join clients as f on orders.client_id = f.id 
-                    inner join users as g on orders.collaborator_id = g.id 
+                    inner join users as g on orders.collaborator_id = g.id
+                WHERE orders.collaborator_id = $id 
+                and orders.order_status_cod != 'OC'
          "));
     
         return response()->json(['data' => $orders], 200);
@@ -222,7 +224,9 @@ class PedidosController extends Controller
                     inner join collaborators as e on orders.collaborator_id = e.id 
                     inner join clients as f on orders.client_id = f.id 
                     inner join users as g on orders.collaborator_id = g.id 
-            WHERE orders.collaborator_id = $id and orders.order_status_cod != 'OE'
+            WHERE orders.collaborator_id = $id 
+                and orders.order_status_cod != 'OE'
+                and orders.order_status_cod != 'OC'
          "));
     
         return response()->json(['data' => $orders], 200);
